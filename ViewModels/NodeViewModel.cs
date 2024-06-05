@@ -10,6 +10,12 @@ namespace mystery_app.ViewModels;
     
 public partial class NodeViewModel : ObservableObject
 {
+
+    public NodeViewModel(string name, string desc, int x, int y)
+    {
+        Node = new NodeModel(name, desc, x, y);
+    }
+
     [ObservableProperty]
-    private NodeModel _node = new NodeModel("Chris", "He's a dude", 30, 30);
+    private NodeModel _node;
 }
