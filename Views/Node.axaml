@@ -10,10 +10,8 @@
 		<vm:NodeViewModel />
 	</Design.DataContext>
 	
-	<ListBox Canvas.Left="{Binding Node.Coord.X}" Canvas.Top="{Binding Node.Coord.Y}">
+	<ListBox>
 		<TextBox Text="{Binding Node.Name}"/>
 		<TextBox Text="{Binding Node.Description}"/>
-		<TextBox Text="{Binding Node.Coord.X}"/>
-		<TextBox Text="{Binding Node.Coord.Y}"/>
 	</ListBox>
 </UserControl>
