@@ -13,16 +13,14 @@ namespace mystery_app.Models;
 public class NodeModel
 {
 
-    public NodeModel(string name = "", string desc = "", int x = 0, int y = 0)
+    public NodeModel(string name = "", string desc = "")
     {
         Name = name;
         Description = desc;
-        Coord = new Coordinate(x, y);
     }
 
     private string _name;
     private string _description;
-    private Coordinate _coord;
 
     public string Name
     {
@@ -33,10 +31,5 @@ public class NodeModel
     {
         get { return _description; }
         set { _description = value; }
-    }
-    public Coordinate Coord
-    {
-        get { return _coord; }
-        set { _coord = value; }
     }
 }

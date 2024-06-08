@@ -17,9 +17,9 @@
     </Design.DataContext>
 
 	<Grid>
-	    <Canvas Background="Gray" >
+		<Canvas Background="Gray" >
 			<views:Node DataContext="{Binding FirstNode}"/>
-	    </Canvas>
+		</Canvas>
 	</Grid>
 
 </Window>
