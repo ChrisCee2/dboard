@@ -14,6 +14,9 @@ public class MovableUserControl : UserControl
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
+        // If not left click, return
+        if (!e.GetCurrentPoint(Parent as Avalonia.Visual).Properties.IsLeftButtonPressed) { return; }
+
         _isPressed = true;
         _positionInBlock = e.GetPosition((Avalonia.Visual?)Parent);
 

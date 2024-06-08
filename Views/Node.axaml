@@ -8,15 +8,15 @@
 	mc:Ignorable="d"
 	x:Class="mystery_app.Views.Node"
 	x:DataType="vm:NodeViewModel"
-	Padding="20"
-	Background="Blue"
+	Padding="10"
+	Background="Black"
 	>
 	<Design.DataContext>
 		<vm:NodeViewModel />
 	</Design.DataContext>
 
-		<ListBox>
-			<TextBox Text="{Binding Node.Name}"/>
-			<TextBox Text="{Binding Node.Description}"/>
-		</ListBox>
+		<StackPanel>
+			<TextBlock Text="{Binding Node.Name}"/>
+			<TextBlock Text="{Binding Node.Description}"/>
+		</StackPanel>
 </controls:MovableUserControl>
