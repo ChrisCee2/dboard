@@ -1,11 +1,8 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Logging;
-using Avalonia.Markup.Xaml;
+using mystery_app.Controls;
 
 namespace mystery_app.Views;
 
-public partial class Node : UserControl
+public partial class Node : MovableUserControl
 {
     public Node()
     {

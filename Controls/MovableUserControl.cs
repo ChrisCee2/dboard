@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia;
 
 namespace mystery_app.Controls;
 
-public class CustomMovableBorder : Border
+public class MovableUserControl : UserControl
 {
 
     private bool _isPressed;
     private Point _positionInBlock;
-    private TranslateTransform _transform = null!;
+    private TranslateTransform? _transform = null;
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
         _isPressed = true;
         _positionInBlock = e.GetPosition((Avalonia.Visual?)Parent);
 
-        if (_transform != null!)
+        if (_transform != null)
         {
-            _positionInBlock = new Point(_positionInBlock.X - (int) _transform.X, _positionInBlock.Y - (int) _transform.Y);
+            _positionInBlock = new Point(_positionInBlock.X - (int)_transform.X, _positionInBlock.Y - (int)_transform.Y);
         }
 
         base.OnPointerPressed(e);
@@ -36,6 +31,7 @@ public class CustomMovableBorder : Border
 
         base.OnPointerReleased(e);
     }
+
     protected override void OnPointerMoved(PointerEventArgs e)
     {
         if (!_isPressed) { return; }

@@ -2,7 +2,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:mystery_app.ViewModels"
 		xmlns:views="clr-namespace:mystery_app.Views"
-		xmlns:controls="clr-namespace:mystery_app.Controls"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -18,11 +17,9 @@
     </Design.DataContext>
 
 	<Grid>
-	    <Canvas Background="Gray" >
-			<controls:CustomMovableBorder Background="Black" Padding="10">
-			    <views:Node DataContext="{Binding FirstNode}"/>
-			</controls:CustomMovableBorder>
-	    </Canvas>
+		<Canvas Background="Gray" >
+			<views:Node DataContext="{Binding FirstNode}"/>
+		</Canvas>
 	</Grid>
 
 </Window>

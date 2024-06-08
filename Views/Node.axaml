@@ -1,17 +1,22 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="clr-namespace:mystery_app.ViewModels"
-             mc:Ignorable="d"
-             x:Class="mystery_app.Views.Node"
-			 x:DataType="vm:NodeViewModel">
+<controls:MovableUserControl 
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:controls="clr-namespace:mystery_app.Controls"
+	xmlns:vm="clr-namespace:mystery_app.ViewModels"
+	mc:Ignorable="d"
+	x:Class="mystery_app.Views.Node"
+	x:DataType="vm:NodeViewModel"
+	Padding="20"
+	Background="Blue"
+	>
 	<Design.DataContext>
 		<vm:NodeViewModel />
 	</Design.DataContext>
-	
-	<ListBox>
-		<TextBox Text="{Binding Node.Name}"/>
-		<TextBox Text="{Binding Node.Description}"/>
-	</ListBox>
-</UserControl>
+
+		<ListBox>
+			<TextBox Text="{Binding Node.Name}"/>
+			<TextBox Text="{Binding Node.Description}"/>
+		</ListBox>
+</controls:MovableUserControl>
