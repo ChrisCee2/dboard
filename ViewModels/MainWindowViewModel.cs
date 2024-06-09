@@ -1,13 +1,24 @@
-﻿namespace mystery_app.ViewModels;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
-public class MainWindowViewModel : ViewModelBase
+namespace mystery_app.ViewModels;
+
+public partial class MainWindowViewModel : ViewModelBase
 {
 
     public MainWindowViewModel()
     {
-        FirstNode = new NodeViewModel("YO", "DESC");
+        Nodes = new ObservableCollection<NodeViewModel>(new List<NodeViewModel>());
     }
 
-    public NodeViewModel FirstNode { get; }
+    [RelayCommand]
+    private void CreateNode()
+    {
+        Nodes.Add(new NodeViewModel("1", "2"));
+    }
+
+    public ObservableCollection<NodeViewModel> Nodes { get; set; }
 
 }
