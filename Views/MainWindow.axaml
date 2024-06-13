@@ -16,10 +16,25 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<Grid>
-		<Canvas Background="Gray" >
-			<views:Node DataContext="{Binding FirstNode}"/>
-		</Canvas>
-	</Grid>
+
+	<DockPanel>
+		<Menu DockPanel.Dock = "Top">
+			<MenuItem Header = "Actions">
+				<MenuItem Header = "Create Node" Command="{Binding CreateNodeCommand}"/>
+			</MenuItem>
+		</Menu>
+		<ItemsControl ItemsSource="{Binding Nodes}" Background="Salmon">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas/>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<views:Node DataContext="{Binding}"/>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</DockPanel>
 
 </Window>

@@ -9,7 +9,7 @@
 	x:Class="mystery_app.Views.Node"
 	x:DataType="vm:NodeViewModel"
 	Padding="10"
-	Background="Black"
+	Background="Gray"
 	>
 	<Design.DataContext>
 		<vm:NodeViewModel />
