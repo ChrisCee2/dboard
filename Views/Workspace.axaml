@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:mystery_app.ViewModels"
+		xmlns:views="clr-namespace:mystery_app.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="mystery_app.Views.Workspace"
+        x:DataType="vm:WorkspaceViewModel">
+
+    <Design.DataContext>
+        <vm:WorkspaceViewModel />
+    </Design.DataContext>
+
+	<Panel>
+		<TextBlock TextWrapping="Wrap" x:Name="results" DockPanel.Dock = "Top"/>
+		<ItemsControl ItemsSource="{Binding Nodes}" Background="Salmon">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas PointerPressed="PointerPressedHandler"/>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<views:Node DataContext="{Binding}"/>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</Panel>
+
+</UserControl>

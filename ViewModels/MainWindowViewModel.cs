@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using mystery_app.Messages;
 
 namespace mystery_app.ViewModels;
 
@@ -10,15 +9,15 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        Nodes = new ObservableCollection<NodeViewModel>(new List<NodeViewModel>());
+        Workspace = new WorkspaceViewModel();
     }
+
+    public WorkspaceViewModel Workspace { get; set; }
 
     [RelayCommand]
     private void CreateNode()
     {
-        Nodes.Add(new NodeViewModel("1", "2"));
+        WeakReferenceMessenger.Default.Send(new CreateNodeMessage("unused string"));
     }
-
-    public ObservableCollection<NodeViewModel> Nodes { get; set; }
 
 }

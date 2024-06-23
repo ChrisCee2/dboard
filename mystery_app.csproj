@@ -24,6 +24,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaXaml Update="Views\Workspace.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Workspace.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>Workspace.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Node.axaml.cs">
       <DependentUpon>Node.axaml</DependentUpon>
     </Compile>
