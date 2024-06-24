@@ -13,11 +13,10 @@
     </Design.DataContext>
 
 	<Panel>
-		<TextBlock TextWrapping="Wrap" x:Name="results" DockPanel.Dock = "Top"/>
 		<ItemsControl ItemsSource="{Binding Nodes}" Background="Salmon">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
-					<Canvas PointerPressed="PointerPressedHandler"/>
+					<Canvas/>
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemTemplate>
