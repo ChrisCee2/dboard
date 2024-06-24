@@ -2,6 +2,7 @@
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia;
+using Avalonia.VisualTree;
 
 namespace mystery_app.Controls;
 
@@ -12,20 +13,30 @@ public class MovableUserControl : UserControl
     private Point _positionInBlock;
     private TranslateTransform? _transform = null;
 
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    protected override void OnPointerPressed(PointerPressedEventArgs args)
     {
         // If not left click, return
-        if (!e.GetCurrentPoint(Parent as Avalonia.Visual).Properties.IsLeftButtonPressed) { return; }
+        if (!args.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed) { return; }
+
+        // Don't start moving if tag is to not move
+        var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
+        var rootCoordinates = args.GetPosition(root);
+        var hitElement = root.InputHitTest(rootCoordinates);
+
+        if (hitElement is Control control)
+        {
+            if (control == null || control.Tag == "Nonmovable") { return; }
+        }
 
         _isPressed = true;
-        _positionInBlock = e.GetPosition((Avalonia.Visual?)Parent);
+        _positionInBlock = args.GetPosition((Visual?)Parent);
 
         if (_transform != null)
         {
             _positionInBlock = new Point(_positionInBlock.X - (int)_transform.X, _positionInBlock.Y - (int)_transform.Y);
         }
 
-        base.OnPointerPressed(e);
+        base.OnPointerPressed(args);
     }
 
     protected override void OnPointerReleased(PointerReleasedEventArgs e)
@@ -40,7 +51,7 @@ public class MovableUserControl : UserControl
         if (!_isPressed) { return; }
         if (Parent == null) { return; }
 
-        var currentPosition = e.GetPosition((Avalonia.Visual?)Parent);
+        var currentPosition = e.GetPosition((Visual?)Parent);
 
         var offsetX = currentPosition.X - _positionInBlock.X;
         var offsetY = currentPosition.Y - _positionInBlock.Y;

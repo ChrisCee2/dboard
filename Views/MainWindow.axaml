@@ -23,18 +23,7 @@
 				<MenuItem Header = "Create Node" Command="{Binding CreateNodeCommand}"/>
 			</MenuItem>
 		</Menu>
-		<ItemsControl ItemsSource="{Binding Nodes}" Background="Salmon">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<Canvas/>
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<views:Node DataContext="{Binding}"/>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
+		<views:Workspace DataContext="{Binding Workspace}"/>
 	</DockPanel>
 
 </Window>

@@ -1,16 +1,38 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using mystery_app.Models;
+﻿using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace mystery_app.ViewModels;
     
 public partial class NodeViewModel : ObservableObject
 {
 
-    public NodeViewModel(string name, string desc)
+    public NodeViewModel()
     {
-        Node = new NodeModel(name, desc);
+        _name = "";
+        _desc = "";
+        _edges = new Dictionary<NodeViewModel, string>();
+    }
+
+    public NodeViewModel(string name="", string desc="", Dictionary<NodeViewModel, string> edges=null)
+    {
+        _name = name;
+        _desc = desc;
+        if (edges != null) 
+        {
+            _edges = edges;
+        }
+        else
+        {
+            _edges = new Dictionary<NodeViewModel, string>();
+        }
     }
 
     [ObservableProperty]
-    private NodeModel _node;
+    private string _name;
+
+    [ObservableProperty]
+    private string _desc;
+
+    [ObservableProperty]
+    private Dictionary<NodeViewModel, string> _edges;
 }
