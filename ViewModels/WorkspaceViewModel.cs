@@ -39,12 +39,7 @@ public partial class WorkspaceViewModel : ViewModelBase
                 {
                     _selectedNode.Edges.Remove(_enteredNode);
                 }
-                if (_enteredNode.Edges.ContainsKey(_selectedNode))
-                {
-                    _enteredNode.Edges.Remove(_selectedNode);
-                }
                 _selectedNode.Edges.Add(_enteredNode, "reason");
-                _enteredNode.Edges.Add(_selectedNode, "reason");
             }
             _selectedNode = null;
             _enteredNode = null;
