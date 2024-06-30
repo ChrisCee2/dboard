@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Messages;
+using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
 
 public partial class WorkspaceViewModel : ViewModelBase
 {
-
+    public ObservableCollection<NodeViewModel> Nodes { get; set; }
+    public EdgeCollection Edges { get; set; }
     private NodeViewModel? _selectedNode;
     private NodeViewModel? _enteredNode;
 
     public WorkspaceViewModel()
     {
         Nodes = new ObservableCollection<NodeViewModel>(new List<NodeViewModel>());
+        Edges = new EdgeCollection();
 
         WeakReferenceMessenger.Default.Register<CreateNodeMessage>(this, (sender, message) =>
         {

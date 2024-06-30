@@ -10,6 +10,7 @@
 	x:DataType="vm:NodeViewModel"
 	Padding="10"
 	Background="Gray"
+	PointerMoved="MoveNodeHandler"
 	>
 	<Design.DataContext>
 		<vm:NodeViewModel />
@@ -25,6 +26,6 @@
 			PointerReleased="ReleaseNodeEdge"/>
 		<TextBlock Text="{Binding Name}"/>
 		<TextBlock Text="{Binding Desc}"/>
-		<TextBlock Text="{Binding Edges}"/>
+		<TextBlock Text="{Binding Position}"/>
 	</StackPanel>
 </controls:MovableUserControl>
