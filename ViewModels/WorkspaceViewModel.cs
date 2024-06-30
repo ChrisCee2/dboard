@@ -36,13 +36,14 @@ public partial class WorkspaceViewModel : ViewModelBase
         {
             _enteredNode = message.Value;
 
-            if (Nodes.Contains(_enteredNode) && Nodes.Contains(_selectedNode) && _selectedNode != null && _enteredNode != null && !Object.Equals(_enteredNode, _selectedNode))
+            if (Nodes.Contains(_enteredNode) 
+                && Nodes.Contains(_selectedNode) 
+                && _selectedNode != null 
+                && _enteredNode != null 
+                && !Object.Equals(_enteredNode, _selectedNode)
+                && !Edges.ContainsEdge(_selectedNode, _enteredNode))
             {
-                if (_selectedNode.Edges.ContainsKey(_enteredNode))
-                {
-                    _selectedNode.Edges.Remove(_enteredNode);
-                }
-                _selectedNode.Edges.Add(_enteredNode, "reason");
+                Edges.Add(new Edge(_selectedNode, _enteredNode, "asdf"));
             }
             _selectedNode = null;
             _enteredNode = null;
