@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Avalonia.Logging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Messages;
 using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
 
-public partial class WorkspaceViewModel : ViewModelBase
+public partial class WorkspaceViewModel : ObservableObject
 {
     public ObservableCollection<NodeViewModel> Nodes { get; set; }
     public EdgeCollection Edges { get; set; }
