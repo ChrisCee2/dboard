@@ -17,51 +17,82 @@
         <vm:WorkspaceViewModel />
     </Design.DataContext>
 
-	<Panel>
-		<ItemsControl ItemsSource="{Binding Nodes}">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<Canvas Background="Salmon"/>
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<views:Node DataContext="{Binding}"/>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-		<ItemsControl ItemsSource="{Binding Edges}">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<Canvas/>
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<Canvas>
-						<TextBox Text="{Binding Description}">
-							<Canvas.Left>
-								<MultiBinding Converter="{StaticResource EdgeMidPointConverter}" ConverterParameter="X">
-									<Binding Path="FromNode.Position"/>
-									<Binding Path="ToNode.Position"/>
-								</MultiBinding>
-							</Canvas.Left>
-							<Canvas.Top>
-								<MultiBinding Converter="{StaticResource EdgeMidPointConverter}" ConverterParameter="Y">
-									<Binding Path="FromNode.Position"/>
-									<Binding Path="ToNode.Position"/>
-								</MultiBinding>
-							</Canvas.Top>
-						</TextBox>
-						<Line
-						StartPoint="{Binding FromNode.Position}"
-						EndPoint="{Binding ToNode.Position}"
-						Stroke="Red"
-						StrokeThickness="2"/>
-					</Canvas>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-	</Panel>
-
+	<SplitView
+		Name="NotesSplitView"
+		PanePlacement="Right"
+		DisplayMode="Overlay"
+		OpenPaneLength="200">
+		<SplitView.Pane>
+			<DockPanel>
+				<DockPanel DockPanel.Dock="Top">
+					<Button
+						Margin="5"
+						Click="ToggleNotes"
+						DockPanel.Dock="Left">
+						>
+					</Button>
+					<TextBlock VerticalAlignment="Center">Notes</TextBlock>
+				</DockPanel>
+				<TextBox
+					Margin="5"
+					Watermark="Record your notes here!"/>
+			</DockPanel>
+		</SplitView.Pane>
+		
+		<Panel>
+			<Button
+				VerticalAlignment="Top"
+				HorizontalAlignment="Right"
+				Margin="5"
+				ZIndex="1"
+				Click="ToggleNotes">
+				Notes
+			</Button>
+			<ItemsControl ItemsSource="{Binding Nodes}">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<Canvas Background="Salmon"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<views:Node DataContext="{Binding}"/>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+			<ItemsControl ItemsSource="{Binding Edges}">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<Canvas/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Canvas>
+							<TextBox Text="{Binding Description}">
+								<Canvas.Left>
+									<MultiBinding Converter="{StaticResource EdgeMidPointConverter}" ConverterParameter="X">
+										<Binding Path="FromNode.Position"/>
+										<Binding Path="ToNode.Position"/>
+									</MultiBinding>
+								</Canvas.Left>
+								<Canvas.Top>
+									<MultiBinding Converter="{StaticResource EdgeMidPointConverter}" ConverterParameter="Y">
+										<Binding Path="FromNode.Position"/>
+										<Binding Path="ToNode.Position"/>
+									</MultiBinding>
+								</Canvas.Top>
+							</TextBox>
+							<Line
+							StartPoint="{Binding FromNode.Position}"
+							EndPoint="{Binding ToNode.Position}"
+							Stroke="Red"
+							StrokeThickness="2"/>
+						</Canvas>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</Panel>
+		
+	</SplitView>
 </UserControl>
