@@ -47,13 +47,19 @@ public partial class WorkspaceViewModel : ViewModelBase
             _selectedNode = null;
             _enteredNode = null;
         });
+
+        WeakReferenceMessenger.Default.Register<MoveNodeMessage>(this, (sender, message) =>
+        {
+            var dataContext = message.Value.Context;
+            if (Nodes.Contains(dataContext))
+            {
+                ((NodeViewModel)dataContext).Position = message.Value.Position;
+            }
+        });
     }
 
     private void CreateNode()
     {
         Nodes.Add(new NodeViewModel());
     }
-
-    public ObservableCollection<NodeViewModel> Nodes { get; set; }
-
 }
