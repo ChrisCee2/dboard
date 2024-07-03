@@ -11,20 +11,40 @@
 	Padding="10"
 	Background="Gray"
 	PointerMoved="MoveNodeHandler"
+	Width="{Binding Width}"
+	Height="{Binding Height}"
+	MinWidth="90"
+	MinHeight="110"
 	>
 	<Design.DataContext>
 		<vm:NodeViewModel />
 	</Design.DataContext>
 
-	<StackPanel Background="Black">
-		<Panel 
+	<DockPanel Background="Black">
+		<Panel
+			DockPanel.Dock="Top"
 			Tag="Nonmovable"
 			Background="Blue"
 			Width="10" 
 			Height="10"
 			PointerPressed="SelectNodeEdge"
 			PointerReleased="ReleaseNodeEdge"/>
-		<TextBox Text="{Binding Name}"/>
-		<TextBox Text="{Binding Desc}"/>
-	</StackPanel>
+		<TextBox
+			DockPanel.Dock="Top"
+			Text="{Binding Name}"/>
+		<TextBox
+			DockPanel.Dock="Top"
+			Text="{Binding Desc}"/>
+		<Panel
+			DockPanel.Dock="Bottom"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Bottom"
+			Tag="Nonmovable"
+			Background="White"
+			Width="10"
+			Height="10"
+			Margin="2"
+			PointerPressed="SelectResize"
+			PointerReleased="ReleaseResize"/>
+	</DockPanel>
 </controls:MovableUserControl>

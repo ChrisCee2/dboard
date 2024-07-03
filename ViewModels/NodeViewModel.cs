@@ -6,16 +6,12 @@ namespace mystery_app.ViewModels;
 public partial class NodeViewModel : ObservableObject
 {
 
-    public NodeViewModel()
-    {
-        _name = "";
-        _desc = "";
-    }
-
-    public NodeViewModel(string name="", string desc="")
+    public NodeViewModel(string name="", string desc="", double width=100, double height=110)
     {
         _name = name;
         _desc = desc;
+        _width = width;
+        _height = height;
     }
 
     [ObservableProperty]
@@ -26,4 +22,10 @@ public partial class NodeViewModel : ObservableObject
 
     [ObservableProperty]
     private Point _position;
+
+    [ObservableProperty]
+    private double _width;
+
+    [ObservableProperty]
+    private double _height;
 }
