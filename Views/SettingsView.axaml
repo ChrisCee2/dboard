@@ -1,0 +1,22 @@
+<UserControl
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:controls="clr-namespace:mystery_app.Controls"
+	xmlns:vm="clr-namespace:mystery_app.ViewModels"
+	mc:Ignorable="d"
+	x:Class="mystery_app.Views.SettingsView"
+	x:DataType="vm:SettingsViewModel"
+	>
+	<Design.DataContext>
+		<vm:SettingsViewModel />
+	</Design.DataContext>
+
+	<DockPanel Background="Gray">
+		<DockPanel DockPanel.Dock="Top">
+			<Button Command="{Binding GoToMainContentCommand}">Back</Button>
+			<TextBlock DockPanel.Dock="Top" Text="Settings"/>
+		</DockPanel>
+	</DockPanel>
+</UserControl>

@@ -4,9 +4,9 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace mystery_app.Views;
 
-public partial class Workspace : UserControl
+public partial class WorkspaceView : UserControl
 {
-    public Workspace()
+    public WorkspaceView()
     {
         InitializeComponent();
     }

@@ -10,13 +10,13 @@ using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
 
-public partial class Node : MovableUserControl
+public partial class NodeView : MovableUserControl
 {
 
     private bool _resizing;
     private Point _lastPressedPoint;
 
-    public Node()
+    public NodeView()
     {
         InitializeComponent();
     }
