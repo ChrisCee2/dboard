@@ -58,7 +58,15 @@ public class MovableUserControl : UserControl
         _transform = new TranslateTransform(offsetX, offsetY);
         RenderTransform = _transform;
 
+        OnTransform(_transform);
         base.OnPointerMoved(e);
     }
 
+    virtual public void OnTransform(TranslateTransform transform) {}
+
+    public void LoadTransform(TranslateTransform transform)
+    {
+        _transform = transform;
+        RenderTransform = _transform;
+    }
 }

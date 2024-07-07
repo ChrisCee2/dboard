@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Media;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Controls;
@@ -12,7 +13,6 @@ namespace mystery_app.Views;
 
 public partial class NodeView : MovableUserControl
 {
-
     private bool _resizing;
     private Point _lastPressedPoint;
 
@@ -21,13 +21,16 @@ public partial class NodeView : MovableUserControl
         InitializeComponent();
     }
 
-    // Updates position of the node to the node viewmodel
-    private void MoveNodeHandler(object sender, PointerEventArgs args)
+    protected override void OnDataContextEndUpdate()
     {
-        var workspaceRoot = ((Control)((Control)sender).Parent).PointToScreen(new Point(0, 0));
-        var senderRoot = ((Control)sender).PointToScreen(new Point(0, 0));
-        var pos = new Point(senderRoot.X - workspaceRoot.X, senderRoot.Y - workspaceRoot.Y);
-        var message = new MoveNodeHelper((NodeViewModel)DataContext, pos);
+        base.OnDataContextEndUpdate();
+        var position = ((NodeViewModel)DataContext).Position;
+        LoadTransform(new TranslateTransform(position.X, position.Y));
+    }
+
+    public override void OnTransform(TranslateTransform transform) 
+    {
+        var message = new MoveNodeHelper((NodeViewModel)DataContext, new Point(transform.X, transform.Y));
         WeakReferenceMessenger.Default.Send(new MoveNodeMessage(message));
     }
 

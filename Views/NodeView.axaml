@@ -10,7 +10,6 @@
 	x:DataType="vm:NodeViewModel"
 	Padding="10"
 	Background="Gray"
-	PointerMoved="MoveNodeHandler"
 	Width="{Binding Width}"
 	Height="{Binding Height}"
 	MinWidth="90"
