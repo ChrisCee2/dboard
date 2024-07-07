@@ -72,8 +72,8 @@ public partial class NodeView : MovableUserControl
             _resizing = false;
             var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
             var resizeSize = args.GetPosition(root) - _lastPressedPoint;
-            Width = (Width + resizeSize.X < this.MinWidth) ? this.MinWidth : Width + resizeSize.X;
-            Height = (Height + resizeSize.Y < this.MinHeight) ? this.MinHeight : Height + resizeSize.Y;
+            ((NodeViewModel)DataContext).Width = (Width + resizeSize.X < this.MinWidth) ? this.MinWidth : Width + resizeSize.X;
+            ((NodeViewModel)DataContext).Height = (Height + resizeSize.Y < this.MinHeight) ? this.MinHeight : Height + resizeSize.Y;
         }
     }
 }
