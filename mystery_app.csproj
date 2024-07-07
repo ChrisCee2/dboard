@@ -24,18 +24,31 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AvaloniaXaml Update="Views\Workspace.axaml">
+    <AvaloniaXaml Update="Views\SettingsView.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
+    <AvaloniaXaml Update="Views\WorkspaceView.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Workspace.axaml.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>Workspace.axaml</DependentUpon>
+    <Compile Update="Views\MainContentView.axaml.cs">
+      <DependentUpon>MainContentView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Node.axaml.cs">
-      <DependentUpon>Node.axaml</DependentUpon>
+    <Compile Update="Views\MainWindowView.axaml.cs">
+      <DependentUpon>MainWindowView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SettingsView.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>SettingsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\WorkspaceView.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>WorkspaceView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NodeView.axaml.cs">
+      <DependentUpon>NodeView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Media;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Controls;
@@ -10,24 +11,26 @@ using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
 
-public partial class Node : MovableUserControl
+public partial class NodeView : MovableUserControl
 {
-
     private bool _resizing;
     private Point _lastPressedPoint;
 
-    public Node()
+    public NodeView()
     {
         InitializeComponent();
     }
 
-    // Updates position of the node to the node viewmodel
-    private void MoveNodeHandler(object sender, PointerEventArgs args)
+    protected override void OnDataContextEndUpdate()
     {
-        var workspaceRoot = ((Control)((Control)sender).Parent).PointToScreen(new Point(0, 0));
-        var senderRoot = ((Control)sender).PointToScreen(new Point(0, 0));
-        var pos = new Point(senderRoot.X - workspaceRoot.X, senderRoot.Y - workspaceRoot.Y);
-        var message = new MoveNodeHelper((NodeViewModel)DataContext, pos);
+        base.OnDataContextEndUpdate();
+        var position = ((NodeViewModel)DataContext).Position;
+        LoadTransform(new TranslateTransform(position.X, position.Y));
+    }
+
+    public override void OnTransform(TranslateTransform transform) 
+    {
+        var message = new MoveNodeHelper((NodeViewModel)DataContext, new Point(transform.X, transform.Y));
         WeakReferenceMessenger.Default.Send(new MoveNodeMessage(message));
     }
 
@@ -69,8 +72,8 @@ public partial class Node : MovableUserControl
             _resizing = false;
             var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
             var resizeSize = args.GetPosition(root) - _lastPressedPoint;
-            Width = (Width + resizeSize.X < this.MinWidth) ? this.MinWidth : Width + resizeSize.X;
-            Height = (Height + resizeSize.Y < this.MinHeight) ? this.MinHeight : Height + resizeSize.Y;
+            ((NodeViewModel)DataContext).Width = (Width + resizeSize.X < this.MinWidth) ? this.MinWidth : Width + resizeSize.X;
+            ((NodeViewModel)DataContext).Height = (Height + resizeSize.Y < this.MinHeight) ? this.MinHeight : Height + resizeSize.Y;
         }
     }
 }

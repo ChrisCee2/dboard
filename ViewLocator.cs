@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using CommunityToolkit.Mvvm.ComponentModel;
 using mystery_app.ViewModels;
 
 namespace mystery_app;
@@ -12,7 +13,7 @@ public class ViewLocator : IDataTemplate
     {
         if (data is null)
             return null;
-        
+
         var name = data.GetType().FullName!.Replace("ViewModel", "View", StringComparison.Ordinal);
         var type = Type.GetType(name);
 
@@ -22,12 +23,12 @@ public class ViewLocator : IDataTemplate
             control.DataContext = data;
             return control;
         }
-        
+
         return new TextBlock { Text = "Not Found: " + name };
     }
 
     public bool Match(object? data)
     {
-        return data is ViewModelBase;
+        return (data is ObservableObject || data is ViewModelBase);
     }
 }
