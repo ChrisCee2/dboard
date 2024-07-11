@@ -5,6 +5,7 @@ using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DynamicData;
 using mystery_app.Messages;
 using mystery_app.Models;
 
@@ -59,6 +60,24 @@ public partial class WorkspaceViewModel : ObservableObject
             {
                 ((NodeViewModel)dataContext).Position = message.Value.Position;
             }
+        });
+
+        WeakReferenceMessenger.Default.Register<DeleteNodeMessage>(this, (sender, message) =>
+        {
+            var node = message.Value;
+            // Remove node
+            Nodes.Remove(node);
+
+            // Remove edges
+            var edgesToRemove = new Collection<Edge>();
+            foreach (Edge edge in Edges)
+            {
+                if (edge.FromNode == node || edge.ToNode == node)
+                {
+                    edgesToRemove.Add(edge);
+                }
+            }
+            Edges.RemoveMany(edgesToRemove);
         });
     }
 

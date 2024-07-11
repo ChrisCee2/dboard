@@ -20,14 +20,18 @@
 	</Design.DataContext>
 
 	<DockPanel Background="Black">
-		<Panel
-			DockPanel.Dock="Top"
+		<DockPanel DockPanel.Dock="Top">
+			<Button
+				DockPanel.Dock="Left"
+				Command="{Binding DeleteNodeCommand}">X</Button>
+			<Panel
 			Tag="Nonmovable"
 			Background="Blue"
-			Width="10" 
+			Width="10"
 			Height="10"
 			PointerPressed="SelectNodeEdge"
 			PointerReleased="ReleaseNodeEdge"/>
+		</DockPanel>
 		<TextBox
 			DockPanel.Dock="Top"
 			Text="{Binding Name}"/>
