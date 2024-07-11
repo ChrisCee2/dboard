@@ -1,5 +1,8 @@
 ﻿using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using mystery_app.Messages;
 
 namespace mystery_app.ViewModels;
     
@@ -28,4 +31,10 @@ public partial class NodeViewModel : ObservableObject
 
     [ObservableProperty]
     private double _height;
+
+    [RelayCommand]
+    private void DeleteNode()
+    {
+        WeakReferenceMessenger.Default.Send(new DeleteNodeMessage(this));
+    }
 }

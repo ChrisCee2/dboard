@@ -24,8 +24,11 @@ public partial class NodeView : MovableUserControl
     protected override void OnDataContextEndUpdate()
     {
         base.OnDataContextEndUpdate();
-        var position = ((NodeViewModel)DataContext).Position;
-        LoadTransform(new TranslateTransform(position.X, position.Y));
+        if (DataContext != null)
+        {
+            var position = ((NodeViewModel)DataContext).Position;
+            LoadTransform(new TranslateTransform(position.X, position.Y));
+        }
     }
 
     public override void OnTransform(TranslateTransform transform) 
