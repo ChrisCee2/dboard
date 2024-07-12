@@ -13,11 +13,15 @@ public partial class MainWindowViewModel : ObservableObject
     private readonly Dictionary<string, ObservableObject> Pages;
     [ObservableProperty]
     private ObservableObject _currentPage;
+    [ObservableProperty]
+    private string _currentTheme;
 
     public MainWindowViewModel()
     {
+        _currentTheme = "Default";
+
         Pages = new Dictionary<string, ObservableObject>();
-        Pages.Add("Settings", new SettingsViewModel());
+        Pages.Add("Settings", new SettingsViewModel(_currentTheme));
         Pages.Add("MainContent", new MainContentViewModel());
         _currentPage = Pages["MainContent"];
 
@@ -26,6 +30,10 @@ public partial class MainWindowViewModel : ObservableObject
             Navigate(message.Value);
         });
 
+        WeakReferenceMessenger.Default.Register<ChangeThemeMessage>(this, (sender, message) =>
+        {
+            CurrentTheme = message.Value;
+        });
     }
 
     [RelayCommand]

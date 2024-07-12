@@ -8,8 +8,12 @@ namespace mystery_app.ViewModels;
 public partial class SettingsViewModel : ObservableObject
 {
 
-    public SettingsViewModel()
+    [ObservableProperty]
+    private string _currentTheme;
+
+    public SettingsViewModel(string currentTheme)
     {
+        _currentTheme = currentTheme;
     }
 
     [RelayCommand]
@@ -18,4 +22,10 @@ public partial class SettingsViewModel : ObservableObject
         WeakReferenceMessenger.Default.Send(new ChangePageMessage("MainContent"));
     }
 
+    [RelayCommand]
+    private void ChangeTheme(string theme)
+    {
+        CurrentTheme = theme;
+        WeakReferenceMessenger.Default.Send(new ChangeThemeMessage(CurrentTheme));
+    }
 }

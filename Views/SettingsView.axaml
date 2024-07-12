@@ -5,10 +5,15 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="clr-namespace:mystery_app.Controls"
 	xmlns:vm="clr-namespace:mystery_app.ViewModels"
+	xmlns:converters="clr-namespace:mystery_app.Converters"
 	mc:Ignorable="d"
 	x:Class="mystery_app.Views.SettingsView"
-	x:DataType="vm:SettingsViewModel"
-	>
+	x:DataType="vm:SettingsViewModel">
+	
+	<UserControl.Resources>
+		<converters:ComparisonConverter x:Key="ComparisonConverter"/>
+	</UserControl.Resources>
+
 	<Design.DataContext>
 		<vm:SettingsViewModel />
 	</Design.DataContext>
@@ -18,5 +23,49 @@
 			<Button Command="{Binding GoToMainContentCommand}">Back</Button>
 			<TextBlock DockPanel.Dock="Top" Text="Settings"/>
 		</DockPanel>
+		<StackPanel>
+			<StackPanel>
+				<TextBlock Text="Change Theme"/>
+				<WrapPanel>
+					<RadioButton
+						Command="{Binding ChangeThemeCommand}"
+						CommandParameter="Default">
+						<RadioButton.IsChecked>
+							<Binding 
+								Path="CurrentTheme"
+								Converter="{StaticResource ComparisonConverter}"
+								ConverterParameter="Default">
+							</Binding>
+						</RadioButton.IsChecked>
+						Auto
+					</RadioButton>
+					<RadioButton 
+						Command="{Binding ChangeThemeCommand}"	 
+						CommandParameter="Light">
+						<RadioButton.IsChecked>
+							<Binding
+								Path="CurrentTheme"
+								Converter="{StaticResource ComparisonConverter}"
+								ConverterParameter="Light">
+							</Binding>
+						</RadioButton.IsChecked>
+						Light
+					</RadioButton>
+					<RadioButton
+						Command="{Binding ChangeThemeCommand}"
+						CommandParameter="Dark">
+						<RadioButton.IsChecked>
+							<Binding
+								Path="CurrentTheme"
+								Converter="{StaticResource ComparisonConverter}"
+								ConverterParameter="Dark">
+							</Binding>
+						</RadioButton.IsChecked>
+						Dark
+					</RadioButton>
+					<!--TODO: DRY, this code can be generated-->
+				</WrapPanel>
+			</StackPanel>
+		</StackPanel>
 	</DockPanel>
 </UserControl>
