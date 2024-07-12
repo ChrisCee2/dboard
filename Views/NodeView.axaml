@@ -12,8 +12,8 @@
 	Background="Gray"
 	Width="{Binding Width}"
 	Height="{Binding Height}"
-	MinWidth="90"
-	MinHeight="110"
+	MinWidth="100"
+	MinHeight="100"
 	>
 	<Design.DataContext>
 		<vm:NodeViewModel />
@@ -32,12 +32,20 @@
 			PointerPressed="SelectNodeEdge"
 			PointerReleased="ReleaseNodeEdge"/>
 		</DockPanel>
-		<TextBox
-			DockPanel.Dock="Top"
-			Text="{Binding Name}"/>
-		<TextBox
-			DockPanel.Dock="Top"
-			Text="{Binding Desc}"/>
+		<Grid DockPanel.Dock="Top"
+			RowDefinitions="*,Auto,Auto">
+			<Image
+				Grid.Row="0"
+				Source="{Binding Image}"/>
+			<TextBox
+				Grid.Row="1"
+				DockPanel.Dock="Bottom"
+				Text="{Binding Name}"/>
+			<TextBox
+				Grid.Row="2"
+				DockPanel.Dock="Bottom"
+				Text="{Binding Desc}"/>
+		</Grid>
 		<Panel
 			DockPanel.Dock="Bottom"
 			HorizontalAlignment="Right"
