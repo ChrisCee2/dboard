@@ -1,11 +1,18 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="mystery_app.App"
+			 xmlns:converters="clr-namespace:mystery_app.Converters"
              xmlns:local="using:mystery_app"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
-    <Application.DataTemplates>
+	<Application.Resources>
+		<ResourceDictionary>
+			<converters:ColorConverter x:Key="ColorConverter"/>
+		</ResourceDictionary>
+	</Application.Resources>
+
+	<Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
   

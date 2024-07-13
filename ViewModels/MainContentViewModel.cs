@@ -9,9 +9,9 @@ public partial class MainContentViewModel : ObservableObject
 {
     public WorkspaceViewModel Workspace { get; set; }
 
-    public MainContentViewModel()
+    public MainContentViewModel(string backgroundColor)
     {
-        Workspace = new WorkspaceViewModel();
+        Workspace = new WorkspaceViewModel(backgroundColor);
     }
 
     [RelayCommand]

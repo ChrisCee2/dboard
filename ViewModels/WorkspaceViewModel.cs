@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Avalonia.Logging;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DynamicData;
 using mystery_app.Messages;
@@ -17,11 +17,16 @@ public partial class WorkspaceViewModel : ObservableObject
     public EdgeCollection Edges { get; set; }
     private NodeViewModel? _selectedNode;
     private NodeViewModel? _enteredNode;
+    [ObservableProperty]
+    private IBrush _backgroundColor;
+    BrushConverter _colorConverter;
 
-    public WorkspaceViewModel()
+    public WorkspaceViewModel(string backgroundColor)
     {
         Nodes = new ObservableCollection<NodeViewModel>(new List<NodeViewModel>());
         Edges = new EdgeCollection();
+        _colorConverter = new BrushConverter();
+        BackgroundColor = HexToBrush(backgroundColor);
 
         WeakReferenceMessenger.Default.Register<CreateNodeMessage>(this, (sender, message) =>
         {
@@ -79,10 +84,20 @@ public partial class WorkspaceViewModel : ObservableObject
             }
             Edges.RemoveMany(edgesToRemove);
         });
+
+        WeakReferenceMessenger.Default.Register<ChangeBackgroundColorMessage>(this, (sender, message) =>
+        {
+            BackgroundColor = HexToBrush(message.Value);
+        });
     }
 
     private void CreateNode()
     {
         Nodes.Add(new NodeViewModel());
+    }
+
+    private IBrush HexToBrush(string hex)
+    {
+        return (IBrush)_colorConverter.ConvertFrom(hex);
     }
 }
