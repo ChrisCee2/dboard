@@ -7,7 +7,8 @@
         x:Class="mystery_app.Views.MainWindowView"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="mystery_app">
+        Title="mystery_app"
+		RequestedThemeVariant="{Binding CurrentTheme}">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
