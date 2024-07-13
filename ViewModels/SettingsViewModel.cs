@@ -1,12 +1,15 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Messages;
 
 namespace mystery_app.ViewModels;
-    
+
 public partial class SettingsViewModel : ObservableObject
 {
+
+    public ObservableCollection<string> Themes { get; set; }
 
     [ObservableProperty]
     private string _currentTheme;
@@ -14,6 +17,10 @@ public partial class SettingsViewModel : ObservableObject
     public SettingsViewModel(string currentTheme)
     {
         _currentTheme = currentTheme;
+        Themes = new ObservableCollection<string>();
+        Themes.Add("Default");
+        Themes.Add("Light");
+        Themes.Add("Dark");
     }
 
     [RelayCommand]
