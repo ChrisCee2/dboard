@@ -5,15 +5,10 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="clr-namespace:mystery_app.Controls"
 	xmlns:vm="clr-namespace:mystery_app.ViewModels"
-	xmlns:converters="clr-namespace:mystery_app.Converters"
 	mc:Ignorable="d"
 	x:Class="mystery_app.Views.SettingsView"
 	x:DataType="vm:SettingsViewModel">
 	
-	<UserControl.Resources>
-		<converters:ComparisonConverter x:Key="ComparisonConverter"/>
-	</UserControl.Resources>
-
 	<Design.DataContext>
 		<vm:SettingsViewModel />
 	</Design.DataContext>
