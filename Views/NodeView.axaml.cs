@@ -48,14 +48,14 @@ public partial class NodeView : MovableUserControl
     {
         var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
         var rootCoordinates = args.GetPosition(root);
-        var hitElement = root.InputHitTest(rootCoordinates);
+        var hitElements = root.GetInputElementsAt(rootCoordinates);
 
-        if (hitElement is Control control)
+        foreach (var hitElement in hitElements)
         {
-            // TODO Find node, should improve this later
-            var node = control.Parent.Parent.Parent;
-            if (node == null || node.DataContext == null || node.DataContext is not NodeViewModel) { return; }
-            WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage((NodeViewModel)node.DataContext));
+            if (hitElement is Control control && control.Tag == "EdgeButton")
+            {
+                WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage((NodeViewModel)control.DataContext));
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Avalonia;
 using Avalonia.Logging;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,6 +21,12 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private IBrush _backgroundColor;
     BrushConverter _colorConverter;
+    [ObservableProperty]
+    private Point _selectedEdgeNodePosition;
+    [ObservableProperty]
+    private Point _cursorPosition;
+    [ObservableProperty]
+    private int _edgeVisualThickness;
 
     public WorkspaceViewModel(string backgroundColor)
     {
