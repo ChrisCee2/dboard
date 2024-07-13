@@ -15,4 +15,9 @@ public partial class SettingsView : UserControl
         var theme = ((ComboBox)e.Source).SelectedItem.ToString();
         ((SettingsViewModel)DataContext).ChangeThemeCommand.Execute(theme);
     }
+
+    private void ChangeColorOnSelection(object? sender, ColorChangedEventArgs e)
+    {
+        ((SettingsViewModel)DataContext).ChangeColorCommand.Execute(e.NewColor);
+    }
 }

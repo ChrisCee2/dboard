@@ -19,10 +19,11 @@ public partial class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         _currentTheme = "Default";
+        var defaultBackgroundColor = "#FFFFFF";
 
         Pages = new Dictionary<string, ObservableObject>();
-        Pages.Add("Settings", new SettingsViewModel(_currentTheme));
-        Pages.Add("MainContent", new MainContentViewModel());
+        Pages.Add("Settings", new SettingsViewModel(_currentTheme, defaultBackgroundColor));
+        Pages.Add("MainContent", new MainContentViewModel(defaultBackgroundColor));
         _currentPage = Pages["MainContent"];
 
         WeakReferenceMessenger.Default.Register<ChangePageMessage>(this, (sender, message) =>

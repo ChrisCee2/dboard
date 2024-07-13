@@ -9,13 +9,27 @@
     mc:Ignorable="d"
     x:Class="mystery_app.Views.WorkspaceView"
     x:DataType="vm:WorkspaceViewModel"
-	Focusable="True">
+	Focusable="True"
+	Background="{Binding BackgroundColor}">
 
 	<UserControl.Resources>
 		<converters:EdgeMidPointConverter x:Key="EdgeMidPointConverter"/>
 	</UserControl.Resources>
 
-    <Design.DataContext>
+	<UserControl.Styles>
+		<Style Selector="Button">
+			<Setter Property="Background" Value="Gray"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="BorderBrush" Value="White"/>
+		</Style>
+		<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="Gray"/>
+			<Setter Property="BorderBrush" Value="White"/>
+		</Style>
+	</UserControl.Styles>
+
+
+	<Design.DataContext>
         <vm:WorkspaceViewModel />
     </Design.DataContext>
 
@@ -48,12 +62,12 @@
 				Margin="5"
 				ZIndex="1"
 				Click="ToggleNotes">
-				Notes
+					Notes
 			</Button>
 			<ItemsControl ItemsSource="{Binding Nodes}">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
-						<Canvas Background="Salmon"/>
+						<Canvas/>
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
 				<ItemsControl.ItemTemplate>

@@ -7,31 +7,45 @@
 	xmlns:vm="clr-namespace:mystery_app.ViewModels"
 	mc:Ignorable="d"
 	x:Class="mystery_app.Views.SettingsView"
-	x:DataType="vm:SettingsViewModel">
+	x:DataType="vm:SettingsViewModel"
+	Background="{Binding CurrentBackgroundColor, Converter={StaticResource ColorConverter}}">
 	
 	<Design.DataContext>
 		<vm:SettingsViewModel />
 	</Design.DataContext>
 
-	<DockPanel Background="Gray">
-		<DockPanel DockPanel.Dock="Top">
-			<Button Command="{Binding GoToMainContentCommand}">Back</Button>
-			<TextBlock DockPanel.Dock="Top" Text="Settings"/>
-		</DockPanel>
-		<StackPanel>
+	<UserControl.Styles>
+		<StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+	</UserControl.Styles>
+
+	<Border Margin="30" Padding="10" Background="Gray">
+		<DockPanel Background="Gray">
+			<DockPanel DockPanel.Dock="Top">
+				<Button Command="{Binding GoToMainContentCommand}">Back</Button>
+				<TextBlock DockPanel.Dock="Top" Text="Settings"/>
+			</DockPanel>
 			<StackPanel>
-				<TextBlock Text="Change Theme"/>
-				<ComboBox 
-					ItemsSource="{Binding Themes}"
-					SelectionChanged="ChangeThemeOnSelection"
-					SelectedItem="{Binding CurrentTheme}">
-					<ComboBox.ItemTemplate>
-						<DataTemplate>
-							<TextBlock Text="{Binding}"/>
-						</DataTemplate>
-					</ComboBox.ItemTemplate>
-				</ComboBox>
+				<StackPanel>
+					<TextBlock Text="Change Theme"/>
+					<ComboBox 
+						ItemsSource="{Binding Themes}"
+						SelectionChanged="ChangeThemeOnSelection"
+						SelectedItem="{Binding CurrentTheme}">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding}"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+				</StackPanel>
+				<StackPanel>
+					<TextBlock Text="Change Background"/>
+					<ColorPicker 
+						HorizontalAlignment="Left" 
+						Color="{Binding CurrentBackgroundColor}"
+						ColorChanged="ChangeColorOnSelection"/>
+				</StackPanel>
 			</StackPanel>
-		</StackPanel>
-	</DockPanel>
+		</DockPanel>
+	</Border>
 </UserControl>
