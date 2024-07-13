@@ -25,7 +25,7 @@ public class MovableUserControl : UserControl
 
         if (hitElement is Control control)
         {
-            if (control == null || control.Tag == "Nonmovable") { return; }
+            if (control == null || control.Tag == "EdgeButton" || control.Tag == "Nonmovable") { return; }
         }
 
         _isPressed = true;

@@ -108,6 +108,13 @@
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
+			<Canvas>
+				<Line
+					StartPoint="{Binding SelectedEdgeNodePosition}"
+					EndPoint="{Binding CursorPosition}"
+					Stroke="Red"
+					StrokeThickness="{Binding EdgeVisualThickness}"/>
+			</Canvas>
 		</Panel>
 		
 	</SplitView>

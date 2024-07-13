@@ -25,7 +25,7 @@
 				DockPanel.Dock="Left"
 				Command="{Binding DeleteNodeCommand}">X</Button>
 			<Panel
-			Tag="Nonmovable"
+			Tag="EdgeButton"
 			Background="Blue"
 			Width="10"
 			Height="10"
