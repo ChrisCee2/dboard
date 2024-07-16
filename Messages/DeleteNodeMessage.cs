@@ -2,9 +2,9 @@
 using mystery_app.ViewModels;
 
 namespace mystery_app.Messages;
-public class DeleteNodeMessage : ValueChangedMessage<NodeViewModel>
+public class DeleteNodeMessage : ValueChangedMessage<NodeViewModelBase>
 {
-    public DeleteNodeMessage(NodeViewModel value) : base(value)
+    public DeleteNodeMessage(NodeViewModelBase value) : base(value)
     { 
     }
 }
