@@ -10,7 +10,7 @@ using mystery_app.Models;
 
 namespace mystery_app.Controls;
 
-public class NodeUserControl : UserControl
+public abstract class NodeUserControl : UserControl
 {
     // Move variables
     private bool _isPressed;
@@ -27,7 +27,7 @@ public class NodeUserControl : UserControl
         if (DataContext != null)
         {
             var position = ((NodeViewModelBase)DataContext).Position;
-            LoadTransform(new TranslateTransform(position.X, position.Y));
+            RenderTransform = new TranslateTransform(position.X, position.Y);
         }
     }
 
@@ -128,11 +128,5 @@ public class NodeUserControl : UserControl
 
         OnTransform(_transform);
         base.OnPointerMoved(e);
-    }
-
-    protected void LoadTransform(TranslateTransform transform)
-    {
-        _transform = transform;
-        RenderTransform = _transform;
     }
 }

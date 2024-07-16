@@ -1,7 +1,4 @@
-﻿using System;
-using Avalonia;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
+﻿using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
