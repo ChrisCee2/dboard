@@ -16,8 +16,8 @@ public partial class WorkspaceViewModel : ObservableObject
 {
     public ObservableCollection<NodeViewModelBase> Nodes { get; set; }
     public EdgeCollection Edges { get; set; }
-    private NodeViewModel? _selectedNode;
-    private NodeViewModel? _enteredNode;
+    private NodeViewModelBase? _selectedNode;
+    private NodeViewModelBase? _enteredNode;
     [ObservableProperty]
     private IBrush _backgroundColor;
     BrushConverter _colorConverter;
