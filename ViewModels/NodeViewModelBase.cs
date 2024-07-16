@@ -9,22 +9,8 @@ using mystery_app.Messages;
 
 namespace mystery_app.ViewModels;
 
-public partial class NodeViewModelBase : ObservableObject
+public abstract partial class NodeViewModelBase : ObservableObject
 {
-
-    public NodeViewModelBase(
-        string desc = "",
-        double width = 150,
-        double height = 150,
-        double x = 0,
-        double y = 0)
-    {
-        _desc = desc;
-        _width = width;
-        _height = height;
-        _position = new Point(x, y);
-    }
-
     [ObservableProperty]
     protected string _desc;
 
