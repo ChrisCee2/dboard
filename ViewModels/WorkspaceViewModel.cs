@@ -14,10 +14,10 @@ namespace mystery_app.ViewModels;
 
 public partial class WorkspaceViewModel : ObservableObject
 {
-    public ObservableCollection<NodeViewModel> Nodes { get; set; }
+    public ObservableCollection<NodeViewModelBase> Nodes { get; set; }
     public EdgeCollection Edges { get; set; }
-    private NodeViewModel? _selectedNode;
-    private NodeViewModel? _enteredNode;
+    private NodeViewModelBase? _selectedNode;
+    private NodeViewModelBase? _enteredNode;
     [ObservableProperty]
     private IBrush _backgroundColor;
     BrushConverter _colorConverter;
@@ -30,7 +30,7 @@ public partial class WorkspaceViewModel : ObservableObject
 
     public WorkspaceViewModel(string backgroundColor)
     {
-        Nodes = new ObservableCollection<NodeViewModel>(new List<NodeViewModel>());
+        Nodes = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
         Edges = new EdgeCollection();
         _colorConverter = new BrushConverter();
         BackgroundColor = HexToBrush(backgroundColor);

@@ -7,16 +7,16 @@ namespace mystery_app.Models;
 public class MoveNodeHelper
 {
 
-    public MoveNodeHelper(NodeViewModel context, Point pos)
+    public MoveNodeHelper(NodeViewModelBase context, Point pos)
     {
         Context = context;
         Position = pos;
     }
 
-    private NodeViewModel _context;
+    private NodeViewModelBase _context;
     private Point _position;
 
-    public NodeViewModel Context
+    public NodeViewModelBase Context
     {
         get { return _context; }
         set { _context = value; }
