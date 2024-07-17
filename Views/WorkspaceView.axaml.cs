@@ -16,7 +16,7 @@ public partial class WorkspaceView : UserControl
         WeakReferenceMessenger.Default.Register<SelectNodeEdgeMessage>(this, (sender, message) =>
         {
             ((WorkspaceViewModel)DataContext).SelectedEdgeNodePosition = message.Value.Position;
-            ((WorkspaceViewModel)DataContext).EdgeVisualThickness = 2;
+            ((WorkspaceViewModel)DataContext).EdgeVisualThickness = Constants.Node.EDGE_THICKNESS;
         });
     }
 

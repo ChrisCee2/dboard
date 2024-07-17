@@ -4,6 +4,7 @@
     xmlns:vm="using:mystery_app.ViewModels"
 	xmlns:views="clr-namespace:mystery_app.Views"
 	xmlns:converters="clr-namespace:mystery_app.Converters"
+	xmlns:constants ="clr-namespace:mystery_app.Constants"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -103,7 +104,7 @@
 							StartPoint="{Binding FromNode.Position}"
 							EndPoint="{Binding ToNode.Position}"
 							Stroke="Red"
-							StrokeThickness="2"/>
+							StrokeThickness="{Binding Source={x:Static constants:Node.EDGE_THICKNESS}}"/>
 						</Canvas>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>

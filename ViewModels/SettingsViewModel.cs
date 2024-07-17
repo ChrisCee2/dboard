@@ -9,9 +9,6 @@ namespace mystery_app.ViewModels;
 
 public partial class SettingsViewModel : ObservableObject
 {
-
-    public ObservableCollection<string> Themes { get; set; }
-
     [ObservableProperty]
     private string _currentTheme;
     [ObservableProperty]
@@ -24,16 +21,12 @@ public partial class SettingsViewModel : ObservableObject
         CurrentTheme = currentTheme;
         System.Drawing.Color tempColor = (System.Drawing.Color)_colorConverter.ConvertFromString(backgroundColor);
         CurrentBackgroundColor = new Color(tempColor.A, tempColor.R, tempColor.G, tempColor.B);
-        Themes = new ObservableCollection<string>();
-        Themes.Add("Default");
-        Themes.Add("Light");
-        Themes.Add("Dark");
     }
 
     [RelayCommand]
     private void GoToMainContent()
     {
-        WeakReferenceMessenger.Default.Send(new ChangePageMessage("MainContent"));
+        WeakReferenceMessenger.Default.Send(new ChangePageMessage(Constants.Pages.MAIN_CONTENT));
     }
 
     [RelayCommand]
