@@ -47,7 +47,7 @@ public abstract class NodeUserControl : UserControl
     // On releasing node edge creation, find node released on and send to workspace
     protected void ReleaseNodeEdge(object sender, PointerReleasedEventArgs args)
     {
-        var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
+        var root = _GetRoot((Visual)args.Source);
         var rootCoordinates = args.GetPosition(root);
         var hitElements = root.GetInputElementsAt(rootCoordinates);
 
@@ -63,7 +63,7 @@ public abstract class NodeUserControl : UserControl
     // On selecting resize button, get current cursor position
     protected void SelectResize(object sender, PointerPressedEventArgs args)
     {
-        var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
+        var root = _GetRoot((Visual)args.Source);
         _resizing = true;
         _lastPressedPoint = args.GetPosition(root);
     }
@@ -74,7 +74,7 @@ public abstract class NodeUserControl : UserControl
         if (_resizing)
         {
             _resizing = false;
-            var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
+            var root = _GetRoot((Visual)args.Source);
             var resizeSize = args.GetPosition(root) - _lastPressedPoint;
             ((NodeViewModelBase)DataContext).Width = (Width + resizeSize.X < this.MinWidth) ? this.MinWidth : Width + resizeSize.X;
             ((NodeViewModelBase)DataContext).Height = (Height + resizeSize.Y < this.MinHeight) ? this.MinHeight : Height + resizeSize.Y;
@@ -87,7 +87,7 @@ public abstract class NodeUserControl : UserControl
         if (!args.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed) { return; }
 
         // Don't start moving if tag is to not move
-        var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
+        var root = _GetRoot((Visual)args.Source);
         var rootCoordinates = args.GetPosition(root);
         var hitElement = root.InputHitTest(rootCoordinates);
 
@@ -128,5 +128,10 @@ public abstract class NodeUserControl : UserControl
 
         OnTransform(_transform);
         base.OnPointerMoved(e);
+    }
+
+    private TopLevel _GetRoot(Visual source)
+    {
+        return (TopLevel)source.GetVisualRoot();
     }
 }
