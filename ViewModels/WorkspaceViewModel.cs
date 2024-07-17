@@ -65,15 +65,6 @@ public partial class WorkspaceViewModel : ObservableObject
             _enteredNode = null;
         });
 
-        WeakReferenceMessenger.Default.Register<MoveNodeMessage>(this, (sender, message) =>
-        {
-            var dataContext = message.Value.Context;
-            if (Nodes.Contains(dataContext))
-            {
-                ((NodeViewModel)dataContext).Position = message.Value.Position;
-            }
-        });
-
         WeakReferenceMessenger.Default.Register<DeleteNodeMessage>(this, (sender, message) =>
         {
             var node = message.Value;

@@ -27,6 +27,7 @@ public abstract class NodeUserControl : UserControl
         if (DataContext != null)
         {
             var position = ((NodeViewModelBase)DataContext).Position;
+            _transform = new TranslateTransform(position.X, position.Y);
             RenderTransform = new TranslateTransform(position.X, position.Y);
         }
     }
@@ -34,8 +35,7 @@ public abstract class NodeUserControl : UserControl
     // Update position in viewmodel when node is moved
     protected void OnTransform(TranslateTransform transform)
     {
-        var message = new MoveNodeHelper((NodeViewModelBase)DataContext, new Point(transform.X, transform.Y));
-        WeakReferenceMessenger.Default.Send(new MoveNodeMessage(message));
+        ((NodeViewModelBase)DataContext).Position = new Point(transform.X, transform.Y);
     }
 
     // On selecting node edge creation, tell workspace this node has been selected
