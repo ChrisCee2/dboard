@@ -114,7 +114,8 @@
 					StartPoint="{Binding SelectedEdgeNodePosition}"
 					EndPoint="{Binding CursorPosition}"
 					Stroke="Red"
-					StrokeThickness="{Binding EdgeVisualThickness}"/>
+					StrokeThickness="{Binding EdgeVisualThickness}"
+					IsHitTestVisible="False"/>
 			</Canvas>
 		</Panel>
 		
