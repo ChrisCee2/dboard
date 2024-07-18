@@ -9,7 +9,7 @@
 	mc:Ignorable="d"
 	x:Class="mystery_app.Views.SettingsView"
 	x:DataType="vm:SettingsViewModel"
-	Background="{Binding CurrentBackgroundColor, Converter={StaticResource ColorConverter}}">
+	Background="{Binding CurrentBackgroundColor, Converter={StaticResource ColorToBrushConverter}}">
 	
 	<Design.DataContext>
 		<vm:SettingsViewModel />
