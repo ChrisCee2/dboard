@@ -28,8 +28,7 @@ public partial class WorkspaceView : UserControl
 
     protected override void OnPointerMoved(PointerEventArgs e)
     {
-        var currentPosition = e.GetPosition(this);
-        ((WorkspaceViewModel)DataContext).CursorPosition = currentPosition;
+        ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
         base.OnPointerMoved(e);
     }
 

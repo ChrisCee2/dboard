@@ -4,7 +4,5 @@ using mystery_app.ViewModels;
 namespace mystery_app.Messages;
 public class DeleteNodeMessage : ValueChangedMessage<NodeViewModelBase>
 {
-    public DeleteNodeMessage(NodeViewModelBase value) : base(value)
-    { 
-    }
+    public DeleteNodeMessage(NodeViewModelBase value) : base(value) { }
 }

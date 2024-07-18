@@ -3,7 +3,5 @@
 namespace mystery_app.Messages;
 public class ChangeBackgroundColorMessage : ValueChangedMessage<string>
 {
-    public ChangeBackgroundColorMessage(string value) : base(value)
-    { 
-    }
+    public ChangeBackgroundColorMessage(string value) : base(value) { }
 }
