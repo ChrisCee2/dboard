@@ -14,10 +14,8 @@ public partial class WorkspaceViewModel : ObservableObject
 {
     public ObservableCollection<NodeViewModelBase> Nodes { get; set; }
     public EdgeCollection Edges { get; set; }
-    private NodeViewModelBase? _selectedNode;
-    private NodeViewModelBase? _enteredNode;
     [ObservableProperty]
-    private Point _selectedEdgeNodePosition;
+    private NodeViewModelBase? _selectedNode;
     [ObservableProperty]
     private Point _cursorPosition;
     [ObservableProperty]
@@ -33,37 +31,35 @@ public partial class WorkspaceViewModel : ObservableObject
 
         WeakReferenceMessenger.Default.Register<CreateNodeMessage>(this, (sender, message) =>
         {
-            CreateNode();
+            Nodes.Add(new NodeViewModel());
         });
         
         WeakReferenceMessenger.Default.Register<SelectNodeEdgeMessage>(this, (sender, message) =>
         {
             if (Nodes.Contains(message.Value))
             {
-                _selectedNode = message.Value;
+                SelectedNode = message.Value;
             }
         });
         
         WeakReferenceMessenger.Default.Register<ReleaseNodeEdgeMessage>(this, (sender, message) =>
         {
-            _enteredNode = message.Value;
+            var enteredNode = message.Value;
 
-            if (Nodes.Contains(_enteredNode) 
-                && Nodes.Contains(_selectedNode) 
-                && _selectedNode != null 
-                && _enteredNode != null 
-                && !Object.Equals(_enteredNode, _selectedNode)
-                && !Edges.ContainsEdge(_selectedNode, _enteredNode))
+            if (Nodes.Contains(enteredNode) 
+                && Nodes.Contains(SelectedNode)
+                && !Object.Equals(enteredNode, SelectedNode)
+                && !Edges.ContainsEdge(SelectedNode, enteredNode))
             {
-                Edges.Add(new Edge(_selectedNode, _enteredNode, "asdf"));
+                Edges.Add(new Edge(SelectedNode, enteredNode, ""));
             }
-            _selectedNode = null;
-            _enteredNode = null;
+            SelectedNode = null;
         });
 
         WeakReferenceMessenger.Default.Register<DeleteNodeMessage>(this, (sender, message) =>
         {
             var node = message.Value;
+
             // Remove node
             Nodes.Remove(node);
 
@@ -78,10 +74,5 @@ public partial class WorkspaceViewModel : ObservableObject
             }
             Edges.RemoveMany(edgesToRemove);
         });
-    }
-
-    private void CreateNode()
-    {
-        Nodes.Add(new NodeViewModel());
     }
 }

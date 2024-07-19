@@ -111,7 +111,7 @@
 			</ItemsControl>
 			<Canvas>
 				<Line
-					StartPoint="{Binding SelectedEdgeNodePosition}"
+					StartPoint="{Binding SelectedNode.Position}"
 					EndPoint="{Binding CursorPosition}"
 					Stroke="Red"
 					StrokeThickness="{Binding EdgeVisualThickness}"
