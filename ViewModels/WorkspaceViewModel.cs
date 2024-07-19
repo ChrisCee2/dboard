@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Avalonia;
-using Avalonia.Logging;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using DynamicData;
@@ -19,21 +17,19 @@ public partial class WorkspaceViewModel : ObservableObject
     private NodeViewModelBase? _selectedNode;
     private NodeViewModelBase? _enteredNode;
     [ObservableProperty]
-    private IBrush _backgroundColor;
-    BrushConverter _colorConverter;
-    [ObservableProperty]
     private Point _selectedEdgeNodePosition;
     [ObservableProperty]
     private Point _cursorPosition;
     [ObservableProperty]
     private int _edgeVisualThickness;
+    [ObservableProperty]
+    private SharedSettingsViewModel _sharedSettings;
 
-    public WorkspaceViewModel(string backgroundColor)
+    public WorkspaceViewModel(SharedSettingsViewModel sharedSettings)
     {
         Nodes = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
         Edges = new EdgeCollection();
-        _colorConverter = new BrushConverter();
-        BackgroundColor = HexToBrush(backgroundColor);
+        _sharedSettings = sharedSettings;
 
         WeakReferenceMessenger.Default.Register<CreateNodeMessage>(this, (sender, message) =>
         {
@@ -82,20 +78,10 @@ public partial class WorkspaceViewModel : ObservableObject
             }
             Edges.RemoveMany(edgesToRemove);
         });
-
-        WeakReferenceMessenger.Default.Register<ChangeBackgroundColorMessage>(this, (sender, message) =>
-        {
-            BackgroundColor = HexToBrush(message.Value);
-        });
     }
 
     private void CreateNode()
     {
         Nodes.Add(new NodeViewModel());
-    }
-
-    private IBrush HexToBrush(string hex)
-    {
-        return (IBrush)_colorConverter.ConvertFrom(hex);
     }
 }

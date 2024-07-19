@@ -11,7 +11,7 @@
     x:Class="mystery_app.Views.WorkspaceView"
     x:DataType="vm:WorkspaceViewModel"
 	Focusable="True"
-	Background="{Binding BackgroundColor}">
+	Background="{Binding SharedSettings.BackgroundColor, Converter={StaticResource ColorToBrushConverter}}">
 
 	<UserControl.Resources>
 		<converters:EdgeMidPointConverter x:Key="EdgeMidPointConverter"/>

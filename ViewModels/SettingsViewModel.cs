@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Avalonia.Media;
+﻿using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -10,17 +9,11 @@ namespace mystery_app.ViewModels;
 public partial class SettingsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string _currentTheme;
-    [ObservableProperty]
-    private Color _currentBackgroundColor;
-    private System.Drawing.ColorConverter _colorConverter;
+    private SharedSettingsViewModel _sharedSettings;
 
-    public SettingsViewModel(string currentTheme, string backgroundColor)
+    public SettingsViewModel(SharedSettingsViewModel sharedSettings)
     {
-        _colorConverter = new System.Drawing.ColorConverter();
-        CurrentTheme = currentTheme;
-        System.Drawing.Color tempColor = (System.Drawing.Color)_colorConverter.ConvertFromString(backgroundColor);
-        CurrentBackgroundColor = new Color(tempColor.A, tempColor.R, tempColor.G, tempColor.B);
+        _sharedSettings = sharedSettings;
     }
 
     [RelayCommand]
@@ -32,15 +25,12 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private void ChangeTheme(string theme)
     {
-        CurrentTheme = theme;
-        WeakReferenceMessenger.Default.Send(new ChangeThemeMessage(CurrentTheme));
+        SharedSettings.Theme = theme;
     }
 
     [RelayCommand]
     private void ChangeColor(Color color)
     {
-        CurrentBackgroundColor = color;
-        var hexString = _colorConverter.ConvertToString(CurrentBackgroundColor);
-        WeakReferenceMessenger.Default.Send(new ChangeBackgroundColorMessage(hexString));
+        SharedSettings.BackgroundColor = color;
     }
 }

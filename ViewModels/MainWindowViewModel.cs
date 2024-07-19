@@ -14,27 +14,19 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private ObservableObject _currentPage;
     [ObservableProperty]
-    private string _currentTheme;
+    private SharedSettingsViewModel _sharedSettings = new SharedSettingsViewModel();
 
     public MainWindowViewModel()
     {
-        // Initialize current theme
-        _currentTheme = Constants.Settings.DEFAULT_THEME;
-
         // Initialize available pages
         Pages = new Dictionary<string, ObservableObject>();
-        Pages.Add(Constants.Pages.SETTINGS, new SettingsViewModel(_currentTheme, Constants.Settings.DEFAULT_BACKGROUND_COLOR));
-        Pages.Add(Constants.Pages.MAIN_CONTENT, new MainContentViewModel(Constants.Settings.DEFAULT_BACKGROUND_COLOR));
+        Pages.Add(Constants.Pages.SETTINGS, new SettingsViewModel(_sharedSettings));
+        Pages.Add(Constants.Pages.MAIN_CONTENT, new MainContentViewModel(_sharedSettings));
         _currentPage = Pages[Constants.Pages.MAIN_CONTENT];
 
         WeakReferenceMessenger.Default.Register<ChangePageMessage>(this, (sender, message) =>
         {
             Navigate(message.Value);
-        });
-
-        WeakReferenceMessenger.Default.Register<ChangeThemeMessage>(this, (sender, message) =>
-        {
-            CurrentTheme = message.Value;
         });
     }
 
