@@ -9,7 +9,7 @@
 	mc:Ignorable="d"
 	x:Class="mystery_app.Views.SettingsView"
 	x:DataType="vm:SettingsViewModel"
-	Background="{Binding CurrentBackgroundColor, Converter={StaticResource ColorConverter}}">
+	Background="{Binding SharedSettings.BackgroundColor, Converter={StaticResource ColorToBrushConverter}}">
 	
 	<Design.DataContext>
 		<vm:SettingsViewModel />
@@ -31,7 +31,7 @@
 					<ComboBox 
 						ItemsSource="{Binding Source={x:Static constants:Settings.THEMES}}"
 						SelectionChanged="ChangeThemeOnSelection"
-						SelectedItem="{Binding CurrentTheme}">
+						SelectedItem="{Binding SharedSettings.Theme}">
 						<ComboBox.ItemTemplate>
 							<DataTemplate x:CompileBindings="False">
 								<TextBlock Text="{Binding}"/>
@@ -43,7 +43,7 @@
 					<TextBlock Text="Change Background"/>
 					<ColorPicker 
 						HorizontalAlignment="Left" 
-						Color="{Binding CurrentBackgroundColor}"
+						Color="{Binding SharedSettings.BackgroundColor}"
 						ColorChanged="ChangeColorOnSelection"/>
 				</StackPanel>
 			</StackPanel>

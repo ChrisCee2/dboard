@@ -8,15 +8,14 @@ public class EdgeCollection : ObservableCollection<Edge>
 {
     public bool ContainsEdge(NodeViewModelBase fromNode, NodeViewModelBase toNode)
     {
-        var containsEdge = false;
         foreach (Edge edge in this)
         {
             if (edge.FromNode == fromNode && edge.ToNode == toNode)
             {
-                containsEdge = true;
+                return true;
             }
         }
 
-        return containsEdge;
+        return false;
     }
 }

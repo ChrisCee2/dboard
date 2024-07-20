@@ -1,17 +1,16 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:mystery_app.ViewModels"
-		xmlns:views="clr-namespace:mystery_app.Views"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="mystery_app.Views.MainContentView"
-        x:DataType="vm:MainContentViewModel">
+<UserControl 
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="using:mystery_app.ViewModels"
+	xmlns:views="clr-namespace:mystery_app.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Class="mystery_app.Views.MainContentView"
+    x:DataType="vm:MainContentViewModel">
 
     <Design.DataContext>
         <vm:MainContentViewModel/>
     </Design.DataContext>
-
 
 	<DockPanel>
 		<Menu DockPanel.Dock = "Top">
@@ -23,8 +22,7 @@
 			<MenuItem Header = "Actions">
 				<MenuItem Header = "Create Node" Command="{Binding CreateNodeCommand}"/>
 			</MenuItem>
-			<MenuItem Header = "Settings" HorizontalAlignment="Right" Command="{Binding GoToSettingsCommand}">
-			</MenuItem>
+			<MenuItem Header = "Settings" HorizontalAlignment="Right" Command="{Binding GoToSettingsCommand}"/>
 		</Menu>
 		<views:WorkspaceView DataContext="{Binding Workspace}"/>
 	</DockPanel>

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Controls.Converters;
-using mystery_app.ViewModels;
-
-namespace mystery_app.Models;
+﻿namespace mystery_app.Models;
 
 
 public class NodeModel

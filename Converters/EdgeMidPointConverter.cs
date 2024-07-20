@@ -25,7 +25,7 @@ public class EdgeMidPointConverter : IMultiValueConverter
                 return midPoint.Y;
             }
         }
-        // converter used for the wrong type
+
         return new BindingNotification(new InvalidCastException(), BindingErrorType.Error);
     }
 
