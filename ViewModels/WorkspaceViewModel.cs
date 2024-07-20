@@ -38,10 +38,11 @@ public partial class WorkspaceViewModel : ObservableObject
         {
             if (Nodes.Contains(message.Value))
             {
+                EdgeVisualThickness = Constants.Node.EDGE_THICKNESS;
                 SelectedNode = message.Value;
             }
         });
-        
+
         WeakReferenceMessenger.Default.Register<ReleaseNodeEdgeMessage>(this, (sender, message) =>
         {
             var enteredNode = message.Value;

@@ -1,8 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using CommunityToolkit.Mvvm.Messaging;
-using mystery_app.Messages;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
@@ -12,11 +10,6 @@ public partial class WorkspaceView : UserControl
     public WorkspaceView()
     {
         InitializeComponent();
-        
-        WeakReferenceMessenger.Default.Register<SelectNodeEdgeMessage>(this, (sender, message) =>
-        {
-            ((WorkspaceViewModel)DataContext).EdgeVisualThickness = Constants.Node.EDGE_THICKNESS;
-        });
     }
 
     protected override void OnPointerReleased(PointerReleasedEventArgs e)
@@ -31,7 +24,7 @@ public partial class WorkspaceView : UserControl
         base.OnPointerMoved(e);
     }
 
-    public void ToggleNotes(object sender, RoutedEventArgs args)
+    protected void ToggleNotes(object sender, RoutedEventArgs args)
     {
         NotesSplitView.IsPaneOpen = !NotesSplitView.IsPaneOpen;
     }

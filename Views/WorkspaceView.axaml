@@ -3,19 +3,13 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="using:mystery_app.ViewModels"
 	xmlns:views="clr-namespace:mystery_app.Views"
-	xmlns:converters="clr-namespace:mystery_app.Converters"
 	xmlns:constants ="clr-namespace:mystery_app.Constants"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
     x:Class="mystery_app.Views.WorkspaceView"
     x:DataType="vm:WorkspaceViewModel"
 	Focusable="True"
 	Background="{Binding SharedSettings.BackgroundColor, Converter={StaticResource ColorToBrushConverter}}">
-
-	<UserControl.Resources>
-		<converters:EdgeMidPointConverter x:Key="EdgeMidPointConverter"/>
-	</UserControl.Resources>
 
 	<UserControl.Styles>
 		<Style Selector="Button">
@@ -29,7 +23,6 @@
 		</Style>
 	</UserControl.Styles>
 
-
 	<Design.DataContext>
         <vm:WorkspaceViewModel />
     </Design.DataContext>
@@ -39,6 +32,7 @@
 		PanePlacement="Right"
 		DisplayMode="Overlay"
 		OpenPaneLength="200">
+		
 		<SplitView.Pane>
 			<DockPanel>
 				<DockPanel DockPanel.Dock="Top">
@@ -50,9 +44,7 @@
 					</Button>
 					<TextBlock VerticalAlignment="Center">Notes</TextBlock>
 				</DockPanel>
-				<TextBox
-					Margin="5"
-					Watermark="Record your notes here!"/>
+				<TextBox Margin="5" Watermark="Record your notes here!"/>
 			</DockPanel>
 		</SplitView.Pane>
 		
@@ -63,26 +55,32 @@
 				Margin="5"
 				ZIndex="1"
 				Click="ToggleNotes">
-					Notes
+				Notes
 			</Button>
+
+			<!--Nodes-->
 			<ItemsControl ItemsSource="{Binding Nodes}">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
 						<Canvas/>
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
+				
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<views:NodeView DataContext="{Binding}"/>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
+
+			<!--Edges-->
 			<ItemsControl ItemsSource="{Binding Edges}">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
 						<Canvas/>
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
+				
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<Canvas>
@@ -101,14 +99,16 @@
 								</Canvas.Top>
 							</TextBox>
 							<Line
-							StartPoint="{Binding FromNode.Position}"
-							EndPoint="{Binding ToNode.Position}"
-							Stroke="Red"
-							StrokeThickness="{Binding Source={x:Static constants:Node.EDGE_THICKNESS}}"/>
+								StartPoint="{Binding FromNode.Position}"
+								EndPoint="{Binding ToNode.Position}"
+								Stroke="Red"
+								StrokeThickness="{Binding Source={x:Static constants:Node.EDGE_THICKNESS}}"/>
 						</Canvas>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
+
+			<!--Edge for edge creation-->
 			<Canvas>
 				<Line
 					StartPoint="{Binding SelectedNode.Position}"
@@ -118,6 +118,5 @@
 					IsHitTestVisible="False"/>
 			</Canvas>
 		</Panel>
-		
 	</SplitView>
 </UserControl>

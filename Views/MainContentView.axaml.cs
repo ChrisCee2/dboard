@@ -1,7 +1,4 @@
 using Avalonia.Controls;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using mystery_app.Messages;
 
 namespace mystery_app.Views;
 
