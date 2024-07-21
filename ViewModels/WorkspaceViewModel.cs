@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DynamicData;
 using mystery_app.Messages;
@@ -75,5 +76,11 @@ public partial class WorkspaceViewModel : ObservableObject
             }
             Edges.RemoveMany(edgesToRemove);
         });
+    }
+
+    [RelayCommand]
+    private void CreateNode()
+    {
+        WeakReferenceMessenger.Default.Send(new CreateNodeMessage(""));
     }
 }
