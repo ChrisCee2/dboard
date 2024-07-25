@@ -23,6 +23,12 @@ public partial class SettingsViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void ToggleNotes()
+    {
+        SharedSettings.ShowNotes = !SharedSettings.ShowNotes;
+    }
+
+    [RelayCommand]
     private void ChangeTheme(string theme)
     {
         SharedSettings.Theme = theme;
