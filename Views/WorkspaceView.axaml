@@ -89,27 +89,7 @@
 				
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<Canvas>
-							<TextBox Text="{Binding Description}">
-								<Canvas.Left>
-									<MultiBinding Converter="{StaticResource EdgeMidPointConverter}" ConverterParameter="X">
-										<Binding Path="FromNode.Position"/>
-										<Binding Path="ToNode.Position"/>
-									</MultiBinding>
-								</Canvas.Left>
-								<Canvas.Top>
-									<MultiBinding Converter="{StaticResource EdgeMidPointConverter}" ConverterParameter="Y">
-										<Binding Path="FromNode.Position"/>
-										<Binding Path="ToNode.Position"/>
-									</MultiBinding>
-								</Canvas.Top>
-							</TextBox>
-							<Line
-								StartPoint="{Binding FromNode.Position}"
-								EndPoint="{Binding ToNode.Position}"
-								Stroke="Red"
-								StrokeThickness="{Binding Source={x:Static constants:Node.EDGE_THICKNESS}}"/>
-						</Canvas>
+						<views:EdgeView DataContext="{Binding}"/>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
