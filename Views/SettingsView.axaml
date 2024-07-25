@@ -17,6 +17,12 @@
 
 	<UserControl.Styles>
 		<StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+		<Style Selector="ToggleButton:checked Panel">
+			<Setter Property="Background" Value="Green"/>
+		</Style>
+		<Style Selector="ToggleButton Panel">
+			<Setter Property="Background" Value="Red"/>
+		</Style>
 	</UserControl.Styles>
 
 	<Border Margin="30" Padding="10" Background="Gray">
@@ -25,7 +31,7 @@
 				<Button Command="{Binding GoToMainContentCommand}">Back</Button>
 				<TextBlock DockPanel.Dock="Top" Text="Settings"/>
 			</DockPanel>
-			<StackPanel>
+			<StackPanel DockPanel.Dock="Top">
 				<StackPanel>
 					<TextBlock Text="Change Theme"/>
 					<ComboBox 
@@ -46,6 +52,15 @@
 						Color="{Binding SharedSettings.BackgroundColor}"
 						ColorChanged="ChangeColorOnSelection"/>
 				</StackPanel>
+			</StackPanel>
+			<StackPanel DockPanel.Dock="Top">
+				<TextBlock Text="Show Notes"/>
+				<ToggleButton
+				DockPanel.Dock="Top"
+				Padding="2"
+				IsChecked="{Binding SharedSettings.ShowNotes}">
+					<Panel Height="10" Width="20"/>
+				</ToggleButton>
 			</StackPanel>
 		</DockPanel>
 	</Border>
