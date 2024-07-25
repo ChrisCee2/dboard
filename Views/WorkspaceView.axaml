@@ -9,7 +9,8 @@
     x:Class="mystery_app.Views.WorkspaceView"
     x:DataType="vm:WorkspaceViewModel"
 	Focusable="True"
-	Background="{Binding SharedSettings.BackgroundColor, Converter={StaticResource ColorToBrushConverter}}">
+	Background="{Binding SharedSettings.ModeModel.Background, Converter={StaticResource ColorToBrushConverter}}"
+	Opacity="{Binding SharedSettings.ModeModel.WorkspaceOpacity}">
 
 	<UserControl.ContextMenu>
 		<ContextMenu>

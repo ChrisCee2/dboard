@@ -8,9 +8,12 @@ namespace mystery_app.ViewModels;
 public partial class MainContentViewModel : ObservableObject
 {
     public WorkspaceViewModel Workspace { get; set; }
+    [ObservableProperty]
+    private SharedSettingsViewModel _sharedSettings;
 
     public MainContentViewModel(SharedSettingsViewModel sharedSettings)
     {
+        _sharedSettings = sharedSettings;
         Workspace = new WorkspaceViewModel(sharedSettings);
     }
 

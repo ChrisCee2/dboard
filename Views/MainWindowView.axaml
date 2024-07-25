@@ -9,9 +9,10 @@
     x:DataType="vm:MainWindowViewModel"
     Icon="/Assets/avalonia-logo.ico"
     Title="mystery_app"
-	RequestedThemeVariant="{Binding SharedSettings.Theme}">
+	RequestedThemeVariant="{Binding SharedSettings.Theme}"
+	Background="{Binding SharedSettings.ModeModel.Background, Converter={StaticResource ColorToBrushConverter}}">
 
-    <Design.DataContext>
+	<Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
