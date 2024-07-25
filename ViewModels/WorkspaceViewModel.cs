@@ -14,9 +14,9 @@ namespace mystery_app.ViewModels;
 public partial class WorkspaceViewModel : ObservableObject
 {
     public ObservableCollection<NodeViewModelBase> Nodes { get; set; } = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
-    public EdgeCollection Edges { get; set; } = new EdgeCollection();
+    public EdgeCollectionModel Edges { get; set; } = new EdgeCollectionModel();
     [ObservableProperty]
-    private NodeViewModelBase? _selectedNode = Node.NULL_NODEVIEWMODEL;
+    private NodeViewModelBase? _selectedNode = NodeConstants.NULL_NODEVIEWMODEL;
     [ObservableProperty]
     private Point _cursorPosition;
     [ObservableProperty]
@@ -53,7 +53,7 @@ public partial class WorkspaceViewModel : ObservableObject
             {
                 Edges.Add(new EdgeViewModel(SelectedNode, enteredNode));
             }
-            SelectedNode = Node.NULL_NODEVIEWMODEL;
+            SelectedNode = NodeConstants.NULL_NODEVIEWMODEL;
         });
 
         WeakReferenceMessenger.Default.Register<DeleteNodeMessage>(this, (sender, message) =>

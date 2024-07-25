@@ -23,6 +23,6 @@ public partial class MainContentViewModel : ObservableObject
     [RelayCommand]
     private void GoToSettings()
     {
-        WeakReferenceMessenger.Default.Send(new ChangePageMessage(Constants.Pages.SETTINGS));
+        WeakReferenceMessenger.Default.Send(new ChangePageMessage(Constants.PagesConstants.SETTINGS));
     }
 }

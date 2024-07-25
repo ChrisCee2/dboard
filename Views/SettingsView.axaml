@@ -29,7 +29,7 @@
 				<StackPanel>
 					<TextBlock Text="Change Theme"/>
 					<ComboBox 
-						ItemsSource="{Binding Source={x:Static constants:Settings.THEMES}}"
+						ItemsSource="{Binding Source={x:Static constants:SettingsConstants.THEMES}}"
 						SelectionChanged="ChangeThemeOnSelection"
 						SelectedItem="{Binding SharedSettings.Theme}">
 						<ComboBox.ItemTemplate>

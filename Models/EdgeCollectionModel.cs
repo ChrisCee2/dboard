@@ -4,7 +4,7 @@ using mystery_app.ViewModels;
 namespace mystery_app.Models;
 
 
-public class EdgeCollection : ObservableCollection<EdgeViewModel>
+public class EdgeCollectionModel : ObservableCollection<EdgeViewModel>
 {
     public bool ContainsEdge(NodeViewModelBase fromNode, NodeViewModelBase toNode)
     {

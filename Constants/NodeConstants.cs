@@ -3,7 +3,7 @@ using mystery_app.ViewModels;
 
 namespace mystery_app.Constants;
 
-public static class Node
+public static class NodeConstants
 {
     public static int MIN_WIDTH => 100;
     public static int MIN_HEIGHT => 100;
