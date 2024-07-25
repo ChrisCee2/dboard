@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DynamicData;
+using mystery_app.Constants;
 using mystery_app.Messages;
 using mystery_app.Models;
 
@@ -13,10 +13,10 @@ namespace mystery_app.ViewModels;
 
 public partial class WorkspaceViewModel : ObservableObject
 {
-    public ObservableCollection<NodeViewModelBase> Nodes { get; set; }
-    public EdgeCollection Edges { get; set; }
+    public ObservableCollection<NodeViewModelBase> Nodes { get; set; } = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
+    public EdgeCollectionModel Edges { get; set; } = new EdgeCollectionModel();
     [ObservableProperty]
-    private NodeViewModelBase? _selectedNode;
+    private NodeViewModelBase? _selectedNode = NodeConstants.NULL_NODEVIEWMODEL;
     [ObservableProperty]
     private Point _cursorPosition;
     [ObservableProperty]
@@ -26,8 +26,6 @@ public partial class WorkspaceViewModel : ObservableObject
 
     public WorkspaceViewModel(SharedSettingsViewModel sharedSettings)
     {
-        Nodes = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
-        Edges = new EdgeCollection();
         _sharedSettings = sharedSettings;
 
         WeakReferenceMessenger.Default.Register<CreateNodeMessage>(this, (sender, message) =>
@@ -39,7 +37,7 @@ public partial class WorkspaceViewModel : ObservableObject
         {
             if (Nodes.Contains(message.Value))
             {
-                EdgeVisualThickness = Constants.Node.EDGE_THICKNESS;
+                EdgeVisualThickness = EdgeConstants.THICKNESS;
                 SelectedNode = message.Value;
             }
         });
@@ -50,12 +48,12 @@ public partial class WorkspaceViewModel : ObservableObject
 
             if (Nodes.Contains(enteredNode) 
                 && Nodes.Contains(SelectedNode)
-                && !Object.Equals(enteredNode, SelectedNode)
+                && !Equals(enteredNode, SelectedNode)
                 && !Edges.ContainsEdge(SelectedNode, enteredNode))
             {
-                Edges.Add(new Edge(SelectedNode, enteredNode, ""));
+                Edges.Add(new EdgeViewModel(SelectedNode, enteredNode));
             }
-            SelectedNode = null;
+            SelectedNode = NodeConstants.NULL_NODEVIEWMODEL;
         });
 
         WeakReferenceMessenger.Default.Register<DeleteNodeMessage>(this, (sender, message) =>
@@ -66,12 +64,12 @@ public partial class WorkspaceViewModel : ObservableObject
             Nodes.Remove(node);
 
             // Remove edges
-            var edgesToRemove = new Collection<Edge>();
-            foreach (Edge edge in Edges)
+            var edgesToRemove = new Collection<EdgeViewModel>();
+            foreach (EdgeViewModel edgeViewModel in Edges)
             {
-                if (edge.FromNode == node || edge.ToNode == node)
+                if (edgeViewModel.Edge.FromNode == node || edgeViewModel.Edge.ToNode == node)
                 {
-                    edgesToRemove.Add(edge);
+                    edgesToRemove.Add(edgeViewModel);
                 }
             }
             Edges.RemoveMany(edgesToRemove);

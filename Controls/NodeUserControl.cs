@@ -43,7 +43,7 @@ public abstract class NodeUserControl : UserControl
         var root = _GetRoot((Visual)args.Source);
         var rootCoordinates = args.GetPosition(root);
         var hitElement = root.InputHitTest(rootCoordinates);
-        if (hitElement is Control control && control.Tag == Constants.Node.EDGE_BUTTON_TAG)
+        if (hitElement is Control control && control.Tag == Constants.NodeConstants.EDGE_BUTTON_TAG)
         {
             WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage((NodeViewModelBase)control.DataContext));
         }
@@ -76,7 +76,7 @@ public abstract class NodeUserControl : UserControl
         if (!args.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed) { return; }
 
         // If the pressed element does not have a nonmovable tag, start moving
-        if (args.Source is Control control && !Constants.Node.NONMOVABLE_TAGS.Contains((string)control.Tag))
+        if (args.Source is Control control && !Constants.NodeConstants.NONMOVABLE_TAGS.Contains((string)control.Tag))
         {
             _isMoving = true;
             var pos = args.GetPosition((Visual?)Parent);

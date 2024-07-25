@@ -1,20 +1,25 @@
-﻿using mystery_app.ViewModels;
+﻿using Avalonia.Media;
+using mystery_app.ViewModels;
 
 namespace mystery_app.Models;
 
-
-public class Edge
+public class EdgeModel
 {
-    public Edge(NodeViewModelBase fromNode, NodeViewModelBase toNode, string description="")
+    public EdgeModel(NodeViewModelBase fromNode, NodeViewModelBase toNode, string description, double thickness, Color color)
     {
         FromNode = fromNode;
         ToNode = toNode;
         Description = description;
+        Thickness = thickness;
+        Color = color;
     }
+
 
     private NodeViewModelBase _fromNode;
     private NodeViewModelBase _toNode;
     private string _description;
+    private double _thickness;
+    private Color _color;
 
     public NodeViewModelBase FromNode
     {
@@ -30,5 +35,15 @@ public class Edge
     {
         get { return _description; }
         set { _description = value; }
+    }
+    public double Thickness
+    {
+        get { return _thickness; }
+        set { _thickness = value; }
+    }
+    public Color Color
+    {
+        get { return _color; }
+        set { _color = value; }
     }
 }

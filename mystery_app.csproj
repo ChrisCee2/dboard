@@ -28,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaXaml Update="Views\EdgeView.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
     <AvaloniaXaml Update="Views\SettingsView.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
@@ -42,6 +45,10 @@
     </Compile>
     <Compile Update="Views\MainWindowView.axaml.cs">
       <DependentUpon>MainWindowView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\EdgeView.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>EdgeView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\SettingsView.axaml.cs">
       <SubType>Code</SubType>

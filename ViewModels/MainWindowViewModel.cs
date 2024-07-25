@@ -16,9 +16,9 @@ public partial class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         // Initialize available pages
-        Pages.Add(Constants.Pages.SETTINGS, new SettingsViewModel(_sharedSettings));
-        Pages.Add(Constants.Pages.MAIN_CONTENT, new MainContentViewModel(_sharedSettings));
-        _currentPage = Pages[Constants.Pages.MAIN_CONTENT];
+        Pages.Add(Constants.PagesConstants.SETTINGS, new SettingsViewModel(_sharedSettings));
+        Pages.Add(Constants.PagesConstants.MAIN_CONTENT, new MainContentViewModel(_sharedSettings));
+        _currentPage = Pages[Constants.PagesConstants.MAIN_CONTENT];
 
         WeakReferenceMessenger.Default.Register<ChangePageMessage>(this, (sender, message) =>
         {

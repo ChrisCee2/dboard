@@ -1,0 +1,34 @@
+<Canvas
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="clr-namespace:mystery_app.ViewModels"
+	xmlns:constants ="clr-namespace:mystery_app.Constants"
+	x:Class="mystery_app.Views.EdgeView"
+	x:DataType="vm:EdgeViewModel"
+	>
+	<Design.DataContext>
+		<vm:EdgeViewModel />
+	</Design.DataContext>
+
+	<TextBox Text="{Binding Edge.Description}">
+		<Canvas.Left>
+			<MultiBinding Converter="{StaticResource EdgeMidPointConverter}" ConverterParameter="X">
+				<Binding Path="Edge.FromNode.Position"/>
+				<Binding Path="Edge.ToNode.Position"/>
+			</MultiBinding>
+		</Canvas.Left>
+		<Canvas.Top>
+			<MultiBinding Converter="{StaticResource EdgeMidPointConverter}" ConverterParameter="Y">
+				<Binding Path="Edge.FromNode.Position"/>
+				<Binding Path="Edge.ToNode.Position"/>
+			</MultiBinding>
+		</Canvas.Top>
+	</TextBox>
+	<Line
+		StartPoint="{Binding Edge.FromNode.Position}"
+		EndPoint="{Binding Edge.ToNode.Position}"
+		Stroke="{Binding Edge.Color, Converter={StaticResource ColorToBrushConverter}}"
+		StrokeThickness="{Binding Edge.Thickness}"/>
+</Canvas>
