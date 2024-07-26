@@ -16,11 +16,11 @@ public static class SettingsConstants
 
 
     public static string DEFAULT_THEME => "Default";
-    public static ModeModel DEFAULT_MODE => new ModeModel("Default", DEFAULT_BACKGROUND_COLOR, 1, 1, "Normal");
+    public static ModeModel DEFAULT_MODE => new ModeModel("Default", DEFAULT_BACKGROUND_COLOR, true, 1, "Normal");
     public static ModeModel TRANSPARENT_MODE => new ToggleModeModel(
         "Transparent", 
         TRANSPARENT_BACKGROUND_COLOR, 
-        TRANSPARENT_ITEM_OPACITY, 
+        false, 
         TRANSPARENT_WORKSPACE_OPACITY,
         TRANSPARENT_WINDOW_STATE);
     public static Collection<string> THEMES => new Collection<string>() { "Default", "Light", "Dark" };

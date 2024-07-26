@@ -6,11 +6,11 @@ namespace mystery_app.Models;
 
 public partial class ModeModel: ObservableObject
 {
-    public ModeModel(string mode, Color background, double itemOpacity, double workspaceOpacity, string windowState)
+    public ModeModel(string mode, Color background, bool showItems, double workspaceOpacity, string windowState)
     {
         Mode = mode;
         Background = background;
-        ItemOpacity = itemOpacity;
+        ShowItems = showItems;
         WorkspaceOpacity = workspaceOpacity;
         WindowState = windowState;
     }
@@ -20,7 +20,7 @@ public partial class ModeModel: ObservableObject
     [ObservableProperty]
     private Color _background;
     [ObservableProperty]
-    private double _itemOpacity;
+    private bool _showItems;
     [ObservableProperty]
     private double _workspaceOpacity;
     [ObservableProperty]

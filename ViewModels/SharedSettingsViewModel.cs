@@ -29,14 +29,14 @@ public partial class SharedSettingsViewModel : ObservableObject
             {
                 ((ToggleModeModel)ModeModel).ToggleProperties(
                     Constants.SettingsConstants.TRANSPARENT_BACKGROUND_COLOR,
-                    Constants.SettingsConstants.TRANSPARENT_ITEM_OPACITY,
+                    false,
                     Constants.SettingsConstants.TRANSPARENT_WORKSPACE_OPACITY);
             }
             else
             {
                 ((ToggleModeModel)ModeModel).ToggleProperties(
                     UserModeModel.Background,
-                    UserModeModel.ItemOpacity,
+                    UserModeModel.ShowItems,
                     UserModeModel.WorkspaceOpacity);
             }
 
