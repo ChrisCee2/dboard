@@ -10,11 +10,18 @@
     Icon="/Assets/avalonia-logo.ico"
     Title="mystery_app"
 	RequestedThemeVariant="{Binding SharedSettings.Theme}"
-	Background="{Binding SharedSettings.ModeModel.Background, Converter={StaticResource ColorToBrushConverter}}">
+	Background="{Binding SharedSettings.ModeModel.Background, Converter={StaticResource ColorToBrushConverter}}"
+	WindowState="{Binding SharedSettings.ModeModel.WindowState}">
 
 	<Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
+
+	<Window.KeyBindings>
+		<KeyBinding Gesture="Tab" Command="{Binding SharedSettings.ToggleControlCommand}" />
+		<KeyBinding Gesture="P" Command="{Binding SharedSettings.ToggleFullScreenCommand}" />
+	</Window.KeyBindings>
+
 
 	<TransitioningContentControl Content="{Binding CurrentPage}" />
 
