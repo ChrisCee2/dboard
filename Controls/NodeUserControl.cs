@@ -18,7 +18,8 @@ public abstract class NodeUserControl : UserControl
     private TranslateTransform? _transform = new TranslateTransform(0, 0);
     // Resizing variables
     private bool _resizing;
-    private Point _lastSize;
+    private double _lastWidth;
+    private double _lastHeight;
 
     // Render position of node on loading data context
     protected override void OnDataContextEndUpdate()
@@ -59,7 +60,8 @@ public abstract class NodeUserControl : UserControl
         _resizing = true;
         var pos = args.GetPosition((Visual?)Parent);
         _positionInBlock = new Point(pos.X - (int)_transform.X, pos.Y - (int)_transform.Y);
-        _lastSize = new Point(Width, Height);
+        _lastWidth = ((NodeViewModelBase)DataContext).Width;
+        _lastHeight = ((NodeViewModelBase)DataContext).Height;
     }
 
     protected override void OnPointerPressed(PointerPressedEventArgs args)
@@ -95,8 +97,8 @@ public abstract class NodeUserControl : UserControl
             // Offset found by subtracting original cursor position on resize press from the current cursor position
             var offsetX = currentPosition.X - (_positionInBlock.X + _transform.X);
             var offsetY = currentPosition.Y - (_positionInBlock.Y + _transform.Y);
-            ((NodeViewModelBase)DataContext).Width = Math.Max(_lastSize.X + offsetX, MinWidth);
-            ((NodeViewModelBase)DataContext).Height = Math.Max(_lastSize.Y + offsetY, MinHeight);
+            ((NodeViewModelBase)DataContext).Width = Math.Max(_lastWidth + offsetX, MinWidth);
+            ((NodeViewModelBase)DataContext).Height = Math.Max(_lastHeight + offsetY, MinHeight);
         }
         else if (_isMoving)
         {

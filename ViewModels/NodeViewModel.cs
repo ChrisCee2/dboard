@@ -31,4 +31,7 @@ public partial class NodeViewModel : NodeViewModelBase
 
     [ObservableProperty]
     private Bitmap _image;
+
+    [ObservableProperty]
+    private string _notes;
 }

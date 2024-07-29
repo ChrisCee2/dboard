@@ -10,15 +10,13 @@
 	x:DataType="vm:NodeViewModel"
 	Padding="10"
 	Background="Gray"
-	Width="{Binding Width}"
-	Height="{Binding Height}"
 	MinWidth="100"
 	MinHeight="100"
 	>
 	<Design.DataContext>
 		<vm:NodeViewModel />
 	</Design.DataContext>
-
+	
 	<UserControl.ContextMenu>
 		<ContextMenu>
 			<MenuItem Header="Delete Node" Command="{Binding DeleteNodeCommand}"/>
@@ -26,20 +24,27 @@
 	</UserControl.ContextMenu>
 
 	<DockPanel Background="Black">
-			<Panel 
-				DockPanel.Dock="Top"
-				Tag="EdgeButton"
-				Background="Blue"
-				Width="10"
-				Height="10"
-				Margin="5"
-				PointerPressed="SelectNodeEdge"
-				PointerReleased="ReleaseNodeEdge"/>
-		<Grid DockPanel.Dock="Top" RowDefinitions="*,Auto,Auto">
+		<Panel 
+			DockPanel.Dock="Top"
+			Tag="EdgeButton"
+			Background="Blue"
+			Width="10"
+			Height="10"
+			Margin="5"
+			PointerPressed="SelectNodeEdge"
+			PointerReleased="ReleaseNodeEdge"/>
+		<Grid 
+			DockPanel.Dock="Top" 
+			RowDefinitions="*,Auto,Auto"
+			Width="{Binding Width}"
+			Height="{Binding Height}">
 			<Image Grid.Row="0" Source="{Binding Image}"/>
 			<TextBox Grid.Row="1" Text="{Binding Name}" DockPanel.Dock="Bottom"/>
 			<TextBox Grid.Row="2" Text="{Binding Desc}" DockPanel.Dock="Bottom"/>
 		</Grid>
+		<Expander Header="Notes" VerticalAlignment="Top">
+			<TextBox Text="{Binding Notes}"/>
+		</Expander>
 		<Panel 
 			Tag="Nonmovable"
 			DockPanel.Dock="Bottom"
