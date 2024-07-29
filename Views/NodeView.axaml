@@ -49,7 +49,6 @@
 			Width="10"
 			Height="10"
 			Margin="2"
-			PointerPressed="SelectResize"
-			PointerReleased="ReleaseResize"/>
+			PointerPressed="SelectResize"/>
 	</DockPanel>
 </controls:NodeUserControl>
