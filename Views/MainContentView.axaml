@@ -13,7 +13,7 @@
     </Design.DataContext>
 
 	<DockPanel>
-		<Menu DockPanel.Dock = "Top">
+		<Menu DockPanel.Dock = "Top" Background="Gray" IsVisible="{Binding SharedSettings.ModeModel.ShowItems}">
 			<Menu.ItemsPanel>
 				<ItemsPanelTemplate>
 					<DockPanel HorizontalAlignment="Stretch"/>

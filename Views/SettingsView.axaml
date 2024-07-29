@@ -9,7 +9,7 @@
 	mc:Ignorable="d"
 	x:Class="mystery_app.Views.SettingsView"
 	x:DataType="vm:SettingsViewModel"
-	Background="{Binding SharedSettings.BackgroundColor, Converter={StaticResource ColorToBrushConverter}}">
+	Background="{Binding SharedSettings.ModeModel.Background, Converter={StaticResource ColorToBrushConverter}}">
 	
 	<Design.DataContext>
 		<vm:SettingsViewModel />
@@ -31,7 +31,7 @@
 				<Button Command="{Binding GoToMainContentCommand}">Back</Button>
 				<TextBlock DockPanel.Dock="Top" Text="Settings"/>
 			</DockPanel>
-			<StackPanel DockPanel.Dock="Top">
+			<StackPanel>
 				<StackPanel>
 					<TextBlock Text="Change Theme"/>
 					<ComboBox 
@@ -49,18 +49,30 @@
 					<TextBlock Text="Change Background"/>
 					<ColorPicker 
 						HorizontalAlignment="Left" 
-						Color="{Binding SharedSettings.BackgroundColor}"
+						Color="{Binding SharedSettings.UserModeModel.Background}"
 						ColorChanged="ChangeColorOnSelection"/>
 				</StackPanel>
-			</StackPanel>
-			<StackPanel DockPanel.Dock="Top">
-				<TextBlock Text="Show Notes"/>
-				<ToggleButton
-				DockPanel.Dock="Top"
-				Padding="2"
-				IsChecked="{Binding SharedSettings.ShowNotes}">
-					<Panel Height="10" Width="20"/>
-				</ToggleButton>
+				<StackPanel>
+					<TextBlock Text="Show Notes"/>
+					<ToggleButton
+						Padding="2"
+						IsChecked="{Binding SharedSettings.ShowNotes}">
+						<Panel Height="10" Width="20"/>
+					</ToggleButton>
+				</StackPanel>
+				<StackPanel>
+					<TextBlock Text="Mode"/>
+					<ComboBox
+						ItemsSource="{Binding Modes}"
+						SelectionChanged="ChangeModeOnSelection"
+						SelectedItem="{Binding SharedSettings.ModeModel}">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding Mode}"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+				</StackPanel>
 			</StackPanel>
 		</DockPanel>
 	</Border>
