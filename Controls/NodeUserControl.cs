@@ -6,6 +6,8 @@ using Avalonia.VisualTree;
 using mystery_app.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Messages;
+using System;
+using Avalonia.Logging;
 
 namespace mystery_app.Controls;
 
@@ -17,7 +19,7 @@ public abstract class NodeUserControl : UserControl
     private TranslateTransform? _transform = new TranslateTransform(0, 0);
     // Resizing variables
     private bool _resizing;
-    private Point _lastPressedPoint;
+    private Point _lastSize;
 
     // Render position of node on loading data context
     protected override void OnDataContextEndUpdate()
@@ -40,7 +42,7 @@ public abstract class NodeUserControl : UserControl
     // On releasing node edge creation, find node released on and send to workspace
     protected void ReleaseNodeEdge(object sender, PointerReleasedEventArgs args)
     {
-        var root = _GetRoot((Visual)args.Source);
+        var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
         var rootCoordinates = args.GetPosition(root);
         var hitElement = root.InputHitTest(rootCoordinates);
         if (hitElement is Control control && control.Tag == Constants.NodeConstants.EDGE_BUTTON_TAG)
@@ -52,22 +54,15 @@ public abstract class NodeUserControl : UserControl
     // On selecting resize button, get current cursor position
     protected void SelectResize(object sender, PointerPressedEventArgs args)
     {
-        _resizing = true;
-        var root = _GetRoot((Visual)args.Source);
-        _lastPressedPoint = args.GetPosition(root);
-    }
+        // If not left click, return
+        if (!args.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed) { return; }
 
-    // On releasing resize button, get new size from difference between initial and current cursor position
-    protected void ReleaseResize(object sender, PointerReleasedEventArgs args)
-    {
-        if (_resizing)
-        {
-            _resizing = false;
-            var root = _GetRoot((Visual)args.Source);
-            var resizeSize = args.GetPosition(root) - _lastPressedPoint;
-            ((NodeViewModelBase)DataContext).Width = (Width + resizeSize.X < this.MinWidth) ? this.MinWidth : Width + resizeSize.X;
-            ((NodeViewModelBase)DataContext).Height = (Height + resizeSize.Y < this.MinHeight) ? this.MinHeight : Height + resizeSize.Y;
-        }
+        _resizing = true;
+        var pos = args.GetPosition((Visual?)Parent);
+        _positionInBlock = new Point(pos.X - (int)_transform.X, pos.Y - (int)_transform.Y);
+        _lastSize = new Point(Width, Height);
+
+        base.OnPointerPressed(args);
     }
 
     protected override void OnPointerPressed(PointerPressedEventArgs args)
@@ -89,27 +84,33 @@ public abstract class NodeUserControl : UserControl
     protected override void OnPointerReleased(PointerReleasedEventArgs e)
     {
         _isMoving = false;
+        _resizing = false;
         base.OnPointerReleased(e);
     }
 
     protected override void OnPointerMoved(PointerEventArgs e)
     {
-        if (!_isMoving || Parent == null) { return; }
-
+        if (Parent == null) { return; }
         var currentPosition = e.GetPosition((Visual?)Parent);
 
-        var offsetX = currentPosition.X - _positionInBlock.X;
-        var offsetY = currentPosition.Y - _positionInBlock.Y;
-        _transform = new TranslateTransform(offsetX, offsetY);
-        RenderTransform = _transform;
+        if (_resizing)
+        {
+            // Offset found by subtracting original cursor position on resize press from the current cursor position
+            var offsetX = currentPosition.X - (_positionInBlock.X + _transform.X);
+            var offsetY = currentPosition.Y - (_positionInBlock.Y + _transform.Y);
+            ((NodeViewModelBase)DataContext).Width = Math.Max(_lastSize.X + offsetX, MinWidth);
+            ((NodeViewModelBase)DataContext).Height = Math.Max(_lastSize.Y + offsetY, MinHeight);
+        }
+        else if (_isMoving)
+        {
+            var offsetX = currentPosition.X - _positionInBlock.X;
+            var offsetY = currentPosition.Y - _positionInBlock.Y;
+            _transform = new TranslateTransform(offsetX, offsetY);
+            RenderTransform = _transform;
 
-        // Update position in viewmodel when node is moved
-        ((NodeViewModelBase)DataContext).Position = new Point(offsetX, offsetY);
-        base.OnPointerMoved(e);
-    }
-
-    private TopLevel _GetRoot(Visual source)
-    {
-        return (TopLevel)source.GetVisualRoot();
+            // Update position in viewmodel when node is moved
+            ((NodeViewModelBase)DataContext).Position = new Point(offsetX, offsetY);
+            base.OnPointerMoved(e);
+        }
     }
 }
