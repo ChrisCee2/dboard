@@ -7,7 +7,6 @@ using mystery_app.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Messages;
 using System;
-using Avalonia.Logging;
 
 namespace mystery_app.Controls;
 
@@ -61,8 +60,6 @@ public abstract class NodeUserControl : UserControl
         var pos = args.GetPosition((Visual?)Parent);
         _positionInBlock = new Point(pos.X - (int)_transform.X, pos.Y - (int)_transform.Y);
         _lastSize = new Point(Width, Height);
-
-        base.OnPointerPressed(args);
     }
 
     protected override void OnPointerPressed(PointerPressedEventArgs args)
