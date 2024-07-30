@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Logging;
 using Avalonia.Media.Imaging;
 using mystery_app.ViewModels;
 
@@ -20,27 +21,30 @@ public partial class DragDropImageView : Image
     public async Task DropImage(object sender, DragEventArgs e)
     {
         var formats = e.Data.GetDataFormats();
-
-        if (formats.Contains("text/html") && _IsImageUrl(e.Data.GetText()))
+        if (e.Data.GetFileNames() is { } fileNames && fileNames is not null)
         {
-            await using (var imageStream = await _GetImage(e.Data.GetText()))
+            foreach (var file in fileNames)
             {
-                if (imageStream is not null) 
+                if (_IsImage(file))
                 {
-                    ((DragDropImageViewModel)DataContext).Image = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
+                    await using (var imageStream = await _GetImageStreamFromPath(file))
+                    {
+                        if (imageStream is not null)
+                        {
+                            ((DragDropImageViewModel)DataContext).Image = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
+                        }
+                    }
                 }
             }
         }
-
     }
 
-    private async Task<Stream> _GetImage(string url)
+    private async Task<Stream> _GetImageStreamFromPath(string path)
     {
-        var data = await Constants.ImageConstants.httpClient.GetByteArrayAsync(url);
-        return new MemoryStream(data);
+        return File.OpenRead(path);
     }
 
-    private bool _IsImageUrl(string url)
+    private bool _IsImage(string url)
     {
         return Constants.ImageConstants.imageUrlRegex.IsMatch(url);
     }
