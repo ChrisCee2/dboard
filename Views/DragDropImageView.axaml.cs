@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -13,9 +11,6 @@ namespace mystery_app.Views;
 
 public partial class DragDropImageView : Image
 {
-    private static HttpClient s_httpClient = new();
-    private Regex imageUrlRegex = new Regex(@"(jpg|jpeg|png|webp|avif|gif)$");
-
     public DragDropImageView()
     {
         InitializeComponent();
@@ -41,12 +36,12 @@ public partial class DragDropImageView : Image
 
     private async Task<Stream> _GetImage(string url)
     {
-        var data = await s_httpClient.GetByteArrayAsync(url);
+        var data = await Constants.ImageConstants.httpClient.GetByteArrayAsync(url);
         return new MemoryStream(data);
     }
 
     private bool _IsImageUrl(string url)
     {
-        return imageUrlRegex.IsMatch(url);
+        return Constants.ImageConstants.imageUrlRegex.IsMatch(url);
     }
 }
