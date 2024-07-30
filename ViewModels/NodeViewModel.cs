@@ -12,7 +12,7 @@ public partial class NodeViewModel : NodeViewModelBase
     public NodeViewModel(
         string name = "",
         string desc = "",
-        string image_path = "avares://mystery_app/Assets/amongusbutt.png",
+        Bitmap image = null,
         double width = 150,
         double height = 150,
         double x = 0,
@@ -20,7 +20,14 @@ public partial class NodeViewModel : NodeViewModelBase
     {
         _name = name;
         _desc = desc;
-        _image = new DragDropImageViewModel( new Bitmap(AssetLoader.Open(new Uri(image_path))) );
+        if (image is null)
+        {
+            _image = new DragDropImageViewModel(new Bitmap(AssetLoader.Open(new Uri("avares://mystery_app/Assets/amongusbutt.png"))));
+        }
+        else
+        {
+            _image = new DragDropImageViewModel(image);
+        }
         _width = width;
         _height = height;
         _position = new Point(x, y);
@@ -34,4 +41,16 @@ public partial class NodeViewModel : NodeViewModelBase
 
     [ObservableProperty]
     private string _notes;
+
+    public override NodeViewModelBase Clone()
+    {
+        return new NodeViewModel(
+            _name,
+            _desc,
+            _image.Image,
+            _width,
+            _height,
+            _position.X,
+            _position.Y);
+    }
 }

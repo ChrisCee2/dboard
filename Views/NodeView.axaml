@@ -21,6 +21,7 @@
 	<UserControl.ContextMenu>
 		<ContextMenu>
 			<MenuItem Header="Delete Node" Command="{Binding DeleteNodeCommand}"/>
+			<MenuItem Header="Copy Node" Command="{Binding CopyNodeCommand}"/>
 		</ContextMenu>
 	</UserControl.ContextMenu>
 
