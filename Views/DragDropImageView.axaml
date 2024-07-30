@@ -1,4 +1,4 @@
-<Image 
+<Panel 
 	xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,9 +6,26 @@
 	xmlns:vm="using:mystery_app.ViewModels"
     x:Class="mystery_app.Views.DragDropImageView"
     x:DataType="vm:DragDropImageViewModel"
-	DragDrop.AllowDrop="True"
-	Source="{Binding Image}">
+	DragDrop.AllowDrop="True">
 	<Design.DataContext>
 		<vm:DragDropImageViewModel/>
     </Design.DataContext>
-</Image>
+
+	<Panel.Styles>
+		<Style Selector="Button">
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="BorderThickness" Value="0"/>
+		</Style>
+		<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="White" />
+			<Setter Property="Opacity" Value=".25" />
+			<Setter Property="BorderThickness" Value="0"/>
+		</Style>
+	</Panel.Styles>
+
+	<Image Source="{Binding Image}"/>
+	<Button
+		HorizontalAlignment="Stretch"
+		VerticalAlignment="Stretch"
+		Click="OpenFileButton_Clicked"/>
+</Panel>

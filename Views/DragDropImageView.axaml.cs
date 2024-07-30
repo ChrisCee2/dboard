@@ -4,13 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform.Storage;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
 
-public partial class DragDropImageView : Image
+public partial class DragDropImageView : Panel
 {
     public DragDropImageView()
     {
@@ -47,5 +49,33 @@ public partial class DragDropImageView : Image
     private bool _IsImage(string url)
     {
         return Constants.ImageConstants.imageUrlRegex.IsMatch(url);
+    }
+
+    private async void OpenFileButton_Clicked(object sender, RoutedEventArgs args)
+    {
+        // Get top level from the current control. Alternatively, you can use Window reference instead.
+        var topLevel = TopLevel.GetTopLevel(this);
+
+        // Start async operation to open the dialog.
+        var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = "Insert Image",
+            AllowMultiple = false
+        });
+
+        if (files.Count == 1)
+        {
+            // Open reading stream from the first file.
+            //await using var stream = await files[0].OpenReadAsync();
+            //var fileContent = await streamReader.ReadToEndAsync();
+
+            await using (var imageStream = await files[0].OpenReadAsync())
+            {
+                if (imageStream is not null)
+                {
+                    ((DragDropImageViewModel)DataContext).Image = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
+                }
+            }
+        }
     }
 }
