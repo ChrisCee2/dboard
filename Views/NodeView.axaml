@@ -5,6 +5,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:controls="clr-namespace:mystery_app.Controls"
 	xmlns:vm="clr-namespace:mystery_app.ViewModels"
+	xmlns:views="clr-namespace:mystery_app.Views"
 	xmlns:constants ="clr-namespace:mystery_app.Constants"
 	x:Class="mystery_app.Views.NodeView"
 	x:DataType="vm:NodeViewModel"
@@ -38,7 +39,7 @@
 			RowDefinitions="*,Auto,Auto"
 			Width="{Binding Width}"
 			Height="{Binding Height}">
-			<Image Grid.Row="0" Source="{Binding Image}"/>
+			<views:DragDropImageView Grid.Row="0" DataContext="{Binding Image}"/>
 			<TextBox Grid.Row="1" Text="{Binding Name}" DockPanel.Dock="Bottom"/>
 			<TextBox Grid.Row="2" Text="{Binding Desc}" DockPanel.Dock="Bottom"/>
 		</Grid>

@@ -20,7 +20,7 @@ public partial class NodeViewModel : NodeViewModelBase
     {
         _name = name;
         _desc = desc;
-        _image = new Bitmap(AssetLoader.Open(new Uri(image_path)));
+        _image = new DragDropImageViewModel( new Bitmap(AssetLoader.Open(new Uri(image_path))) );
         _width = width;
         _height = height;
         _position = new Point(x, y);
@@ -30,7 +30,7 @@ public partial class NodeViewModel : NodeViewModelBase
     private string _name;
 
     [ObservableProperty]
-    private Bitmap _image;
+    private DragDropImageViewModel _image;
 
     [ObservableProperty]
     private string _notes;
