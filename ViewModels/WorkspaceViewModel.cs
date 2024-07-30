@@ -23,6 +23,9 @@ public partial class WorkspaceViewModel : ObservableObject
     private int _edgeVisualThickness;
     [ObservableProperty]
     private SharedSettingsViewModel _sharedSettings;
+    [ObservableProperty]
+    private NodeViewModelBase? _copiedNode;
+    private bool CanPaste() => _copiedNode != null;
 
     public WorkspaceViewModel(SharedSettingsViewModel sharedSettings)
     {
@@ -74,11 +77,22 @@ public partial class WorkspaceViewModel : ObservableObject
             }
             Edges.RemoveMany(edgesToRemove);
         });
+
+        WeakReferenceMessenger.Default.Register<CopyNodeMessage>(this, (sender, message) =>
+        {
+            CopiedNode = message.Value;
+        });
     }
 
     [RelayCommand]
     private void CreateNode()
     {
         WeakReferenceMessenger.Default.Send(new CreateNodeMessage(""));
+    }
+
+    [RelayCommand(CanExecute = nameof(CanPaste))]
+    private void PasteNode()
+    {
+        Nodes.Add(CopiedNode.Clone());
     }
 }

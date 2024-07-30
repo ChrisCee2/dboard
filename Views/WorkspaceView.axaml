@@ -15,6 +15,7 @@
 	<UserControl.ContextMenu>
 		<ContextMenu>
 			<MenuItem Header="Create Node" Command="{Binding CreateNodeCommand}"/>
+			<MenuItem Header="Paste Node" Command="{Binding PasteNodeCommand}"/>
 		</ContextMenu>
 	</UserControl.ContextMenu>
 	

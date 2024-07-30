@@ -25,4 +25,12 @@ public abstract partial class NodeViewModelBase : ObservableObject
     {
         WeakReferenceMessenger.Default.Send(new DeleteNodeMessage(this));
     }
+
+    [RelayCommand]
+    protected void CopyNode()
+    {
+        WeakReferenceMessenger.Default.Send(new CopyNodeMessage(this));
+    }
+
+    public abstract NodeViewModelBase Clone();
 }
