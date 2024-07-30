@@ -25,6 +25,7 @@ public partial class WorkspaceViewModel : ObservableObject
     private SharedSettingsViewModel _sharedSettings;
     [ObservableProperty]
     private NodeViewModelBase? _copiedNode;
+    private bool CanPaste() => _copiedNode != null;
 
     public WorkspaceViewModel(SharedSettingsViewModel sharedSettings)
     {
@@ -89,7 +90,7 @@ public partial class WorkspaceViewModel : ObservableObject
         WeakReferenceMessenger.Default.Send(new CreateNodeMessage(""));
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanPaste))]
     private void PasteNode()
     {
         Nodes.Add(CopiedNode.Clone());
