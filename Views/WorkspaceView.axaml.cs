@@ -22,12 +22,12 @@ public partial class WorkspaceView : UserControl
     {
         // Multiselect
         // If not left click, return
-        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) { return; }
         var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
         var rootCoordinates = e.GetPosition(root);
         var hitElement = root.InputHitTest(rootCoordinates);
         if (((Control)hitElement).Parent == this)
         {
+            if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) { return; }
             ((WorkspaceViewModel)DataContext).IsMultiSelecting = true;
             ((WorkspaceViewModel)DataContext).PressedPosition = e.GetPosition(this);
             ((WorkspaceViewModel)DataContext).MultiSelectVisualThickness = 2;
