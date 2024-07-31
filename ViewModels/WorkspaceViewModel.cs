@@ -16,11 +16,17 @@ public partial class WorkspaceViewModel : ObservableObject
     public ObservableCollection<NodeViewModelBase> Nodes { get; set; } = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
     public EdgeCollectionModel Edges { get; set; } = new EdgeCollectionModel();
     [ObservableProperty]
-    private NodeViewModelBase? _selectedNode = NodeConstants.NULL_NODEVIEWMODEL;
+    private NodeViewModelBase? _selectedNodeEdge = NodeConstants.NULL_NODEVIEWMODEL;
     [ObservableProperty]
     private Point _cursorPosition;
     [ObservableProperty]
+    private Point _pressedPosition;
+    [ObservableProperty]
     private int _edgeVisualThickness;
+    [ObservableProperty]
+    private int _multiSelectVisualThickness;
+    [ObservableProperty]
+    private bool _isMultiSelecting;
     [ObservableProperty]
     private SharedSettingsViewModel _sharedSettings;
     [ObservableProperty]
@@ -41,7 +47,7 @@ public partial class WorkspaceViewModel : ObservableObject
             if (Nodes.Contains(message.Value))
             {
                 EdgeVisualThickness = EdgeConstants.THICKNESS;
-                SelectedNode = message.Value;
+                SelectedNodeEdge = message.Value;
             }
         });
 
@@ -50,13 +56,13 @@ public partial class WorkspaceViewModel : ObservableObject
             var enteredNode = message.Value;
 
             if (Nodes.Contains(enteredNode) 
-                && Nodes.Contains(SelectedNode)
-                && !Equals(enteredNode, SelectedNode)
-                && !Edges.ContainsEdge(SelectedNode, enteredNode))
+                && Nodes.Contains(SelectedNodeEdge)
+                && !Equals(enteredNode, SelectedNodeEdge)
+                && !Edges.ContainsEdge(SelectedNodeEdge, enteredNode))
             {
-                Edges.Add(new EdgeViewModel(SelectedNode, enteredNode));
+                Edges.Add(new EdgeViewModel(SelectedNodeEdge, enteredNode));
             }
-            SelectedNode = NodeConstants.NULL_NODEVIEWMODEL;
+            SelectedNodeEdge = NodeConstants.NULL_NODEVIEWMODEL;
         });
 
         WeakReferenceMessenger.Default.Register<DeleteNodeMessage>(this, (sender, message) =>

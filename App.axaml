@@ -11,6 +11,8 @@
 		<ResourceDictionary>
 			<converters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
 			<customConverters:EdgeMidPointConverter x:Key="EdgeMidPointConverter"/>
+			<customConverters:RectanglePositionConverter x:Key="RectanglePositionConverter"/>
+			<customConverters:RectangleSizeConverter x:Key="RectangleSizeConverter"/>
 		</ResourceDictionary>
 	</Application.Resources>
 

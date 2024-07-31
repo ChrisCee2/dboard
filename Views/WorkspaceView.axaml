@@ -68,7 +68,7 @@
 			</Button>
 
 			<!--Nodes-->
-			<ItemsControl ItemsSource="{Binding Nodes}">
+			<ItemsControl ItemsSource="{Binding Nodes}" Name="NodeItemsControl">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
 						<Canvas/>
@@ -100,11 +100,46 @@
 			<!--Edge for edge creation-->
 			<Canvas>
 				<Line
-					StartPoint="{Binding SelectedNode.Position}"
+					StartPoint="{Binding SelectedNodeEdge.Position}"
 					EndPoint="{Binding CursorPosition}"
 					Stroke="Red"
 					StrokeThickness="{Binding EdgeVisualThickness}"
 					IsHitTestVisible="False"/>
+			</Canvas>
+
+			<!--Rectangle for multiselect-->
+			<Canvas>
+				<Rectangle
+					Name="MultiselectRectangle"
+					Stroke="Red"
+					StrokeDashArray="2,4"
+					StrokeThickness="{Binding MultiSelectVisualThickness}"
+					IsHitTestVisible="False">
+					<Canvas.Left>
+						<MultiBinding Converter="{StaticResource RectanglePositionConverter}" ConverterParameter="X">
+							<Binding Path="PressedPosition"/>
+							<Binding Path="CursorPosition"/>
+						</MultiBinding>
+					</Canvas.Left>
+					<Canvas.Top>
+						<MultiBinding Converter="{StaticResource RectanglePositionConverter}" ConverterParameter="Y">
+							<Binding Path="PressedPosition"/>
+							<Binding Path="CursorPosition"/>
+						</MultiBinding>
+					</Canvas.Top>
+					<Rectangle.Width>
+						<MultiBinding Converter="{StaticResource RectangleSizeConverter}" ConverterParameter="X">
+							<Binding Path="PressedPosition"/>
+							<Binding Path="CursorPosition"/>
+						</MultiBinding>
+					</Rectangle.Width>
+					<Rectangle.Height>
+						<MultiBinding Converter="{StaticResource RectangleSizeConverter}" ConverterParameter="Y">
+							<Binding Path="PressedPosition"/>
+							<Binding Path="CursorPosition"/>
+						</MultiBinding>
+					</Rectangle.Height>
+				</Rectangle>
 			</Canvas>
 		</Panel>
 	</SplitView>

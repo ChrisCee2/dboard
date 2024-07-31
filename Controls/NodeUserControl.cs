@@ -7,6 +7,7 @@ using mystery_app.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Messages;
 using System;
+using mystery_app.Models;
 
 namespace mystery_app.Controls;
 
@@ -20,6 +21,38 @@ public abstract class NodeUserControl : UserControl
     private bool _resizing;
     private double _lastWidth;
     private double _lastHeight;
+    private bool _isSelected;
+    public bool IsSelected
+    {
+        get { return _isSelected; }
+        set
+        {
+            _isSelected = value;
+            if (_isSelected)
+            {
+                if (!WeakReferenceMessenger.Default.IsRegistered<MoveNodeMessage>(this))
+                {
+                    WeakReferenceMessenger.Default.Register<MoveNodeMessage>(this, (sender, message) =>
+                    {
+                        var offsetX = ((NodeViewModelBase)DataContext).Position.X + message.Value.Offset.X;
+                        var offsetY = ((NodeViewModelBase)DataContext).Position.Y + message.Value.Offset.Y;
+                        _transform = new TranslateTransform(offsetX, offsetY);
+                        RenderTransform = _transform;
+
+                        // Update position in viewmodel when node is moved
+                        ((NodeViewModelBase)DataContext).Position = new Point(offsetX, offsetY);
+                    });
+                }
+            }
+            else
+            {
+                if (WeakReferenceMessenger.Default.IsRegistered<MoveNodeMessage>(this))
+                {
+                    WeakReferenceMessenger.Default.Unregister<MoveNodeMessage>(this);
+                }
+            }
+        }
+    }
 
     // Render position of node on loading data context
     protected override void OnDataContextEndUpdate()
@@ -107,9 +140,18 @@ public abstract class NodeUserControl : UserControl
             _transform = new TranslateTransform(offsetX, offsetY);
             RenderTransform = _transform;
 
+            base.OnPointerMoved(e);
+            WeakReferenceMessenger.Default.Send(
+                new MoveNodeMessage(
+                    new MoveNodeModel(
+                        (NodeViewModelBase)DataContext, 
+                        new Point(offsetX - ((NodeViewModelBase)DataContext).Position.X, offsetY - ((NodeViewModelBase)DataContext).Position.Y)
+                        )
+                    )
+                );
+
             // Update position in viewmodel when node is moved
             ((NodeViewModelBase)DataContext).Position = new Point(offsetX, offsetY);
-            base.OnPointerMoved(e);
         }
     }
 }
