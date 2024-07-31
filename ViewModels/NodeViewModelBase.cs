@@ -20,6 +20,9 @@ public abstract partial class NodeViewModelBase : ObservableObject
     [ObservableProperty]
     protected Point _position;
 
+    [ObservableProperty]
+    protected bool _isSelected;
+
     [RelayCommand]
     protected void DeleteNode()
     {

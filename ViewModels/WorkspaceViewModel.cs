@@ -28,6 +28,8 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private bool _isMultiSelecting;
     [ObservableProperty]
+    private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
+    [ObservableProperty]
     private SharedSettingsViewModel _sharedSettings;
     [ObservableProperty]
     private NodeViewModelBase? _copiedNode;
@@ -67,21 +69,26 @@ public partial class WorkspaceViewModel : ObservableObject
 
         WeakReferenceMessenger.Default.Register<DeleteNodeMessage>(this, (sender, message) =>
         {
-            var node = message.Value;
-
+            // Deregisters messenger for moving
+            // TODO: Make better logic for this, directly deregister instead of doing it through making isSelected false
+            foreach (var node in SelectedNodes)
+            {
+                node.IsSelected = false;
+            }
             // Remove node
-            Nodes.Remove(node);
+            Nodes.RemoveMany(SelectedNodes);
 
             // Remove edges
             var edgesToRemove = new Collection<EdgeViewModel>();
             foreach (EdgeViewModel edgeViewModel in Edges)
             {
-                if (edgeViewModel.Edge.FromNode == node || edgeViewModel.Edge.ToNode == node)
+                if (SelectedNodes.Contains(edgeViewModel.Edge.FromNode) || SelectedNodes.Contains(edgeViewModel.Edge.ToNode))
                 {
                     edgesToRemove.Add(edgeViewModel);
                 }
             }
             Edges.RemoveMany(edgesToRemove);
+            SelectedNodes = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
         });
 
         WeakReferenceMessenger.Default.Register<CopyNodeMessage>(this, (sender, message) =>

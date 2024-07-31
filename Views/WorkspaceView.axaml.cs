@@ -5,7 +5,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Logging;
 using Avalonia.LogicalTree;
 using Avalonia.VisualTree;
 using mystery_app.ViewModels;
@@ -14,9 +13,6 @@ namespace mystery_app.Views;
 
 public partial class WorkspaceView : UserControl
 {
-
-    private Collection<NodeView> _selectedNodes = new Collection<NodeView>();
-
     public WorkspaceView()
     {
         InitializeComponent();
@@ -26,23 +22,23 @@ public partial class WorkspaceView : UserControl
     {
         // Multiselect
         // If not left click, return
-        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) { return; }
         var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
         var rootCoordinates = e.GetPosition(root);
         var hitElement = root.InputHitTest(rootCoordinates);
         if (((Control)hitElement).Parent == this)
         {
+            if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) { return; }
             ((WorkspaceViewModel)DataContext).IsMultiSelecting = true;
             ((WorkspaceViewModel)DataContext).PressedPosition = e.GetPosition(this);
             ((WorkspaceViewModel)DataContext).MultiSelectVisualThickness = 2;
         }
-        else if (((Control)hitElement).Parent is NodeView node && !_selectedNodes.Contains(node))
+        else if (((Control)hitElement).Parent is NodeView node && !((WorkspaceViewModel)DataContext).SelectedNodes.Contains((NodeViewModelBase)node.DataContext))
         {
-            foreach (NodeView n in _selectedNodes)
+            foreach (NodeViewModelBase n in ((WorkspaceViewModel)DataContext).SelectedNodes)
             {
-                    n.IsSelected = false;
+                n.IsSelected = false;
             }
-            _selectedNodes = new Collection<NodeView> { node };
+            ((WorkspaceViewModel)DataContext).SelectedNodes = new ObservableCollection<NodeViewModelBase> { (NodeViewModelBase)node.DataContext };
         }
         base.OnPointerPressed(e);
     }
@@ -62,7 +58,7 @@ public partial class WorkspaceView : UserControl
             var y1 = Math.Min(((WorkspaceViewModel)DataContext).PressedPosition.Y, ((WorkspaceViewModel)DataContext).CursorPosition.Y);
             var y2 = y1 + Math.Abs(((WorkspaceViewModel)DataContext).PressedPosition.Y - ((WorkspaceViewModel)DataContext).CursorPosition.Y);
             var availableNodes = ((WorkspaceViewModel)DataContext).Nodes;
-            var newSelectedNodes = new Collection<NodeView>();
+            var newSelectedNodes = new ObservableCollection<NodeViewModelBase>();
             var itemsControl = this.Find<ItemsControl>("NodeItemsControl");
             foreach (ContentPresenter item in itemsControl.GetLogicalChildren())
             {
@@ -74,19 +70,18 @@ public partial class WorkspaceView : UserControl
                     && y1 < nodeY + node.Bounds.Size.Height
                     && y2 > nodeY)
                 {
-                    node.IsSelected = true;
-                    newSelectedNodes.Add(node);
-                    Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, node.ToString());
+                    newSelectedNodes.Add((NodeViewModelBase)node.DataContext);
+                    ((NodeViewModelBase)node.DataContext).IsSelected = true;
                 }
             }
-            foreach (NodeView node in _selectedNodes)
+            foreach (NodeViewModelBase node in ((WorkspaceViewModel)DataContext).SelectedNodes)
             {
                 if (!newSelectedNodes.Contains(node))
                 {
                     node.IsSelected = false;
                 }
             }
-            _selectedNodes = newSelectedNodes;
+            ((WorkspaceViewModel)DataContext).SelectedNodes = newSelectedNodes;
         }
         ((WorkspaceViewModel)DataContext).IsMultiSelecting = false;
         base.OnPointerReleased(e);

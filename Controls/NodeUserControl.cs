@@ -21,48 +21,47 @@ public abstract class NodeUserControl : UserControl
     private bool _resizing;
     private double _lastWidth;
     private double _lastHeight;
-    private bool _isSelected;
-    public bool IsSelected
-    {
-        get { return _isSelected; }
-        set
-        {
-            _isSelected = value;
-            if (_isSelected)
-            {
-                if (!WeakReferenceMessenger.Default.IsRegistered<MoveNodeMessage>(this))
-                {
-                    WeakReferenceMessenger.Default.Register<MoveNodeMessage>(this, (sender, message) =>
-                    {
-                        var offsetX = ((NodeViewModelBase)DataContext).Position.X + message.Value.Offset.X;
-                        var offsetY = ((NodeViewModelBase)DataContext).Position.Y + message.Value.Offset.Y;
-                        _transform = new TranslateTransform(offsetX, offsetY);
-                        RenderTransform = _transform;
 
-                        // Update position in viewmodel when node is moved
-                        ((NodeViewModelBase)DataContext).Position = new Point(offsetX, offsetY);
-                    });
-                }
-            }
-            else
-            {
-                if (WeakReferenceMessenger.Default.IsRegistered<MoveNodeMessage>(this))
-                {
-                    WeakReferenceMessenger.Default.Unregister<MoveNodeMessage>(this);
-                }
-            }
-        }
-    }
-
-    // Render position of node on loading data context
     protected override void OnDataContextEndUpdate()
     {
         base.OnDataContextEndUpdate();
         if (DataContext != null)
         {
+            // Render position of node on loading data context
             var position = ((NodeViewModelBase)DataContext).Position;
             _transform = new TranslateTransform(position.X, position.Y);
             RenderTransform = new TranslateTransform(position.X, position.Y);
+
+            // Handle isSelected
+            NodeViewModelBase viewModel = (NodeViewModelBase)this.DataContext;
+            viewModel.PropertyChanged += (sender, args) => {
+                if (!args.PropertyName.Equals("IsSelected"))
+                    return;
+                var isSelected = viewModel.IsSelected;
+                if (isSelected)
+                {
+                    if (!WeakReferenceMessenger.Default.IsRegistered<MoveNodeMessage>(this))
+                    {
+                        WeakReferenceMessenger.Default.Register<MoveNodeMessage>(this, (sender, message) =>
+                        {
+                            var offsetX = ((NodeViewModelBase)DataContext).Position.X + message.Value.Offset.X;
+                            var offsetY = ((NodeViewModelBase)DataContext).Position.Y + message.Value.Offset.Y;
+                            _transform = new TranslateTransform(offsetX, offsetY);
+                            RenderTransform = _transform;
+
+                            // Update position in viewmodel when node is moved
+                            ((NodeViewModelBase)DataContext).Position = new Point(offsetX, offsetY);
+                        });
+                    }
+                }
+                else
+                {
+                    if (WeakReferenceMessenger.Default.IsRegistered<MoveNodeMessage>(this))
+                    {
+                        WeakReferenceMessenger.Default.Unregister<MoveNodeMessage>(this);
+                    }
+                }
+            };
         }
     }
 
