@@ -28,6 +28,8 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private bool _isMultiSelecting;
     [ObservableProperty]
+    private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
+    [ObservableProperty]
     private SharedSettingsViewModel _sharedSettings;
     [ObservableProperty]
     private NodeViewModelBase? _copiedNode;
