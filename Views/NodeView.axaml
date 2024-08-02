@@ -11,8 +11,6 @@
 	x:DataType="vm:NodeViewModel"
 	Padding="10"
 	Background="Gray"
-	MinWidth="100"
-	MinHeight="100"
 	>
 	<Design.DataContext>
 		<vm:NodeViewModel />
@@ -47,15 +45,5 @@
 			<Expander Header="Notes" VerticalAlignment="Top">
 				<TextBox Text="{Binding Notes}"/>
 			</Expander>
-			<Panel 
-				Tag="Nonmovable"
-				DockPanel.Dock="Bottom"
-				HorizontalAlignment="Right"
-				VerticalAlignment="Bottom"
-				Background="White"
-				Width="10"
-				Height="10"
-				Margin="2"
-				PointerPressed="SelectResize"/>
 		</DockPanel>
 </controls:NodeUserControl>
