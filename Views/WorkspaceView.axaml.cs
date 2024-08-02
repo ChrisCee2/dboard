@@ -7,6 +7,8 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.VisualTree;
+using CommunityToolkit.Mvvm.Messaging;
+using mystery_app.Messages;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
@@ -16,6 +18,18 @@ public partial class WorkspaceView : UserControl
     public WorkspaceView()
     {
         InitializeComponent();
+        WeakReferenceMessenger.Default.Register<SelectNodeMessage>(this, (sender, args) =>
+        {
+            if (!((WorkspaceViewModel)DataContext).SelectedNodes.Contains(args.Value))
+            {
+                foreach (NodeViewModelBase n in ((WorkspaceViewModel)DataContext).SelectedNodes)
+                {
+                    n.IsSelected = false;
+                }
+                ((WorkspaceViewModel)DataContext).SelectedNodes = new ObservableCollection<NodeViewModelBase> { args.Value };
+                args.Value.IsSelected = true;
+            }
+        });
     }
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
@@ -31,14 +45,6 @@ public partial class WorkspaceView : UserControl
             ((WorkspaceViewModel)DataContext).IsMultiSelecting = true;
             ((WorkspaceViewModel)DataContext).PressedPosition = e.GetPosition(this);
             ((WorkspaceViewModel)DataContext).MultiSelectVisualThickness = 2;
-        }
-        else if (((Control)hitElement).Parent is NodeView node && !((WorkspaceViewModel)DataContext).SelectedNodes.Contains((NodeViewModelBase)node.DataContext))
-        {
-            foreach (NodeViewModelBase n in ((WorkspaceViewModel)DataContext).SelectedNodes)
-            {
-                n.IsSelected = false;
-            }
-            ((WorkspaceViewModel)DataContext).SelectedNodes = new ObservableCollection<NodeViewModelBase> { (NodeViewModelBase)node.DataContext };
         }
         base.OnPointerPressed(e);
     }
@@ -62,7 +68,7 @@ public partial class WorkspaceView : UserControl
             var itemsControl = this.Find<ItemsControl>("NodeItemsControl");
             foreach (ContentPresenter item in itemsControl.GetLogicalChildren())
             {
-                NodeView node = (NodeView)item.Child;
+                InteractiveView node = (InteractiveView)item.Child;
                 var nodeX = ((NodeViewModelBase)node.DataContext).Position.X;
                 var nodeY = ((NodeViewModelBase)node.DataContext).Position.Y;
             if (x1 < nodeX + node.Bounds.Size.Width

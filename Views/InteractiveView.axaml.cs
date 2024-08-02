@@ -6,9 +6,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Messages;
 using Avalonia.Controls;
 using System;
-using mystery_app.Models;
 using mystery_app.Constants;
-using Avalonia.Logging;
 
 namespace mystery_app.Views;
 
@@ -54,13 +52,9 @@ public partial class InteractiveView : UserControl
                     {
                         WeakReferenceMessenger.Default.Register<MoveNodeMessage>(this, (sender, message) =>
                         {
-                            var offsetX = ((NodeViewModelBase)DataContext).Position.X + message.Value.Offset.X;
-                            var offsetY = ((NodeViewModelBase)DataContext).Position.Y + message.Value.Offset.Y;
-                            _transform = new TranslateTransform(offsetX, offsetY);
-                            RenderTransform = _transform;
-
-                            // Update position in viewmodel when node is moved
-                            ((NodeViewModelBase)DataContext).Position = new Point(offsetX, offsetY);
+                                var offsetX = ((NodeViewModelBase)DataContext).Position.X + message.Value.X;
+                                var offsetY = ((NodeViewModelBase)DataContext).Position.Y + message.Value.Y;
+                                _moveControl(offsetX, offsetY);
                         });
                     }
                 }
@@ -81,11 +75,13 @@ public partial class InteractiveView : UserControl
         if (e.ClickCount >= 2)
         {
             ((Control)sender).IsHitTestVisible = false;
+            return;
         }
 
         // If not left click, return
         if (!e.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed || _isPressed) { return; }
 
+        WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage(((NodeViewModelBase)DataContext)));
         _isMoving = true;
         var pos = e.GetPosition((Visual?)Parent);
         _positionInBlock = new Point(pos.X - (int)_transform.X, pos.Y - (int)_transform.Y);
@@ -105,17 +101,9 @@ public partial class InteractiveView : UserControl
         var offsetX = currentPosition.X - _positionInBlock.X;
         var offsetY = currentPosition.Y - _positionInBlock.Y;
 
-        WeakReferenceMessenger.Default.Send(
-            new MoveNodeMessage(
-                new MoveNodeModel(
-                    (NodeViewModelBase)DataContext,
-                    new Point(offsetX - ((NodeViewModelBase)DataContext).Position.X, offsetY - ((NodeViewModelBase)DataContext).Position.Y)
-                    )
-                )
-            );
-
-        // Update position of node
-        _moveControl(offsetX, offsetY);
+        WeakReferenceMessenger.Default.Send(new MoveNodeMessage(
+            new Point(offsetX - ((NodeViewModelBase)DataContext).Position.X, offsetY - ((NodeViewModelBase)DataContext).Position.Y))
+        );
     }
 
     // On selecting resize button, get current cursor position and set axis to resize
@@ -130,7 +118,6 @@ public partial class InteractiveView : UserControl
         _lastPosition = pos;
         _lastWidth = ((NodeViewModelBase)DataContext).Width;
         _lastHeight = ((NodeViewModelBase)DataContext).Height;
-        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, _resizeAxis.ToString());
     }
 
     protected void ResizePointerReleased(object sender, PointerReleasedEventArgs e)

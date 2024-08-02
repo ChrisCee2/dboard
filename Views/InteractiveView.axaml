@@ -17,6 +17,13 @@
 		<Grid
 			ColumnDefinitions="Auto,*,Auto"
 			RowDefinitions="Auto,*,Auto">
+			<Grid.ContextMenu>
+				<ContextMenu>
+					<MenuItem Header="Delete Node" Command="{Binding DeleteNodeCommand}"/>
+					<MenuItem Header="Copy Node" Command="{Binding CopyNodeCommand}"/>
+				</ContextMenu>
+			</Grid.ContextMenu>
+			
 			<Panel Tag="xy" Background="Red" Grid.Row="0" Grid.Column="0" Width="7" Height="7"
 				PointerPressed="ResizePointerPressed"
 				PointerReleased="ResizePointerReleased"
