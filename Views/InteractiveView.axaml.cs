@@ -8,6 +8,8 @@ using Avalonia.Controls;
 using System;
 using mystery_app.Constants;
 using Avalonia.VisualTree;
+using Avalonia.Logging;
+using Avalonia.LogicalTree;
 
 namespace mystery_app.Views;
 
@@ -167,20 +169,24 @@ public partial class InteractiveView : Grid
     }
 
     // On selecting node edge creation, tell workspace this node has been selected
-    protected void SelectNodeEdge(object sender, PointerPressedEventArgs args)
+    protected void SelectNodeEdge(object sender, PointerPressedEventArgs e)
     {
+        var clickProperties = e.GetCurrentPoint(Parent as Visual).Properties;
+        if (!clickProperties.IsLeftButtonPressed) { return; }
+
+        WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage((NodeViewModelBase)DataContext));
         WeakReferenceMessenger.Default.Send(new SelectNodeEdgeMessage((NodeViewModelBase)DataContext));
     }
 
     // On releasing node edge creation, find node released on and send to workspace
-    protected void ReleaseNodeEdge(object sender, PointerReleasedEventArgs args)
+    protected void ReleaseNodeEdge(object sender, PointerReleasedEventArgs e)
     {
-        var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
-        var rootCoordinates = args.GetPosition(root);
+        var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
+        var rootCoordinates = e.GetPosition(root);
         var hitElement = root.InputHitTest(rootCoordinates);
-        if (hitElement is Control control && control.Tag == Constants.NodeConstants.EDGE_BUTTON_TAG)
+        if (((Visual)hitElement).FindLogicalAncestorOfType<InteractiveView>() is InteractiveView node)
         {
-            WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage((NodeViewModelBase)control.DataContext));
+            WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage((NodeViewModelBase)node.DataContext));
         }
     }
 }
