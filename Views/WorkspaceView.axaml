@@ -78,7 +78,7 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<views:InteractiveView DataContext="{Binding}">
-							<views:NodeView DataContext="{Binding, RelativeSource={RelativeSource AncestorType=vm:NodeViewModelBase}}" />
+							<views:NodeView DataContext="{Binding}" />
 						</views:InteractiveView>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
