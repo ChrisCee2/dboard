@@ -1,5 +1,7 @@
-﻿using Avalonia.Media;
+﻿using Avalonia.Controls;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using DynamicData;
 using mystery_app.Constants;
 using mystery_app.Models;
 
@@ -23,6 +25,13 @@ public partial class ToggleModeModel : ModeModel
     {
         OffMode = offMode;
         OnMode = onMode;
+
+        // Settings default to off mode
+        Mode = OffMode.Mode;
+        Background = OffMode.Background;
+        ShowItems = OffMode.ShowItems;
+        WorkspaceOpacity = OffMode.WorkspaceOpacity;
+        WindowState = OffMode.WindowState;
     }
 
     [ObservableProperty]

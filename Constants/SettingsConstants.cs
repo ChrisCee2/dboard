@@ -16,9 +16,5 @@ public static class SettingsConstants
     public const string TRANSPARENT_WINDOW_STATE = "FullScreen";
 
     public static readonly ModeModel DEFAULT_MODE = new ModeModel("Default", DEFAULT_BACKGROUND_COLOR, true, 1, "Normal");
-    public static readonly ModeModel TRANSPARENT_MODE = new ToggleModeModel("Transparent", TRANSPARENT_BACKGROUND_COLOR, false, TRANSPARENT_WORKSPACE_OPACITY,TRANSPARENT_WINDOW_STATE);
-    public static readonly Collection<ModeModel> MODES = new Collection<ModeModel>()
-    {
-        TRANSPARENT_MODE
-    };
+    public static readonly ModeModel TRANSPARENT_MODE = new ModeModel("Transparent", TRANSPARENT_BACKGROUND_COLOR, false, TRANSPARENT_WORKSPACE_OPACITY,TRANSPARENT_WINDOW_STATE);
 }

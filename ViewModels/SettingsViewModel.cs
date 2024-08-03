@@ -13,12 +13,13 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private SharedSettingsModel _sharedSettings;
     [ObservableProperty]
-    private Collection<ModeModel> _modes = SettingsConstants.MODES;
+    private Collection<ModeModel> _modes = new Collection<ModeModel>();
 
     public SettingsViewModel(SharedSettingsModel sharedSettings)
     {
         SharedSettings = sharedSettings;
         Modes.Add(sharedSettings.UserModeModel);
+        Modes.Add(new ToggleModeModel(SettingsConstants.TRANSPARENT_MODE, sharedSettings.UserModeModel));
     }
 
     [RelayCommand]
