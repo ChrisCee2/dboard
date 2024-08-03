@@ -7,6 +7,8 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.VisualTree;
+using CommunityToolkit.Mvvm.Messaging;
+using mystery_app.Messages;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
@@ -16,6 +18,18 @@ public partial class WorkspaceView : UserControl
     public WorkspaceView()
     {
         InitializeComponent();
+        WeakReferenceMessenger.Default.Register<SelectNodeMessage>(this, (sender, args) =>
+        {
+            if (args.Value.IsEdit)
+            {
+                _updateSelectedNodes(new ObservableCollection<NodeViewModelBase> { args.Value });
+                args.Value.IsEdit = true;
+            }
+            else if (!((WorkspaceViewModel)DataContext).SelectedNodes.Contains(args.Value))
+            {
+                _updateSelectedNodes(new ObservableCollection<NodeViewModelBase> { args.Value });
+            }
+        });
     }
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
@@ -32,14 +46,6 @@ public partial class WorkspaceView : UserControl
             ((WorkspaceViewModel)DataContext).PressedPosition = e.GetPosition(this);
             ((WorkspaceViewModel)DataContext).MultiSelectVisualThickness = 2;
         }
-        else if (((Control)hitElement).Parent is NodeView node && !((WorkspaceViewModel)DataContext).SelectedNodes.Contains((NodeViewModelBase)node.DataContext))
-        {
-            foreach (NodeViewModelBase n in ((WorkspaceViewModel)DataContext).SelectedNodes)
-            {
-                n.IsSelected = false;
-            }
-            ((WorkspaceViewModel)DataContext).SelectedNodes = new ObservableCollection<NodeViewModelBase> { (NodeViewModelBase)node.DataContext };
-        }
         base.OnPointerPressed(e);
     }
 
@@ -52,39 +58,50 @@ public partial class WorkspaceView : UserControl
         // Multiselect
         if (((WorkspaceViewModel)DataContext).IsMultiSelecting)
         {
-
+            // Get points of multiselect
             var x1 = Math.Min(((WorkspaceViewModel)DataContext).PressedPosition.X, ((WorkspaceViewModel)DataContext).CursorPosition.X);
             var x2 = x1 + Math.Abs(((WorkspaceViewModel)DataContext).PressedPosition.X - ((WorkspaceViewModel)DataContext).CursorPosition.X);
             var y1 = Math.Min(((WorkspaceViewModel)DataContext).PressedPosition.Y, ((WorkspaceViewModel)DataContext).CursorPosition.Y);
             var y2 = y1 + Math.Abs(((WorkspaceViewModel)DataContext).PressedPosition.Y - ((WorkspaceViewModel)DataContext).CursorPosition.Y);
-            var availableNodes = ((WorkspaceViewModel)DataContext).Nodes;
-            var newSelectedNodes = new ObservableCollection<NodeViewModelBase>();
+            // Get all interactive views (Node containers)
             var itemsControl = this.Find<ItemsControl>("NodeItemsControl");
+
+            // Check if each node is within bounds of multiselect and update the selected nodes
+            var newSelectedNodes = new ObservableCollection<NodeViewModelBase>();
             foreach (ContentPresenter item in itemsControl.GetLogicalChildren())
             {
-                NodeView node = (NodeView)item.Child;
+                InteractiveView node = (InteractiveView)item.Child;
                 var nodeX = ((NodeViewModelBase)node.DataContext).Position.X;
                 var nodeY = ((NodeViewModelBase)node.DataContext).Position.Y;
-            if (x1 < nodeX + node.Bounds.Size.Width
+                if (x1 < nodeX + node.Bounds.Size.Width
                     && x2 > nodeX
                     && y1 < nodeY + node.Bounds.Size.Height
                     && y2 > nodeY)
                 {
                     newSelectedNodes.Add((NodeViewModelBase)node.DataContext);
-                    ((NodeViewModelBase)node.DataContext).IsSelected = true;
                 }
             }
-            foreach (NodeViewModelBase node in ((WorkspaceViewModel)DataContext).SelectedNodes)
-            {
-                if (!newSelectedNodes.Contains(node))
-                {
-                    node.IsSelected = false;
-                }
-            }
-            ((WorkspaceViewModel)DataContext).SelectedNodes = newSelectedNodes;
+            _updateSelectedNodes(newSelectedNodes);
         }
+
         ((WorkspaceViewModel)DataContext).IsMultiSelecting = false;
         base.OnPointerReleased(e);
+    }
+
+    private void _updateSelectedNodes(ObservableCollection<NodeViewModelBase> newSelectedNodes)
+    {
+        foreach (NodeViewModelBase node in ((WorkspaceViewModel)DataContext).SelectedNodes)
+        {
+            node.IsSelected = false;
+            node.IsEdit = false;
+        }
+
+        foreach (NodeViewModelBase node in newSelectedNodes)
+        {
+            node.IsSelected = true;
+            node.IsEdit = false;
+        }
+        ((WorkspaceViewModel)DataContext).SelectedNodes = newSelectedNodes;
     }
 
     protected override void OnPointerMoved(PointerEventArgs e)

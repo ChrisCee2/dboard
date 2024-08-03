@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-using mystery_app.Models;
+﻿using Avalonia;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace mystery_app.Messages;
-public class MoveNodeMessage : ValueChangedMessage<MoveNodeModel>
+public class MoveNodeMessage : ValueChangedMessage<Point>
 {
-    public MoveNodeMessage(MoveNodeModel value) : base(value) { }
+    public MoveNodeMessage(Point value) : base(value) { }
 }

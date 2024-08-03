@@ -23,6 +23,9 @@ public abstract partial class NodeViewModelBase : ObservableObject
     [ObservableProperty]
     protected bool _isSelected;
 
+    [ObservableProperty]
+    protected bool _isEdit;
+
     [RelayCommand]
     protected void DeleteNode()
     {
@@ -36,4 +39,8 @@ public abstract partial class NodeViewModelBase : ObservableObject
     }
 
     public abstract NodeViewModelBase Clone();
+
+    public double MinWidth = Constants.NodeConstants.MIN_WIDTH;
+
+    public double MinHeight = Constants.NodeConstants.MIN_HEIGHT;
 }
