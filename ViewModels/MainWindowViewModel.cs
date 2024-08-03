@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Constants;
 using mystery_app.Messages;
+using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
 
@@ -12,7 +13,7 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private ObservableObject _currentPage;
     [ObservableProperty]
-    private SharedSettingsViewModel _sharedSettings = new SharedSettingsViewModel();
+    private SharedSettingsModel _sharedSettings = new SharedSettingsModel();
 
     public MainWindowViewModel()
     {

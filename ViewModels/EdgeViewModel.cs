@@ -7,7 +7,6 @@ namespace mystery_app.ViewModels;
 
 public partial class EdgeViewModel : ObservableObject
 {
-
     public EdgeViewModel(
         NodeViewModelBase fromNode,
         NodeViewModelBase toNode,

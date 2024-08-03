@@ -18,7 +18,7 @@
     </Design.DataContext>
 
 	<Window.KeyBindings>
-		<KeyBinding Gesture="Tab" Command="{Binding SharedSettings.ToggleControlCommand}" />
+		<KeyBinding Gesture="Tab" Command="{Binding SharedSettings.ToggleModeCommand}" />
 		<KeyBinding Gesture="P" Command="{Binding SharedSettings.ToggleFullScreenCommand}" />
 	</Window.KeyBindings>
 

@@ -44,7 +44,7 @@ public partial class WorkspaceView : UserControl
             if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) { return; }
             ((WorkspaceViewModel)DataContext).IsMultiSelecting = true;
             ((WorkspaceViewModel)DataContext).PressedPosition = e.GetPosition(this);
-            ((WorkspaceViewModel)DataContext).MultiSelectVisualThickness = 2;
+            ((WorkspaceViewModel)DataContext).MultiSelectThickness = 2;
         }
         base.OnPointerPressed(e);
     }
@@ -52,8 +52,8 @@ public partial class WorkspaceView : UserControl
     protected override void OnPointerReleased(PointerReleasedEventArgs e)
     {
         // Edge
-        ((WorkspaceViewModel)DataContext).EdgeVisualThickness = 0;
-        ((WorkspaceViewModel)DataContext).MultiSelectVisualThickness = 0;
+        ((WorkspaceViewModel)DataContext).EdgeThickness = 0;
+        ((WorkspaceViewModel)DataContext).MultiSelectThickness = 0;
 
         // Multiselect
         if (((WorkspaceViewModel)DataContext).IsMultiSelecting)

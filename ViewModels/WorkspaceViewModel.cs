@@ -22,20 +22,21 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private Point _pressedPosition;
     [ObservableProperty]
-    private int _edgeVisualThickness;
+    private int _edgeThickness;
     [ObservableProperty]
-    private int _multiSelectVisualThickness;
+    private int _multiSelectThickness;
     [ObservableProperty]
     private bool _isMultiSelecting;
     [ObservableProperty]
     private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
     [ObservableProperty]
-    private SharedSettingsViewModel _sharedSettings;
+    private SharedSettingsModel _sharedSettings;
     [ObservableProperty]
     private ObservableCollection<NodeViewModelBase>? _copiedNodes;
+
     private bool CanPaste() => _copiedNodes != null;
 
-    public WorkspaceViewModel(SharedSettingsViewModel sharedSettings)
+    public WorkspaceViewModel(SharedSettingsModel sharedSettings)
     {
         _sharedSettings = sharedSettings;
         
@@ -43,7 +44,7 @@ public partial class WorkspaceViewModel : ObservableObject
         {
             if (Nodes.Contains(message.Value))
             {
-                EdgeVisualThickness = EdgeConstants.THICKNESS;
+                EdgeThickness = EdgeConstants.THICKNESS;
                 SelectedNodeEdge = message.Value;
             }
         });
@@ -64,13 +65,13 @@ public partial class WorkspaceViewModel : ObservableObject
 
         WeakReferenceMessenger.Default.Register<DeleteNodeMessage>(this, (sender, message) =>
         {
-            // Deregisters messenger for moving
-            // TODO: Make better logic for this, directly deregister instead of doing it through making isSelected false
+            // Deregisters move messenger through the property listener in InteractiveView
             foreach (var node in SelectedNodes)
             {
                 node.IsSelected = false;
             }
-            // Remove node
+
+            // Remove nodes
             Nodes.RemoveMany(SelectedNodes);
 
             // Remove edges
@@ -83,12 +84,13 @@ public partial class WorkspaceViewModel : ObservableObject
                 }
             }
             Edges.RemoveMany(edgesToRemove);
-            SelectedNodes = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
+
+            SelectedNodes = new ObservableCollection<NodeViewModelBase>();
         });
 
         WeakReferenceMessenger.Default.Register<CopyNodeMessage>(this, (sender, message) =>
         {
-            CopiedNodes = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
+            CopiedNodes = new ObservableCollection<NodeViewModelBase>();
             foreach (var node in SelectedNodes) {
                 CopiedNodes.Add(node.Clone());
             }

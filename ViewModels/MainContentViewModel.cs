@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Constants;
 using mystery_app.Messages;
+using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
 
@@ -10,9 +11,9 @@ public partial class MainContentViewModel : ObservableObject
 {
     public WorkspaceViewModel Workspace { get; set; }
     [ObservableProperty]
-    private SharedSettingsViewModel _sharedSettings;
+    private SharedSettingsModel _sharedSettings;
 
-    public MainContentViewModel(SharedSettingsViewModel sharedSettings)
+    public MainContentViewModel(SharedSettingsModel sharedSettings)
     {
         _sharedSettings = sharedSettings;
         Workspace = new WorkspaceViewModel(sharedSettings);

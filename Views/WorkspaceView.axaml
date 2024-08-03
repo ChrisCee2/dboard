@@ -105,7 +105,7 @@
 					StartPoint="{Binding SelectedNodeEdge.Position}"
 					EndPoint="{Binding CursorPosition}"
 					Stroke="Red"
-					StrokeThickness="{Binding EdgeVisualThickness}"
+					StrokeThickness="{Binding EdgeThickness}"
 					IsHitTestVisible="False"/>
 			</Canvas>
 
@@ -115,7 +115,7 @@
 					Name="MultiselectRectangle"
 					Stroke="Red"
 					StrokeDashArray="2,4"
-					StrokeThickness="{Binding MultiSelectVisualThickness}"
+					StrokeThickness="{Binding MultiSelectThickness}"
 					IsHitTestVisible="False">
 					<Canvas.Left>
 						<MultiBinding Converter="{StaticResource MinConverter}">
