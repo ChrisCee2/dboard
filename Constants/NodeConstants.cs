@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Avalonia;
+using Avalonia.Input;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Constants;

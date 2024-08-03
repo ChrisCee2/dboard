@@ -12,7 +12,6 @@ namespace mystery_app.Views;
 
 public partial class InteractiveView : UserControl
 {
-    private bool _isPressed;
     // Move variables
     private bool _isMoving;
     private Point _positionInBlock;
@@ -71,21 +70,27 @@ public partial class InteractiveView : UserControl
 
     protected void MovePointerPressed(object sender, PointerPressedEventArgs e)
     {
-        // If double click, make click through
-        if (e.ClickCount >= 2)
+        var clickProperties = e.GetCurrentPoint(Parent as Visual).Properties;
+
+        if (clickProperties.IsRightButtonPressed)
         {
-            ((Control)sender).IsHitTestVisible = false;
-            return;
+            WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage((NodeViewModelBase)DataContext));
         }
+        else if (clickProperties.IsLeftButtonPressed)
+        {
+            // If double click, make click through
+            if (e.ClickCount >= 2)
+            {
+                ((NodeViewModelBase)DataContext).IsEdit = true;
+                WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage((NodeViewModelBase)DataContext));
+                return;
+            }
+            WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage((NodeViewModelBase)DataContext));
 
-        // If not left click, return
-        if (!e.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed || _isPressed) { return; }
-
-        WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage(((NodeViewModelBase)DataContext)));
-        _isMoving = true;
-        var pos = e.GetPosition((Visual?)Parent);
-        _positionInBlock = new Point(pos.X - (int)_transform.X, pos.Y - (int)_transform.Y);
-
+            _isMoving = true;
+            var pos = e.GetPosition((Visual?)Parent);
+            _positionInBlock = new Point(pos.X - (int)_transform.X, pos.Y - (int)_transform.Y);
+        }
     }
 
     protected void MovePointerReleased(object sender, PointerReleasedEventArgs e)
@@ -110,7 +115,7 @@ public partial class InteractiveView : UserControl
     private void ResizePointerPressed(object sender, PointerPressedEventArgs e)
     {
         // If not left click, return
-        if (!e.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed || _isPressed) { return; }
+        if (!e.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed) { return; }
         _isResizing = true;
         _resizeAxis = (NodeConstants.ResizeAxis)System.Enum.Parse(typeof(NodeConstants.ResizeAxis), ((Control)sender).Tag.ToString());
         var pos = e.GetPosition((Visual?)Parent);

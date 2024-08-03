@@ -57,6 +57,7 @@
 				PointerReleased="ResizePointerReleased"
 				PointerMoved="ResizePointerMoved" />
 			<Panel Background="Green" Grid.Row="1" Grid.Column="1" Opacity="0.3"
+				IsHitTestVisible="{Binding !IsEdit}"
 				PointerPressed="MovePointerPressed"
 				PointerReleased="MovePointerReleased"
 				PointerMoved="MovePointerMoved"/>
