@@ -12,7 +12,6 @@ public static class SettingsConstants
 
     // Mode Constants
     public static readonly Color TRANSPARENT_BACKGROUND_COLOR = new Color(0, 0, 0, 0);
-    public const double TRANSPARENT_ITEM_OPACITY = 0;
     public const double TRANSPARENT_WORKSPACE_OPACITY = 0.5;
     public const string TRANSPARENT_WINDOW_STATE = "FullScreen";
 

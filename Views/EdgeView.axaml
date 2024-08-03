@@ -14,15 +14,15 @@
 
 	<TextBox Text="{Binding Edge.Description}">
 		<Canvas.Left>
-			<MultiBinding Converter="{StaticResource EdgeMidPointConverter}" ConverterParameter="X">
-				<Binding Path="Edge.FromNode.Position"/>
-				<Binding Path="Edge.ToNode.Position"/>
+			<MultiBinding Converter="{StaticResource MedianConverter}">
+				<Binding Path="Edge.FromNode.Position.X"/>
+				<Binding Path="Edge.ToNode.Position.X"/>
 			</MultiBinding>
 		</Canvas.Left>
 		<Canvas.Top>
-			<MultiBinding Converter="{StaticResource EdgeMidPointConverter}" ConverterParameter="Y">
-				<Binding Path="Edge.FromNode.Position"/>
-				<Binding Path="Edge.ToNode.Position"/>
+			<MultiBinding Converter="{StaticResource MedianConverter}">
+				<Binding Path="Edge.FromNode.Position.Y"/>
+				<Binding Path="Edge.ToNode.Position.Y"/>
 			</MultiBinding>
 		</Canvas.Top>
 	</TextBox>
