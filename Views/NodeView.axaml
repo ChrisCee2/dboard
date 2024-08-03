@@ -5,7 +5,6 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:vm="clr-namespace:mystery_app.ViewModels"
 	xmlns:views="clr-namespace:mystery_app.Views"
-	xmlns:constants ="clr-namespace:mystery_app.Constants"
 	x:Class="mystery_app.Views.NodeView"
 	x:DataType="vm:NodeViewModel"
 	Padding="10"

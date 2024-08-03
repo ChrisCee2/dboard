@@ -3,7 +3,6 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="using:mystery_app.ViewModels"
 	xmlns:views="clr-namespace:mystery_app.Views"
-	xmlns:constants ="clr-namespace:mystery_app.Constants"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Class="mystery_app.Views.WorkspaceView"

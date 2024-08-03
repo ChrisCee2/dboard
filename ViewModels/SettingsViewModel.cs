@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -26,29 +25,5 @@ public partial class SettingsViewModel : ObservableObject
     private void GoToMainContent()
     {
         WeakReferenceMessenger.Default.Send(new ChangePageMessage(PageConstants.PAGE.MainContent));
-    }
-
-    [RelayCommand]
-    private void ToggleNotes()
-    {
-        SharedSettings.ShowNotes = !SharedSettings.ShowNotes;
-    }
-
-    [RelayCommand]
-    private void ChangeTheme(string theme)
-    {
-        SharedSettings.Theme = theme;
-    }
-
-    [RelayCommand]
-    private void ChangeMode(ModeModel mode)
-    {
-        SharedSettings.ModeModel = mode;
-    }
-
-    [RelayCommand]
-    private void ChangeColor(Color color)
-    {
-        SharedSettings.UserModeModel.Background = color;
     }
 }

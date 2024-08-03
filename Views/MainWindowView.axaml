@@ -22,7 +22,5 @@
 		<KeyBinding Gesture="P" Command="{Binding SharedSettings.ToggleFullScreenCommand}" />
 	</Window.KeyBindings>
 
-
 	<TransitioningContentControl Content="{Binding CurrentPage}" />
-
 </Window>

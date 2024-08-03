@@ -8,7 +8,6 @@ using Avalonia.Controls;
 using System;
 using mystery_app.Constants;
 using Avalonia.VisualTree;
-using Avalonia.Logging;
 using Avalonia.LogicalTree;
 
 namespace mystery_app.Views;
