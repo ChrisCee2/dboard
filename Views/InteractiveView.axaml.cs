@@ -8,6 +8,7 @@ using Avalonia.Controls;
 using System;
 using mystery_app.Constants;
 using Avalonia.VisualTree;
+using Avalonia.LogicalTree;
 
 namespace mystery_app.Views;
 
@@ -19,7 +20,7 @@ public partial class InteractiveView : Grid
     private TranslateTransform? _transform = new TranslateTransform(0, 0);
     // Resize variables
     private bool _isResizing;
-    private NodeConstants.ResizeAxis _resizeAxis;
+    private NodeConstants.RESIZE _resizeAxis;
     private Point _lastPosition;
     private double _lastWidth;
     private double _lastHeight;
@@ -75,7 +76,7 @@ public partial class InteractiveView : Grid
 
         if (clickProperties.IsRightButtonPressed)
         {
-            WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage((NodeViewModelBase)DataContext));
+            WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
         }
         else if (clickProperties.IsLeftButtonPressed)
         {
@@ -83,10 +84,10 @@ public partial class InteractiveView : Grid
             if (e.ClickCount >= 2)
             {
                 ((NodeViewModelBase)DataContext).IsEdit = true;
-                WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage((NodeViewModelBase)DataContext));
+                WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
                 return;
             }
-            WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage((NodeViewModelBase)DataContext));
+            WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
 
             _isMoving = true;
             var pos = e.GetPosition((Visual?)Parent);
@@ -118,7 +119,7 @@ public partial class InteractiveView : Grid
         // If not left click, return
         if (!e.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed) { return; }
         _isResizing = true;
-        _resizeAxis = (NodeConstants.ResizeAxis)System.Enum.Parse(typeof(NodeConstants.ResizeAxis), ((Control)sender).Tag.ToString());
+        _resizeAxis = (NodeConstants.RESIZE)System.Enum.Parse(typeof(NodeConstants.RESIZE), ((Control)sender).Tag.ToString());
         var pos = e.GetPosition((Visual?)Parent);
         _positionInBlock = new Point(pos.X - (int)_transform.X, pos.Y - (int)_transform.Y);
         _lastPosition = pos;
@@ -135,7 +136,7 @@ public partial class InteractiveView : Grid
     {
         if (Parent == null || !_isResizing) { return; }
         Point currentPosition = e.GetPosition((Visual?)Parent);
-        Point resizeDir = NodeConstants.AxisToDir[_resizeAxis];
+        Point resizeDir = NodeConstants.RESIZE_TO_DIR[_resizeAxis];
         NodeViewModelBase context = ((NodeViewModelBase)DataContext);
 
         if (_isResizing)
@@ -144,14 +145,14 @@ public partial class InteractiveView : Grid
             double offsetX = (currentPosition.X - _lastPosition.X) * resizeDir.X;
             double offsetY = (currentPosition.Y - _lastPosition.Y) * resizeDir.Y;
 
-            context.Width = Math.Max(_lastWidth + offsetX, context.MinWidth);
-            context.Height = Math.Max(_lastHeight + offsetY, context.MinHeight);
+            context.Width = Math.Max(_lastWidth + offsetX, NodeConstants.MIN_WIDTH);
+            context.Height = Math.Max(_lastHeight + offsetY, NodeConstants.MIN_HEIGHT);
             if ((int)_resizeAxis > 2)
             {
                 var moveOffsetX = (_lastPosition.X - _positionInBlock.X) + ((context.Width - _lastWidth) * resizeDir.X);
                 var moveOffsetY = (_lastPosition.Y - _positionInBlock.Y) + ((context.Height - _lastHeight) * resizeDir.Y);
-                if (_resizeAxis == NodeConstants.ResizeAxis.xY) { moveOffsetY = _transform.Y; } // Don't move on Y axis if resizing left-down
-                if (_resizeAxis == NodeConstants.ResizeAxis.Xy) { moveOffsetX = _transform.X; } // Don't move on X axis if resizing up-right
+                if (_resizeAxis == NodeConstants.RESIZE.xY) { moveOffsetY = _transform.Y; } // Don't move on Y axis if resizing left-down
+                if (_resizeAxis == NodeConstants.RESIZE.Xy) { moveOffsetX = _transform.X; } // Don't move on X axis if resizing up-right
                 _moveControl(moveOffsetX, moveOffsetY);
             }
         }
@@ -167,20 +168,24 @@ public partial class InteractiveView : Grid
     }
 
     // On selecting node edge creation, tell workspace this node has been selected
-    protected void SelectNodeEdge(object sender, PointerPressedEventArgs args)
+    protected void SelectNodeEdge(object sender, PointerPressedEventArgs e)
     {
+        var clickProperties = e.GetCurrentPoint(Parent as Visual).Properties;
+        if (!clickProperties.IsLeftButtonPressed) { return; }
+
+        WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
         WeakReferenceMessenger.Default.Send(new SelectNodeEdgeMessage((NodeViewModelBase)DataContext));
     }
 
     // On releasing node edge creation, find node released on and send to workspace
-    protected void ReleaseNodeEdge(object sender, PointerReleasedEventArgs args)
+    protected void ReleaseNodeEdge(object sender, PointerReleasedEventArgs e)
     {
-        var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
-        var rootCoordinates = args.GetPosition(root);
+        var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
+        var rootCoordinates = e.GetPosition(root);
         var hitElement = root.InputHitTest(rootCoordinates);
-        if (hitElement is Control control && control.Tag == Constants.NodeConstants.EDGE_BUTTON_TAG)
+        if (((Visual)hitElement).FindLogicalAncestorOfType<InteractiveView>() is InteractiveView node)
         {
-            WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage((NodeViewModelBase)control.DataContext));
+            WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage((NodeViewModelBase)node.DataContext));
         }
     }
 }

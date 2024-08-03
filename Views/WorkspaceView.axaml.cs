@@ -18,6 +18,7 @@ public partial class WorkspaceView : UserControl
     public WorkspaceView()
     {
         InitializeComponent();
+
         WeakReferenceMessenger.Default.Register<SelectNodeMessage>(this, (sender, args) =>
         {
             if (args.Value.IsEdit)
@@ -32,37 +33,45 @@ public partial class WorkspaceView : UserControl
         });
     }
 
+    // Start multiselect
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
-        // Multiselect
         // If not left click, return
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) { return; }
+
         var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
         var rootCoordinates = e.GetPosition(root);
         var hitElement = root.InputHitTest(rootCoordinates);
         if (((Control)hitElement).Parent == this)
         {
-            if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) { return; }
             ((WorkspaceViewModel)DataContext).IsMultiSelecting = true;
             ((WorkspaceViewModel)DataContext).PressedPosition = e.GetPosition(this);
-            ((WorkspaceViewModel)DataContext).MultiSelectVisualThickness = 2;
+            ((WorkspaceViewModel)DataContext).MultiSelectThickness = 2;
         }
         base.OnPointerPressed(e);
     }
 
+    protected override void OnPointerMoved(PointerEventArgs e)
+    {
+        ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
+        base.OnPointerMoved(e);
+    }
+
     protected override void OnPointerReleased(PointerReleasedEventArgs e)
     {
-        // Edge
-        ((WorkspaceViewModel)DataContext).EdgeVisualThickness = 0;
-        ((WorkspaceViewModel)DataContext).MultiSelectVisualThickness = 0;
+        WorkspaceViewModel context = (WorkspaceViewModel)DataContext;
+        // Make lines disappear
+        context.EdgeThickness = 0;
+        context.MultiSelectThickness = 0;
 
         // Multiselect
-        if (((WorkspaceViewModel)DataContext).IsMultiSelecting)
+        if (context.IsMultiSelecting)
         {
             // Get points of multiselect
-            var x1 = Math.Min(((WorkspaceViewModel)DataContext).PressedPosition.X, ((WorkspaceViewModel)DataContext).CursorPosition.X);
-            var x2 = x1 + Math.Abs(((WorkspaceViewModel)DataContext).PressedPosition.X - ((WorkspaceViewModel)DataContext).CursorPosition.X);
-            var y1 = Math.Min(((WorkspaceViewModel)DataContext).PressedPosition.Y, ((WorkspaceViewModel)DataContext).CursorPosition.Y);
-            var y2 = y1 + Math.Abs(((WorkspaceViewModel)DataContext).PressedPosition.Y - ((WorkspaceViewModel)DataContext).CursorPosition.Y);
+            var x1 = Math.Min(context.PressedPosition.X, context.CursorPosition.X);
+            var x2 = x1 + Math.Abs(context.PressedPosition.X - context.CursorPosition.X);
+            var y1 = Math.Min(context.PressedPosition.Y, context.CursorPosition.Y);
+            var y2 = y1 + Math.Abs(context.PressedPosition.Y - context.CursorPosition.Y);
             // Get all interactive views (Node containers)
             var itemsControl = this.Find<ItemsControl>("NodeItemsControl");
 
@@ -71,20 +80,19 @@ public partial class WorkspaceView : UserControl
             foreach (ContentPresenter item in itemsControl.GetLogicalChildren())
             {
                 InteractiveView node = (InteractiveView)item.Child;
-                var nodeX = ((NodeViewModelBase)node.DataContext).Position.X;
-                var nodeY = ((NodeViewModelBase)node.DataContext).Position.Y;
-                if (x1 < nodeX + node.Bounds.Size.Width
-                    && x2 > nodeX
-                    && y1 < nodeY + node.Bounds.Size.Height
-                    && y2 > nodeY)
+                NodeViewModelBase nodeContext = (NodeViewModelBase)node.DataContext;
+                if (x1 < nodeContext.Position.X + node.Bounds.Size.Width
+                    && x2 > nodeContext.Position.X
+                    && y1 < nodeContext.Position.Y + node.Bounds.Size.Height
+                    && y2 > nodeContext.Position.Y)
                 {
-                    newSelectedNodes.Add((NodeViewModelBase)node.DataContext);
+                    newSelectedNodes.Add(nodeContext);
                 }
             }
             _updateSelectedNodes(newSelectedNodes);
         }
 
-        ((WorkspaceViewModel)DataContext).IsMultiSelecting = false;
+        context.IsMultiSelecting = false;
         base.OnPointerReleased(e);
     }
 
@@ -102,12 +110,6 @@ public partial class WorkspaceView : UserControl
             node.IsEdit = false;
         }
         ((WorkspaceViewModel)DataContext).SelectedNodes = newSelectedNodes;
-    }
-
-    protected override void OnPointerMoved(PointerEventArgs e)
-    {
-        ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
-        base.OnPointerMoved(e);
     }
 
     protected void ToggleNotes(object sender, RoutedEventArgs args)

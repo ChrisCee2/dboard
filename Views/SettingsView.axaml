@@ -3,7 +3,6 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:controls="clr-namespace:mystery_app.Controls"
 	xmlns:vm="clr-namespace:mystery_app.ViewModels"
 	xmlns:constants ="clr-namespace:mystery_app.Constants"
 	mc:Ignorable="d"
@@ -36,7 +35,6 @@
 					<TextBlock Text="Change Theme"/>
 					<ComboBox 
 						ItemsSource="{Binding Source={x:Static constants:SettingsConstants.THEMES}}"
-						SelectionChanged="ChangeThemeOnSelection"
 						SelectedItem="{Binding SharedSettings.Theme}">
 						<ComboBox.ItemTemplate>
 							<DataTemplate x:CompileBindings="False">
@@ -49,8 +47,7 @@
 					<TextBlock Text="Change Background"/>
 					<ColorPicker 
 						HorizontalAlignment="Left" 
-						Color="{Binding SharedSettings.UserModeModel.Background}"
-						ColorChanged="ChangeColorOnSelection"/>
+						Color="{Binding SharedSettings.UserModeModel.Background}"/>
 				</StackPanel>
 				<StackPanel>
 					<TextBlock Text="Show Notes"/>
@@ -64,7 +61,6 @@
 					<TextBlock Text="Mode"/>
 					<ComboBox
 						ItemsSource="{Binding Modes}"
-						SelectionChanged="ChangeModeOnSelection"
 						SelectedItem="{Binding SharedSettings.ModeModel}">
 						<ComboBox.ItemTemplate>
 							<DataTemplate>

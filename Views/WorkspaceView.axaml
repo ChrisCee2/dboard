@@ -3,7 +3,6 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="using:mystery_app.ViewModels"
 	xmlns:views="clr-namespace:mystery_app.Views"
-	xmlns:constants ="clr-namespace:mystery_app.Constants"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Class="mystery_app.Views.WorkspaceView"
@@ -105,7 +104,7 @@
 					StartPoint="{Binding SelectedNodeEdge.Position}"
 					EndPoint="{Binding CursorPosition}"
 					Stroke="Red"
-					StrokeThickness="{Binding EdgeVisualThickness}"
+					StrokeThickness="{Binding EdgeThickness}"
 					IsHitTestVisible="False"/>
 			</Canvas>
 
@@ -115,30 +114,30 @@
 					Name="MultiselectRectangle"
 					Stroke="Red"
 					StrokeDashArray="2,4"
-					StrokeThickness="{Binding MultiSelectVisualThickness}"
+					StrokeThickness="{Binding MultiSelectThickness}"
 					IsHitTestVisible="False">
 					<Canvas.Left>
-						<MultiBinding Converter="{StaticResource RectanglePositionConverter}" ConverterParameter="X">
-							<Binding Path="PressedPosition"/>
-							<Binding Path="CursorPosition"/>
+						<MultiBinding Converter="{StaticResource MinConverter}">
+							<Binding Path="PressedPosition.X"/>
+							<Binding Path="CursorPosition.X"/>
 						</MultiBinding>
 					</Canvas.Left>
 					<Canvas.Top>
-						<MultiBinding Converter="{StaticResource RectanglePositionConverter}" ConverterParameter="Y">
-							<Binding Path="PressedPosition"/>
-							<Binding Path="CursorPosition"/>
+						<MultiBinding Converter="{StaticResource MinConverter}">
+							<Binding Path="PressedPosition.Y"/>
+							<Binding Path="CursorPosition.Y"/>
 						</MultiBinding>
 					</Canvas.Top>
 					<Rectangle.Width>
-						<MultiBinding Converter="{StaticResource RectangleSizeConverter}" ConverterParameter="X">
-							<Binding Path="PressedPosition"/>
-							<Binding Path="CursorPosition"/>
+						<MultiBinding Converter="{StaticResource DiffConverter}">
+							<Binding Path="PressedPosition.X"/>
+							<Binding Path="CursorPosition.X"/>
 						</MultiBinding>
 					</Rectangle.Width>
 					<Rectangle.Height>
-						<MultiBinding Converter="{StaticResource RectangleSizeConverter}" ConverterParameter="Y">
-							<Binding Path="PressedPosition"/>
-							<Binding Path="CursorPosition"/>
+						<MultiBinding Converter="{StaticResource DiffConverter}">
+							<Binding Path="PressedPosition.Y"/>
+							<Binding Path="CursorPosition.Y"/>
 						</MultiBinding>
 					</Rectangle.Height>
 				</Rectangle>

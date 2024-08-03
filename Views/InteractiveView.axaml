@@ -12,8 +12,8 @@
 
 	<Grid.ContextMenu>
 		<ContextMenu>
-			<MenuItem Header="Delete Node" Command="{Binding DeleteNodeCommand}"/>
-			<MenuItem Header="Copy Node" Command="{Binding CopyNodeCommand}"/>
+			<MenuItem Header="Delete" Command="{Binding DeleteNodeCommand}"/>
+			<MenuItem Header="Copy" Command="{Binding CopyNodeCommand}"/>
 		</ContextMenu>
 	</Grid.ContextMenu>
 
@@ -31,8 +31,8 @@
 				RowDefinitions="Auto,*,Auto">
 				<Grid.ContextMenu>
 					<ContextMenu>
-						<MenuItem Header="Delete Node" Command="{Binding DeleteNodeCommand}"/>
-						<MenuItem Header="Copy Node" Command="{Binding CopyNodeCommand}"/>
+						<MenuItem Header="Delete" Command="{Binding DeleteNodeCommand}"/>
+						<MenuItem Header="Copy" Command="{Binding CopyNodeCommand}"/>
 					</ContextMenu>
 				</Grid.ContextMenu>
 			

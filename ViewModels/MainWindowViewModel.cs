@@ -1,24 +1,26 @@
 ﻿using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using mystery_app.Constants;
 using mystery_app.Messages;
+using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
-    private readonly Dictionary<string, ObservableObject> Pages = new Dictionary<string, ObservableObject>();
+    private readonly Dictionary<PageConstants.PAGE, ObservableObject> Pages = new Dictionary<PageConstants.PAGE, ObservableObject>();
     [ObservableProperty]
     private ObservableObject _currentPage;
     [ObservableProperty]
-    private SharedSettingsViewModel _sharedSettings = new SharedSettingsViewModel();
+    private SharedSettingsModel _sharedSettings = new SharedSettingsModel();
 
     public MainWindowViewModel()
     {
         // Initialize available pages
-        Pages.Add(Constants.PagesConstants.SETTINGS, new SettingsViewModel(_sharedSettings));
-        Pages.Add(Constants.PagesConstants.MAIN_CONTENT, new MainContentViewModel(_sharedSettings));
-        _currentPage = Pages[Constants.PagesConstants.MAIN_CONTENT];
+        Pages.Add(PageConstants.PAGE.Settings, new SettingsViewModel(_sharedSettings));
+        Pages.Add(PageConstants.PAGE.MainContent, new MainContentViewModel(_sharedSettings));
+        _currentPage = Pages[PageConstants.PAGE.MainContent];
 
         WeakReferenceMessenger.Default.Register<ChangePageMessage>(this, (sender, message) =>
         {

@@ -39,8 +39,4 @@ public abstract partial class NodeViewModelBase : ObservableObject
     }
 
     public abstract NodeViewModelBase Clone();
-
-    public double MinWidth = Constants.NodeConstants.MIN_WIDTH;
-
-    public double MinHeight = Constants.NodeConstants.MIN_HEIGHT;
 }

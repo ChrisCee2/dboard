@@ -10,9 +10,9 @@
 	<Application.Resources>
 		<ResourceDictionary>
 			<converters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
-			<customConverters:EdgeMidPointConverter x:Key="EdgeMidPointConverter"/>
-			<customConverters:RectanglePositionConverter x:Key="RectanglePositionConverter"/>
-			<customConverters:RectangleSizeConverter x:Key="RectangleSizeConverter"/>
+			<customConverters:MedianConverter x:Key="MedianConverter"/>
+			<customConverters:MinConverter x:Key="MinConverter"/>
+			<customConverters:DiffConverter x:Key="DiffConverter"/>
 		</ResourceDictionary>
 	</Application.Resources>
 

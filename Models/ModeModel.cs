@@ -6,6 +6,8 @@ namespace mystery_app.Models;
 
 public partial class ModeModel: ObservableObject
 {
+    public ModeModel() {}
+
     public ModeModel(string mode, Color background, bool showItems, double workspaceOpacity, string windowState)
     {
         Mode = mode;

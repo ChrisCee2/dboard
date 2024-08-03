@@ -8,7 +8,6 @@ namespace mystery_app.ViewModels;
 
 public partial class NodeViewModel : NodeViewModelBase
 {
-
     public NodeViewModel(
         string name = "",
         string desc = "",
@@ -20,14 +19,7 @@ public partial class NodeViewModel : NodeViewModelBase
     {
         _name = name;
         _desc = desc;
-        if (image is null)
-        {
-            _image = new DragDropImageViewModel(new Bitmap(AssetLoader.Open(new Uri("avares://mystery_app/Assets/amongusbutt.png"))));
-        }
-        else
-        {
-            _image = new DragDropImageViewModel(image);
-        }
+        _image = new DragDropImageViewModel((image is null) ? new Bitmap(AssetLoader.Open(new Uri("avares://mystery_app/Assets/amongusbutt.png"))) : image);
         _width = width;
         _height = height;
         _position = new Point(x, y);
