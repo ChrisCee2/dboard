@@ -1,8 +1,8 @@
-using mystery_app.Controls;
+using Avalonia.Controls;
 
 namespace mystery_app.Views;
 
-public partial class NodeView : NodeUserControl
+public partial class NodeView : UserControl
 {
     public NodeView()
     {

@@ -7,10 +7,11 @@ using mystery_app.Messages;
 using Avalonia.Controls;
 using System;
 using mystery_app.Constants;
+using Avalonia.VisualTree;
 
 namespace mystery_app.Views;
 
-public partial class InteractiveView : UserControl
+public partial class InteractiveView : Grid
 {
     // Move variables
     private bool _isMoving;
@@ -163,5 +164,23 @@ public partial class InteractiveView : UserControl
 
         // Update position in viewmodel when node is moved
         ((NodeViewModelBase)DataContext).Position = new Point(offsetX, offsetY);
+    }
+
+    // On selecting node edge creation, tell workspace this node has been selected
+    protected void SelectNodeEdge(object sender, PointerPressedEventArgs args)
+    {
+        WeakReferenceMessenger.Default.Send(new SelectNodeEdgeMessage((NodeViewModelBase)DataContext));
+    }
+
+    // On releasing node edge creation, find node released on and send to workspace
+    protected void ReleaseNodeEdge(object sender, PointerReleasedEventArgs args)
+    {
+        var root = (TopLevel)((Visual)args.Source).GetVisualRoot();
+        var rootCoordinates = args.GetPosition(root);
+        var hitElement = root.InputHitTest(rootCoordinates);
+        if (hitElement is Control control && control.Tag == Constants.NodeConstants.EDGE_BUTTON_TAG)
+        {
+            WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage((NodeViewModelBase)control.DataContext));
+        }
     }
 }

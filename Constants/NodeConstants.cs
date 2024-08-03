@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Avalonia;
-using Avalonia.Input;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Constants;
@@ -9,7 +8,7 @@ namespace mystery_app.Constants;
 public static class NodeConstants
 {
     public static int MIN_WIDTH => 100;
-    public static int MIN_HEIGHT => 100;
+    public static int MIN_HEIGHT => 120; // Extra 20 to account for edge
     public static string EDGE_BUTTON_TAG => "EdgeButton";
     public static string NONMOVABLE_TAG => "Nonmovable";
     public static Collection<string> NONMOVABLE_TAGS => new Collection<string>() { EDGE_BUTTON_TAG, NONMOVABLE_TAG };
