@@ -2,7 +2,7 @@
 using mystery_app.Constants;
 
 namespace mystery_app.Messages;
-public class ChangePageMessage : ValueChangedMessage<PageConstants.Page>
+public class ChangePageMessage : ValueChangedMessage<PageConstants.PAGE>
 {
-    public ChangePageMessage(PageConstants.Page value) : base(value) { }
+    public ChangePageMessage(PageConstants.PAGE value) : base(value) { }
 }

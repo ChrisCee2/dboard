@@ -8,7 +8,7 @@ namespace mystery_app.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
-    private readonly Dictionary<PageConstants.Page, ObservableObject> Pages = new Dictionary<PageConstants.Page, ObservableObject>();
+    private readonly Dictionary<PageConstants.PAGE, ObservableObject> Pages = new Dictionary<PageConstants.PAGE, ObservableObject>();
     [ObservableProperty]
     private ObservableObject _currentPage;
     [ObservableProperty]
@@ -17,9 +17,9 @@ public partial class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         // Initialize available pages
-        Pages.Add(PageConstants.Page.Settings, new SettingsViewModel(_sharedSettings));
-        Pages.Add(PageConstants.Page.MainContent, new MainContentViewModel(_sharedSettings));
-        _currentPage = Pages[PageConstants.Page.MainContent];
+        Pages.Add(PageConstants.PAGE.Settings, new SettingsViewModel(_sharedSettings));
+        Pages.Add(PageConstants.PAGE.MainContent, new MainContentViewModel(_sharedSettings));
+        _currentPage = Pages[PageConstants.PAGE.MainContent];
 
         WeakReferenceMessenger.Default.Register<ChangePageMessage>(this, (sender, message) =>
         {

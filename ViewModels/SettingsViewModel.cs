@@ -25,7 +25,7 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private void GoToMainContent()
     {
-        WeakReferenceMessenger.Default.Send(new ChangePageMessage(PageConstants.Page.MainContent));
+        WeakReferenceMessenger.Default.Send(new ChangePageMessage(PageConstants.PAGE.MainContent));
     }
 
     [RelayCommand]

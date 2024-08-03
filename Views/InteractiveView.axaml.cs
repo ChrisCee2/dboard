@@ -21,7 +21,7 @@ public partial class InteractiveView : Grid
     private TranslateTransform? _transform = new TranslateTransform(0, 0);
     // Resize variables
     private bool _isResizing;
-    private NodeConstants.ResizeAxis _resizeAxis;
+    private NodeConstants.RESIZE _resizeAxis;
     private Point _lastPosition;
     private double _lastWidth;
     private double _lastHeight;
@@ -120,7 +120,7 @@ public partial class InteractiveView : Grid
         // If not left click, return
         if (!e.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed) { return; }
         _isResizing = true;
-        _resizeAxis = (NodeConstants.ResizeAxis)System.Enum.Parse(typeof(NodeConstants.ResizeAxis), ((Control)sender).Tag.ToString());
+        _resizeAxis = (NodeConstants.RESIZE)System.Enum.Parse(typeof(NodeConstants.RESIZE), ((Control)sender).Tag.ToString());
         var pos = e.GetPosition((Visual?)Parent);
         _positionInBlock = new Point(pos.X - (int)_transform.X, pos.Y - (int)_transform.Y);
         _lastPosition = pos;
@@ -137,7 +137,7 @@ public partial class InteractiveView : Grid
     {
         if (Parent == null || !_isResizing) { return; }
         Point currentPosition = e.GetPosition((Visual?)Parent);
-        Point resizeDir = NodeConstants.AxisToDir[_resizeAxis];
+        Point resizeDir = NodeConstants.RESIZE_TO_DIR[_resizeAxis];
         NodeViewModelBase context = ((NodeViewModelBase)DataContext);
 
         if (_isResizing)
@@ -152,8 +152,8 @@ public partial class InteractiveView : Grid
             {
                 var moveOffsetX = (_lastPosition.X - _positionInBlock.X) + ((context.Width - _lastWidth) * resizeDir.X);
                 var moveOffsetY = (_lastPosition.Y - _positionInBlock.Y) + ((context.Height - _lastHeight) * resizeDir.Y);
-                if (_resizeAxis == NodeConstants.ResizeAxis.xY) { moveOffsetY = _transform.Y; } // Don't move on Y axis if resizing left-down
-                if (_resizeAxis == NodeConstants.ResizeAxis.Xy) { moveOffsetX = _transform.X; } // Don't move on X axis if resizing up-right
+                if (_resizeAxis == NodeConstants.RESIZE.xY) { moveOffsetY = _transform.Y; } // Don't move on Y axis if resizing left-down
+                if (_resizeAxis == NodeConstants.RESIZE.Xy) { moveOffsetX = _transform.X; } // Don't move on X axis if resizing up-right
                 _moveControl(moveOffsetX, moveOffsetY);
             }
         }

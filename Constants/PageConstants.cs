@@ -2,7 +2,7 @@
 
 public static class PageConstants
 {
-    public enum Page
+    public enum PAGE
     {
         MainContent,
         Settings

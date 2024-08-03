@@ -48,7 +48,7 @@ public partial class DragDropImageView : Panel
 
     private bool _IsImage(string url)
     {
-        return Constants.ImageConstants.imageUrlRegex.IsMatch(url);
+        return Constants.ImageConstants.IMAGE_URL_REGEX.IsMatch(url);
     }
 
     private async void OpenFileButton_Clicked(object sender, RoutedEventArgs args)
