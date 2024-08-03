@@ -21,7 +21,7 @@ public partial class MainContentViewModel : ObservableObject
     [RelayCommand]
     private void CreateNode()
     {
-        WeakReferenceMessenger.Default.Send(new CreateNodeMessage(""));
+        Workspace.CreateEmptyNode();
     }
 
     [RelayCommand]

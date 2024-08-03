@@ -38,11 +38,6 @@ public partial class WorkspaceViewModel : ObservableObject
     public WorkspaceViewModel(SharedSettingsViewModel sharedSettings)
     {
         _sharedSettings = sharedSettings;
-
-        WeakReferenceMessenger.Default.Register<CreateNodeMessage>(this, (sender, message) =>
-        {
-            Nodes.Add(new NodeViewModel());
-        });
         
         WeakReferenceMessenger.Default.Register<SelectNodeEdgeMessage>(this, (sender, message) =>
         {
@@ -103,7 +98,7 @@ public partial class WorkspaceViewModel : ObservableObject
     [RelayCommand]
     private void CreateNode()
     {
-        WeakReferenceMessenger.Default.Send(new CreateNodeMessage(""));
+        CreateEmptyNode();
     }
 
     [RelayCommand(CanExecute = nameof(CanPaste))]
@@ -113,5 +108,10 @@ public partial class WorkspaceViewModel : ObservableObject
         {
             Nodes.Add(node.Clone());
         }
+    }
+
+    public void CreateEmptyNode()
+    {
+        Nodes.Add(new NodeViewModel());
     }
 }

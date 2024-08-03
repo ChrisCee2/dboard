@@ -77,7 +77,7 @@ public partial class InteractiveView : Grid
 
         if (clickProperties.IsRightButtonPressed)
         {
-            WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage((NodeViewModelBase)DataContext));
+            WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
         }
         else if (clickProperties.IsLeftButtonPressed)
         {
@@ -85,10 +85,10 @@ public partial class InteractiveView : Grid
             if (e.ClickCount >= 2)
             {
                 ((NodeViewModelBase)DataContext).IsEdit = true;
-                WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage((NodeViewModelBase)DataContext));
+                WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
                 return;
             }
-            WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage((NodeViewModelBase)DataContext));
+            WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
 
             _isMoving = true;
             var pos = e.GetPosition((Visual?)Parent);
@@ -174,7 +174,7 @@ public partial class InteractiveView : Grid
         var clickProperties = e.GetCurrentPoint(Parent as Visual).Properties;
         if (!clickProperties.IsLeftButtonPressed) { return; }
 
-        WeakReferenceMessenger.Default.Send<SelectNodeMessage>(new SelectNodeMessage((NodeViewModelBase)DataContext));
+        WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
         WeakReferenceMessenger.Default.Send(new SelectNodeEdgeMessage((NodeViewModelBase)DataContext));
     }
 
