@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using mystery_app.Constants;
 using mystery_app.Messages;
 
 namespace mystery_app.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
-    private readonly Dictionary<string, ObservableObject> Pages = new Dictionary<string, ObservableObject>();
+    private readonly Dictionary<PageConstants.Page, ObservableObject> Pages = new Dictionary<PageConstants.Page, ObservableObject>();
     [ObservableProperty]
     private ObservableObject _currentPage;
     [ObservableProperty]
@@ -16,9 +17,9 @@ public partial class MainWindowViewModel : ObservableObject
     public MainWindowViewModel()
     {
         // Initialize available pages
-        Pages.Add(Constants.PagesConstants.SETTINGS, new SettingsViewModel(_sharedSettings));
-        Pages.Add(Constants.PagesConstants.MAIN_CONTENT, new MainContentViewModel(_sharedSettings));
-        _currentPage = Pages[Constants.PagesConstants.MAIN_CONTENT];
+        Pages.Add(PageConstants.Page.Settings, new SettingsViewModel(_sharedSettings));
+        Pages.Add(PageConstants.Page.MainContent, new MainContentViewModel(_sharedSettings));
+        _currentPage = Pages[PageConstants.Page.MainContent];
 
         WeakReferenceMessenger.Default.Register<ChangePageMessage>(this, (sender, message) =>
         {

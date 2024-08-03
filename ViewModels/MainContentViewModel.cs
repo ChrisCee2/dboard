@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using mystery_app.Constants;
 using mystery_app.Messages;
 
 namespace mystery_app.ViewModels;
@@ -26,6 +27,6 @@ public partial class MainContentViewModel : ObservableObject
     [RelayCommand]
     private void GoToSettings()
     {
-        WeakReferenceMessenger.Default.Send(new ChangePageMessage(Constants.PagesConstants.SETTINGS));
+        WeakReferenceMessenger.Default.Send(new ChangePageMessage(PageConstants.Page.Settings));
     }
 }

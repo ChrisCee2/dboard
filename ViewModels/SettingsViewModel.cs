@@ -3,6 +3,7 @@ using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using mystery_app.Constants;
 using mystery_app.Messages;
 using mystery_app.Models;
 
@@ -24,7 +25,7 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private void GoToMainContent()
     {
-        WeakReferenceMessenger.Default.Send(new ChangePageMessage(Constants.PagesConstants.MAIN_CONTENT));
+        WeakReferenceMessenger.Default.Send(new ChangePageMessage(PageConstants.Page.MainContent));
     }
 
     [RelayCommand]

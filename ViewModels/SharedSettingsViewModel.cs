@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using mystery_app.Constants;
 using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
@@ -7,7 +8,7 @@ namespace mystery_app.ViewModels;
 public partial class SharedSettingsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string _theme = Constants.SettingsConstants.DEFAULT_THEME;
+    private string _theme = SettingsConstants.THEMES[0];
     [ObservableProperty]
     private bool _showNotes = true;
     [ObservableProperty]

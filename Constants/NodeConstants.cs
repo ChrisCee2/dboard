@@ -7,12 +7,13 @@ namespace mystery_app.Constants;
 
 public static class NodeConstants
 {
-    public static int MIN_WIDTH => 100;
-    public static int MIN_HEIGHT => 120; // Extra 20 to account for edge
-    public static string EDGE_BUTTON_TAG => "EdgeButton";
-    public static string NONMOVABLE_TAG => "Nonmovable";
-    public static Collection<string> NONMOVABLE_TAGS => new Collection<string>() { EDGE_BUTTON_TAG, NONMOVABLE_TAG };
-    public static readonly NodeViewModel NULL_NODEVIEWMODEL = new NodeViewModel(); 
+    public static readonly NodeViewModel NULL_NODEVIEWMODEL = new NodeViewModel();
+
+    // Size constants
+    public const int MIN_WIDTH = 100;
+    public const int MIN_HEIGHT = 120; // Extra 20 to account for edge
+
+    // Resize constants
     public enum ResizeAxis
     {
         X, // RIGHT
@@ -24,7 +25,7 @@ public static class NodeConstants
         Xy,// RIGHT UP
         xy // LEFT UP
     }
-    public static Dictionary<ResizeAxis, Point> AxisToDir => new Dictionary<ResizeAxis, Point>()
+    public static readonly Dictionary<ResizeAxis, Point> AxisToDir = new Dictionary<ResizeAxis, Point>()
     {
         { ResizeAxis.X, new Point( 1, 0) },
         { ResizeAxis.Y, new Point( 0, 1) },
