@@ -6,7 +6,7 @@ namespace mystery_app.Models;
 
 public class EdgeCollectionModel : ObservableCollection<EdgeViewModel>
 {
-    public bool ContainsEdge(NodeViewModelBase fromNode, NodeViewModelBase toNode)
+    public bool ContainsEdge(NodeModelBase fromNode, NodeModelBase toNode)
     {
         foreach (EdgeViewModel edgeViewModel in this)
         {
@@ -21,7 +21,7 @@ public class EdgeCollectionModel : ObservableCollection<EdgeViewModel>
     }
 
     // Can be used in future if looking for one way edges
-    public bool ContainsEdgeOneWay(NodeViewModelBase fromNode, NodeViewModelBase toNode)
+    public bool ContainsEdgeOneWay(NodeModelBase fromNode, NodeModelBase toNode)
     {
         foreach (EdgeViewModel edgeViewModel in this)
         {

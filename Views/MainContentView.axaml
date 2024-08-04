@@ -19,6 +19,9 @@
 					<DockPanel HorizontalAlignment="Stretch"/>
 				</ItemsPanelTemplate>
 			</Menu.ItemsPanel>
+			<MenuItem Header = "File">
+				<MenuItem Header = "Save" PointerReleased="Save"/>
+			</MenuItem>
 			<MenuItem Header = "Actions">
 				<MenuItem Header = "Create Node" Command="{Binding CreateNodeCommand}"/>
 			</MenuItem>

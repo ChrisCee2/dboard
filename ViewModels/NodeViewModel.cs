@@ -1,8 +1,8 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
+using mystery_app.Constants;
+using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
 
@@ -15,34 +15,37 @@ public partial class NodeViewModel : NodeViewModelBase
         double width = 150,
         double height = 150,
         double x = 0,
-        double y = 0)
+        double y = 0,
+        string notes = "")
     {
-        _name = name;
-        _desc = desc;
-        _image = new DragDropImageViewModel((image is null) ? new Bitmap(AssetLoader.Open(new Uri("avares://mystery_app/Assets/amongusbutt.png"))) : image);
-        _width = width;
-        _height = height;
-        _position = new Point(x, y);
+        Node = new NodeModel(
+            name, 
+            desc,
+            new DragDropImageViewModel((image is null) ? NodeConstants.DEFAULT_IMAGE : image), 
+            width, 
+            height, 
+            new Point(x, y),
+            notes);
     }
 
     [ObservableProperty]
-    private string _name;
-
-    [ObservableProperty]
-    private DragDropImageViewModel _image;
-
-    [ObservableProperty]
-    private string _notes;
+    private NodeModel _node;
+    public override NodeModelBase NodeBase
+    {
+        get { return _node; }
+        set { _node = (NodeModel)value; }
+    }
 
     public override NodeViewModelBase Clone()
     {
         return new NodeViewModel(
-            _name,
-            _desc,
-            _image.Image,
-            _width,
-            _height,
-            _position.X,
-            _position.Y);
+            Node.Name,
+            Node.Desc,
+            Node.Image.Image,
+            Node.Width,
+            Node.Height,
+            Node.Position.X,
+            Node.Position.Y,
+            Node.Notes);
     }
 }

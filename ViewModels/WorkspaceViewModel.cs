@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -13,7 +12,7 @@ namespace mystery_app.ViewModels;
 
 public partial class WorkspaceViewModel : ObservableObject
 {
-    public ObservableCollection<NodeViewModelBase> Nodes { get; set; } = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
+    public ObservableCollection<NodeViewModelBase> Nodes { get; set; } = new ObservableCollection<NodeViewModelBase>();
     public EdgeCollectionModel Edges { get; set; } = new EdgeCollectionModel();
     [ObservableProperty]
     private NodeViewModelBase? _selectedNodeEdge = NodeConstants.NULL_NODEVIEWMODEL;
@@ -28,7 +27,7 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private bool _isMultiSelecting;
     [ObservableProperty]
-    private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>(new List<NodeViewModelBase>());
+    private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>();
     [ObservableProperty]
     private SharedSettingsModel _sharedSettings;
     [ObservableProperty]
@@ -56,9 +55,9 @@ public partial class WorkspaceViewModel : ObservableObject
             if (Nodes.Contains(enteredNode) 
                 && Nodes.Contains(SelectedNodeEdge)
                 && !Equals(enteredNode, SelectedNodeEdge)
-                && !Edges.ContainsEdge(SelectedNodeEdge, enteredNode))
+                && !Edges.ContainsEdge(SelectedNodeEdge.NodeBase, enteredNode.NodeBase))
             {
-                Edges.Add(new EdgeViewModel(SelectedNodeEdge, enteredNode));
+                Edges.Add(new EdgeViewModel(SelectedNodeEdge.NodeBase, enteredNode.NodeBase));
             }
             SelectedNodeEdge = NodeConstants.NULL_NODEVIEWMODEL;
         });
@@ -66,9 +65,9 @@ public partial class WorkspaceViewModel : ObservableObject
         WeakReferenceMessenger.Default.Register<DeleteNodeMessage>(this, (sender, message) =>
         {
             // Deregisters move messenger through the property listener in InteractiveView
-            foreach (var node in SelectedNodes)
+            foreach (var nodeVM in SelectedNodes)
             {
-                node.IsSelected = false;
+                nodeVM.IsSelected = false;
             }
 
             // Remove nodes
@@ -78,9 +77,13 @@ public partial class WorkspaceViewModel : ObservableObject
             var edgesToRemove = new Collection<EdgeViewModel>();
             foreach (EdgeViewModel edgeViewModel in Edges)
             {
-                if (SelectedNodes.Contains(edgeViewModel.Edge.FromNode) || SelectedNodes.Contains(edgeViewModel.Edge.ToNode))
+                foreach (NodeViewModelBase nodeVM in SelectedNodes)
                 {
-                    edgesToRemove.Add(edgeViewModel);
+                    if (nodeVM.NodeBase == edgeViewModel.Edge.FromNode || nodeVM.NodeBase == edgeViewModel.Edge.ToNode)
+                    {
+                        edgesToRemove.Add(edgeViewModel);
+                        break;
+                    }
                 }
             }
             Edges.RemoveMany(edgesToRemove);

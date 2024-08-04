@@ -8,8 +8,8 @@ namespace mystery_app.ViewModels;
 public partial class EdgeViewModel : ObservableObject
 {
     public EdgeViewModel(
-        NodeViewModelBase fromNode,
-        NodeViewModelBase toNode,
+        NodeModelBase fromNode,
+        NodeModelBase toNode,
         string description = "",
         double thickness = EdgeConstants.THICKNESS)
     {
@@ -17,8 +17,8 @@ public partial class EdgeViewModel : ObservableObject
     }
 
     public EdgeViewModel(
-        NodeViewModelBase fromNode,
-        NodeViewModelBase toNode,
+        NodeModelBase fromNode,
+        NodeModelBase toNode,
         Color color,
         string description = "",
         double thickness = EdgeConstants.THICKNESS)

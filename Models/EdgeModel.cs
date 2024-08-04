@@ -5,7 +5,7 @@ namespace mystery_app.Models;
 
 public class EdgeModel
 {
-    public EdgeModel(NodeViewModelBase fromNode, NodeViewModelBase toNode, string description, double thickness, Color color)
+    public EdgeModel(NodeModelBase fromNode, NodeModelBase toNode, string description, double thickness, Color color)
     {
         FromNode = fromNode;
         ToNode = toNode;
@@ -15,18 +15,18 @@ public class EdgeModel
     }
 
 
-    private NodeViewModelBase _fromNode;
-    private NodeViewModelBase _toNode;
+    private NodeModelBase _fromNode;
+    private NodeModelBase _toNode;
     private string _description;
     private double _thickness;
     private Color _color;
 
-    public NodeViewModelBase FromNode
+    public NodeModelBase FromNode
     {
         get { return _fromNode; }
         set { _fromNode = value; }
     }
-    public NodeViewModelBase ToNode
+    public NodeModelBase ToNode
     {
         get { return _toNode; }
         set { _toNode = value; }
