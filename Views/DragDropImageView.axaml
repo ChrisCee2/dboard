@@ -3,13 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:vm="using:mystery_app.ViewModels"
     x:Class="mystery_app.Views.DragDropImageView"
-    x:DataType="vm:DragDropImageViewModel"
-	DragDrop.AllowDrop="True">
+	DragDrop.AllowDrop="True"
+	x:DataType="Bitmap">
 	<Design.DataContext>
-		<vm:DragDropImageViewModel/>
-    </Design.DataContext>
+		<Bitmap/>
+	</Design.DataContext>
 
 	<Panel.Styles>
 		<Style Selector="Button">
@@ -23,7 +22,7 @@
 		</Style>
 	</Panel.Styles>
 
-	<Image Source="{Binding Image}"/>
+	<Image Source="{Binding}"/>
 	<Button
 		HorizontalAlignment="Stretch"
 		VerticalAlignment="Stretch"

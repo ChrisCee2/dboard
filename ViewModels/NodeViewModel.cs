@@ -21,7 +21,7 @@ public partial class NodeViewModel : NodeViewModelBase
         Node = new NodeModel(
             name, 
             desc,
-            new DragDropImageViewModel((image is null) ? NodeConstants.DEFAULT_IMAGE : image), 
+            (image is null) ? NodeConstants.DEFAULT_IMAGE : image, 
             width, 
             height, 
             new Point(x, y),
@@ -41,7 +41,7 @@ public partial class NodeViewModel : NodeViewModelBase
         return new NodeViewModel(
             Node.Name,
             Node.Desc,
-            Node.Image.Image,
+            Node.Image,
             Node.Width,
             Node.Height,
             Node.Position.X,

@@ -30,7 +30,7 @@ public partial class DragDropImageView : Panel
                     {
                         if (imageStream is not null)
                         {
-                            ((DragDropImageViewModel)DataContext).Image = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
+                            DataContext = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
                         }
                     }
                 }
@@ -52,7 +52,7 @@ public partial class DragDropImageView : Panel
             {
                 if (imageStream is not null)
                 {
-                    ((DragDropImageViewModel)DataContext).Image = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
+                    DataContext = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
                 }
             }
         }

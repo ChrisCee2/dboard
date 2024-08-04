@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using mystery_app.ViewModels;
 using Avalonia;
 using mystery_app.Constants;
+using Avalonia.Media.Imaging;
 
 namespace mystery_app.Models;
 
@@ -11,7 +11,7 @@ public partial class NodeModel : NodeModelBase
     {
         Name = "";
         Desc = "";
-        Image = new DragDropImageViewModel(NodeConstants.DEFAULT_IMAGE);
+        Image = NodeConstants.DEFAULT_IMAGE;
         Width = NodeConstants.MIN_WIDTH;
         Height = NodeConstants.MIN_HEIGHT;
         Position = new Point(0, 0);
@@ -21,7 +21,7 @@ public partial class NodeModel : NodeModelBase
     public NodeModel(
         string name,
         string desc,
-        DragDropImageViewModel image,
+        Bitmap image,
         double width,
         double height,
         Point position,
@@ -40,7 +40,7 @@ public partial class NodeModel : NodeModelBase
     private string _name;
 
     [ObservableProperty]
-    private DragDropImageViewModel _image;
+    private Bitmap _image;
 
     [ObservableProperty]
     private string _notes;

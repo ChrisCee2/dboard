@@ -1,8 +1,10 @@
-﻿using Avalonia;
+﻿using System.Text.Json.Serialization;
+using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace mystery_app.Models;
 
+[JsonDerivedType(typeof(NodeModel), typeDiscriminator: "")]
 public abstract partial class NodeModelBase : ObservableObject
 {
     [ObservableProperty]
