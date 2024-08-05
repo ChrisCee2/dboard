@@ -1,9 +1,15 @@
 ﻿using System.Collections.Generic;
+using Avalonia.Controls;
+using System.IO;
+using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Constants;
 using mystery_app.Messages;
 using mystery_app.Models;
+using System;
+using Avalonia.Logging;
+using CommunityToolkit.Mvvm.Input;
 
 namespace mystery_app.ViewModels;
 
@@ -13,13 +19,16 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private ObservableObject _currentPage;
     [ObservableProperty]
-    private SharedSettingsModel _sharedSettings = new SharedSettingsModel();
+    private SettingsModel _sharedSettings;
 
     public MainWindowViewModel()
     {
+        // Initialize shared settings
+        SharedSettings = LoadSettings();
+
         // Initialize available pages
-        Pages.Add(PageConstants.PAGE.Settings, new SettingsViewModel(_sharedSettings));
-        Pages.Add(PageConstants.PAGE.MainContent, new MainContentViewModel(_sharedSettings));
+        Pages.Add(PageConstants.PAGE.Settings, new SettingsViewModel(SharedSettings));
+        Pages.Add(PageConstants.PAGE.MainContent, new MainContentViewModel(SharedSettings));
         _currentPage = Pages[PageConstants.PAGE.MainContent];
 
         WeakReferenceMessenger.Default.Register<ChangePageMessage>(this, (sender, message) =>
@@ -27,5 +36,64 @@ public partial class MainWindowViewModel : ObservableObject
             var pageName = message.Value;
             CurrentPage = Pages.ContainsKey(pageName) ? Pages[pageName] : CurrentPage;
         });
+    }
+
+    public SettingsModel LoadSettings()
+    {
+        if (File.Exists("./Settings.json"))
+        {
+            using (FileStream stream = File.OpenRead("./Settings.json"))
+            {
+                try
+                {
+                    return JsonSerializer.Deserialize<SettingsModel>(stream);
+                }
+                catch (Exception e)
+                {
+                    Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, e.Message);
+                    return new SettingsModel();
+                }
+            }
+        }
+        else
+        {
+            return new SettingsModel();
+        }
+    }
+
+    public async void SaveSettings()
+    {
+        string settings = JsonSerializer.Serialize(SharedSettings);
+        File.WriteAllText("./Settings.json", settings);
+    }
+
+    public void OnWindowClosing(object sender, WindowClosingEventArgs e)
+    {
+        SaveSettings();
+    }
+
+    [RelayCommand]
+    private void ToggleMode()
+    {
+        if (SharedSettings.ModeModel is ToggleModeModel modeModel)
+        {
+            modeModel.Toggle();
+        }
+    }
+
+    [RelayCommand]
+    private void ToggleFullScreen()
+    {
+        if (SharedSettings.ModeModel.Equals(SharedSettings.UserModeModel))
+        {
+            if (SharedSettings.UserModeModel.WindowState == "FullScreen")
+            {
+                SharedSettings.UserModeModel.WindowState = "Normal";
+            }
+            else if (SharedSettings.UserModeModel.WindowState == "Normal")
+            {
+                SharedSettings.UserModeModel.WindowState = "FullScreen";
+            }
+        }
     }
 }

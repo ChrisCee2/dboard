@@ -11,11 +11,11 @@ namespace mystery_app.ViewModels;
 public partial class SettingsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private SharedSettingsModel _sharedSettings;
+    private SettingsModel _sharedSettings;
     [ObservableProperty]
     private Collection<ModeModel> _modes = new Collection<ModeModel>();
 
-    public SettingsViewModel(SharedSettingsModel sharedSettings)
+    public SettingsViewModel(SettingsModel sharedSettings)
     {
         SharedSettings = sharedSettings;
         Modes.Add(sharedSettings.UserModeModel);

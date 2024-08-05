@@ -18,8 +18,8 @@
     </Design.DataContext>
 
 	<Window.KeyBindings>
-		<KeyBinding Gesture="Tab" Command="{Binding SharedSettings.ToggleModeCommand}" />
-		<KeyBinding Gesture="P" Command="{Binding SharedSettings.ToggleFullScreenCommand}" />
+		<KeyBinding Gesture="Tab" Command="{Binding ToggleModeCommand}" />
+		<KeyBinding Gesture="P" Command="{Binding ToggleFullScreenCommand}" />
 	</Window.KeyBindings>
 
 	<TransitioningContentControl Content="{Binding CurrentPage}" />
