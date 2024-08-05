@@ -9,13 +9,14 @@ namespace mystery_app.ViewModels;
 
 public partial class MainContentViewModel : ObservableObject
 {
-    public WorkspaceViewModel Workspace { get; set; }
+    [ObservableProperty]
+    public WorkspaceViewModel _workspace;
     [ObservableProperty]
     private SharedSettingsModel _sharedSettings;
 
     public MainContentViewModel(SharedSettingsModel sharedSettings)
     {
-        _sharedSettings = sharedSettings;
+        SharedSettings = sharedSettings;
         Workspace = new WorkspaceViewModel(sharedSettings);
     }
 
@@ -29,5 +30,11 @@ public partial class MainContentViewModel : ObservableObject
     private void GoToSettings()
     {
         WeakReferenceMessenger.Default.Send(new ChangePageMessage(PageConstants.PAGE.Settings));
+    }
+
+    [RelayCommand]
+    private void New()
+    {
+        Workspace = new WorkspaceViewModel(SharedSettings);
     }
 }
