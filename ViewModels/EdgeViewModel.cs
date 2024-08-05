@@ -15,20 +15,6 @@ public partial class EdgeViewModel : ObservableObject
     public EdgeViewModel(
         NodeModelBase fromNode,
         NodeModelBase toNode,
-        string description = "",
-        double thickness = EdgeConstants.THICKNESS)
-    {
-        Edge = new EdgeModel(
-            fromNode, 
-            toNode, 
-            description, 
-            thickness, 
-            EdgeConstants.COLOR.A, EdgeConstants.COLOR.R, EdgeConstants.COLOR.G, EdgeConstants.COLOR.B);
-    }
-
-    public EdgeViewModel(
-        NodeModelBase fromNode,
-        NodeModelBase toNode,
         Color color,
         string description = "",
         double thickness = EdgeConstants.THICKNESS)

@@ -7,10 +7,24 @@ public class EdgeModel
     public EdgeModel() {}
 
     public EdgeModel(
+        NodeModelBase fromNode,
+        NodeModelBase toNode)
+    {
+        FromNode = fromNode;
+        ToNode = toNode;
+        Description = "";
+        Thickness = EdgeConstants.THICKNESS;
+        A = EdgeConstants.A;
+        R = EdgeConstants.R;
+        G = EdgeConstants.G;
+        B = EdgeConstants.B;
+    }
+
+    public EdgeModel(
         NodeModelBase fromNode, 
         NodeModelBase toNode, 
         string description, 
-        double thickness, 
+        double thickness = EdgeConstants.THICKNESS, 
         byte a=EdgeConstants.A, byte r=EdgeConstants.R, byte g=EdgeConstants.G, byte b=EdgeConstants.B)
     {
         FromNode = fromNode;
