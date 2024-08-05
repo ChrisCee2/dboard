@@ -6,9 +6,9 @@ using Avalonia.Media;
 using Avalonia.Media.Immutable;
 
 namespace mystery_app.Converters;
-public class ARGBConverter : IMultiValueConverter
+public class ARGBBrushConverter : IMultiValueConverter
 {
-    public static readonly ARGBConverter Instance = new();
+    public static readonly ARGBBrushConverter Instance = new();
 
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
@@ -21,7 +21,11 @@ public class ARGBConverter : IMultiValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        throw new NotSupportedException();
+        if (value is ImmutableSolidColorBrush brush) 
+        {
+            return new List<byte> { brush.Color.A, brush.Color.R, brush.Color.G, brush.Color.B };
+        }
+        return null;
     }
 
 }

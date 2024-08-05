@@ -10,8 +10,15 @@
     Icon="/Assets/avalonia-logo.ico"
     Title="mystery_app"
 	RequestedThemeVariant="{Binding SharedSettings.Theme}"
-	Background="{Binding SharedSettings.ModeModel.Background, Converter={StaticResource ColorToBrushConverter}}"
 	WindowState="{Binding SharedSettings.ModeModel.WindowState}">
+	<Window.Background>
+		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+			<Binding Path="SharedSettings.ModeModel.A"/>
+			<Binding Path="SharedSettings.ModeModel.R"/>
+			<Binding Path="SharedSettings.ModeModel.G"/>
+			<Binding Path="SharedSettings.ModeModel.B"/>
+		</MultiBinding>
+	</Window.Background>
 
 	<Design.DataContext>
         <vm:MainWindowViewModel/>

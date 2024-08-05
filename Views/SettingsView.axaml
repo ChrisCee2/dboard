@@ -7,8 +7,15 @@
 	xmlns:constants ="clr-namespace:mystery_app.Constants"
 	mc:Ignorable="d"
 	x:Class="mystery_app.Views.SettingsView"
-	x:DataType="vm:SettingsViewModel"
-	Background="{Binding SharedSettings.ModeModel.Background, Converter={StaticResource ColorToBrushConverter}}">
+	x:DataType="vm:SettingsViewModel">
+	<UserControl.Background>
+		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+			<Binding Path="SharedSettings.ModeModel.A"/>
+			<Binding Path="SharedSettings.ModeModel.R"/>
+			<Binding Path="SharedSettings.ModeModel.G"/>
+			<Binding Path="SharedSettings.ModeModel.B"/>
+		</MultiBinding>
+	</UserControl.Background>
 	
 	<Design.DataContext>
 		<vm:SettingsViewModel />
@@ -46,8 +53,8 @@
 				<StackPanel>
 					<TextBlock Text="Change Background"/>
 					<ColorPicker 
-						HorizontalAlignment="Left" 
-						Color="{Binding SharedSettings.UserModeModel.Background}"/>
+						HorizontalAlignment="Left"
+						Color="{Binding Background}"/>
 				</StackPanel>
 				<StackPanel>
 					<TextBlock Text="Show Notes"/>
@@ -64,7 +71,7 @@
 						SelectedItem="{Binding SharedSettings.ModeModel}">
 						<ComboBox.ItemTemplate>
 							<DataTemplate>
-								<TextBlock Text="{Binding Mode}"/>
+								<TextBlock Text="{Binding Name}"/>
 							</DataTemplate>
 						</ComboBox.ItemTemplate>
 					</ComboBox>

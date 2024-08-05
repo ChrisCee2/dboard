@@ -40,7 +40,7 @@
 			</MultiBinding>
 		</Line.EndPoint>
 		<Line.Stroke>
-			<MultiBinding Converter="{StaticResource ARGBConverter}">
+			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 				<Binding Path="Edge.A"/>
 				<Binding Path="Edge.R"/>
 				<Binding Path="Edge.G"/>

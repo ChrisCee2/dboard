@@ -10,11 +10,18 @@ using mystery_app.Models;
 using System;
 using Avalonia.Logging;
 using CommunityToolkit.Mvvm.Input;
+using System.Text.Json.Serialization;
 
 namespace mystery_app.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
+    JsonSerializerOptions options = new()
+    {
+        ReferenceHandler = ReferenceHandler.Preserve,
+        WriteIndented = true
+    };
+
     private readonly Dictionary<PageConstants.PAGE, ObservableObject> Pages = new Dictionary<PageConstants.PAGE, ObservableObject>();
     [ObservableProperty]
     private ObservableObject _currentPage;
@@ -46,7 +53,7 @@ public partial class MainWindowViewModel : ObservableObject
             {
                 try
                 {
-                    return JsonSerializer.Deserialize<SettingsModel>(stream);
+                    return JsonSerializer.Deserialize<SettingsModel>(stream, options);
                 }
                 catch (Exception e)
                 {
@@ -63,7 +70,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     public async void SaveSettings()
     {
-        string settings = JsonSerializer.Serialize(SharedSettings);
+        string settings = JsonSerializer.Serialize(SharedSettings, options);
         File.WriteAllText("./Settings.json", settings);
     }
 
@@ -75,7 +82,7 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private void ToggleMode()
     {
-        if (SharedSettings.ModeModel is ToggleModeModel modeModel)
+        if (SharedSettings.ModeModel is ModeModelToggle modeModel)
         {
             modeModel.Toggle();
         }

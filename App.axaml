@@ -9,12 +9,12 @@
 
 	<Application.Resources>
 		<ResourceDictionary>
-			<converters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
 			<customConverters:MedianConverter x:Key="MedianConverter"/>
 			<customConverters:MinConverter x:Key="MinConverter"/>
 			<customConverters:DiffConverter x:Key="DiffConverter"/>
 			<customConverters:PointConverter x:Key="PointConverter"/>
-			<customConverters:ARGBConverter x:Key="ARGBConverter"/>
+			<customConverters:ARGBBrushConverter x:Key="ARGBBrushConverter"/>
+			<customConverters:ARGBColorConverter x:Key="ARGBColorConverter"/>
 		</ResourceDictionary>
 	</Application.Resources>
 
