@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Avalonia;
 using mystery_app.Constants;
-using Avalonia.Media.Imaging;
 
 namespace mystery_app.Models;
 
@@ -14,7 +12,8 @@ public partial class NodeModel : NodeModelBase
         ImagePath = NodeConstants.DEFAULT_IMAGE_PATH;
         Width = NodeConstants.MIN_WIDTH;
         Height = NodeConstants.MIN_HEIGHT;
-        Position = new Point(0, 0);
+        PositionX = 0;
+        PositionY = 0;
         Notes = "";
     }
 
@@ -24,7 +23,8 @@ public partial class NodeModel : NodeModelBase
         string imagePath,
         double width,
         double height,
-        Point position,
+        double x,
+        double y,
         string notes)
     {
         Name = name;
@@ -32,7 +32,8 @@ public partial class NodeModel : NodeModelBase
         ImagePath = imagePath;
         Width = width;
         Height = height;
-        Position = position;
+        PositionX = x;
+        PositionY = y;
         Notes = notes;
     }
 

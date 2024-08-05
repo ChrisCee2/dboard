@@ -101,7 +101,7 @@
 			<!--Edge for edge creation-->
 			<Canvas>
 				<Line
-					StartPoint="{Binding SelectedNodeEdge.NodeBase.Position}"
+					StartPoint="{Binding PressedPosition}"
 					EndPoint="{Binding CursorPosition}"
 					Stroke="Red"
 					StrokeThickness="{Binding EdgeThickness}"

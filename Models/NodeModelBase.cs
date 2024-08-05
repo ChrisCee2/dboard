@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace mystery_app.Models;
@@ -17,5 +16,8 @@ public abstract partial class NodeModelBase : ObservableObject
     private double _height;
 
     [ObservableProperty]
-    private Point _position;
+    private double _positionX;
+
+    [ObservableProperty]
+    private double _positionY;
 }

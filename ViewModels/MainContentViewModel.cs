@@ -35,6 +35,12 @@ public partial class MainContentViewModel : ObservableObject
     [RelayCommand]
     private void New()
     {
+        foreach (var node in Workspace.Nodes)
+        {
+            // Unregisters all nodes. TODO: Improve this, there has to be a better way to unregister everything
+            node.IsSelected = false;
+        }
+
         Workspace = new WorkspaceViewModel(SharedSettings);
     }
 }

@@ -41,10 +41,11 @@ public partial class WorkspaceViewModel : ObservableObject
         
         WeakReferenceMessenger.Default.Register<SelectNodeEdgeMessage>(this, (sender, message) =>
         {
-            if (Nodes.Contains(message.Value))
+            if (message.Value is NodeViewModelBase nodeVMBase && Nodes.Contains(nodeVMBase))
             {
                 EdgeThickness = EdgeConstants.THICKNESS;
                 SelectedNodeEdge = message.Value;
+                PressedPosition = new Point(nodeVMBase.NodeBase.PositionX, nodeVMBase.NodeBase.PositionY);
             }
         });
 

@@ -1,17 +1,26 @@
-﻿using Avalonia.Media;
-using mystery_app.ViewModels;
+﻿using mystery_app.Constants;
 
 namespace mystery_app.Models;
 
 public class EdgeModel
 {
-    public EdgeModel(NodeModelBase fromNode, NodeModelBase toNode, string description, double thickness, Color color)
+    public EdgeModel() {}
+
+    public EdgeModel(
+        NodeModelBase fromNode, 
+        NodeModelBase toNode, 
+        string description, 
+        double thickness, 
+        byte a=EdgeConstants.A, byte r=EdgeConstants.R, byte g=EdgeConstants.G, byte b=EdgeConstants.B)
     {
         FromNode = fromNode;
         ToNode = toNode;
         Description = description;
         Thickness = thickness;
-        Color = color;
+        A = a;
+        R = r;
+        G = g;
+        B = b;
     }
 
 
@@ -19,7 +28,10 @@ public class EdgeModel
     private NodeModelBase _toNode;
     private string _description;
     private double _thickness;
-    private Color _color;
+    private byte _a;
+    private byte _r;
+    private byte _g;
+    private byte _b;
 
     public NodeModelBase FromNode
     {
@@ -41,9 +53,24 @@ public class EdgeModel
         get { return _thickness; }
         set { _thickness = value; }
     }
-    public Color Color
+    public byte A
     {
-        get { return _color; }
-        set { _color = value; }
+        get { return _a; }
+        set { _a = value; }
+    }
+    public byte R
+    {
+        get { return _r; }
+        set { _r = value; }
+    }
+    public byte G
+    {
+        get { return _g; }
+        set { _g = value; }
+    }
+    public byte B
+    {
+        get { return _b; }
+        set { _b = value; }
     }
 }

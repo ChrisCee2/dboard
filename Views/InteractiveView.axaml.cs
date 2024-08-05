@@ -9,7 +9,6 @@ using System;
 using mystery_app.Constants;
 using Avalonia.VisualTree;
 using Avalonia.LogicalTree;
-using Avalonia.Logging;
 
 namespace mystery_app.Views;
 
@@ -37,9 +36,9 @@ public partial class InteractiveView : Grid
         if (DataContext != null)
         {
             // Render position of control on loading data context
-            var position = ((NodeViewModelBase)DataContext).NodeBase.Position;
-            _transform = new TranslateTransform(position.X, position.Y);
-            RenderTransform = new TranslateTransform(position.X, position.Y);
+            var node = ((NodeViewModelBase)DataContext).NodeBase;
+            _transform = new TranslateTransform(node.PositionX, node.PositionY);
+            RenderTransform = _transform;
 
             // Handle isSelected
             NodeViewModelBase viewModel = (NodeViewModelBase)this.DataContext;
@@ -54,8 +53,8 @@ public partial class InteractiveView : Grid
                     {
                         WeakReferenceMessenger.Default.Register<MoveNodeMessage>(this, (sender, message) =>
                         {
-                                var offsetX = ((NodeViewModelBase)DataContext).NodeBase.Position.X + message.Value.X;
-                                var offsetY = ((NodeViewModelBase)DataContext).NodeBase.Position.Y + message.Value.Y;
+                                var offsetX = node.PositionX + message.Value.X;
+                                var offsetY = node.PositionY + message.Value.Y;
                                 _moveControl(offsetX, offsetY);
                         });
                     }
@@ -110,7 +109,7 @@ public partial class InteractiveView : Grid
         var offsetY = currentPosition.Y - _positionInBlock.Y;
 
         WeakReferenceMessenger.Default.Send(new MoveNodeMessage(
-            new Point(offsetX - ((NodeViewModelBase)DataContext).NodeBase.Position.X, offsetY - ((NodeViewModelBase)DataContext).NodeBase.Position.Y))
+            new Point(offsetX - ((NodeViewModelBase)DataContext).NodeBase.PositionX, offsetY - ((NodeViewModelBase)DataContext).NodeBase.PositionY))
         );
     }
 
@@ -165,7 +164,8 @@ public partial class InteractiveView : Grid
         RenderTransform = _transform;
 
         // Update position in viewmodel when node is moved
-        ((NodeViewModelBase)DataContext).NodeBase.Position = new Point(offsetX, offsetY);
+        ((NodeViewModelBase)DataContext).NodeBase.PositionX = offsetX;
+        ((NodeViewModelBase)DataContext).NodeBase.PositionY = offsetY;
     }
 
     // On selecting node edge creation, tell workspace this node has been selected

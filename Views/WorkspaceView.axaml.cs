@@ -1,17 +1,13 @@
 using System;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
-using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
-using DynamicData;
 using mystery_app.Messages;
 using mystery_app.ViewModels;
 
@@ -85,10 +81,10 @@ public partial class WorkspaceView : UserControl
             {
                 InteractiveView node = (InteractiveView)item.Child;
                 NodeViewModelBase nodeContext = (NodeViewModelBase)node.DataContext;
-                if (x1 < nodeContext.NodeBase.Position.X + node.Bounds.Size.Width
-                    && x2 > nodeContext.NodeBase.Position.X
-                    && y1 < nodeContext.NodeBase.Position.Y + node.Bounds.Size.Height
-                    && y2 > nodeContext.NodeBase.Position.Y)
+                if (x1 < nodeContext.NodeBase.PositionX + node.Bounds.Size.Width
+                    && x2 > nodeContext.NodeBase.PositionX
+                    && y1 < nodeContext.NodeBase.PositionY + node.Bounds.Size.Height
+                    && y2 > nodeContext.NodeBase.PositionY)
                 {
                     newSelectedNodes.Add(nodeContext);
                 }
