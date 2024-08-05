@@ -8,8 +8,15 @@
     x:Class="mystery_app.Views.WorkspaceView"
     x:DataType="vm:WorkspaceViewModel"
 	Focusable="True"
-	Background="{Binding SharedSettings.ModeModel.Background, Converter={StaticResource ColorToBrushConverter}}"
 	Opacity="{Binding SharedSettings.ModeModel.WorkspaceOpacity}">
+	<UserControl.Background>
+		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+			<Binding Path="SharedSettings.ModeModel.A"/>
+			<Binding Path="SharedSettings.ModeModel.R"/>
+			<Binding Path="SharedSettings.ModeModel.G"/>
+			<Binding Path="SharedSettings.ModeModel.B"/>
+		</MultiBinding>
+	</UserControl.Background>
 
 	<UserControl.ContextMenu>
 		<ContextMenu>

@@ -29,13 +29,13 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>();
     [ObservableProperty]
-    private SharedSettingsModel _sharedSettings;
+    private SettingsModel _sharedSettings;
     [ObservableProperty]
     private ObservableCollection<NodeViewModelBase>? _copiedNodes;
 
     private bool CanPaste() => _copiedNodes != null;
 
-    public WorkspaceViewModel(SharedSettingsModel sharedSettings)
+    public WorkspaceViewModel(SettingsModel sharedSettings)
     {
         _sharedSettings = sharedSettings;
         

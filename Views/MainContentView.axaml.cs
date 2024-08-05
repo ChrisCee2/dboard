@@ -1,16 +1,12 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Logging;
 using Avalonia.Platform.Storage;
-using DynamicData;
 using mystery_app.Models;
-using mystery_app.Tools;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Views;

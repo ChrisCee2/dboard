@@ -12,9 +12,9 @@ public partial class MainContentViewModel : ObservableObject
     [ObservableProperty]
     public WorkspaceViewModel _workspace;
     [ObservableProperty]
-    private SharedSettingsModel _sharedSettings;
+    private SettingsModel _sharedSettings;
 
-    public MainContentViewModel(SharedSettingsModel sharedSettings)
+    public MainContentViewModel(SettingsModel sharedSettings)
     {
         SharedSettings = sharedSettings;
         Workspace = new WorkspaceViewModel(sharedSettings);
