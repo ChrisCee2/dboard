@@ -58,7 +58,7 @@ public partial class WorkspaceViewModel : ObservableObject
                 && !Equals(enteredNode, SelectedNodeEdge)
                 && !Edges.ContainsEdge(SelectedNodeEdge.NodeBase, enteredNode.NodeBase))
             {
-                Edges.Add(new EdgeViewModel(SelectedNodeEdge.NodeBase, enteredNode.NodeBase));
+                Edges.Add(new EdgeViewModel(new EdgeModel(SelectedNodeEdge.NodeBase, enteredNode.NodeBase)));
             }
             SelectedNodeEdge = NodeConstants.NULL_NODEVIEWMODEL;
         });

@@ -78,6 +78,7 @@ public partial class MainContentView : UserControl
 
         if (files.Count == 1)
         {
+            ((MainContentViewModel)DataContext).NewCommand.Execute(null);
             await using var stream = await files[0].OpenReadAsync();
             WorkspaceModel workspace = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
             foreach (var node in workspace.Nodes)
