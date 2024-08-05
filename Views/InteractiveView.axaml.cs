@@ -36,9 +36,9 @@ public partial class InteractiveView : Grid
         if (DataContext != null)
         {
             // Render position of control on loading data context
-            var position = ((NodeViewModelBase)DataContext).Position;
-            _transform = new TranslateTransform(position.X, position.Y);
-            RenderTransform = new TranslateTransform(position.X, position.Y);
+            var node = ((NodeViewModelBase)DataContext).NodeBase;
+            _transform = new TranslateTransform(node.PositionX, node.PositionY);
+            RenderTransform = _transform;
 
             // Handle isSelected
             NodeViewModelBase viewModel = (NodeViewModelBase)this.DataContext;
@@ -53,8 +53,8 @@ public partial class InteractiveView : Grid
                     {
                         WeakReferenceMessenger.Default.Register<MoveNodeMessage>(this, (sender, message) =>
                         {
-                                var offsetX = ((NodeViewModelBase)DataContext).Position.X + message.Value.X;
-                                var offsetY = ((NodeViewModelBase)DataContext).Position.Y + message.Value.Y;
+                                var offsetX = node.PositionX + message.Value.X;
+                                var offsetY = node.PositionY + message.Value.Y;
                                 _moveControl(offsetX, offsetY);
                         });
                     }
@@ -109,7 +109,7 @@ public partial class InteractiveView : Grid
         var offsetY = currentPosition.Y - _positionInBlock.Y;
 
         WeakReferenceMessenger.Default.Send(new MoveNodeMessage(
-            new Point(offsetX - ((NodeViewModelBase)DataContext).Position.X, offsetY - ((NodeViewModelBase)DataContext).Position.Y))
+            new Point(offsetX - ((NodeViewModelBase)DataContext).NodeBase.PositionX, offsetY - ((NodeViewModelBase)DataContext).NodeBase.PositionY))
         );
     }
 
@@ -123,8 +123,8 @@ public partial class InteractiveView : Grid
         var pos = e.GetPosition((Visual?)Parent);
         _positionInBlock = new Point(pos.X - (int)_transform.X, pos.Y - (int)_transform.Y);
         _lastPosition = pos;
-        _lastWidth = ((NodeViewModelBase)DataContext).Width;
-        _lastHeight = ((NodeViewModelBase)DataContext).Height;
+        _lastWidth = ((NodeViewModelBase)DataContext).NodeBase.Width;
+        _lastHeight = ((NodeViewModelBase)DataContext).NodeBase.Height;
     }
 
     protected void ResizePointerReleased(object sender, PointerReleasedEventArgs e)
@@ -145,12 +145,12 @@ public partial class InteractiveView : Grid
             double offsetX = (currentPosition.X - _lastPosition.X) * resizeDir.X;
             double offsetY = (currentPosition.Y - _lastPosition.Y) * resizeDir.Y;
 
-            context.Width = Math.Max(_lastWidth + offsetX, NodeConstants.MIN_WIDTH);
-            context.Height = Math.Max(_lastHeight + offsetY, NodeConstants.MIN_HEIGHT);
+            context.NodeBase.Width = Math.Max(_lastWidth + offsetX, NodeConstants.MIN_WIDTH);
+            context.NodeBase.Height = Math.Max(_lastHeight + offsetY, NodeConstants.MIN_HEIGHT);
             if ((int)_resizeAxis > 2)
             {
-                var moveOffsetX = (_lastPosition.X - _positionInBlock.X) + ((context.Width - _lastWidth) * resizeDir.X);
-                var moveOffsetY = (_lastPosition.Y - _positionInBlock.Y) + ((context.Height - _lastHeight) * resizeDir.Y);
+                var moveOffsetX = (_lastPosition.X - _positionInBlock.X) + ((context.NodeBase.Width - _lastWidth) * resizeDir.X);
+                var moveOffsetY = (_lastPosition.Y - _positionInBlock.Y) + ((context.NodeBase.Height - _lastHeight) * resizeDir.Y);
                 if (_resizeAxis == NodeConstants.RESIZE.xY) { moveOffsetY = _transform.Y; } // Don't move on Y axis if resizing left-down
                 if (_resizeAxis == NodeConstants.RESIZE.Xy) { moveOffsetX = _transform.X; } // Don't move on X axis if resizing up-right
                 _moveControl(moveOffsetX, moveOffsetY);
@@ -164,7 +164,8 @@ public partial class InteractiveView : Grid
         RenderTransform = _transform;
 
         // Update position in viewmodel when node is moved
-        ((NodeViewModelBase)DataContext).Position = new Point(offsetX, offsetY);
+        ((NodeViewModelBase)DataContext).NodeBase.PositionX = offsetX;
+        ((NodeViewModelBase)DataContext).NodeBase.PositionY = offsetY;
     }
 
     // On selecting node edge creation, tell workspace this node has been selected

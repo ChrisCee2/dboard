@@ -1,39 +1,29 @@
-﻿using Avalonia;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Messages;
+using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
 
 public abstract partial class NodeViewModelBase : ObservableObject
 {
-    [ObservableProperty]
-    protected string _desc;
+    public abstract NodeModelBase NodeBase { get; set; }
 
     [ObservableProperty]
-    protected double _width;
+    private bool _isSelected;
 
     [ObservableProperty]
-    protected double _height;
-
-    [ObservableProperty]
-    protected Point _position;
-
-    [ObservableProperty]
-    protected bool _isSelected;
-
-    [ObservableProperty]
-    protected bool _isEdit;
+    private bool _isEdit;
 
     [RelayCommand]
-    protected void DeleteNode()
+    private void DeleteNode()
     {
         WeakReferenceMessenger.Default.Send(new DeleteNodeMessage(this));
     }
 
     [RelayCommand]
-    protected void CopyNode()
+    private void CopyNode()
     {
         WeakReferenceMessenger.Default.Send(new CopyNodeMessage(this));
     }

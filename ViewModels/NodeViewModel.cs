@@ -1,48 +1,47 @@
-﻿using System;
-using Avalonia;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using mystery_app.Constants;
+using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
 
 public partial class NodeViewModel : NodeViewModelBase
 {
-    public NodeViewModel(
-        string name = "",
-        string desc = "",
-        Bitmap image = null,
-        double width = 150,
-        double height = 150,
-        double x = 0,
-        double y = 0)
+    public NodeViewModel()
     {
-        _name = name;
-        _desc = desc;
-        _image = new DragDropImageViewModel((image is null) ? new Bitmap(AssetLoader.Open(new Uri("avares://mystery_app/Assets/amongusbutt.png"))) : image);
-        _width = width;
-        _height = height;
-        _position = new Point(x, y);
+        Node = new NodeModel(
+            "",
+            "",
+            NodeConstants.DEFAULT_IMAGE_PATH,
+            150,
+            150,
+            0,
+            0,
+            "");
+    }
+
+    public NodeViewModel(NodeModel node)
+    {
+        Node = node;
     }
 
     [ObservableProperty]
-    private string _name;
-
-    [ObservableProperty]
-    private DragDropImageViewModel _image;
-
-    [ObservableProperty]
-    private string _notes;
+    private NodeModel _node;
+    public override NodeModelBase NodeBase
+    {
+        get { return _node; }
+        set { _node = (NodeModel)value; }
+    }
 
     public override NodeViewModelBase Clone()
     {
-        return new NodeViewModel(
-            _name,
-            _desc,
-            _image.Image,
-            _width,
-            _height,
-            _position.X,
-            _position.Y);
+        return new NodeViewModel(new NodeModel(
+            Node.Name,
+            Node.Desc,
+            Node.ImagePath,
+            Node.Width,
+            Node.Height,
+            Node.PositionX,
+            Node.PositionY,
+            Node.Notes));
     }
 }

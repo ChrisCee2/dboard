@@ -9,13 +9,14 @@ namespace mystery_app.ViewModels;
 
 public partial class MainContentViewModel : ObservableObject
 {
-    public WorkspaceViewModel Workspace { get; set; }
+    [ObservableProperty]
+    public WorkspaceViewModel _workspace;
     [ObservableProperty]
     private SharedSettingsModel _sharedSettings;
 
     public MainContentViewModel(SharedSettingsModel sharedSettings)
     {
-        _sharedSettings = sharedSettings;
+        SharedSettings = sharedSettings;
         Workspace = new WorkspaceViewModel(sharedSettings);
     }
 
@@ -29,5 +30,17 @@ public partial class MainContentViewModel : ObservableObject
     private void GoToSettings()
     {
         WeakReferenceMessenger.Default.Send(new ChangePageMessage(PageConstants.PAGE.Settings));
+    }
+
+    [RelayCommand]
+    private void New()
+    {
+        foreach (var node in Workspace.Nodes)
+        {
+            // Unregisters all nodes. TODO: Improve this, there has to be a better way to unregister everything
+            node.IsSelected = false;
+        }
+
+        Workspace = new WorkspaceViewModel(SharedSettings);
     }
 }

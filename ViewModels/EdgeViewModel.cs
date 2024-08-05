@@ -7,23 +7,33 @@ namespace mystery_app.ViewModels;
 
 public partial class EdgeViewModel : ObservableObject
 {
-    public EdgeViewModel(
-        NodeViewModelBase fromNode,
-        NodeViewModelBase toNode,
-        string description = "",
-        double thickness = EdgeConstants.THICKNESS)
+    public EdgeViewModel(EdgeModel edgeModel)
     {
-        _edge = new EdgeModel(fromNode, toNode, description, thickness, EdgeConstants.COLOR);
+        Edge = edgeModel;
     }
 
     public EdgeViewModel(
-        NodeViewModelBase fromNode,
-        NodeViewModelBase toNode,
+        NodeModelBase fromNode,
+        NodeModelBase toNode,
+        string description = "",
+        double thickness = EdgeConstants.THICKNESS)
+    {
+        Edge = new EdgeModel(
+            fromNode, 
+            toNode, 
+            description, 
+            thickness, 
+            EdgeConstants.COLOR.A, EdgeConstants.COLOR.R, EdgeConstants.COLOR.G, EdgeConstants.COLOR.B);
+    }
+
+    public EdgeViewModel(
+        NodeModelBase fromNode,
+        NodeModelBase toNode,
         Color color,
         string description = "",
         double thickness = EdgeConstants.THICKNESS)
     {
-        _edge = new EdgeModel(fromNode, toNode, description, thickness, color);
+        Edge = new EdgeModel(fromNode, toNode, description, thickness, color.A, color.R, color.G, color.B);
     }
 
     [ObservableProperty]

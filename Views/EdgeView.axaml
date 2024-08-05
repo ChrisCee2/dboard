@@ -14,20 +14,38 @@
 	<TextBox Text="{Binding Edge.Description}">
 		<Canvas.Left>
 			<MultiBinding Converter="{StaticResource MedianConverter}">
-				<Binding Path="Edge.FromNode.Position.X"/>
-				<Binding Path="Edge.ToNode.Position.X"/>
+				<Binding Path="Edge.FromNode.PositionX"/>
+				<Binding Path="Edge.ToNode.PositionX"/>
 			</MultiBinding>
 		</Canvas.Left>
 		<Canvas.Top>
 			<MultiBinding Converter="{StaticResource MedianConverter}">
-				<Binding Path="Edge.FromNode.Position.Y"/>
-				<Binding Path="Edge.ToNode.Position.Y"/>
+				<Binding Path="Edge.FromNode.PositionY"/>
+				<Binding Path="Edge.ToNode.PositionY"/>
 			</MultiBinding>
 		</Canvas.Top>
 	</TextBox>
 	<Line
-		StartPoint="{Binding Edge.FromNode.Position}"
-		EndPoint="{Binding Edge.ToNode.Position}"
-		Stroke="{Binding Edge.Color, Converter={StaticResource ColorToBrushConverter}}"
-		StrokeThickness="{Binding Edge.Thickness}"/>
+		StrokeThickness="{Binding Edge.Thickness}">
+		<Line.StartPoint>
+			<MultiBinding Converter="{StaticResource PointConverter}">
+				<Binding Path="Edge.FromNode.PositionX"/>
+				<Binding Path="Edge.FromNode.PositionY"/>
+			</MultiBinding>
+		</Line.StartPoint>
+		<Line.EndPoint>
+			<MultiBinding Converter="{StaticResource PointConverter}">
+				<Binding Path="Edge.ToNode.PositionX"/>
+				<Binding Path="Edge.ToNode.PositionY"/>
+			</MultiBinding>
+		</Line.EndPoint>
+		<Line.Stroke>
+			<MultiBinding Converter="{StaticResource ARGBConverter}">
+				<Binding Path="Edge.A"/>
+				<Binding Path="Edge.R"/>
+				<Binding Path="Edge.G"/>
+				<Binding Path="Edge.B"/>
+			</MultiBinding>
+		</Line.Stroke>
+	</Line>
 </Canvas>

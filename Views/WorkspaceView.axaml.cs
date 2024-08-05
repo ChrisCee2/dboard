@@ -81,10 +81,10 @@ public partial class WorkspaceView : UserControl
             {
                 InteractiveView node = (InteractiveView)item.Child;
                 NodeViewModelBase nodeContext = (NodeViewModelBase)node.DataContext;
-                if (x1 < nodeContext.Position.X + node.Bounds.Size.Width
-                    && x2 > nodeContext.Position.X
-                    && y1 < nodeContext.Position.Y + node.Bounds.Size.Height
-                    && y2 > nodeContext.Position.Y)
+                if (x1 < nodeContext.NodeBase.PositionX + node.Bounds.Size.Width
+                    && x2 > nodeContext.NodeBase.PositionX
+                    && y1 < nodeContext.NodeBase.PositionY + node.Bounds.Size.Height
+                    && y2 > nodeContext.NodeBase.PositionY)
                 {
                     newSelectedNodes.Add(nodeContext);
                 }
@@ -98,16 +98,16 @@ public partial class WorkspaceView : UserControl
 
     private void _updateSelectedNodes(ObservableCollection<NodeViewModelBase> newSelectedNodes)
     {
-        foreach (NodeViewModelBase node in ((WorkspaceViewModel)DataContext).SelectedNodes)
+        foreach (NodeViewModelBase nodeVM in ((WorkspaceViewModel)DataContext).SelectedNodes)
         {
-            node.IsSelected = false;
-            node.IsEdit = false;
+            nodeVM.IsSelected = false;
+            nodeVM.IsEdit = false;
         }
 
-        foreach (NodeViewModelBase node in newSelectedNodes)
+        foreach (NodeViewModelBase nodeVM in newSelectedNodes)
         {
-            node.IsSelected = true;
-            node.IsEdit = false;
+            nodeVM.IsSelected = true;
+            nodeVM.IsEdit = false;
         }
         ((WorkspaceViewModel)DataContext).SelectedNodes = newSelectedNodes;
     }

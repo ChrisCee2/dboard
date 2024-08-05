@@ -8,6 +8,8 @@ public static class NodeConstants
 {
     public static readonly NodeViewModel NULL_NODEVIEWMODEL = new NodeViewModel();
 
+    public const string DEFAULT_IMAGE_PATH = "avares://mystery_app/Assets/amongusbutt.png";
+
     // Size constants
     public const int MIN_WIDTH = 100;
     public const int MIN_HEIGHT = 120; // Extra 20 to account for edge
