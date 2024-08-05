@@ -3,11 +3,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+	xmlns:models="using:mystery_app.Models"
     x:Class="mystery_app.Views.DragDropImageView"
-	DragDrop.AllowDrop="True"
-	x:DataType="Bitmap">
+	x:DataType="models:NodeModel"
+	DragDrop.AllowDrop="True">
 	<Design.DataContext>
-		<Bitmap/>
+		<models:NodeModel/>
 	</Design.DataContext>
 
 	<Panel.Styles>
@@ -22,9 +24,6 @@
 		</Style>
 	</Panel.Styles>
 
-	<Image Source="{Binding}"/>
-	<Button
-		HorizontalAlignment="Stretch"
-		VerticalAlignment="Stretch"
-		Click="OpenFileButton_Clicked"/>
+	<Image asyncImageLoader:ImageLoader.Source="{Binding ImagePath}"/>
+	<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OpenFileButton_Clicked"/>
 </Panel>

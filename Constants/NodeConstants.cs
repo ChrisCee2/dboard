@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Avalonia;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Constants;
@@ -11,7 +8,7 @@ public static class NodeConstants
 {
     public static readonly NodeViewModel NULL_NODEVIEWMODEL = new NodeViewModel();
 
-    public static readonly Bitmap DEFAULT_IMAGE = new Bitmap(AssetLoader.Open(new Uri("avares://mystery_app/Assets/amongusbutt.png")));
+    public const string DEFAULT_IMAGE_PATH = "avares://mystery_app/Assets/amongusbutt.png";
 
     // Size constants
     public const int MIN_WIDTH = 100;

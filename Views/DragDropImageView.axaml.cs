@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
-using mystery_app.ViewModels;
+using mystery_app.Models;
 
 namespace mystery_app.Views;
 
@@ -19,20 +18,17 @@ public partial class DragDropImageView : Panel
 
     public async Task DropImage(object sender, DragEventArgs e)
     {
-        var formats = e.Data.GetDataFormats();
-        if (e.Data.GetFileNames() is { } fileNames && fileNames is not null)
+        if (e.Data.GetText() is string url && _IsImage(e.Data.GetText()))
+        {
+            ((NodeModel)DataContext).ImagePath = e.Data.GetText();
+        }
+        else if (e.Data.GetFileNames() is { } fileNames && fileNames is not null)
         {
             foreach (var file in fileNames)
             {
                 if (_IsImage(file))
                 {
-                    await using (var imageStream = await _GetImageStreamFromPath(file))
-                    {
-                        if (imageStream is not null)
-                        {
-                            DataContext = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
-                        }
-                    }
+                    ((NodeModel)DataContext).ImagePath = file;
                 }
             }
         }
@@ -48,13 +44,7 @@ public partial class DragDropImageView : Panel
 
         if (files.Count == 1)
         {
-            await using (var imageStream = await files[0].OpenReadAsync())
-            {
-                if (imageStream is not null)
-                {
-                    DataContext = await Task.Run(() => Bitmap.DecodeToWidth(imageStream, 400));
-                }
-            }
+            ((NodeModel)DataContext).ImagePath = files[0].Path.LocalPath;
         }
     }
 

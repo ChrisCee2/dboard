@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using mystery_app.Constants;
 using mystery_app.Models;
@@ -11,7 +10,7 @@ public partial class NodeViewModel : NodeViewModelBase
     public NodeViewModel(
         string name = "",
         string desc = "",
-        Bitmap image = null,
+        string imagePath = NodeConstants.DEFAULT_IMAGE_PATH,
         double width = 150,
         double height = 150,
         double x = 0,
@@ -21,7 +20,7 @@ public partial class NodeViewModel : NodeViewModelBase
         Node = new NodeModel(
             name, 
             desc,
-            (image is null) ? NodeConstants.DEFAULT_IMAGE : image, 
+            imagePath, 
             width, 
             height, 
             new Point(x, y),
@@ -41,7 +40,7 @@ public partial class NodeViewModel : NodeViewModelBase
         return new NodeViewModel(
             Node.Name,
             Node.Desc,
-            Node.Image,
+            Node.ImagePath,
             Node.Width,
             Node.Height,
             Node.Position.X,

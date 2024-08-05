@@ -11,7 +11,7 @@ public partial class NodeModel : NodeModelBase
     {
         Name = "";
         Desc = "";
-        Image = NodeConstants.DEFAULT_IMAGE;
+        ImagePath = NodeConstants.DEFAULT_IMAGE_PATH;
         Width = NodeConstants.MIN_WIDTH;
         Height = NodeConstants.MIN_HEIGHT;
         Position = new Point(0, 0);
@@ -21,7 +21,7 @@ public partial class NodeModel : NodeModelBase
     public NodeModel(
         string name,
         string desc,
-        Bitmap image,
+        string imagePath,
         double width,
         double height,
         Point position,
@@ -29,7 +29,7 @@ public partial class NodeModel : NodeModelBase
     {
         Name = name;
         Desc = desc;
-        Image = image;
+        ImagePath = imagePath;
         Width = width;
         Height = height;
         Position = position;
@@ -40,7 +40,7 @@ public partial class NodeModel : NodeModelBase
     private string _name;
 
     [ObservableProperty]
-    private Bitmap _image;
+    private string _imagePath;
 
     [ObservableProperty]
     private string _notes;
