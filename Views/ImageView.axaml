@@ -5,9 +5,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
 	xmlns:models="using:mystery_app.Models"
-    x:Class="mystery_app.Views.DragDropImageView"
-	x:DataType="models:NodeModel"
-	DragDrop.AllowDrop="True">
+    x:Class="mystery_app.Views.ImageView"
+	x:DataType="models:NodeModel">
 	<Design.DataContext>
 		<models:NodeModel/>
 	</Design.DataContext>

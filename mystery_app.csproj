@@ -32,7 +32,7 @@
     <AvaloniaXaml Update="Views\EdgeView.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
-    <AvaloniaXaml Update="Views\DragDropImageView.axaml">
+    <AvaloniaXaml Update="Views\ImageView.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
     <AvaloniaXaml Update="Views\SettingsView.axaml">
@@ -50,9 +50,9 @@
     <Compile Update="Views\MainContentView.axaml.cs">
       <DependentUpon>MainContentView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\DragDropImageView.axaml.cs">
+    <Compile Update="Views\ImageView.axaml.cs">
       <SubType>Code</SubType>
-      <DependentUpon>DragDropImageView.axaml</DependentUpon>
+      <DependentUpon>ImageView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\MainWindowView.axaml.cs">
       <DependentUpon>MainWindowView.axaml</DependentUpon>
