@@ -8,6 +8,7 @@ using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
+using mystery_app.Constants;
 using mystery_app.Messages;
 using mystery_app.ViewModels;
 
@@ -46,6 +47,7 @@ public partial class WorkspaceView : UserControl
         {
             ((WorkspaceViewModel)DataContext).IsMultiSelecting = true;
             ((WorkspaceViewModel)DataContext).PressedPosition = e.GetPosition(this);
+            ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
             ((WorkspaceViewModel)DataContext).MultiSelectThickness = 2;
         }
         base.OnPointerPressed(e);
@@ -53,7 +55,11 @@ public partial class WorkspaceView : UserControl
 
     protected override void OnPointerMoved(PointerEventArgs e)
     {
-        ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
+        // Only update position if multiselecting or edge selecting
+        if (((WorkspaceViewModel)DataContext).IsMultiSelecting || ((WorkspaceViewModel)DataContext).SelectedNodeEdge != NodeConstants.NULL_NODEVIEWMODEL)
+        {
+            ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
+        }
         base.OnPointerMoved(e);
     }
 

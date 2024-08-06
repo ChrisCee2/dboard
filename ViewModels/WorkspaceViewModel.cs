@@ -46,6 +46,7 @@ public partial class WorkspaceViewModel : ObservableObject
                 EdgeThickness = EdgeConstants.THICKNESS;
                 SelectedNodeEdge = message.Value;
                 PressedPosition = new Point(nodeVMBase.NodeBase.PositionX, nodeVMBase.NodeBase.PositionY);
+                CursorPosition = new Point(nodeVMBase.NodeBase.PositionX, nodeVMBase.NodeBase.PositionY);
             }
         });
 
