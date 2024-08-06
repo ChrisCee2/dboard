@@ -27,6 +27,7 @@
 	<AdornerLayer Grid.Row="1">
 		<AdornerLayer.Adorner>
 			<Grid
+				Name="AdornerGrid"
 				ColumnDefinitions="Auto,*,Auto"
 				RowDefinitions="Auto,*,Auto">
 				<Grid.ContextMenu>

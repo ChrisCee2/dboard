@@ -9,6 +9,8 @@ using System;
 using mystery_app.Constants;
 using Avalonia.VisualTree;
 using Avalonia.LogicalTree;
+using mystery_app.Models;
+using System.Threading.Tasks;
 
 namespace mystery_app.Views;
 
@@ -35,6 +37,17 @@ public partial class InteractiveView : Grid
         base.OnDataContextEndUpdate();
         if (DataContext != null)
         {
+            // Set drag drop image
+            if (DataContext is NodeViewModel nodeVM)
+            {
+                Grid adorner = this.FindControl<Grid>("AdornerGrid");
+                DragDrop.SetAllowDrop(this, true);
+                DragDrop.SetAllowDrop(adorner, true);
+                adorner.AddHandler(DragDrop.DropEvent, DropImage);
+                AddHandler(DragDrop.DropEvent, DropImage);
+
+            }
+
             // Render position of control on loading data context
             var node = ((NodeViewModelBase)DataContext).NodeBase;
             _transform = new TranslateTransform(node.PositionX, node.PositionY);
@@ -188,5 +201,30 @@ public partial class InteractiveView : Grid
         {
             WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage((NodeViewModelBase)node.DataContext));
         }
+    }
+
+    // Handle dropping image
+    public async Task DropImage(object sender, DragEventArgs e)
+    {
+        NodeModel node = ((NodeViewModel)DataContext).Node;
+        if (e.Data.GetText() is string url && _IsImage(e.Data.GetText()))
+        {
+            node.ImagePath = e.Data.GetText();
+        }
+        else if (e.Data.GetFileNames() is { } fileNames && fileNames is not null)
+        {
+            foreach (var file in fileNames)
+            {
+                if (_IsImage(file))
+                {
+                    node.ImagePath = file;
+                }
+            }
+        }
+    }
+
+    private bool _IsImage(string url)
+    {
+        return ImageConstants.IMAGE_URL_REGEX.IsMatch(url);
     }
 }
