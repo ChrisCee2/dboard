@@ -43,42 +43,42 @@
 					</ContextMenu>
 				</Grid.ContextMenu>
 			
-				<Panel Tag="xy" Background="Transparent"
-					   Grid.Row="0" Grid.Column="0" Width="7" Height="7"
+				<Panel Tag="xy" Background="Transparent" Cursor="TopLeftCorner"
+					   Grid.Row="0" Grid.Column="0" Width="8" Height="8"
 					   PointerPressed="ResizePointerPressed"
 					   PointerReleased="ResizePointerReleased"
 					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="Xy" Background="Transparent"
-					   Grid.Row="0" Grid.Column="2" Width="7" Height="7"
+				<Panel Tag="Xy" Background="Transparent" Cursor="TopRightCorner"
+					   Grid.Row="0" Grid.Column="2" Width="8" Height="8"
 					   PointerPressed="ResizePointerPressed"
 					   PointerReleased="ResizePointerReleased"
 					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="xY" Background="Transparent"
-					   Grid.Row="2" Grid.Column="0" Width="7" Height="7"
+				<Panel Tag="xY" Background="Transparent" Cursor="BottomLeftCorner"
+					   Grid.Row="2" Grid.Column="0" Width="8" Height="8"
 					   PointerPressed="ResizePointerPressed"
 					   PointerReleased="ResizePointerReleased"
 					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="XY" Background="Transparent"
-						Grid.Row="2" Grid.Column="2" Width="7" Height="7"
+				<Panel Tag="XY" Background="Transparent" Cursor="BottomRightCorner"
+						Grid.Row="2" Grid.Column="2" Width="8" Height="8"
 						PointerPressed="ResizePointerPressed"
 						PointerReleased="ResizePointerReleased"
 						PointerMoved="ResizePointerMoved" />
-				<Panel Tag="y" Background="Transparent"
+				<Panel Tag="y" Background="Transparent" Cursor="TopSide"
 					   Grid.Row="0" Grid.Column="1"
 					   PointerPressed="ResizePointerPressed"
 					   PointerReleased="ResizePointerReleased"
 					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="x" Background="Transparent"
+				<Panel Tag="x" Background="Transparent" Cursor="LeftSide"
 					   Grid.Row="1" Grid.Column="0"
 					   PointerPressed="ResizePointerPressed"
 					   PointerReleased="ResizePointerReleased"
 					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="X" Background="Transparent"
+				<Panel Tag="X" Background="Transparent" Cursor="RightSide"
 					   Grid.Row="1" Grid.Column="2"
 					   PointerPressed="ResizePointerPressed"
 					   PointerReleased="ResizePointerReleased"
 					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="Y" Background="Transparent"
+				<Panel Tag="Y" Background="Transparent" Cursor="BottomSide"
 					   Grid.Row="2" Grid.Column="1"
 					   PointerPressed="ResizePointerPressed"
 					   PointerReleased="ResizePointerReleased"
