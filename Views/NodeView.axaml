@@ -8,18 +8,34 @@
 	x:Class="mystery_app.Views.NodeView"
 	x:DataType="vm:NodeViewModel"
 	Padding="10"
-	Background="Gray"
+	Background="Beige"
+	CornerRadius="10"
 	>
 	<Design.DataContext>
 		<vm:NodeViewModel />
 	</Design.DataContext>
 
-	<Grid RowDefinitions="*,Auto,Auto,Auto">
+	<UserControl.Styles>
+		<Style Selector="TextBox">
+			<Setter Property="BorderThickness" Value="0"/>
+		</Style>
+	</UserControl.Styles>
+
+	<UserControl.Effect>
+		<DropShadowEffect BlurRadius="8" Opacity=".4" OffsetX="2" OffsetY="2"/>
+	</UserControl.Effect>
+
+	<Grid RowDefinitions="*, Auto">
 		<views:ImageView Grid.Row="0" DataContext="{Binding Node}"/>
-		<TextBox Grid.Row="1" Text="{Binding Node.Name}" DockPanel.Dock="Bottom"/>
-		<TextBox Grid.Row="2" Text="{Binding Node.Desc}" DockPanel.Dock="Bottom"/>
-		<Expander Grid.Row="3" Header="Notes" VerticalAlignment="Top">
-			<TextBox Text="{Binding Node.Notes}"/>
-		</Expander>
+		<StackPanel Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+			<TextBox Text="{Binding Node.Name}" MinHeight="20" MaxHeight="60"/>
+			<Expander
+				Header="Notes"
+				VerticalAlignment="Stretch"
+				HorizontalAlignment="Stretch"
+				MinHeight="10">
+				<TextBox Text="{Binding Node.Notes}" MinHeight="20" MaxHeight="10000" VerticalAlignment="Stretch"/>
+			</Expander>
+		</StackPanel>
 	</Grid>
 </UserControl>

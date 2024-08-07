@@ -21,9 +21,13 @@
 		<vm:NodeViewModelBase />
 	</Design.DataContext>
 
-	<Panel Grid.Row="0" Tag="EdgeButton" Width="10" Height="10" Margin="5" Background="Red"
+	<Border Width="12" Height="12" Margin="5" BorderThickness="1" Background="Red" CornerRadius="12"
 			PointerPressed="SelectNodeEdge"
-			PointerReleased="ReleaseNodeEdge"/>
+			PointerReleased="ReleaseNodeEdge">
+		<Border.Effect>
+			<DropShadowEffect BlurRadius="8" OffsetX="2" OffsetY="2"/>
+		</Border.Effect>
+	</Border>
 	<AdornerLayer Grid.Row="1">
 		<AdornerLayer.Adorner>
 			<Grid
@@ -37,43 +41,52 @@
 					</ContextMenu>
 				</Grid.ContextMenu>
 			
-				<Panel Tag="xy" Background="Red" Grid.Row="0" Grid.Column="0" Width="7" Height="7"
-					PointerPressed="ResizePointerPressed"
-					PointerReleased="ResizePointerReleased"
-					PointerMoved="ResizePointerMoved" />
-				<Panel Tag="Xy" Background="Red" Grid.Row="0" Grid.Column="2" Width="7" Height="7"
-					PointerPressed="ResizePointerPressed"
-					PointerReleased="ResizePointerReleased"
-					PointerMoved="ResizePointerMoved" />
-				<Panel Tag="xY" Background="Red" Grid.Row="2" Grid.Column="0" Width="7" Height="7"
-					PointerPressed="ResizePointerPressed"
-					PointerReleased="ResizePointerReleased"
-					PointerMoved="ResizePointerMoved" />
-				<Panel Tag="XY" Background="Red" Grid.Row="2" Grid.Column="2" Width="7" Height="7"
-					PointerPressed="ResizePointerPressed"
-					PointerReleased="ResizePointerReleased"
-					PointerMoved="ResizePointerMoved" />
-				<Panel Tag="y" Background="Blue" Grid.Row="0" Grid.Column="1"
-					PointerPressed="ResizePointerPressed"
-					PointerReleased="ResizePointerReleased"
-					PointerMoved="ResizePointerMoved" />
-				<Panel Tag="x" Background="Blue" Grid.Row="1" Grid.Column="0"
-					PointerPressed="ResizePointerPressed"
-					PointerReleased="ResizePointerReleased"
-					PointerMoved="ResizePointerMoved" />
-				<Panel Tag="X" Background="Blue" Grid.Row="1" Grid.Column="2"
-					PointerPressed="ResizePointerPressed"
-					PointerReleased="ResizePointerReleased"
-					PointerMoved="ResizePointerMoved" />
-				<Panel Tag="Y" Background="Blue" Grid.Row="2" Grid.Column="1"
-					PointerPressed="ResizePointerPressed"
-					PointerReleased="ResizePointerReleased"
-					PointerMoved="ResizePointerMoved" />
-				<Panel Background="Green" Grid.Row="1" Grid.Column="1" Opacity="0.3"
-					IsHitTestVisible="{Binding !IsEdit}"
-					PointerPressed="MovePointerPressed"
-					PointerReleased="MovePointerReleased"
-					PointerMoved="MovePointerMoved"/>
+				<Panel Tag="xy" Background="Transparent"
+					   Grid.Row="0" Grid.Column="0" Width="7" Height="7"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="Xy" Background="Transparent"
+					   Grid.Row="0" Grid.Column="2" Width="7" Height="7"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="xY" Background="Transparent"
+					   Grid.Row="2" Grid.Column="0" Width="7" Height="7"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="XY" Background="Transparent"
+						Grid.Row="2" Grid.Column="2" Width="7" Height="7"
+						PointerPressed="ResizePointerPressed"
+						PointerReleased="ResizePointerReleased"
+						PointerMoved="ResizePointerMoved" />
+				<Panel Tag="y" Background="Transparent"
+					   Grid.Row="0" Grid.Column="1"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="x" Background="Transparent"
+					   Grid.Row="1" Grid.Column="0"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="X" Background="Transparent"
+					   Grid.Row="1" Grid.Column="2"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="Y" Background="Transparent"
+					   Grid.Row="2" Grid.Column="1"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Background="Transparent"
+					   Grid.Row="1" Grid.Column="1" Opacity="0.3"
+					   IsHitTestVisible="{Binding !IsEdit}"
+					   PointerPressed="MovePointerPressed"
+					   PointerReleased="MovePointerReleased"
+					   PointerMoved="MovePointerMoved"/>
 			</Grid>
 		</AdornerLayer.Adorner>
 	</AdornerLayer>
