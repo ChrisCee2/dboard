@@ -10,6 +10,10 @@
 	Height="{Binding NodeBase.Height}"
 	RowDefinitions="Auto,*">
 
+	<Grid.Effect>
+		<DropShadowEffect BlurRadius="1" Opacity=".5" OffsetX="3" OffsetY="3"/>
+	</Grid.Effect>
+
 	<Grid.ContextMenu>
 		<ContextMenu>
 			<MenuItem Header="Delete" Command="{Binding DeleteNodeCommand}"/>
@@ -24,9 +28,7 @@
 	<Border Width="12" Height="12" Margin="5" BorderThickness="1" Background="Red" CornerRadius="12"
 			PointerPressed="SelectNodeEdge"
 			PointerReleased="ReleaseNodeEdge">
-		<Border.Effect>
-			<DropShadowEffect BlurRadius="8" OffsetX="2" OffsetY="2"/>
-		</Border.Effect>
+		
 	</Border>
 	<AdornerLayer Grid.Row="1">
 		<AdornerLayer.Adorner>

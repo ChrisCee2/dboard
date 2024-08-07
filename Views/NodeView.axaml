@@ -21,10 +21,6 @@
 		</Style>
 	</UserControl.Styles>
 
-	<UserControl.Effect>
-		<DropShadowEffect BlurRadius="8" Opacity=".4" OffsetX="2" OffsetY="2"/>
-	</UserControl.Effect>
-
 	<Grid RowDefinitions="*, Auto">
 		<views:ImageView Grid.Row="0" DataContext="{Binding Node}"/>
 		<StackPanel Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
