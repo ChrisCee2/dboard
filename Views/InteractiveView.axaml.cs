@@ -16,10 +16,10 @@ namespace mystery_app.Views;
 
 public partial class InteractiveView : Grid
 {
+    private NodeViewModelBase _vm;
     // Move variables
     private bool _isMoving;
     private Point _positionInBlock;
-    private TranslateTransform? _transform = new TranslateTransform(0, 0);
     // Resize variables
     private bool _isResizing;
     private NodeConstants.RESIZE _resizeAxis;
@@ -37,8 +37,10 @@ public partial class InteractiveView : Grid
         base.OnDataContextEndUpdate();
         if (DataContext != null)
         {
+            _vm = (NodeViewModelBase)DataContext;
+            _vm.Control = this;
             // Set drag drop image
-            if (DataContext is NodeViewModel nodeVM)
+            if (_vm is NodeViewModel nodeVM)
             {
                 Grid adorner = this.FindControl<Grid>("AdornerGrid");
                 DragDrop.SetAllowDrop(this, true);
@@ -48,38 +50,7 @@ public partial class InteractiveView : Grid
 
             }
 
-            // Render position of control on loading data context
-            var node = ((NodeViewModelBase)DataContext).NodeBase;
-            _transform = new TranslateTransform(node.PositionX, node.PositionY);
-            RenderTransform = _transform;
-
-            // Handle isSelected
-            NodeViewModelBase viewModel = (NodeViewModelBase)this.DataContext;
-            viewModel.PropertyChanged += (sender, args) =>
-            {
-                if (!args.PropertyName.Equals("IsSelected"))
-                    return;
-                var isSelected = viewModel.IsSelected;
-                if (isSelected)
-                {
-                    if (!WeakReferenceMessenger.Default.IsRegistered<MoveNodeMessage>(this))
-                    {
-                        WeakReferenceMessenger.Default.Register<MoveNodeMessage>(this, (sender, message) =>
-                        {
-                                var offsetX = node.PositionX + message.Value.X;
-                                var offsetY = node.PositionY + message.Value.Y;
-                                _moveControl(offsetX, offsetY);
-                        });
-                    }
-                }
-                else
-                {
-                    if (WeakReferenceMessenger.Default.IsRegistered<MoveNodeMessage>(this))
-                    {
-                        WeakReferenceMessenger.Default.Unregister<MoveNodeMessage>(this);
-                    }
-                }
-            };
+            RenderTransform = new TranslateTransform(_vm.NodeBase.PositionX, _vm.NodeBase.PositionY);
         }
     }
 
@@ -89,22 +60,22 @@ public partial class InteractiveView : Grid
 
         if (clickProperties.IsRightButtonPressed)
         {
-            WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
+            WeakReferenceMessenger.Default.Send(new SelectNodeMessage(_vm));
         }
         else if (clickProperties.IsLeftButtonPressed)
         {
             // If double click, make click through
             if (e.ClickCount >= 2)
             {
-                ((NodeViewModelBase)DataContext).IsEdit = true;
-                WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
+                _vm.IsEdit = true;
+                WeakReferenceMessenger.Default.Send(new SelectNodeMessage(_vm));
                 return;
             }
-            WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
+            WeakReferenceMessenger.Default.Send(new SelectNodeMessage(_vm));
 
             _isMoving = true;
             var pos = e.GetPosition((Visual?)Parent);
-            _positionInBlock = new Point(pos.X - (int)_transform.X, pos.Y - (int)_transform.Y);
+            _positionInBlock = new Point(pos.X - (int)_vm.NodeBase.PositionX, pos.Y - (int)_vm.NodeBase.PositionY);
         }
     }
 
@@ -122,8 +93,8 @@ public partial class InteractiveView : Grid
         var offsetY = currentPosition.Y - _positionInBlock.Y;
 
         WeakReferenceMessenger.Default.Send(new MoveNodeMessage(
-            new Point(offsetX - ((NodeViewModelBase)DataContext).NodeBase.PositionX, offsetY - ((NodeViewModelBase)DataContext).NodeBase.PositionY))
-        );
+            new Point(offsetX - _vm.NodeBase.PositionX, offsetY - _vm.NodeBase.PositionY)
+        ));
     }
 
     // On selecting resize button, get current cursor position and set axis to resize
@@ -132,12 +103,12 @@ public partial class InteractiveView : Grid
         // If not left click, return
         if (!e.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed) { return; }
         _isResizing = true;
-        _resizeAxis = (NodeConstants.RESIZE)System.Enum.Parse(typeof(NodeConstants.RESIZE), ((Control)sender).Tag.ToString());
+        _resizeAxis = (NodeConstants.RESIZE)Enum.Parse(typeof(NodeConstants.RESIZE), ((Control)sender).Tag.ToString());
         var pos = e.GetPosition((Visual?)Parent);
-        _positionInBlock = new Point(pos.X - (int)_transform.X, pos.Y - (int)_transform.Y);
+        _positionInBlock = new Point(pos.X - (int)_vm.NodeBase.PositionX, pos.Y - (int)_vm.NodeBase.PositionY);
         _lastPosition = pos;
-        _lastWidth = ((NodeViewModelBase)DataContext).NodeBase.Width;
-        _lastHeight = ((NodeViewModelBase)DataContext).NodeBase.Height;
+        _lastWidth = _vm.NodeBase.Width;
+        _lastHeight = _vm.NodeBase.Height;
     }
 
     protected void ResizePointerReleased(object sender, PointerReleasedEventArgs e)
@@ -150,7 +121,6 @@ public partial class InteractiveView : Grid
         if (Parent == null || !_isResizing) { return; }
         Point currentPosition = e.GetPosition((Visual?)Parent);
         Point resizeDir = NodeConstants.RESIZE_TO_DIR[_resizeAxis];
-        NodeViewModelBase context = ((NodeViewModelBase)DataContext);
 
         if (_isResizing)
         {
@@ -158,14 +128,14 @@ public partial class InteractiveView : Grid
             double offsetX = (currentPosition.X - _lastPosition.X) * resizeDir.X;
             double offsetY = (currentPosition.Y - _lastPosition.Y) * resizeDir.Y;
 
-            context.NodeBase.Width = Math.Max(_lastWidth + offsetX, NodeConstants.MIN_WIDTH);
-            context.NodeBase.Height = Math.Max(_lastHeight + offsetY, NodeConstants.MIN_HEIGHT);
+            _vm.NodeBase.Width = Math.Max(_lastWidth + offsetX, NodeConstants.MIN_WIDTH);
+            _vm.NodeBase.Height = Math.Max(_lastHeight + offsetY, NodeConstants.MIN_HEIGHT);
             if ((int)_resizeAxis > 2)
             {
-                var moveOffsetX = (_lastPosition.X - _positionInBlock.X) + ((context.NodeBase.Width - _lastWidth) * resizeDir.X);
-                var moveOffsetY = (_lastPosition.Y - _positionInBlock.Y) + ((context.NodeBase.Height - _lastHeight) * resizeDir.Y);
-                if (_resizeAxis == NodeConstants.RESIZE.xY) { moveOffsetY = _transform.Y; } // Don't move on Y axis if resizing left-down
-                if (_resizeAxis == NodeConstants.RESIZE.Xy) { moveOffsetX = _transform.X; } // Don't move on X axis if resizing up-right
+                var moveOffsetX = (_lastPosition.X - _positionInBlock.X) + ((_vm.NodeBase.Width - _lastWidth) * resizeDir.X);
+                var moveOffsetY = (_lastPosition.Y - _positionInBlock.Y) + ((_vm.NodeBase.Height - _lastHeight) * resizeDir.Y);
+                if (_resizeAxis == NodeConstants.RESIZE.xY) { moveOffsetY = _vm.NodeBase.PositionY; } // Don't move on Y axis if resizing left-down
+                if (_resizeAxis == NodeConstants.RESIZE.Xy) { moveOffsetX = _vm.NodeBase.PositionX; } // Don't move on X axis if resizing up-right
                 _moveControl(moveOffsetX, moveOffsetY);
             }
         }
@@ -173,12 +143,9 @@ public partial class InteractiveView : Grid
 
     private void _moveControl(double offsetX, double offsetY)
     {
-        _transform = new TranslateTransform(offsetX, offsetY);
-        RenderTransform = _transform;
-
-        // Update position in viewmodel when node is moved
-        ((NodeViewModelBase)DataContext).NodeBase.PositionX = offsetX;
-        ((NodeViewModelBase)DataContext).NodeBase.PositionY = offsetY;
+        _vm.NodeBase.PositionX = offsetX;
+        _vm.NodeBase.PositionY = offsetY;
+        RenderTransform = new TranslateTransform(offsetX, offsetY);
     }
 
     // On selecting node edge creation, tell workspace this node has been selected
@@ -187,8 +154,8 @@ public partial class InteractiveView : Grid
         var clickProperties = e.GetCurrentPoint(Parent as Visual).Properties;
         if (!clickProperties.IsLeftButtonPressed) { return; }
 
-        WeakReferenceMessenger.Default.Send(new SelectNodeMessage((NodeViewModelBase)DataContext));
-        WeakReferenceMessenger.Default.Send(new SelectNodeEdgeMessage((NodeViewModelBase)DataContext));
+        WeakReferenceMessenger.Default.Send(new SelectNodeMessage(_vm));
+        WeakReferenceMessenger.Default.Send(new SelectNodeEdgeMessage(_vm));
     }
 
     // On releasing node edge creation, find node released on and send to workspace
@@ -197,27 +164,30 @@ public partial class InteractiveView : Grid
         var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
         var rootCoordinates = e.GetPosition(root);
         var hitElement = root.InputHitTest(rootCoordinates);
-        if (((Visual)hitElement).FindLogicalAncestorOfType<InteractiveView>() is InteractiveView node)
+        if (((Visual)hitElement).FindLogicalAncestorOfType<InteractiveView>() is InteractiveView node && node.DataContext is NodeViewModelBase vm)
         {
-            WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage((NodeViewModelBase)node.DataContext));
+            WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage(vm));
         }
     }
 
     // Handle dropping image
     public async Task DropImage(object sender, DragEventArgs e)
     {
-        NodeModel node = ((NodeViewModel)DataContext).Node;
-        if (e.Data.GetText() is string url && _IsImage(e.Data.GetText()))
+        if (_vm is NodeViewModel vm)
         {
-            node.ImagePath = e.Data.GetText();
-        }
-        else if (e.Data.GetFileNames() is { } fileNames && fileNames is not null)
-        {
-            foreach (var file in fileNames)
+            NodeModel node = vm.Node;
+            if (e.Data.GetText() is string url && _IsImage(e.Data.GetText()))
             {
-                if (_IsImage(file))
+                node.ImagePath = e.Data.GetText();
+            }
+            else if (e.Data.GetFileNames() is { } fileNames && fileNames is not null)
+            {
+                foreach (var file in fileNames)
                 {
-                    node.ImagePath = file;
+                    if (_IsImage(file))
+                    {
+                        node.ImagePath = file;
+                    }
                 }
             }
         }
