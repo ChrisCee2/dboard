@@ -15,6 +15,7 @@
 			<customConverters:PointConverter x:Key="PointConverter"/>
 			<customConverters:ARGBBrushConverter x:Key="ARGBBrushConverter"/>
 			<customConverters:ARGBColorConverter x:Key="ARGBColorConverter"/>
+			<customConverters:BoolToDoubleConverter x:Key="BoolToDoubleConverter"/>
 		</ResourceDictionary>
 	</Application.Resources>
 

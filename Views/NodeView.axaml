@@ -15,6 +15,11 @@
 		<vm:NodeViewModel />
 	</Design.DataContext>
 
+	<UserControl.Effect>
+		<DropShadowEffect Color="#88BBFF" BlurRadius="30" OffsetX="0" OffsetY="0"
+						  Opacity="{Binding IsSelected, Converter={StaticResource BoolToDoubleConverter}, ConverterParameter=1}"/>
+	</UserControl.Effect>
+
 	<UserControl.Styles>
 		<Style Selector="TextBox">
 			<Setter Property="BorderThickness" Value="0"/>

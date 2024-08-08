@@ -27,9 +27,8 @@
 
 	<Border Width="12" Height="12" Margin="5" BorderThickness="1" Background="Red" CornerRadius="12"
 			PointerPressed="SelectNodeEdge"
-			PointerReleased="ReleaseNodeEdge">
-		
-	</Border>
+			PointerReleased="ReleaseNodeEdge"/>
+	
 	<AdornerLayer Grid.Row="1">
 		<AdornerLayer.Adorner>
 			<Grid
@@ -59,10 +58,10 @@
 					   PointerReleased="ResizePointerReleased"
 					   PointerMoved="ResizePointerMoved" />
 				<Panel Tag="XY" Background="Transparent" Cursor="BottomRightCorner"
-						Grid.Row="2" Grid.Column="2" Width="8" Height="8"
-						PointerPressed="ResizePointerPressed"
-						PointerReleased="ResizePointerReleased"
-						PointerMoved="ResizePointerMoved" />
+					   Grid.Row="2" Grid.Column="2" Width="8" Height="8"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
 				<Panel Tag="y" Background="Transparent" Cursor="TopSide"
 					   Grid.Row="0" Grid.Column="1"
 					   PointerPressed="ResizePointerPressed"
