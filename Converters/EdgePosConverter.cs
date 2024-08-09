@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using Avalonia;
 
 namespace mystery_app.Converters;
-public class PointConverter : IMultiValueConverter
+public class EdgePosConverter : IMultiValueConverter
 {
-    public static readonly PointConverter Instance = new();
+    public static readonly EdgePosConverter Instance = new();
 
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (values.Count == 2 && values[0] is double x && values[1] is double y)
+        if (values.Count == 3 && values[0] is double x && values[1] is double y && values[2] is double width)
         {
-            return new Point(x, y);
+            return new Point(x + (width/2), y + 11);
         }
         return null;
     }

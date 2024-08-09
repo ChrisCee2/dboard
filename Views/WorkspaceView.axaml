@@ -5,6 +5,7 @@
 	xmlns:views="clr-namespace:mystery_app.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:constants="clr-namespace:mystery_app.Constants"
     x:Class="mystery_app.Views.WorkspaceView"
     x:DataType="vm:WorkspaceViewModel"
 	Focusable="True"
@@ -108,11 +109,25 @@
 			<!--Edge for edge creation-->
 			<Canvas>
 				<Line
-					StartPoint="{Binding PressedPosition}"
 					EndPoint="{Binding CursorPosition}"
-					Stroke="Red"
 					StrokeThickness="{Binding EdgeThickness}"
-					IsHitTestVisible="False"/>
+					IsHitTestVisible="False">
+					<Line.StartPoint>
+						<MultiBinding Converter="{StaticResource EdgePosConverter}">
+							<Binding Path="SelectedNodeEdge.NodeBase.PositionX"/>
+							<Binding Path="SelectedNodeEdge.NodeBase.PositionY"/>
+							<Binding Path="SelectedNodeEdge.NodeBase.Width"/>
+						</MultiBinding>
+					</Line.StartPoint>
+					<Line.Stroke>
+						<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+							<Binding Source="{x:Static constants:EdgeConstants.A}"/>
+							<Binding Source="{x:Static constants:EdgeConstants.R}"/>
+							<Binding Source="{x:Static constants:EdgeConstants.G}"/>
+							<Binding Source="{x:Static constants:EdgeConstants.B}"/>
+						</MultiBinding>
+					</Line.Stroke>
+				</Line>
 			</Canvas>
 
 			<!--Rectangle for multiselect-->
