@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Avalonia;
+using Avalonia.Media;
+using Avalonia.Media.Immutable;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Constants;
@@ -9,6 +11,11 @@ public static class NodeConstants
     public static readonly NodeViewModel NULL_NODEVIEWMODEL = new NodeViewModel();
 
     public const string DEFAULT_IMAGE_PATH = "avares://mystery_app/Assets/amongusbutt.png";
+
+    // Node Color constants
+    public static readonly IBrush TOGGLED_COLOR = new ImmutableSolidColorBrush(new Color(255, 165, 140, 100));
+    public static readonly IBrush UNTOGGLED_COLOR = new ImmutableSolidColorBrush(new Color(255, 200, 185, 140));
+    public static readonly IBrush TEXTBOX_BORDER_COLOR = new ImmutableSolidColorBrush(new Color(255, 200, 185, 140));
 
     // Size constants
     public const int MIN_WIDTH = 140;

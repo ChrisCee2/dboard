@@ -5,6 +5,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:vm="clr-namespace:mystery_app.ViewModels"
 	xmlns:views="clr-namespace:mystery_app.Views"
+	xmlns:constants="clr-namespace:mystery_app.Constants"
 	x:Class="mystery_app.Views.NodeView"
 	x:DataType="vm:NodeViewModel"
 	Padding="10"
@@ -22,7 +23,14 @@
 
 	<UserControl.Styles>
 		<Style Selector="TextBox">
-			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Margin" Value="0,2,0,0"/>
+			<Setter Property="BorderBrush" Value="{x:Static constants:NodeConstants.TEXTBOX_BORDER_COLOR}"/>
+		</Style>
+		<Style Selector="ToggleButton:checked Border">
+			<Setter Property="Background" Value="{x:Static constants:NodeConstants.TOGGLED_COLOR}"/>
+		</Style>
+		<Style Selector="ToggleButton Border">
+			<Setter Property="Background" Value="{x:Static constants:NodeConstants.UNTOGGLED_COLOR}"/>
 		</Style>
 	</UserControl.Styles>
 
@@ -36,28 +44,30 @@
 					Path="Bounds.Size.Height"
 					ConverterParameter="0.7"/>
 			</StackPanel.MaxHeight>
-			<TextBox Text="{Binding Node.Name}" MinHeight="20" MaxHeight="40" FontSize="16" TextWrapping="Wrap"/>
-			<Expander
-				Header="Notes"
-				HorizontalAlignment="Stretch"
-				ExpandDirection="Up"
-				MinHeight="10"
-				Padding="0">
-				<TextBox 
-					Text="{Binding Node.Notes}" 
+			<TextBox Text="{Binding Node.Name}" MinHeight="20" MaxHeight="40" FontSize="16"
+					 TextWrapping="Wrap"/>
+			<TextBox
+					Text="{Binding Node.Notes}"
 					MinHeight="20"
-					VerticalAlignment="Stretch" 
+					VerticalAlignment="Stretch"
 					TextWrapping="Wrap"
-					AcceptsReturn="True">
-					<TextBox.MaxHeight>
-						<Binding
-							Converter="{StaticResource MaxHeightConverter}"
-							ElementName="RootGrid"
-							Path="Bounds.Size.Height"
-							ConverterParameter="0.5"/>
-					</TextBox.MaxHeight>
-				</TextBox>
-			</Expander>
+					AcceptsReturn="True"
+					IsVisible="{Binding Node.NotesToggled}">
+				<TextBox.MaxHeight>
+					<Binding
+						Converter="{StaticResource MaxHeightConverter}"
+						ElementName="RootGrid"
+						Path="Bounds.Size.Height"
+						ConverterParameter="0.5"/>
+				</TextBox.MaxHeight>
+			</TextBox>
+			<ToggleButton Margin="0,2,0,0" Padding="0" HorizontalAlignment="Stretch" CornerRadius="8"
+						  IsVisible="{Binding IsEdit}"
+						  IsChecked="{Binding Node.NotesToggled}">
+				<Border Padding="8,4,0,4" Opacity="1" CornerRadius="8">
+					<TextBlock>Notes</TextBlock>
+				</Border>
+			</ToggleButton>
 		</StackPanel>
 	</Grid>
 </UserControl>
