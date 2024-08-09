@@ -25,7 +25,10 @@
 				<MenuItem Header = "Save" PointerReleased="Save"/>
 			</MenuItem>
 			<MenuItem Header = "Actions">
-				<MenuItem Header = "Create Node" Command="{Binding CreateNodeCommand}"/>
+				<MenuItem Header = "Create Node" Command="{Binding Workspace.CreateNodeCommand}"/>
+				<MenuItem Header = "Delete" Command="{Binding Workspace.DeleteNodeCommand}"/>
+				<MenuItem Header = "Copy" Command="{Binding Workspace.CopyNodeCommand}"/>
+				<MenuItem Header = "Paste" Command="{Binding Workspace.PasteNodeCommand}"/>
 			</MenuItem>
 			<MenuItem Header = "Settings" HorizontalAlignment="Right" Command="{Binding GoToSettingsCommand}"/>
 		</Menu>
