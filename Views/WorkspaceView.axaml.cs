@@ -85,7 +85,7 @@ public partial class WorkspaceView : UserControl
             var newSelectedNodes = new ObservableCollection<NodeViewModelBase>();
             foreach (ContentPresenter item in itemsControl.GetLogicalChildren())
             {
-                InteractiveView node = (InteractiveView)item.Child;
+                InteractiveView node = item.FindDescendantOfType<InteractiveView>();
                 NodeViewModelBase nodeContext = (NodeViewModelBase)node.DataContext;
                 if (x1 < nodeContext.NodeBase.PositionX + node.Bounds.Size.Width
                     && x2 > nodeContext.NodeBase.PositionX

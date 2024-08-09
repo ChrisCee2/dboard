@@ -26,7 +26,7 @@
 
 	<Window.KeyBindings>
 		<KeyBinding Gesture="Tab" Command="{Binding ToggleModeCommand}" />
-		<KeyBinding Gesture="P" Command="{Binding ToggleFullScreenCommand}" />
+		<KeyBinding Gesture="Ctrl+F" Command="{Binding ToggleFullScreenCommand}" />
 	</Window.KeyBindings>
 
 	<TransitioningContentControl Content="{Binding CurrentPage}" />

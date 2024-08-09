@@ -8,15 +8,7 @@ public partial class NodeViewModel : NodeViewModelBase
 {
     public NodeViewModel()
     {
-        Node = new NodeModel(
-            "",
-            "",
-            NodeConstants.DEFAULT_IMAGE_PATH,
-            150,
-            150,
-            0,
-            0,
-            "");
+        Node = new NodeModel();
     }
 
     public NodeViewModel(NodeModel node)

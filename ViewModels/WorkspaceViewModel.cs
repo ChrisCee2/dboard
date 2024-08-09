@@ -15,7 +15,7 @@ public partial class WorkspaceViewModel : ObservableObject
     public ObservableCollection<NodeViewModelBase> Nodes { get; set; } = new ObservableCollection<NodeViewModelBase>();
     public EdgeCollectionModel Edges { get; set; } = new EdgeCollectionModel();
     [ObservableProperty]
-    private NodeViewModelBase? _selectedNodeEdge = NodeConstants.NULL_NODEVIEWMODEL;
+    private NodeViewModelBase _selectedNodeEdge = NodeConstants.NULL_NODEVIEWMODEL;
     [ObservableProperty]
     private Point _cursorPosition;
     [ObservableProperty]
@@ -44,9 +44,9 @@ public partial class WorkspaceViewModel : ObservableObject
             if (message.Value is NodeViewModelBase nodeVMBase && Nodes.Contains(nodeVMBase))
             {
                 EdgeThickness = EdgeConstants.THICKNESS;
-                SelectedNodeEdge = message.Value;
-                PressedPosition = new Point(nodeVMBase.NodeBase.PositionX, nodeVMBase.NodeBase.PositionY);
-                CursorPosition = new Point(nodeVMBase.NodeBase.PositionX, nodeVMBase.NodeBase.PositionY);
+                SelectedNodeEdge = nodeVMBase;
+                // Manually assign position to where pin is
+                CursorPosition = new Point(SelectedNodeEdge.NodeBase.PositionX + (SelectedNodeEdge.NodeBase.Width / 2), SelectedNodeEdge.NodeBase.PositionY + 11);
             }
         });
 

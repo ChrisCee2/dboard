@@ -27,16 +27,21 @@
 	</TextBox>
 	<Line
 		StrokeThickness="{Binding Edge.Thickness}">
+		<Line.Effect>
+			<DropShadowEffect BlurRadius="1" Opacity=".5" OffsetX="3" OffsetY="3"/>
+		</Line.Effect>
 		<Line.StartPoint>
-			<MultiBinding Converter="{StaticResource PointConverter}">
+			<MultiBinding Converter="{StaticResource EdgePosConverter}">
 				<Binding Path="Edge.FromNode.PositionX"/>
 				<Binding Path="Edge.FromNode.PositionY"/>
+				<Binding Path="Edge.FromNode.Width"/>
 			</MultiBinding>
 		</Line.StartPoint>
 		<Line.EndPoint>
-			<MultiBinding Converter="{StaticResource PointConverter}">
+			<MultiBinding Converter="{StaticResource EdgePosConverter}">
 				<Binding Path="Edge.ToNode.PositionX"/>
 				<Binding Path="Edge.ToNode.PositionY"/>
+				<Binding Path="Edge.ToNode.Width"/>
 			</MultiBinding>
 		</Line.EndPoint>
 		<Line.Stroke>

@@ -45,4 +45,7 @@ public partial class NodeModel : NodeModelBase
 
     [ObservableProperty]
     private string _notes;
+
+    [ObservableProperty]
+    private bool _notesToggled;
 }
