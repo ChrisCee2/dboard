@@ -16,6 +16,7 @@
 			<customConverters:ARGBBrushConverter x:Key="ARGBBrushConverter"/>
 			<customConverters:ARGBColorConverter x:Key="ARGBColorConverter"/>
 			<customConverters:BoolToDoubleConverter x:Key="BoolToDoubleConverter"/>
+			<customConverters:MaxHeightConverter x:Key="MaxHeightConverter"/>
 		</ResourceDictionary>
 	</Application.Resources>
 

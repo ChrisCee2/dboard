@@ -3,15 +3,15 @@ using System.Globalization;
 using Avalonia.Data.Converters;
 
 namespace mystery_app.Converters;
-public class BoolToDoubleConverter : IValueConverter
+public class MaxHeightConverter : IValueConverter
 {
-    public static readonly BoolToDoubleConverter Instance = new();
+    public static readonly MaxHeightConverter Instance = new();
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is bool val)
+        if (value is double val && double.Parse((string)parameter) is double percentage)
         {
-            return (bool)value ? double.Parse((string)parameter) : 0;
+            return val * percentage;
         }
         return null;
     }

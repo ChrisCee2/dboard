@@ -26,16 +26,37 @@
 		</Style>
 	</UserControl.Styles>
 
-	<Grid RowDefinitions="*, Auto">
-		<views:ImageView Grid.Row="0" DataContext="{Binding Node}"/>
+	<Grid RowDefinitions="*, Auto" x:Name="RootGrid">
+		<views:ImageView Grid.Row="0" DataContext="{Binding Node}" MinWidth="20"/>
 		<StackPanel Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-			<TextBox Text="{Binding Node.Name}" MinHeight="20" MaxHeight="60"/>
+			<StackPanel.MaxHeight>
+				<Binding
+					Converter="{StaticResource MaxHeightConverter}"
+					ElementName="RootGrid"
+					Path="Bounds.Size.Height"
+					ConverterParameter="0.7"/>
+			</StackPanel.MaxHeight>
+			<TextBox Text="{Binding Node.Name}" MinHeight="20" MaxHeight="40" FontSize="16" TextWrapping="Wrap"/>
 			<Expander
 				Header="Notes"
-				VerticalAlignment="Stretch"
 				HorizontalAlignment="Stretch"
-				MinHeight="10">
-				<TextBox Text="{Binding Node.Notes}" MinHeight="20" MaxHeight="10000" VerticalAlignment="Stretch"/>
+				ExpandDirection="Up"
+				MinHeight="10"
+				Padding="0">
+				<TextBox 
+					Text="{Binding Node.Notes}" 
+					MinHeight="20"
+					VerticalAlignment="Stretch" 
+					TextWrapping="Wrap"
+					AcceptsReturn="True">
+					<TextBox.MaxHeight>
+						<Binding
+							Converter="{StaticResource MaxHeightConverter}"
+							ElementName="RootGrid"
+							Path="Bounds.Size.Height"
+							ConverterParameter="0.5"/>
+					</TextBox.MaxHeight>
+				</TextBox>
 			</Expander>
 		</StackPanel>
 	</Grid>
