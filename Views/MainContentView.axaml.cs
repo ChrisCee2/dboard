@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Platform.Storage;
 using mystery_app.Models;
@@ -88,6 +89,14 @@ public partial class MainContentView : UserControl
             {
                 ((MainContentViewModel)DataContext).Workspace.Edges.Add(new EdgeViewModel(edgeModel));
             }
+        }
+    }
+
+    protected void Exit(object sender, PointerReleasedEventArgs e)
+    {
+        if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.MainWindow.Close();
         }
     }
 }
