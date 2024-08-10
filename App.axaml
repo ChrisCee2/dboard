@@ -3,8 +3,7 @@
              x:Class="mystery_app.App"
 			 xmlns:converters="using:Avalonia.Markup.Xaml.Converters"
 			 xmlns:customConverters="clr-namespace:mystery_app.Converters"
-             xmlns:local="using:mystery_app"
-             RequestedThemeVariant="Default">
+             xmlns:local="using:mystery_app">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
 	<Application.Resources>

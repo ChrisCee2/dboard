@@ -3,6 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="using:mystery_app.ViewModels"
 	xmlns:views="clr-namespace:mystery_app.Views"
+	xmlns:constants="clr-namespace:mystery_app.Constants"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Class="mystery_app.Views.MainContentView"
@@ -13,7 +14,7 @@
     </Design.DataContext>
 
 	<DockPanel>
-		<Menu DockPanel.Dock = "Top" IsVisible="{Binding SharedSettings.ModeModel.ShowItems}">
+		<Menu DockPanel.Dock = "Top" IsVisible="{Binding SharedSettings.ModeModel.ShowItems}" Background="{x:Static constants:ToolBarConstants.COLOR}">
 			<MenuItem Header = "_File">
 				<MenuItem Header = "New" Command="{Binding NewCommand}"/>
 				<MenuItem Header = "Open" PointerReleased="Open"/>
