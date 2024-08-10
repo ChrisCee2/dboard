@@ -16,6 +16,7 @@
 			<customConverters:ARGBColorConverter x:Key="ARGBColorConverter"/>
 			<customConverters:BoolToDoubleConverter x:Key="BoolToDoubleConverter"/>
 			<customConverters:MaxHeightConverter x:Key="MaxHeightConverter"/>
+			<customConverters:WStateBoolConverter x:Key="WStateBoolConverter"/>
 		</ResourceDictionary>
 	</Application.Resources>
 
@@ -25,5 +26,6 @@
   
     <Application.Styles>
         <FluentTheme />
+		<StyleInclude Source="avares://mystery_app/Styles/Icons.axaml" />
     </Application.Styles>
 </Application>
