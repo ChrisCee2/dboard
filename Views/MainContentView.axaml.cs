@@ -3,8 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using mystery_app.Models;
 using mystery_app.ViewModels;
@@ -26,7 +29,7 @@ public partial class MainContentView : UserControl
         InitializeComponent();
     }
 
-    protected async void Save(object sender, PointerReleasedEventArgs e)
+    protected async void Save(object sender, RoutedEventArgs e)
     {
         if (!Directory.Exists("./Workspaces"))
         {
@@ -55,7 +58,7 @@ public partial class MainContentView : UserControl
         }
     }
 
-    protected async void Open(object sender, PointerReleasedEventArgs e)
+    protected async void Open(object sender, RoutedEventArgs e)
     {
         if (!Directory.Exists("./Workspaces"))
         {
@@ -87,6 +90,56 @@ public partial class MainContentView : UserControl
             foreach (EdgeModel edgeModel in workspace.Edges)
             {
                 ((MainContentViewModel)DataContext).Workspace.Edges.Add(new EdgeViewModel(edgeModel));
+            }
+        }
+    }
+
+    protected void Exit(object sender, RoutedEventArgs e)
+    {
+        if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.MainWindow.Close();
+        }
+    }
+
+    protected void Minimize(object sender, RoutedEventArgs e)
+    {
+        if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.MainWindow.WindowState = WindowState.Minimized;
+        }
+    }
+
+    protected void Maximize(object sender, RoutedEventArgs e)
+    {
+        ToggleMaximize();
+    }
+
+    protected void MoveWindow(object sender, PointerPressedEventArgs e)
+    {
+        if (!e.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed) { return; }
+        if (e.ClickCount >= 2)
+        {
+            ToggleMaximize();
+            return;
+        }
+        if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.MainWindow.BeginMoveDrag(e);
+        }
+    }
+
+    protected void ToggleMaximize()
+    {
+        if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            if (desktop.MainWindow.WindowState == WindowState.Maximized)
+            {
+                desktop.MainWindow.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                desktop.MainWindow.WindowState = WindowState.Maximized;
             }
         }
     }

@@ -3,33 +3,137 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="using:mystery_app.ViewModels"
 	xmlns:views="clr-namespace:mystery_app.Views"
+	xmlns:constants="clr-namespace:mystery_app.Constants"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Class="mystery_app.Views.MainContentView"
-    x:DataType="vm:MainContentViewModel">
+    x:DataType="vm:MainContentViewModel"
+	Background="{x:Static constants:ToolBarConstants.COLOR}">
 
     <Design.DataContext>
         <vm:MainContentViewModel/>
     </Design.DataContext>
 
-	<DockPanel>
-		<Menu DockPanel.Dock = "Top" Background="Gray" IsVisible="{Binding SharedSettings.ModeModel.ShowItems}">
-			<Menu.ItemsPanel>
-				<ItemsPanelTemplate>
-					<DockPanel HorizontalAlignment="Stretch"/>
-				</ItemsPanelTemplate>
-			</Menu.ItemsPanel>
-			<MenuItem Header = "File">
-				<MenuItem Header = "New" Command="{Binding NewCommand}"/>
-				<MenuItem Header = "Open" PointerReleased="Open"/>
-				<MenuItem Header = "Save" PointerReleased="Save"/>
-			</MenuItem>
-			<MenuItem Header = "Actions">
-				<MenuItem Header = "Create Node" Command="{Binding CreateNodeCommand}"/>
-			</MenuItem>
-			<MenuItem Header = "Settings" HorizontalAlignment="Right" Command="{Binding GoToSettingsCommand}"/>
-		</Menu>
-		<views:WorkspaceView DataContext="{Binding Workspace}"/>
-	</DockPanel>
+	<UserControl.Styles>
+		<Style Selector="Panel.Maximized">
+			<Setter Property="Width" Value="{x:Static constants:ToolBarConstants.MAX_BORDER_WIDTH}"/>
+		</Style>
+		<Style Selector="Panel.Normal">
+			<Setter Property="Width" Value="{x:Static constants:ToolBarConstants.NORM_BORDER_WIDTH}"/>
+		</Style>
+		<Style Selector="Panel.BMaximized">
+			<Setter Property="Height" Value="{x:Static constants:ToolBarConstants.MAX_BORDER_WIDTH}"/>
+		</Style>
+		<Style Selector="Panel.BNormal">
+			<Setter Property="Height" Value="{x:Static constants:ToolBarConstants.NORM_BORDER_WIDTH}"/>
+		</Style>
+	</UserControl.Styles>
+	
+	<DockPanel >
+		<DockPanel DockPanel.Dock="Top" IsVisible="{Binding SharedSettings.ModeModel.ShowItems}">
+			<DockPanel.Styles>
+				<Style Selector="PathIcon.Maximized">
+					<Setter Property="Data" Value="{StaticResource restore_regular}" />
+				</Style>
+				<Style Selector="PathIcon.Normal">
+					<Setter Property="Data" Value="{StaticResource maximize_regular}" />
+				</Style>
+				<Style Selector="Button">
+					<Setter Property="BorderThickness" Value="0" />
+					<Setter Property="CornerRadius" Value="0" />
+					<Setter Property="Background" Value="Transparent" />
+					<Setter Property="FontSize" Value="{x:Static constants:ToolBarConstants.FONT_SIZE}" />
+				</Style>
+				<Style Selector="Button.MidMax">
+					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.MAX_MBTN_PAD}"/>
+				</Style>
+				<Style Selector="Button.MidNorm">
+					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.NORM_MBTN_PAD}"/>
+				</Style>
+				<Style Selector="PathIcon.MidMax">
+					<Setter Property="Margin" Value="0,8,0,0"/>
+				</Style>
+				<Style Selector="PathIcon.MidNorm">
+					<Setter Property="Margin" Value="0,0,0,0"/>
+				</Style>
+				<Style Selector="Border.LeftMax">
+					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.MAX_LPAD}"/>
+				</Style>
+				<Style Selector="Border.LeftNorm">
+					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.NORM_LPAD}"/>
+				</Style>
+				<Style Selector="Button.RightMax">
+					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.MAX_RBTN_PAD}"/>
+				</Style>
+				<Style Selector="Button.RightNorm">
+					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.NORM_RBTN_PAD}"/>
+				</Style>
+			</DockPanel.Styles>
 
+			<Border PointerPressed="MoveWindow" Width="30" DockPanel.Dock="Left" Background="Transparent"
+					Classes.LeftMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+					Classes.LeftNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
+			<Button Content="File" DockPanel.Dock="Left"
+					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
+				<Button.Flyout>
+					<MenuFlyout Placement="BottomEdgeAlignedLeft">
+						<MenuItem Header="New" Command="{Binding NewCommand}"/>
+						<MenuItem Header="Open" Click="Open"/>
+						<MenuItem Header="Save" Click="Save"/>
+						<MenuItem Header="Settings" Command="{Binding GoToSettingsCommand}"/>
+						<Separator/>
+						<MenuItem Header="Exit" Click="Exit"/>
+					</MenuFlyout>
+				</Button.Flyout>
+			</Button>
+			<Button Content="Edit" DockPanel.Dock="Left"
+					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
+				<Button.Flyout>
+					<MenuFlyout Placement="BottomEdgeAlignedLeft">
+						<MenuItem Header="Copy" Command="{Binding Workspace.CopyNodeCommand}"/>
+						<MenuItem Header="Paste" Command="{Binding Workspace.PasteNodeCommand}"/>
+						<MenuItem Header="Delete" Command="{Binding Workspace.DeleteNodeCommand}"/>
+					</MenuFlyout>
+				</Button.Flyout>
+			</Button>
+			<PathIcon Data="{StaticResource divider_short_regular}" DockPanel.Dock="Left" Width="10" Height="12"
+						Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+						Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
+			<Button Content="Create Node" Command="{Binding Workspace.CreateNodeCommand}" DockPanel.Dock="Left"
+					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
+			<Button Click="Exit" DockPanel.Dock="Right"
+					Classes.RightMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+					Classes.RightNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
+					<PathIcon Data="{StaticResource dismiss_regular}" Width="10" Height="10"/>
+			</Button>
+			<Button Click="Maximize" DockPanel.Dock="Right"
+					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
+				<PathIcon Width="10" Height="10"
+					Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+					Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
+			</Button>
+			<Button Click="Minimize" DockPanel.Dock="Right"
+					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
+				<PathIcon Width="10" Height="10" Data="{StaticResource line_horizontal_1_regular}"/>
+			</Button>
+			<Panel PointerPressed="MoveWindow" HorizontalAlignment="Stretch" Background="Transparent"
+					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
+		</DockPanel>
+		<Panel Background="Transparent" DockPanel.Dock="Left"
+			   Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+			   Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
+		<Panel Background="Transparent" DockPanel.Dock="Right"
+			   Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+			   Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
+		<Panel Background="Transparent" DockPanel.Dock="Bottom"
+			   Classes.BMaximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+			   Classes.BNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
+		<views:WorkspaceView DataContext="{Binding Workspace}" CornerRadius="8" BorderBrush="Blue"/>
+	</DockPanel>
 </UserControl>

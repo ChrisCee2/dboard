@@ -21,12 +21,6 @@ public partial class MainContentViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void CreateNode()
-    {
-        Workspace.CreateEmptyNode();
-    }
-
-    [RelayCommand]
     private void GoToSettings()
     {
         WeakReferenceMessenger.Default.Send(new ChangePageMessage(PageConstants.PAGE.Settings));

@@ -3,8 +3,7 @@
              x:Class="mystery_app.App"
 			 xmlns:converters="using:Avalonia.Markup.Xaml.Converters"
 			 xmlns:customConverters="clr-namespace:mystery_app.Converters"
-             xmlns:local="using:mystery_app"
-             RequestedThemeVariant="Default">
+             xmlns:local="using:mystery_app">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
 	<Application.Resources>
@@ -17,6 +16,7 @@
 			<customConverters:ARGBColorConverter x:Key="ARGBColorConverter"/>
 			<customConverters:BoolToDoubleConverter x:Key="BoolToDoubleConverter"/>
 			<customConverters:MaxHeightConverter x:Key="MaxHeightConverter"/>
+			<customConverters:WStateBoolConverter x:Key="WStateBoolConverter"/>
 		</ResourceDictionary>
 	</Application.Resources>
 
@@ -26,5 +26,6 @@
   
     <Application.Styles>
         <FluentTheme />
+		<StyleInclude Source="avares://mystery_app/Styles/Icons.axaml" />
     </Application.Styles>
 </Application>
