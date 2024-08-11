@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia;
-using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -180,12 +179,6 @@ public partial class WorkspaceViewModel : ObservableObject
 
         // Reorder z indexes
         nodesToSelect = new ObservableCollection<NodeViewModelBase>(nodesToSelect.OrderBy(nodevm => nodevm.NodeBase.ZIndex).ToList());
-        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, "NODES TO SELECT");
-        foreach (var node in nodesToSelect)
-        {
-            Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, node.NodeBase.ZIndex.ToString());
-        }
-
         foreach (var nodeVM in Nodes)
         {
             if (!nodesToSelect.Contains(nodeVM))
