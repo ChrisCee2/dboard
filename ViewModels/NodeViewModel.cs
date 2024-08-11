@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using mystery_app.Constants;
 using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
@@ -34,6 +33,21 @@ public partial class NodeViewModel : NodeViewModelBase
             Node.Height,
             Node.PositionX,
             Node.PositionY,
-            Node.Notes));
+            Node.Notes,
+            Node.ZIndex));
+    }
+
+    public override NodeViewModelBase Clone(int zIndex)
+    {
+        return new NodeViewModel(new NodeModel(
+            Node.Name,
+            Node.Desc,
+            Node.ImagePath,
+            Node.Width,
+            Node.Height,
+            Node.PositionX,
+            Node.PositionY,
+            Node.Notes,
+            zIndex));
     }
 }

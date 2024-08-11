@@ -20,4 +20,7 @@ public abstract partial class NodeModelBase : ObservableObject
 
     [ObservableProperty]
     private double _positionY;
+
+    [ObservableProperty]
+    private int _zIndex;
 }

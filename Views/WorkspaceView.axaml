@@ -81,11 +81,17 @@
 						<Canvas/>
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
+
+				<ItemsControl.Styles>
+					<Style Selector="ContentPresenter" x:DataType="vm:NodeViewModel">
+						<Setter Property="ZIndex" Value="{Binding NodeBase.ZIndex}"/>
+					</Style>
+				</ItemsControl.Styles>
 				
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<views:InteractiveView DataContext="{Binding}">
-							<views:NodeView DataContext="{Binding}" Grid.Row="1"/>
+							<views:NodeView DataContext="{Binding}" Grid.Row="1" Canvas.ZIndex="{Binding NodeBase.ZIndex}"/>
 						</views:InteractiveView>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>

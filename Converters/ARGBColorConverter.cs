@@ -3,7 +3,6 @@ using System.Globalization;
 using Avalonia.Data.Converters;
 using System.Collections.Generic;
 using Avalonia.Media;
-using Avalonia.Logging;
 
 namespace mystery_app.Converters;
 public class ARGBColorConverter : IMultiValueConverter
@@ -21,7 +20,6 @@ public class ARGBColorConverter : IMultiValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, targetType.FullName);
         if (value is Color color) 
         {
             return new List<byte> { color.A, color.R, color.G, color.B };
