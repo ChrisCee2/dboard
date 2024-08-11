@@ -35,7 +35,7 @@
 	</UserControl.Styles>
 
 	<Grid RowDefinitions="*, Auto" x:Name="RootGrid">
-		<TextBlock Text="{Binding NodeBase.ZIndex}" Background="Gray"/>
+		<views:ImageView Grid.Row="0" DataContext="{Binding Node}" MinWidth="20"/>
 		<StackPanel Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 			<StackPanel.MaxHeight>
 				<Binding
@@ -71,5 +71,3 @@
 		</StackPanel>
 	</Grid>
 </UserControl>
-
-<!--<views:ImageView Grid.Row="0" DataContext="{Binding Node}" MinWidth="20"/>-->
