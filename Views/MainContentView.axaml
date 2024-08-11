@@ -27,6 +27,21 @@
 		<Style Selector="Panel.BNormal">
 			<Setter Property="Height" Value="{x:Static constants:ToolBarConstants.NORM_BORDER_WIDTH}"/>
 		</Style>
+		<Style Selector="ToggleButton">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ToggleButton:checked /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="ToggleButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{x:Static constants:ToolBarConstants.BUTTON_TRANSPARENT}"/>
+		</Style>
+		<Style Selector="ToggleButton.Maximized">
+			<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.MAX_RBTN_PAD}"/>
+		</Style>
+		<Style Selector="ToggleButton.Normal">
+			<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.NORM_RBTN_PAD}"/>
+		</Style>
 	</UserControl.Styles>
 	
 	<DockPanel >
@@ -128,12 +143,62 @@
 		<Panel Background="Transparent" DockPanel.Dock="Left"
 			   Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
 			   Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
-		<Panel Background="Transparent" DockPanel.Dock="Right"
-			   Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-			   Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
 		<Panel Background="Transparent" DockPanel.Dock="Bottom"
 			   Classes.BMaximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
 			   Classes.BNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
-		<views:WorkspaceView DataContext="{Binding Workspace}" CornerRadius="8" BorderBrush="Blue"/>
+		<SplitView 
+			DockPanel.Dock="Right"
+			Name="NotesSplitView"
+			PanePlacement="Left"
+			DisplayMode="Inline"
+			OpenPaneLength="200"
+			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
+			<SplitView.PaneBackground>
+				<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+					<Binding Path="SharedSettings.ModeModel.A"/>
+					<Binding Path="SharedSettings.ModeModel.R"/>
+					<Binding Path="SharedSettings.ModeModel.G"/>
+					<Binding Path="SharedSettings.ModeModel.B"/>
+				</MultiBinding>
+			</SplitView.PaneBackground>
+
+			<SplitView.Pane>
+				<DockPanel Background="{x:Static constants:ToolBarConstants.COLOR}">
+					<DockPanel DockPanel.Dock="Top" Background="Transparent">
+						<ToggleButton
+							Margin="5,5,0,0"
+							Padding="8"
+							IsChecked="{Binding #NotesSplitView.IsPaneOpen}"
+							DockPanel.Dock="Left"
+							CornerRadius="10000">
+							<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
+						</ToggleButton>
+					</DockPanel>
+					<TextBox Margin="5" BorderThickness="0"/>
+				</DockPanel>
+			</SplitView.Pane>
+
+			<DockPanel Background="Transparent"
+			   >
+				<LayoutTransformControl>
+					<LayoutTransformControl.LayoutTransform>
+						<RotateTransform Angle="90"/>
+					</LayoutTransformControl.LayoutTransform>
+					<ToggleButton Content="Notes"
+								  FontSize="{x:Static constants:ToolBarConstants.FONT_SIZE}"
+								  IsVisible="{Binding SharedSettings.ShowNotes}"
+								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}"
+								  Margin="0"
+								  BorderThickness="0"
+								  CornerRadius="0"
+								  HorizontalAlignment="Stretch"
+								  Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
+								  Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
+					</ToggleButton>
+				</LayoutTransformControl>
+			</DockPanel>
+		</SplitView>
+		<views:WorkspaceView DataContext="{Binding Workspace}" CornerRadius="8"/>
 	</DockPanel>
 </UserControl>

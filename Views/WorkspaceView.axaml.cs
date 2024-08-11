@@ -101,9 +101,4 @@ public partial class WorkspaceView : UserControl
         context.IsMultiSelecting = false;
         base.OnPointerReleased(e);
     }
-
-    protected void ToggleNotes(object sender, RoutedEventArgs args)
-    {
-        NotesSplitView.IsPaneOpen = !NotesSplitView.IsPaneOpen;
-    }
 }

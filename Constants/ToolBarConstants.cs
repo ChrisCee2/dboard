@@ -9,6 +9,7 @@ public static class ToolBarConstants
     public const double FONT_SIZE = 12;
     public static readonly ImmutableSolidColorBrush COLOR = new ImmutableSolidColorBrush(new Color(170, 150, 150, 150));
     public static readonly ImmutableSolidColorBrush BUTTON_BACKGROUND = new ImmutableSolidColorBrush(new Color(0, 0, 0, 0));
+    public static readonly ImmutableSolidColorBrush BUTTON_TRANSPARENT = new ImmutableSolidColorBrush(new Color(30, 0, 0, 0));
     public const double MAX_BORDER_WIDTH = 18;
     public const double NORM_BORDER_WIDTH = 10;
     public static readonly Thickness MAX_MBTN_PAD = new Thickness(12, 16, 12, 8);
