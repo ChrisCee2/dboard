@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using Avalonia;
+using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -87,7 +89,7 @@ public partial class WorkspaceViewModel : ObservableObject
     {
         foreach (var node in CopiedNodes)
         {
-            Nodes.Add(node.Clone());
+            Nodes.Add(node.Clone(Nodes.Count));
         }
     }
 
@@ -105,7 +107,7 @@ public partial class WorkspaceViewModel : ObservableObject
 
     private void _CreateEmptyNode()
     {
-        Nodes.Add(new NodeViewModel());
+        Nodes.Add(new NodeViewModel(new NodeModel(Nodes.Count)));
     }
 
     private void _CopyNodes()
@@ -115,6 +117,8 @@ public partial class WorkspaceViewModel : ObservableObject
         {
             CopiedNodes.Add(node.Clone());
         }
+        // Reorder nodes
+        CopiedNodes = new ObservableCollection<NodeViewModelBase>(CopiedNodes.OrderBy(nodevm => nodevm.NodeBase.ZIndex).ToList());
     }
 
     private void _DeleteNodes()
@@ -143,6 +147,65 @@ public partial class WorkspaceViewModel : ObservableObject
         }
         Edges.RemoveMany(edgesToRemove);
 
+        // Reorder z indexes
+        foreach (var nodeVM in Nodes)
+        {
+            var decrement = 0;
+            foreach (var deletedNodeVM in SelectedNodes)
+            {
+                if (nodeVM.NodeBase.ZIndex > deletedNodeVM.NodeBase.ZIndex)
+                {
+                    decrement++;
+                }
+            }
+            nodeVM.NodeBase.ZIndex -= decrement;
+        }
+
         SelectedNodes = new ObservableCollection<NodeViewModelBase>();
+    }
+
+    public void UpdateSelectedNodes(ObservableCollection<NodeViewModelBase> nodesToSelect)
+    {
+        foreach (var nodeVM in SelectedNodes)
+        {
+            nodeVM.IsSelected = false;
+            nodeVM.IsEdit = false;
+        }
+
+        foreach (NodeViewModelBase nodeVM in nodesToSelect)
+        {
+            nodeVM.IsSelected = true;
+            nodeVM.IsEdit = false;
+        }
+
+        // Reorder z indexes
+        nodesToSelect = new ObservableCollection<NodeViewModelBase>(nodesToSelect.OrderBy(nodevm => nodevm.NodeBase.ZIndex).ToList());
+        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, "NODES TO SELECT");
+        foreach (var node in nodesToSelect)
+        {
+            Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, node.NodeBase.ZIndex.ToString());
+        }
+
+        foreach (var nodeVM in Nodes)
+        {
+            if (!nodesToSelect.Contains(nodeVM))
+            {
+                var decrement = 0;
+                foreach (var selectedNode in nodesToSelect)
+                {
+                    if (nodeVM.NodeBase.ZIndex > selectedNode.NodeBase.ZIndex)
+                    {
+                        decrement++;
+                    }
+                }
+                nodeVM.NodeBase.ZIndex -= decrement;
+            }
+        }
+        foreach (var nodeVM in nodesToSelect)
+        {
+            nodeVM.NodeBase.ZIndex = Nodes.Count - (nodesToSelect.Count - nodesToSelect.IndexOf(nodeVM));
+        }
+
+        SelectedNodes = nodesToSelect;
     }
 }

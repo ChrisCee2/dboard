@@ -8,7 +8,6 @@ using mystery_app.Constants;
 using mystery_app.Messages;
 using mystery_app.Models;
 using System;
-using Avalonia.Logging;
 using CommunityToolkit.Mvvm.Input;
 using System.Text.Json.Serialization;
 
@@ -57,7 +56,6 @@ public partial class MainWindowViewModel : ObservableObject
                 }
                 catch (Exception e)
                 {
-                    Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, e.Message);
                     return new SettingsModel();
                 }
             }

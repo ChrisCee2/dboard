@@ -24,12 +24,12 @@ public partial class WorkspaceView : UserControl
         {
             if (args.Value.IsEdit)
             {
-                _updateSelectedNodes(new ObservableCollection<NodeViewModelBase> { args.Value });
+                ((WorkspaceViewModel)DataContext).UpdateSelectedNodes(new ObservableCollection<NodeViewModelBase> { args.Value });
                 args.Value.IsEdit = true;
             }
             else if (!((WorkspaceViewModel)DataContext).SelectedNodes.Contains(args.Value))
             {
-                _updateSelectedNodes(new ObservableCollection<NodeViewModelBase> { args.Value });
+                ((WorkspaceViewModel)DataContext).UpdateSelectedNodes(new ObservableCollection<NodeViewModelBase> { args.Value });
             }
         });
     }
@@ -95,27 +95,11 @@ public partial class WorkspaceView : UserControl
                     newSelectedNodes.Add(nodeContext);
                 }
             }
-            _updateSelectedNodes(newSelectedNodes);
+            ((WorkspaceViewModel)DataContext).UpdateSelectedNodes(newSelectedNodes);
         }
 
         context.IsMultiSelecting = false;
         base.OnPointerReleased(e);
-    }
-
-    private void _updateSelectedNodes(ObservableCollection<NodeViewModelBase> newSelectedNodes)
-    {
-        foreach (NodeViewModelBase nodeVM in ((WorkspaceViewModel)DataContext).SelectedNodes)
-        {
-            nodeVM.IsSelected = false;
-            nodeVM.IsEdit = false;
-        }
-
-        foreach (NodeViewModelBase nodeVM in newSelectedNodes)
-        {
-            nodeVM.IsSelected = true;
-            nodeVM.IsEdit = false;
-        }
-        ((WorkspaceViewModel)DataContext).SelectedNodes = newSelectedNodes;
     }
 
     protected void ToggleNotes(object sender, RoutedEventArgs args)

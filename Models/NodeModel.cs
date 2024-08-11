@@ -15,6 +15,20 @@ public partial class NodeModel : NodeModelBase
         PositionX = 0;
         PositionY = 0;
         Notes = "";
+        ZIndex = 0;
+    }
+
+    public NodeModel(int zIndex)
+    {
+        Name = "";
+        Desc = "";
+        ImagePath = NodeConstants.DEFAULT_IMAGE_PATH;
+        Width = NodeConstants.MIN_WIDTH;
+        Height = NodeConstants.MIN_HEIGHT;
+        PositionX = 0;
+        PositionY = 0;
+        Notes = "";
+        ZIndex = zIndex;
     }
 
     public NodeModel(
@@ -25,7 +39,8 @@ public partial class NodeModel : NodeModelBase
         double height,
         double x,
         double y,
-        string notes)
+        string notes,
+        int zIndex)
     {
         Name = name;
         Desc = desc;
@@ -35,6 +50,7 @@ public partial class NodeModel : NodeModelBase
         PositionX = x;
         PositionY = y;
         Notes = notes;
+        ZIndex = zIndex;
     }
 
     [ObservableProperty]
