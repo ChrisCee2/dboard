@@ -18,4 +18,6 @@ public static class ToolBarConstants
     public static readonly Thickness NORM_LPAD = new Thickness(12, 8, 12, 8);
     public static readonly Thickness MAX_RBTN_PAD = new Thickness(12, 16, 20, 8);
     public static readonly Thickness NORM_RBTN_PAD = new Thickness(12, 8, 12, 8);
+    public static readonly Thickness MAX_BBTN_PAD = new Thickness(12, 8, 12, 16);
+    public static readonly Thickness NORM_BBTN_PAD = new Thickness(12, 8, 12, 8);
 }

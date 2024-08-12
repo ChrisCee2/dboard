@@ -12,12 +12,16 @@ public partial class MainContentViewModel : ObservableObject
     [ObservableProperty]
     public WorkspaceViewModel _workspace;
     [ObservableProperty]
+    public SettingsViewModel _settings;
+    [ObservableProperty]
     private SettingsModel _sharedSettings;
 
     public MainContentViewModel(SettingsModel sharedSettings)
     {
         SharedSettings = sharedSettings;
         Workspace = new WorkspaceViewModel(sharedSettings);
+        Settings = new SettingsViewModel(sharedSettings);
+
     }
 
     [RelayCommand]

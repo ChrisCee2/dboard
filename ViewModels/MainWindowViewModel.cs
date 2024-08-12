@@ -33,7 +33,6 @@ public partial class MainWindowViewModel : ObservableObject
         SharedSettings = LoadSettings();
 
         // Initialize available pages
-        Pages.Add(PageConstants.PAGE.Settings, new SettingsViewModel(SharedSettings));
         Pages.Add(PageConstants.PAGE.MainContent, new MainContentViewModel(SharedSettings));
         _currentPage = Pages[PageConstants.PAGE.MainContent];
 
