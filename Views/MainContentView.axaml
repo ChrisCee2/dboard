@@ -65,6 +65,12 @@
 					<Setter Property="Background" Value="Transparent" />
 					<Setter Property="FontSize" Value="{x:Static constants:ToolBarConstants.FONT_SIZE}" />
 				</Style>
+				<Style Selector="ToggleButton">
+					<Setter Property="FontSize" Value="{x:Static constants:ToolBarConstants.FONT_SIZE}" />
+				</Style>
+				<Style Selector="MenuItem">
+					<Setter Property="FontSize" Value="{x:Static constants:ToolBarConstants.FONT_SIZE}" />
+				</Style>
 				<Style Selector="Button.MidMax">
 					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.MAX_MBTN_PAD}"/>
 				</Style>
@@ -102,7 +108,6 @@
 						<MenuItem Header="New" Command="{Binding NewCommand}"/>
 						<MenuItem Header="Open" Click="Open"/>
 						<MenuItem Header="Save" Click="Save"/>
-						<MenuItem Header="Settings" Command="{Binding GoToSettingsCommand}"/>
 						<Separator/>
 						<MenuItem Header="Exit" Click="Exit"/>
 					</MenuFlyout>
@@ -166,7 +171,7 @@
 			Name="SettingsSplitView"
 			PanePlacement="Right"
 			DisplayMode="Inline"
-			OpenPaneLength="300"
+			OpenPaneLength="200"
 			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
 			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
 			<SplitView.PaneBackground>
@@ -227,7 +232,7 @@
 						CornerRadius="10000">
 						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
 					</ToggleButton>
-					<TextBox Margin="5" BorderThickness="0"/>
+					<TextBox Margin="5" BorderThickness="0" TextWrapping="Wrap"/>
 				</DockPanel>
 			</SplitView.Pane>
 
