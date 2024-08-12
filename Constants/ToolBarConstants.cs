@@ -6,7 +6,7 @@ namespace mystery_app.Constants;
 
 public static class ToolBarConstants
 {
-    public const double FONT_SIZE = 12;
+    public const double FONT_SIZE = 13;
     public static readonly ImmutableSolidColorBrush COLOR = new ImmutableSolidColorBrush(new Color(170, 150, 150, 150));
     public static readonly ImmutableSolidColorBrush BUTTON_BACKGROUND = new ImmutableSolidColorBrush(new Color(0, 0, 0, 0));
     public static readonly ImmutableSolidColorBrush BUTTON_TRANSPARENT = new ImmutableSolidColorBrush(new Color(30, 0, 0, 0));
@@ -18,4 +18,6 @@ public static class ToolBarConstants
     public static readonly Thickness NORM_LPAD = new Thickness(12, 8, 12, 8);
     public static readonly Thickness MAX_RBTN_PAD = new Thickness(12, 16, 20, 8);
     public static readonly Thickness NORM_RBTN_PAD = new Thickness(12, 8, 12, 8);
+    public static readonly Thickness MAX_BBTN_PAD = new Thickness(12, 8, 12, 16);
+    public static readonly Thickness NORM_BBTN_PAD = new Thickness(12, 8, 12, 8);
 }

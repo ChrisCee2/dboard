@@ -8,14 +8,6 @@
 	mc:Ignorable="d"
 	x:Class="mystery_app.Views.SettingsView"
 	x:DataType="vm:SettingsViewModel">
-	<UserControl.Background>
-		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
-			<Binding Path="SharedSettings.ModeModel.A"/>
-			<Binding Path="SharedSettings.ModeModel.R"/>
-			<Binding Path="SharedSettings.ModeModel.G"/>
-			<Binding Path="SharedSettings.ModeModel.B"/>
-		</MultiBinding>
-	</UserControl.Background>
 	
 	<Design.DataContext>
 		<vm:SettingsViewModel />
@@ -31,52 +23,66 @@
 		</Style>
 	</UserControl.Styles>
 
-	<Border Margin="30" Padding="10" Background="Gray">
-		<DockPanel Background="Gray">
-			<DockPanel DockPanel.Dock="Top">
-				<Button Command="{Binding GoToMainContentCommand}">Back</Button>
-				<TextBlock DockPanel.Dock="Top" Text="Settings"/>
-			</DockPanel>
-			<StackPanel>
-				<StackPanel>
-					<TextBlock Text="Change Theme"/>
-					<ComboBox 
-						ItemsSource="{Binding Source={x:Static constants:SettingsConstants.THEMES}}"
-						SelectedItem="{Binding SharedSettings.Theme}">
-						<ComboBox.ItemTemplate>
-							<DataTemplate x:CompileBindings="False">
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
-				</StackPanel>
-				<StackPanel>
-					<TextBlock Text="Change Background"/>
-					<ColorPicker 
-						HorizontalAlignment="Left"
-						Color="{Binding Background}"/>
-				</StackPanel>
-				<StackPanel>
-					<TextBlock Text="Show Notes"/>
-					<ToggleButton
-						Padding="2"
-						IsChecked="{Binding SharedSettings.ShowNotes}">
-						<Panel Height="10" Width="20"/>
-					</ToggleButton>
-				</StackPanel>
-				<StackPanel>
-					<TextBlock Text="Mode"/>
-					<ComboBox
-						ItemsSource="{Binding Modes}"
-						SelectedItem="{Binding SharedSettings.ModeModel}">
-						<ComboBox.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding Name}"/>
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
-				</StackPanel>
-			</StackPanel>
-		</DockPanel>
+	<Border Background="{x:Static constants:SettingsConstants.COLOR}" CornerRadius="8" Padding="20">
+		<Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,Auto" HorizontalAlignment="Center">
+			<Grid.Styles>
+				<Style Selector="Grid > TextBlock">
+					<Setter Property="HorizontalAlignment" Value="Right"/>
+					<Setter Property="VerticalAlignment" Value="Center"/>
+					<Setter Property="Margin" Value="0,0,2,0"/>
+				</Style>
+				<Style Selector="TextBlock">
+					<Setter Property="FontSize" Value="{x:Static constants:ToolBarConstants.FONT_SIZE}"/>
+				</Style>
+				<Style Selector="ComboBox">
+					<Setter Property="MinHeight" Value="20"/>
+					<Setter Property="MaxHeight" Value="20"/>
+					<Setter Property="Padding" Value="6,0,0,0"/>
+					<Setter Property="BorderThickness" Value="0"/>
+					<Setter Property="VerticalAlignment" Value="Center"/>
+					<Setter Property="Margin" Value="2,0,0,0"/>
+				</Style>
+				<Style Selector="ComboBoxItem">
+					<Setter Property="MinHeight" Value="20"/>
+					<Setter Property="MaxHeight" Value="20"/>
+					<Setter Property="Padding" Value="6,0,0,0"/>
+					<Setter Property="BorderThickness" Value="0"/>
+					<Setter Property="VerticalAlignment" Value="Center"/>
+				</Style>
+				<Style Selector="Border.GridBorder">
+					<Setter Property="Height" Value="35"/>
+					<Setter Property="BorderThickness" Value="0"/>
+					<Setter Property="HorizontalAlignment" Value="Stretch"/>
+				</Style>
+			</Grid.Styles>
+
+			<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Classes.GridBorder="true"/>
+			<TextBlock Text="Theme" Grid.Row="0" Grid.Column="0"/>
+			<ComboBox Grid.Row="0" Grid.Column="1"
+					  ItemsSource="{Binding Source={x:Static constants:SettingsConstants.THEMES}}"
+					  SelectedItem="{Binding SharedSettings.Theme}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate x:CompileBindings="False">
+						<TextBlock Text="{Binding}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+
+			<Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Classes.GridBorder="true"/>
+			<TextBlock Text="Background" Grid.Row="1" Grid.Column="0"/>
+			<ColorPicker Grid.Row="1" Grid.Column="1"
+						 HorizontalAlignment="Left" VerticalAlignment="Center" Color="{Binding Background}" MaxHeight="20"/>
+				
+			<Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Classes.GridBorder="true"/>
+			<TextBlock Text="Mode" Grid.Row="2" Grid.Column="0"/>
+			<ComboBox Grid.Row="2" Grid.Column="1"
+					  ItemsSource="{Binding Modes}" SelectedItem="{Binding SharedSettings.ModeModel}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Name}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+		</Grid>
 	</Border>
 </UserControl>

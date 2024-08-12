@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Avalonia.Media;
+using Avalonia.Media.Immutable;
 using mystery_app.Models;
 
 namespace mystery_app.Constants;
 
 public static class SettingsConstants
 {
+    // Constants for settings view
+    public static readonly ImmutableSolidColorBrush COLOR = new ImmutableSolidColorBrush(new Color(50, 255, 255, 255));
+
     // Theme Constants
     public static readonly Collection<string> THEMES = new Collection<string>() { "Default", "Light", "Dark" };
     public static readonly Color DEF_CLR = new Color(255, 255, 255, 255);

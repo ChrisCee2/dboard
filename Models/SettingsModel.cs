@@ -8,8 +8,6 @@ public partial class SettingsModel : ObservableObject
     [ObservableProperty]
     private string _theme = SettingsConstants.THEMES[0];
     [ObservableProperty]
-    private bool _showNotes = true;
-    [ObservableProperty]
     private ModeModel _userModeModel = SettingsConstants.DEFAULT_MODE;
     [ObservableProperty]
     private ModeModel _modeModel;
