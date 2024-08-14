@@ -9,7 +9,8 @@
     x:Class="mystery_app.Views.WorkspaceView"
     x:DataType="vm:WorkspaceViewModel"
 	Focusable="True"
-	Opacity="{Binding SharedSettings.ModeModel.WorkspaceOpacity}">
+	Opacity="{Binding SharedSettings.ModeModel.WorkspaceOpacity}"
+	CornerRadius="8">
 	<UserControl.Background>
 		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 			<Binding Path="SharedSettings.ModeModel.A"/>

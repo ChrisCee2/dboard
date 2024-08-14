@@ -14,7 +14,7 @@ using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
 
-public partial class MainContentView : UserControl
+public partial class MainContentView : DockPanel
 {
     JsonSerializerOptions options = new()
     {
