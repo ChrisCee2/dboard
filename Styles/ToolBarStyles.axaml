@@ -13,7 +13,7 @@
 		<Setter Property="Background" Value="Transparent" />
 	</Style>
 	<Style Selector="ToggleButton.BarBtn">
-		<Setter Property="FontSize" Value="{x:Static constants:ToolBarConstants.FONT_SIZE}" />
+		<Setter Property="FontSize" Value="{StaticResource ToolBarFontSize}" />
 		<Setter Property="Margin" Value="0" />
 		<Setter Property="BorderThickness" Value="0" />
 		<Setter Property="CornerRadius" Value="0" />
@@ -22,7 +22,7 @@
 		<Setter Property="Background" Value="Transparent"/>
 	</Style>
 	<Style Selector="ToggleButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="{x:Static constants:ToolBarConstants.BUTTON_TRANSPARENT}"/>
+		<Setter Property="Background" Value="{StaticResource TogBtnHoverColor}"/>
 	</Style>
 	
 	<Style Selector="#TitleBar PathIcon.Max">
@@ -32,18 +32,12 @@
 		<Setter Property="Data" Value="{StaticResource maximize_regular}" />
 	</Style>
 	<Style Selector="#TitleBar ToggleButton, #TitleBar MenuItem, #TitleBar Button">
-		<Setter Property="FontSize" Value="{x:Static constants:ToolBarConstants.FONT_SIZE}" />
+		<Setter Property="FontSize" Value="{StaticResource ToolBarFontSize}" />
 	</Style>
 	<Style Selector="#TitleBar PathIcon.MaxMid">
 		<Setter Property="Margin" Value="0,8,0,0"/>
 	</Style>
 	<Style Selector="#TitleBar PathIcon.NormMid">
 		<Setter Property="Margin" Value="0,0,0,0"/>
-	</Style>
-	<Style Selector="#TitleBar Button.MaxRight">
-		<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.MAX_RBTN_PAD}"/>
-	</Style>
-	<Style Selector="#TitleBar Button.NormRight">
-		<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.NORM_RBTN_PAD}"/>
 	</Style>
 </Styles>

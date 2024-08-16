@@ -18,7 +18,7 @@
 			<customConverters:MaxHeightConverter x:Key="MaxHeightConverter"/>
 			<customConverters:WindowStateBoolConverter x:Key="WSBoolConverter"/>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceInclude Source="/Styles/ToolBarThemes.axaml"/>
+				<ResourceInclude Source="/Styles/ToolBarResources.axaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>
