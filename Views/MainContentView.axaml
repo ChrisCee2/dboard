@@ -1,4 +1,4 @@
-<UserControl 
+<DockPanel
 	xmlns="https://github.com/avaloniaui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="using:mystery_app.ViewModels"
@@ -8,252 +8,127 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Class="mystery_app.Views.MainContentView"
     x:DataType="vm:MainContentViewModel"
-	Background="{x:Static constants:ToolBarConstants.COLOR}">
+	Background="{StaticResource ToolBarColor}">
 
     <Design.DataContext>
         <vm:MainContentViewModel/>
     </Design.DataContext>
 
-	<UserControl.Styles>
-		<Style Selector="Panel.Maximized">
-			<Setter Property="Width" Value="{x:Static constants:ToolBarConstants.MAX_BORDER_WIDTH}"/>
-		</Style>
-		<Style Selector="Panel.Normal">
-			<Setter Property="Width" Value="{x:Static constants:ToolBarConstants.NORM_BORDER_WIDTH}"/>
-		</Style>
-		<Style Selector="DockPanel.BMaximized">
-			<Setter Property="Height" Value="{x:Static constants:ToolBarConstants.MAX_BORDER_WIDTH}"/>
-		</Style>
-		<Style Selector="DockPanel.BNormal">
-			<Setter Property="Height" Value="{x:Static constants:ToolBarConstants.NORM_BORDER_WIDTH}"/>
-		</Style>
-		<Style Selector="ToggleButton">
-			<Setter Property="Background" Value="Transparent"/>
-		</Style>
-		<Style Selector="ToggleButton:checked /template/ ContentPresenter#PART_ContentPresenter">
-			<Setter Property="Background" Value="Transparent"/>
-		</Style>
-		<Style Selector="ToggleButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-			<Setter Property="Background" Value="{x:Static constants:ToolBarConstants.BUTTON_TRANSPARENT}"/>
-		</Style>
-		<Style Selector="ToggleButton.RMaximized">
-			<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.MAX_RBTN_PAD}"/>
-		</Style>
-		<Style Selector="ToggleButton.RNormal">
-			<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.NORM_RBTN_PAD}"/>
-		</Style>
-		<Style Selector="ToggleButton.MidMaximized">
-			<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.MAX_BBTN_PAD}"/>
-		</Style>
-		<Style Selector="ToggleButton.MidNormal">
-			<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.NORM_BBTN_PAD}"/>
-		</Style>
-	</UserControl.Styles>
+	<DockPanel.Styles>
+		<StyleInclude Source="/Styles/ToolBarStyles.axaml" />
+	</DockPanel.Styles>
 	
-	<DockPanel>
-		<DockPanel DockPanel.Dock="Top" IsVisible="{Binding SharedSettings.ModeModel.ShowItems}">
-			<DockPanel.Styles>
-				<Style Selector="PathIcon.Maximized">
-					<Setter Property="Data" Value="{StaticResource restore_regular}" />
-				</Style>
-				<Style Selector="PathIcon.Normal">
-					<Setter Property="Data" Value="{StaticResource maximize_regular}" />
-				</Style>
-				<Style Selector="Button">
-					<Setter Property="BorderThickness" Value="0" />
-					<Setter Property="CornerRadius" Value="0" />
-					<Setter Property="Background" Value="Transparent" />
-					<Setter Property="FontSize" Value="{x:Static constants:ToolBarConstants.FONT_SIZE}" />
-				</Style>
-				<Style Selector="ToggleButton">
-					<Setter Property="FontSize" Value="{x:Static constants:ToolBarConstants.FONT_SIZE}" />
-				</Style>
-				<Style Selector="MenuItem">
-					<Setter Property="FontSize" Value="{x:Static constants:ToolBarConstants.FONT_SIZE}" />
-				</Style>
-				<Style Selector="Button.MidMax">
-					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.MAX_MBTN_PAD}"/>
-				</Style>
-				<Style Selector="Button.MidNorm">
-					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.NORM_MBTN_PAD}"/>
-				</Style>
-				<Style Selector="PathIcon.MidMax">
-					<Setter Property="Margin" Value="0,8,0,0"/>
-				</Style>
-				<Style Selector="PathIcon.MidNorm">
-					<Setter Property="Margin" Value="0,0,0,0"/>
-				</Style>
-				<Style Selector="Border.LeftMax">
-					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.MAX_LPAD}"/>
-				</Style>
-				<Style Selector="Border.LeftNorm">
-					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.NORM_LPAD}"/>
-				</Style>
-				<Style Selector="Button.RightMax">
-					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.MAX_RBTN_PAD}"/>
-				</Style>
-				<Style Selector="Button.RightNorm">
-					<Setter Property="Padding" Value="{x:Static constants:ToolBarConstants.NORM_RBTN_PAD}"/>
-				</Style>
-			</DockPanel.Styles>
+	<!-- Title / Top bar -->
+	<DockPanel x:Name="TitleBar" DockPanel.Dock="Top" IsVisible="{Binding SharedSettings.ModeModel.ShowItems}">
 
-			<Border PointerPressed="MoveWindow" Width="30" DockPanel.Dock="Left" Background="Transparent"
-					Classes.LeftMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-					Classes.LeftNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
-			<Button Content="File" DockPanel.Dock="Left"
-					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
-				<Button.Flyout>
-					<MenuFlyout Placement="BottomEdgeAlignedLeft">
-						<MenuItem Header="New" Command="{Binding NewCommand}"/>
-						<MenuItem Header="Open" Click="Open"/>
-						<MenuItem Header="Save" Click="Save"/>
-						<Separator/>
-						<MenuItem Header="Exit" Click="Exit"/>
-					</MenuFlyout>
-				</Button.Flyout>
-			</Button>
-			<Button Content="Edit" DockPanel.Dock="Left"
-					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
-				<Button.Flyout>
-					<MenuFlyout Placement="BottomEdgeAlignedLeft">
-						<MenuItem Header="Copy" Command="{Binding Workspace.CopyNodeCommand}"/>
-						<MenuItem Header="Paste" Command="{Binding Workspace.PasteNodeCommand}"/>
-						<MenuItem Header="Delete" Command="{Binding Workspace.DeleteNodeCommand}"/>
-					</MenuFlyout>
-				</Button.Flyout>
-			</Button>
-			<PathIcon Data="{StaticResource divider_short_regular}" DockPanel.Dock="Left" Width="10" Height="12"
-						Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-						Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
-			<Button Content="Create Node" Command="{Binding Workspace.CreateNodeCommand}" DockPanel.Dock="Left"
-					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
-			<Button Click="Exit" DockPanel.Dock="Right"
-					Classes.RightMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-					Classes.RightNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
-					<PathIcon Data="{StaticResource dismiss_regular}" Width="10" Height="10"/>
-			</Button>
-			<Button Click="Maximize" DockPanel.Dock="Right"
-					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
-				<PathIcon Width="10" Height="10"
-					Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-					Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
-			</Button>
-			<Button Click="Minimize" DockPanel.Dock="Right"
-					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
-				<PathIcon Width="10" Height="10" Data="{StaticResource line_horizontal_1_regular}"/>
-			</Button>
-			<Panel PointerPressed="MoveWindow" HorizontalAlignment="Stretch" Background="Transparent"
-					Classes.MidMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-					Classes.MidNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
+		<!-- Left side -->
+		<UserControl Template="{StaticResource LeftSpacer}" PointerPressed="MoveWindow"/>
+		<Button Template="{StaticResource MidTopBtn}" Content="File" DockPanel.Dock="Left">
+			<Button.Flyout>
+				<MenuFlyout Placement="BottomEdgeAlignedLeft">
+					<MenuItem Header="New" Command="{Binding NewCommand}"/>
+					<MenuItem Header="Open" Click="Open"/>
+					<MenuItem Header="Save" Click="Save"/>
+					<Separator/>
+					<MenuItem Header="Exit" Click="Exit"/>
+				</MenuFlyout>
+			</Button.Flyout>
+		</Button>
+		<Button Template="{StaticResource MidTopBtn}" Content="Edit" DockPanel.Dock="Left">
+			<Button.Flyout>
+				<MenuFlyout Placement="BottomEdgeAlignedLeft">
+					<MenuItem Header="Copy" Command="{Binding Workspace.CopyNodeCommand}"/>
+					<MenuItem Header="Paste" Command="{Binding Workspace.PasteNodeCommand}"/>
+					<MenuItem Header="Delete" Command="{Binding Workspace.DeleteNodeCommand}"/>
+				</MenuFlyout>
+			</Button.Flyout>
+		</Button>
+		<PathIcon Data="{StaticResource divider_short_regular}" DockPanel.Dock="Left" Width="10" Height="12"
+				  Classes.MaxMid="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
+				  Classes.NormMid="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}"/>
+		<Button Template="{StaticResource MidTopBtn}" DockPanel.Dock="Left" Content="Create Node" Command="{Binding Workspace.CreateNodeCommand}"/>
+
+		<!-- Right side -->
+		<Button Template="{StaticResource RightTopBtn}" Click="Exit" DockPanel.Dock="Right">
+			<PathIcon Width="10" Height="10" Data="{StaticResource dismiss_regular}"/>
+		</Button>
+		<Button Template="{StaticResource MidTopBtn}" Click="Maximize" DockPanel.Dock="Right">
+			<PathIcon Width="10" Height="10"
+						Classes.Max="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
+						Classes.Norm="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
+			</PathIcon>
+		</Button>
+		<Button Template="{StaticResource MidTopBtn}" Click="Minimize" DockPanel.Dock="Right">
+			<PathIcon Width="10" Height="10" Data="{StaticResource line_horizontal_1_regular}"/>
+		</Button>
+		<UserControl Template="{StaticResource MidSpacer}" PointerPressed="MoveWindow" HorizontalAlignment="Stretch"/>
+	</DockPanel>
+		
+	<!-- Bottom bar -->
+	<DockPanel x:Name="Bar" Background="Transparent" DockPanel.Dock="Bottom">
+		<UserControl Template="{StaticResource LeftSpacer}"/>
+		<ToggleButton Template="{StaticResource BotTogBtn}" Classes="BarBtn" Content="Settings" IsChecked="{Binding #SettingsSplitView.IsPaneOpen}"/>
+	</DockPanel>
+		
+	<!-- Left bar -->
+	<SplitView Name="SettingsSplitView" DockPanel.Dock="Left" PanePlacement="Right" DisplayMode="Inline" OpenPaneLength="200">
+		<SplitView.PaneBackground>
+			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+				<Binding Path="SharedSettings.ModeModel.A"/>
+				<Binding Path="SharedSettings.ModeModel.R"/>
+				<Binding Path="SharedSettings.ModeModel.G"/>
+				<Binding Path="SharedSettings.ModeModel.B"/>
+			</MultiBinding>
+		</SplitView.PaneBackground>
+
+		<UserControl Template="{StaticResource LeftBar}"/>
+
+		<SplitView.Pane>
+			<Border Padding="5" Background="{StaticResource ToolBarColor}">
+				<DockPanel>
+					<ToggleButton DockPanel.Dock="Top" Margin="5" Padding="8" CornerRadius="10000" HorizontalAlignment="Right"
+								  IsChecked="{Binding #SettingsSplitView.IsPaneOpen}">
+						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_left_regular}"/>
+					</ToggleButton>
+					<views:SettingsView DataContext="{Binding Settings}"/>
+				</DockPanel>
+			</Border>
+		</SplitView.Pane>
+	</SplitView>
+
+	<!-- Right bar -->
+	<SplitView Name="NotesSplitView" DockPanel.Dock="Right" PanePlacement="Left" DisplayMode="Inline" OpenPaneLength="200">
+		<SplitView.PaneBackground>
+			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+				<Binding Path="SharedSettings.ModeModel.A"/>
+				<Binding Path="SharedSettings.ModeModel.R"/>
+				<Binding Path="SharedSettings.ModeModel.G"/>
+				<Binding Path="SharedSettings.ModeModel.B"/>
+			</MultiBinding>
+		</SplitView.PaneBackground>
+
+		<DockPanel Background="Transparent">
+			<UserControl Template="{StaticResource RightBarSpacer}" DockPanel.Dock="Top"/>
+			<LayoutTransformControl>
+				<LayoutTransformControl.LayoutTransform>
+					<RotateTransform Angle="90"/>
+				</LayoutTransformControl.LayoutTransform>
+				<ToggleButton Template="{StaticResource RightTogBtn}" Classes.BarBtn="true" Content="Notes" 
+							  IsChecked="{Binding #NotesSplitView.IsPaneOpen}"/>
+			</LayoutTransformControl>
 		</DockPanel>
-		<DockPanel Background="Transparent" DockPanel.Dock="Bottom"
-			   Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-			   Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
-			<Border Width="30" DockPanel.Dock="Left" Background="Transparent"
-					Classes.LeftMax="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-					Classes.LeftNorm="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
-			<ToggleButton Content="Settings"
-						  FontSize="{x:Static constants:ToolBarConstants.FONT_SIZE}"
-						  IsChecked="{Binding #SettingsSplitView.IsPaneOpen}"
-						  Margin="0"
-				  		  BorderThickness="0"
-						  CornerRadius="0"
-						  Classes.MidMaximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-						  Classes.MidNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
-		</DockPanel>
-		<SplitView
-			DockPanel.Dock="Left"
-			Name="SettingsSplitView"
-			PanePlacement="Right"
-			DisplayMode="Inline"
-			OpenPaneLength="200"
-			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
-			<SplitView.PaneBackground>
-				<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
-					<Binding Path="SharedSettings.ModeModel.A"/>
-					<Binding Path="SharedSettings.ModeModel.R"/>
-					<Binding Path="SharedSettings.ModeModel.G"/>
-					<Binding Path="SharedSettings.ModeModel.B"/>
-				</MultiBinding>
-			</SplitView.PaneBackground>
 
-			<SplitView.Pane>
-				<Border Padding="5" Background="{x:Static constants:ToolBarConstants.COLOR}">
-					<DockPanel>
-						<ToggleButton
-							Margin="5,5,5,5"
-							Padding="8"
-							IsChecked="{Binding #SettingsSplitView.IsPaneOpen}"
-							DockPanel.Dock="Top"
-							CornerRadius="10000"
-							HorizontalAlignment="Right">
-							<PathIcon Width="10" Height="10" Data="{StaticResource chevron_left_regular}"/>
-						</ToggleButton>
-						<views:SettingsView DataContext="{Binding Settings}"/>
-					</DockPanel>
-				</Border>
-			</SplitView.Pane>
-
-			<Panel Background="Transparent"
-				   Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-				   Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}"/>
-		</SplitView>
-		<SplitView 
-			DockPanel.Dock="Right"
-			Name="NotesSplitView"
-			PanePlacement="Left"
-			DisplayMode="Inline"
-			OpenPaneLength="200"
-			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
-			<SplitView.PaneBackground>
-				<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
-					<Binding Path="SharedSettings.ModeModel.A"/>
-					<Binding Path="SharedSettings.ModeModel.R"/>
-					<Binding Path="SharedSettings.ModeModel.G"/>
-					<Binding Path="SharedSettings.ModeModel.B"/>
-				</MultiBinding>
-			</SplitView.PaneBackground>
-
-			<SplitView.Pane>
-				<DockPanel Background="{x:Static constants:ToolBarConstants.COLOR}">
-					<ToggleButton
-						Margin="5,5,0,0"
-						Padding="8"
-						IsChecked="{Binding #NotesSplitView.IsPaneOpen}"
-						DockPanel.Dock="Top"
-						HorizontalAlignment="Left"
-						CornerRadius="10000">
+		<SplitView.Pane>
+			<Border Padding="5" Background="{StaticResource ToolBarColor}">
+				<DockPanel>
+					<ToggleButton DockPanel.Dock="Top" Margin="5" Padding="8" CornerRadius="10000" HorizontalAlignment="Left"
+								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}">
 						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
 					</ToggleButton>
-					<TextBox Margin="5" BorderThickness="0" TextWrapping="Wrap"/>
+					<TextBox BorderThickness="0" TextWrapping="Wrap"/>
 				</DockPanel>
-			</SplitView.Pane>
-
-			<DockPanel Background="Transparent">
-				<LayoutTransformControl>
-					<LayoutTransformControl.LayoutTransform>
-						<RotateTransform Angle="90"/>
-					</LayoutTransformControl.LayoutTransform>
-					<ToggleButton Content="Notes"
-								  FontSize="{x:Static constants:ToolBarConstants.FONT_SIZE}"
-								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}"
-								  Margin="0"
-								  BorderThickness="0"
-								  CornerRadius="0"
-								  HorizontalAlignment="Stretch"
-								  Classes.RMaximized="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Maximized}"
-								  Classes.RNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WStateBoolConverter}, ConverterParameter=Normal}">
-					</ToggleButton>
-				</LayoutTransformControl>
-			</DockPanel>
-		</SplitView>
-		<views:WorkspaceView DataContext="{Binding Workspace}" CornerRadius="8"/>
-	</DockPanel>
-</UserControl>
+			</Border>
+		</SplitView.Pane>
+	</SplitView>
+	<views:WorkspaceView DataContext="{Binding Workspace}"/>
+</DockPanel>

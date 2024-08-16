@@ -32,7 +32,7 @@
 					<Setter Property="Margin" Value="0,0,2,0"/>
 				</Style>
 				<Style Selector="TextBlock">
-					<Setter Property="FontSize" Value="{x:Static constants:ToolBarConstants.FONT_SIZE}"/>
+					<Setter Property="FontSize" Value="{StaticResource ToolBarFontSize}"/>
 				</Style>
 				<Style Selector="ComboBox">
 					<Setter Property="MinHeight" Value="20"/>

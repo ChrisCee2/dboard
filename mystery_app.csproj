@@ -29,6 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaXaml Update="Styles\Icons.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
     <AvaloniaXaml Update="Views\EdgeView.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>

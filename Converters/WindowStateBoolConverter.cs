@@ -4,9 +4,9 @@ using Avalonia.Controls;
 using Avalonia.Data.Converters;
 
 namespace mystery_app.Converters;
-public class  WStateBoolConverter : IValueConverter
+public class WindowStateBoolConverter : IValueConverter
 {
-    public static readonly WStateBoolConverter Instance = new();
+    public static readonly WindowStateBoolConverter Instance = new();
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {

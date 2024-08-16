@@ -1,0 +1,43 @@
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:constants="clr-namespace:mystery_app.Constants">
+	<Design.PreviewWith>
+		<Border Padding="20">
+		</Border>
+	</Design.PreviewWith>
+
+	<Style Selector="#TitleBar Button">
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="CornerRadius" Value="0" />
+		<Setter Property="Background" Value="Transparent" />
+	</Style>
+	<Style Selector="ToggleButton.BarBtn">
+		<Setter Property="FontSize" Value="{StaticResource ToolBarFontSize}" />
+		<Setter Property="Margin" Value="0" />
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="CornerRadius" Value="0" />
+	</Style>
+	<Style Selector="ToggleButton:checked /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="Transparent"/>
+	</Style>
+	<Style Selector="ToggleButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource TogBtnHoverColor}"/>
+	</Style>
+	
+	<Style Selector="#TitleBar PathIcon.Max">
+		<Setter Property="Data" Value="{StaticResource restore_regular}" />
+	</Style>
+	<Style Selector="#TitleBar PathIcon.Norm">
+		<Setter Property="Data" Value="{StaticResource maximize_regular}" />
+	</Style>
+	<Style Selector="#TitleBar ToggleButton, #TitleBar MenuItem, #TitleBar Button">
+		<Setter Property="FontSize" Value="{StaticResource ToolBarFontSize}" />
+	</Style>
+	<Style Selector="#TitleBar PathIcon.MaxMid">
+		<Setter Property="Margin" Value="0,8,0,0"/>
+	</Style>
+	<Style Selector="#TitleBar PathIcon.NormMid">
+		<Setter Property="Margin" Value="0,0,0,0"/>
+	</Style>
+</Styles>
