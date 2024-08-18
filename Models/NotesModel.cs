@@ -4,16 +4,16 @@ public class NotesModel
 {
     public NotesModel() {}
 
-    public NotesModel(string notes)
+    public NotesModel(string text)
     {
-        Notes = notes;
+        Text = text;
     }
 
-    private string _notes;
+    private string _text;
 
-    public string Notes
+    public string Text
     {
-        get { return _notes; }
-        set { _notes = value; }
+        get { return _text; }
+        set { _text = value; }
     }
 }

@@ -8,6 +8,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using mystery_app.Models;
 using mystery_app.ViewModels;
@@ -53,7 +54,8 @@ public partial class MainContentView : DockPanel
 
             List<NodeModelBase> nodes = ((MainContentViewModel)DataContext).Workspace.Nodes.Select(x => x.NodeBase).ToList();
             List<EdgeModel> edges = ((MainContentViewModel)DataContext).Workspace.Edges.Select(x => x.Edge).ToList();
-            WorkspaceModel workspace = new WorkspaceModel(nodes, edges);
+            NotesModel notes = ((MainContentViewModel)DataContext).Notes;
+            WorkspaceModel workspace = new WorkspaceModel(nodes, edges, notes);
             JsonSerializer.SerializeAsync(stream, workspace, options);
         }
     }
@@ -91,6 +93,7 @@ public partial class MainContentView : DockPanel
             {
                 ((MainContentViewModel)DataContext).Workspace.Edges.Add(new EdgeViewModel(edgeModel));
             }
+            ((MainContentViewModel)DataContext).Notes = workspace.Notes;
         }
     }
 
