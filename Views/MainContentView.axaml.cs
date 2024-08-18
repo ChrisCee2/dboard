@@ -212,7 +212,7 @@ public partial class MainContentView : DockPanel
         {
             // Offset found by subtracting original cursor position on resize press from the current cursor position
             double offsetX = _initialResizeX - currentPosition.X;
-            ((MainContentViewModel)DataContext).NotesLen = Math.Min(ToolbarConstants.NOTES_PANE_MAX_LEN, Math.Max(ToolbarConstants.NOTES_PANE_MIN_LEN, _lastNotesLen + offsetX));
+            ((MainContentViewModel)DataContext).Notes.PaneLength = Math.Min(ToolbarConstants.NOTES_PANE_MAX_LEN, Math.Max(ToolbarConstants.NOTES_PANE_MIN_LEN, _lastNotesLen + offsetX));
         }
     }
 }

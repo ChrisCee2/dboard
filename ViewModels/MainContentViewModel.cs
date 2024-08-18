@@ -16,8 +16,6 @@ public partial class MainContentViewModel : ObservableObject
     [ObservableProperty]
     public NotesModel _notes;
     [ObservableProperty]
-    public double _notesLen = ToolbarConstants.NOTES_PANE_DEFAULT_LEN;
-    [ObservableProperty]
     private SettingsModel _sharedSettings;
     [ObservableProperty]
     private string? _workspaceFileName;
@@ -50,6 +48,5 @@ public partial class MainContentViewModel : ObservableObject
         Workspace = new WorkspaceViewModel(SharedSettings);
         Notes = new NotesModel();
         WorkspaceFileName = null;
-        NotesLen = ToolbarConstants.NOTES_PANE_DEFAULT_LEN;
     }
 }

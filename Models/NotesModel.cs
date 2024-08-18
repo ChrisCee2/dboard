@@ -1,19 +1,20 @@
-﻿namespace mystery_app.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using mystery_app.Constants;
 
-public class NotesModel
+namespace mystery_app.Models;
+
+public partial class NotesModel : ObservableObject
 {
     public NotesModel() {}
 
-    public NotesModel(string text)
+    public NotesModel(string text, double paneLength)
     {
         Text = text;
+        PaneLength = paneLength;
     }
 
+    [ObservableProperty]
     private string _text;
-
-    public string Text
-    {
-        get { return _text; }
-        set { _text = value; }
-    }
+    [ObservableProperty]
+    private double _paneLength = ToolbarConstants.NOTES_PANE_DEFAULT_LEN;
 }

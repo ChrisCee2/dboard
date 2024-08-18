@@ -98,7 +98,7 @@
 	</SplitView>
 
 	<!-- Right bar -->
-	<SplitView Name="NotesSplitView" DockPanel.Dock="Right" PanePlacement="Left" DisplayMode="Inline" OpenPaneLength="{Binding NotesLen}">
+	<SplitView Name="NotesSplitView" DockPanel.Dock="Right" PanePlacement="Left" DisplayMode="Inline" OpenPaneLength="{Binding Notes.PaneLength}">
 		<SplitView.PaneBackground>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 				<Binding Path="SharedSettings.ModeModel.A"/>
