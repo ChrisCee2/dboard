@@ -29,6 +29,7 @@
 					<MenuItem Header="New" Command="{Binding NewCommand}"/>
 					<MenuItem Header="Open" Click="Open"/>
 					<MenuItem Header="Save" Click="Save"/>
+					<MenuItem Header="Save As" Click="SaveAs"/>
 					<Separator/>
 					<MenuItem Header="Exit" Click="Exit"/>
 				</MenuFlyout>
