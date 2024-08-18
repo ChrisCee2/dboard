@@ -17,6 +17,8 @@ public partial class MainContentViewModel : ObservableObject
     public NotesModel _notes;
     [ObservableProperty]
     private SettingsModel _sharedSettings;
+    [ObservableProperty]
+    private string? _workspaceFileName;
 
     public MainContentViewModel(SettingsModel sharedSettings)
     {
@@ -24,6 +26,7 @@ public partial class MainContentViewModel : ObservableObject
         Workspace = new WorkspaceViewModel(sharedSettings);
         Settings = new SettingsViewModel(sharedSettings);
         Notes = new NotesModel();
+        WorkspaceFileName = null;
 
     }
 
@@ -44,5 +47,6 @@ public partial class MainContentViewModel : ObservableObject
 
         Workspace = new WorkspaceViewModel(SharedSettings);
         Notes = new NotesModel();
+        WorkspaceFileName = null;
     }
 }
