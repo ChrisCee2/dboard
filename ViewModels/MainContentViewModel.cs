@@ -14,6 +14,8 @@ public partial class MainContentViewModel : ObservableObject
     [ObservableProperty]
     public SettingsViewModel _settings;
     [ObservableProperty]
+    public NotesViewModel _notes;
+    [ObservableProperty]
     private SettingsModel _sharedSettings;
 
     public MainContentViewModel(SettingsModel sharedSettings)
@@ -21,6 +23,7 @@ public partial class MainContentViewModel : ObservableObject
         SharedSettings = sharedSettings;
         Workspace = new WorkspaceViewModel(sharedSettings);
         Settings = new SettingsViewModel(sharedSettings);
+        Notes = new NotesViewModel();
 
     }
 

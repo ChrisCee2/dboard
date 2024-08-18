@@ -125,7 +125,7 @@
 								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}">
 						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
 					</ToggleButton>
-					<TextBox BorderThickness="0" TextWrapping="Wrap"/>
+					<views:NotesView DataContext="{Binding NotesViewModel}"/>
 				</DockPanel>
 			</Border>
 		</SplitView.Pane>

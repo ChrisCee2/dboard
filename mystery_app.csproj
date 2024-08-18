@@ -47,6 +47,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\NotesView.axaml.cs">
+      <DependentUpon>NotesView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\InteractiveView.axaml.cs">
       <DependentUpon>InteractiveView.axaml</DependentUpon>
     </Compile>
