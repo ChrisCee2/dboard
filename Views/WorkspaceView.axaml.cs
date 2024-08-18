@@ -4,7 +4,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
 using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
@@ -24,13 +23,18 @@ public partial class WorkspaceView : UserControl
         {
             if (args.Value.IsEdit)
             {
-                ((WorkspaceViewModel)DataContext).UpdateSelectedNodes(new ObservableCollection<NodeViewModelBase> { args.Value });
+                ((WorkspaceViewModel)DataContext).UpdateSelection(nodesToSelect: new ObservableCollection<NodeViewModelBase> { args.Value });
                 args.Value.IsEdit = true;
             }
             else if (!((WorkspaceViewModel)DataContext).SelectedNodes.Contains(args.Value))
             {
-                ((WorkspaceViewModel)DataContext).UpdateSelectedNodes(new ObservableCollection<NodeViewModelBase> { args.Value });
+                ((WorkspaceViewModel)DataContext).UpdateSelection(nodesToSelect: new ObservableCollection<NodeViewModelBase> { args.Value });
             }
+        });
+
+        WeakReferenceMessenger.Default.Register<SelectNodeEdgeMessage>(this, (sender, args) =>
+        {
+            ((WorkspaceViewModel)DataContext).UpdateSelection(edgesToSelect: new ObservableCollection<EdgeViewModel> { args.Value });
         });
     }
 
@@ -56,7 +60,7 @@ public partial class WorkspaceView : UserControl
     protected override void OnPointerMoved(PointerEventArgs e)
     {
         // Only update position if multiselecting or edge selecting
-        if (((WorkspaceViewModel)DataContext).IsMultiSelecting || ((WorkspaceViewModel)DataContext).SelectedNodeEdge != NodeConstants.NULL_NODEVIEWMODEL)
+        if (((WorkspaceViewModel)DataContext).IsMultiSelecting || ((WorkspaceViewModel)DataContext).NodeToCreateEdge != NodeConstants.NULL_NODEVIEWMODEL)
         {
             ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
         }
@@ -95,7 +99,7 @@ public partial class WorkspaceView : UserControl
                     newSelectedNodes.Add(nodeContext);
                 }
             }
-            ((WorkspaceViewModel)DataContext).UpdateSelectedNodes(newSelectedNodes);
+            ((WorkspaceViewModel)DataContext).UpdateSelection(nodesToSelect: newSelectedNodes);
         }
 
         context.IsMultiSelecting = false;

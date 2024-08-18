@@ -11,6 +11,11 @@
 		<vm:EdgeViewModel />
 	</Design.DataContext>
 
+	<Canvas.Effect>
+		<DropShadowEffect Color="#88BBFF" BlurRadius="30" OffsetX="0" OffsetY="0"
+							  Opacity="{Binding IsSelected, Converter={StaticResource BoolToDoubleConverter}, ConverterParameter=1}"/>
+	</Canvas.Effect>
+
 	<TextBox Text="{Binding Edge.Description}">
 		<Canvas.Left>
 			<MultiBinding Converter="{StaticResource MedianConverter}">
@@ -25,32 +30,40 @@
 			</MultiBinding>
 		</Canvas.Top>
 	</TextBox>
-	<Line
-		StrokeThickness="{Binding Edge.Thickness}">
-		<Line.Effect>
-			<DropShadowEffect BlurRadius="1" Opacity=".5" OffsetX="3" OffsetY="3"/>
-		</Line.Effect>
-		<Line.StartPoint>
-			<MultiBinding Converter="{StaticResource EdgePosConverter}">
-				<Binding Path="Edge.FromNode.PositionX"/>
-				<Binding Path="Edge.FromNode.PositionY"/>
-				<Binding Path="Edge.FromNode.Width"/>
-			</MultiBinding>
-		</Line.StartPoint>
-		<Line.EndPoint>
-			<MultiBinding Converter="{StaticResource EdgePosConverter}">
-				<Binding Path="Edge.ToNode.PositionX"/>
-				<Binding Path="Edge.ToNode.PositionY"/>
-				<Binding Path="Edge.ToNode.Width"/>
-			</MultiBinding>
-		</Line.EndPoint>
-		<Line.Stroke>
-			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
-				<Binding Path="Edge.A"/>
-				<Binding Path="Edge.R"/>
-				<Binding Path="Edge.G"/>
-				<Binding Path="Edge.B"/>
-			</MultiBinding>
-		</Line.Stroke>
-	</Line>
+	<Border>
+		<Border.Effect>
+			<DropShadowEffect Color="#88BBFF" BlurRadius="30" OffsetX="0" OffsetY="0"
+								  Opacity="{Binding IsSelected, Converter={StaticResource BoolToDoubleConverter}, ConverterParameter=1}"/>
+		</Border.Effect>
+		
+		<Line
+			StrokeThickness="{Binding Edge.Thickness}">
+			<Line.Effect>
+				<DropShadowEffect BlurRadius="1" Opacity=".5" OffsetX="3" OffsetY="3"/>
+			</Line.Effect>
+			
+			<Line.StartPoint>
+				<MultiBinding Converter="{StaticResource EdgePosConverter}">
+					<Binding Path="Edge.FromNode.PositionX"/>
+					<Binding Path="Edge.FromNode.PositionY"/>
+					<Binding Path="Edge.FromNode.Width"/>
+				</MultiBinding>
+			</Line.StartPoint>
+			<Line.EndPoint>
+				<MultiBinding Converter="{StaticResource EdgePosConverter}">
+					<Binding Path="Edge.ToNode.PositionX"/>
+					<Binding Path="Edge.ToNode.PositionY"/>
+					<Binding Path="Edge.ToNode.Width"/>
+				</MultiBinding>
+			</Line.EndPoint>
+			<Line.Stroke>
+				<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+					<Binding Path="Edge.A"/>
+					<Binding Path="Edge.R"/>
+					<Binding Path="Edge.G"/>
+					<Binding Path="Edge.B"/>
+				</MultiBinding>
+			</Line.Stroke>
+		</Line>
+	</Border>
 </Canvas>

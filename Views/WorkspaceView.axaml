@@ -78,9 +78,9 @@
 				IsHitTestVisible="False">
 				<Line.StartPoint>
 					<MultiBinding Converter="{StaticResource EdgePosConverter}">
-						<Binding Path="SelectedNodeEdge.NodeBase.PositionX"/>
-						<Binding Path="SelectedNodeEdge.NodeBase.PositionY"/>
-						<Binding Path="SelectedNodeEdge.NodeBase.Width"/>
+						<Binding Path="NodeToCreateEdge.NodeBase.PositionX"/>
+						<Binding Path="NodeToCreateEdge.NodeBase.PositionY"/>
+						<Binding Path="NodeToCreateEdge.NodeBase.Width"/>
 					</MultiBinding>
 				</Line.StartPoint>
 				<Line.Stroke>

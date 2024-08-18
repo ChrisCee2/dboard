@@ -24,5 +24,7 @@ public partial class EdgeViewModel : ObservableObject
 
     [ObservableProperty]
     private EdgeModel _edge;
+    [ObservableProperty]
+    private bool _isSelected;
 
 }
