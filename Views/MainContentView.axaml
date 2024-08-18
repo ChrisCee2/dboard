@@ -98,7 +98,7 @@
 	</SplitView>
 
 	<!-- Right bar -->
-	<SplitView Name="NotesSplitView" DockPanel.Dock="Right" PanePlacement="Left" DisplayMode="Inline" OpenPaneLength="200">
+	<SplitView Name="NotesSplitView" DockPanel.Dock="Right" PanePlacement="Left" DisplayMode="Inline" OpenPaneLength="{Binding Notes.PaneLength}">
 		<SplitView.PaneBackground>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 				<Binding Path="SharedSettings.ModeModel.A"/>
@@ -120,13 +120,22 @@
 		</DockPanel>
 
 		<SplitView.Pane>
-			<Border Padding="5" Background="{StaticResource ToolBarColor}">
+			<Border Padding="0,5,5,5" Background="{StaticResource ToolBarColor}">
 				<DockPanel>
+					<Panel Cursor="LeftSide"
+						   Width="5"
+						   VerticalAlignment="Stretch"
+						   DockPanel.Dock="Left"
+						   Background="Transparent"
+						   PointerPressed="ResizePointerPressed"
+						   PointerReleased="ResizePointerReleased"
+						   PointerMoved="ResizePointerMoved"/>
+
 					<ToggleButton DockPanel.Dock="Top" Margin="5" Padding="8" CornerRadius="10000" HorizontalAlignment="Left"
 								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}">
 						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
 					</ToggleButton>
-					<TextBox Text="{Binding Notes.Text}" BorderThickness="0" TextWrapping="Wrap"/>
+					<TextBox Text="{Binding Notes.Text}" BorderThickness="0" TextWrapping="Wrap" MinWidth="5"/>
 				</DockPanel>
 			</Border>
 		</SplitView.Pane>

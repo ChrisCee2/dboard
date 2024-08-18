@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Platform.Storage;
+using mystery_app.Constants;
 using mystery_app.Models;
 using mystery_app.ViewModels;
 
@@ -18,6 +20,12 @@ namespace mystery_app.Views;
 
 public partial class MainContentView : DockPanel
 {
+
+    private bool _isResizingNotes;
+    private double _initialResizeX;
+    private double _lastNotesLen;
+    private SplitView _notesSplitView;
+
     JsonSerializerOptions options = new()
     {
         ReferenceHandler = ReferenceHandler.Preserve,
@@ -29,6 +37,7 @@ public partial class MainContentView : DockPanel
     public MainContentView()
     {
         InitializeComponent();
+        _notesSplitView = this.FindControl<SplitView>("NotesSplitView");
     }
 
     protected async void Save(object sender, RoutedEventArgs e)
@@ -175,6 +184,35 @@ public partial class MainContentView : DockPanel
             {
                 desktop.MainWindow.WindowState = WindowState.Maximized;
             }
+        }
+    }
+
+    // On selecting resize button, get current cursor position and set axis to resize
+    private void ResizePointerPressed(object sender, PointerPressedEventArgs e)
+    {
+        // If not left click, return
+        if (!e.GetCurrentPoint(Parent as Visual).Properties.IsLeftButtonPressed) { return; }
+        _isResizingNotes = true;
+        var pos = e.GetPosition((Visual?)Parent);
+        _initialResizeX = pos.X;
+        _lastNotesLen = _notesSplitView.OpenPaneLength;
+    }
+
+    protected void ResizePointerReleased(object sender, PointerReleasedEventArgs e)
+    {
+        _isResizingNotes = false;
+    }
+
+    protected void ResizePointerMoved(object sender, PointerEventArgs e)
+    {
+        if (Parent == null || !_isResizingNotes) { return; }
+        Point currentPosition = e.GetPosition((Visual?)Parent);
+
+        if (_isResizingNotes)
+        {
+            // Offset found by subtracting original cursor position on resize press from the current cursor position
+            double offsetX = _initialResizeX - currentPosition.X;
+            ((MainContentViewModel)DataContext).Notes.PaneLength = Math.Min(ToolbarConstants.NOTES_PANE_MAX_LEN, Math.Max(ToolbarConstants.NOTES_PANE_MIN_LEN, _lastNotesLen + offsetX));
         }
     }
 }
