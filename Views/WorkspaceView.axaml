@@ -56,7 +56,7 @@
 		</ItemsControl>
 
 		<!--Edges-->
-		<ItemsControl ItemsSource="{Binding Edges}">
+		<ItemsControl ItemsSource="{Binding Edges}" Name="EdgeItemsControl">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<Canvas/>

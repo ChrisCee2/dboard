@@ -3,12 +3,14 @@ using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.LogicalTree;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Constants;
 using mystery_app.Messages;
+using mystery_app.Tools;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
@@ -78,28 +80,48 @@ public partial class WorkspaceView : UserControl
         if (context.IsMultiSelecting)
         {
             // Get points of multiselect
-            var x1 = Math.Min(context.PressedPosition.X, context.CursorPosition.X);
-            var x2 = x1 + Math.Abs(context.PressedPosition.X - context.CursorPosition.X);
-            var y1 = Math.Min(context.PressedPosition.Y, context.CursorPosition.Y);
-            var y2 = y1 + Math.Abs(context.PressedPosition.Y - context.CursorPosition.Y);
-            // Get all interactive views (Node containers)
-            var itemsControl = this.Find<ItemsControl>("NodeItemsControl");
+            double x0 = Math.Min(context.PressedPosition.X, context.CursorPosition.X);
+            double x1 = x0 + Math.Abs(context.PressedPosition.X - context.CursorPosition.X);
+            double y0 = Math.Min(context.PressedPosition.Y, context.CursorPosition.Y);
+            double y1 = y0 + Math.Abs(context.PressedPosition.Y - context.CursorPosition.Y);
+            Point a0 = new Point(x0, y0);
+            Point a1 = new Point(x1, y1);
 
-            // Check if each node is within bounds of multiselect and update the selected nodes
+            // Get container for interactive views (nodes)
+            var nodeItemsControl = this.Find<ItemsControl>("NodeItemsControl");
+
+            // Find nodes that are within bounds
             var newSelectedNodes = new ObservableCollection<NodeViewModelBase>();
-            foreach (ContentPresenter item in itemsControl.GetLogicalChildren())
+            foreach (ContentPresenter item in nodeItemsControl.GetLogicalChildren())
             {
                 InteractiveView node = item.FindDescendantOfType<InteractiveView>();
                 NodeViewModelBase nodeContext = (NodeViewModelBase)node.DataContext;
-                if (x1 < nodeContext.NodeBase.PositionX + node.Bounds.Size.Width
-                    && x2 > nodeContext.NodeBase.PositionX
-                    && y1 < nodeContext.NodeBase.PositionY + node.Bounds.Size.Height
-                    && y2 > nodeContext.NodeBase.PositionY)
+                Point b0 = new Point(nodeContext.NodeBase.PositionX, nodeContext.NodeBase.PositionY);
+                Point b1 = new Point(nodeContext.NodeBase.PositionX + node.Bounds.Size.Width, nodeContext.NodeBase.PositionY + node.Bounds.Size.Height);
+                if (Geo.RectInRect(a0, a1, b0, b1))
                 {
                     newSelectedNodes.Add(nodeContext);
                 }
             }
-            ((WorkspaceViewModel)DataContext).UpdateSelection(nodesToSelect: newSelectedNodes);
+
+            // Get container for edges
+            var edgeItemsControl = this.Find<ItemsControl>("EdgeItemsControl");
+
+            // Find edges that are within bounds
+            var newSelectedEdges = new ObservableCollection<EdgeViewModel>();
+            foreach (ContentPresenter item in edgeItemsControl.GetLogicalChildren())
+            {
+                EdgeView edgeView = item.FindDescendantOfType<EdgeView>();
+                Line edge = edgeView.FindControl<Line>("Edge");
+                EdgeViewModel edgeContext = (EdgeViewModel)edge.DataContext;
+                Point line0 = edge.StartPoint;
+                Point line1 = edge.EndPoint;
+                if (Geo.LineInRect(line0, line1, a0, a1))
+                {
+                    newSelectedEdges.Add(edgeContext);
+                }
+            }
+            ((WorkspaceViewModel)DataContext).UpdateSelection(nodesToSelect: newSelectedNodes, edgesToSelect: newSelectedEdges);
         }
 
         context.IsMultiSelecting = false;

@@ -2,7 +2,7 @@
 using System.Globalization;
 using Avalonia.Data.Converters;
 using System.Collections.Generic;
-using Avalonia;
+using mystery_app.Tools;
 
 namespace mystery_app.Converters;
 public class EdgePosConverter : IMultiValueConverter
@@ -13,7 +13,7 @@ public class EdgePosConverter : IMultiValueConverter
     {
         if (values.Count == 3 && values[0] is double x && values[1] is double y && values[2] is double width)
         {
-            return new Point(x + (width/2), y + 11);
+            return EdgeTools.EdgePosFromNode(x, y, width);
         }
         return null;
     }

@@ -36,7 +36,7 @@
 								  Opacity="{Binding IsSelected, Converter={StaticResource BoolToDoubleConverter}, ConverterParameter=1}"/>
 		</Border.Effect>
 		
-		<Line
+		<Line x:Name="Edge"
 			StrokeThickness="{Binding Edge.Thickness}">
 			<Line.Effect>
 				<DropShadowEffect BlurRadius="1" Opacity=".5" OffsetX="3" OffsetY="3"/>
