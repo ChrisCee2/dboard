@@ -68,9 +68,9 @@ public partial class WorkspaceViewModel : ObservableObject
             NodeToCreateEdge = NodeConstants.NULL_NODEVIEWMODEL;
         });
 
-        WeakReferenceMessenger.Default.Register<DeleteNodeMessage>(this, (sender, message) =>
+        WeakReferenceMessenger.Default.Register<DeleteMessage>(this, (sender, message) =>
         {
-            _DeleteNodes();
+            _DeleteSelectedItems();
         });
 
         WeakReferenceMessenger.Default.Register<CopyNodeMessage>(this, (sender, message) =>
@@ -163,6 +163,19 @@ public partial class WorkspaceViewModel : ObservableObject
         }
 
         SelectedNodes = new ObservableCollection<NodeViewModelBase>();
+    }
+
+    private void _DeleteEdges()
+    {
+        // Remove edges
+        Edges.RemoveMany(SelectedEdges);
+        SelectedEdges = new ObservableCollection<EdgeViewModel>();
+    }
+
+    private void _DeleteSelectedItems()
+    {
+        _DeleteNodes();
+        _DeleteEdges();
     }
 
     private void _UpdateSelectedNodes(ObservableCollection<NodeViewModelBase> nodesToSelect)

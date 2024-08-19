@@ -1,6 +1,9 @@
 ﻿using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Constants;
+using mystery_app.Messages;
 using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
@@ -26,5 +29,11 @@ public partial class EdgeViewModel : ObservableObject
     private EdgeModel _edge;
     [ObservableProperty]
     private bool _isSelected;
+
+    [RelayCommand]
+    private void Delete()
+    {
+        WeakReferenceMessenger.Default.Send(new DeleteMessage(""));
+    }
 
 }

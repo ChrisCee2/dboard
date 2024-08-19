@@ -27,7 +27,7 @@ public abstract partial class NodeViewModelBase : ObservableObject
     [RelayCommand]
     private void DeleteNode()
     {
-        WeakReferenceMessenger.Default.Send(new DeleteNodeMessage(this));
+        WeakReferenceMessenger.Default.Send(new DeleteMessage(""));
     }
 
     [RelayCommand]
