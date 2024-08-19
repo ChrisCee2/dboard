@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DynamicData;
 using mystery_app.Constants;
 using mystery_app.Messages;
 using mystery_app.Models;
@@ -36,4 +37,29 @@ public partial class EdgeViewModel : ObservableObject
         WeakReferenceMessenger.Default.Send(new DeleteMessage(""));
     }
 
+    public EdgeViewModel Clone()
+    {
+        return new EdgeViewModel(new EdgeModel(
+            Edge.FromNode,
+            Edge.ToNode,
+            Edge.Description,
+            Edge.Thickness,
+            Edge.A,
+            Edge.R,
+            Edge.G,
+            Edge.B));
+    }
+
+    public EdgeViewModel CloneWithNewNodes(NodeModelBase fromNode, NodeModelBase toNode)
+    {
+        return new EdgeViewModel(new EdgeModel(
+            fromNode,
+            toNode,
+            Edge.Description,
+            Edge.Thickness,
+            Edge.A,
+            Edge.R,
+            Edge.G,
+            Edge.B));
+    }
 }

@@ -38,8 +38,8 @@
 		<Button Template="{StaticResource MidTopBtn}" Content="Edit" DockPanel.Dock="Left">
 			<Button.Flyout>
 				<MenuFlyout Placement="BottomEdgeAlignedLeft">
-					<MenuItem Header="Copy" Command="{Binding Workspace.CopyNodeCommand}"/>
-					<MenuItem Header="Paste" Command="{Binding Workspace.PasteNodeCommand}"/>
+					<MenuItem Header="Copy" Command="{Binding Workspace.CopyNodesCommand}"/>
+					<MenuItem Header="Paste" Command="{Binding Workspace.PasteNodesCommand}"/>
 					<MenuItem Header="Delete" Command="{Binding Workspace.DeleteSelectedItemsCommand}"/>
 				</MenuFlyout>
 			</Button.Flyout>

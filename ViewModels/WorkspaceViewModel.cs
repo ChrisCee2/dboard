@@ -1,6 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Xml.Linq;
 using Avalonia;
+using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -35,6 +38,8 @@ public partial class WorkspaceViewModel : ObservableObject
     private SettingsModel _sharedSettings;
     [ObservableProperty]
     private ObservableCollection<NodeViewModelBase> _copiedNodes = new ObservableCollection<NodeViewModelBase>();
+    [ObservableProperty]
+    private ObservableCollection<EdgeViewModel> _copiedEdges = new ObservableCollection<EdgeViewModel>();
 
     private bool CanPaste() => CopiedNodes.Count > 0;
     private bool ItemsAreSelected() => SelectedNodes.Count > 0 || SelectedEdges.Count > 0;
@@ -76,7 +81,7 @@ public partial class WorkspaceViewModel : ObservableObject
 
         WeakReferenceMessenger.Default.Register<CopyNodeMessage>(this, (sender, message) =>
         {
-            _CopyNodes();
+            CopyNodes();
         });
     }
 
@@ -87,34 +92,57 @@ public partial class WorkspaceViewModel : ObservableObject
     }
 
     [RelayCommand(CanExecute = nameof(CanPaste))]
-    private void PasteNode()
+    private void PasteNodes()
     {
+        // Clone nodes
+        IDictionary<NodeModelBase, NodeModelBase> refToClone = new Dictionary<NodeModelBase, NodeModelBase>();
         foreach (var node in CopiedNodes)
         {
-            Nodes.Add(node.Clone(Nodes.Count));
+            var clone = node.Clone(Nodes.Count);
+            refToClone.Add(node.NodeBase, clone.NodeBase);
+            Nodes.Add(clone);
+        }
+        // Clone edges
+        foreach (EdgeViewModel edgeViewModel in CopiedEdges)
+        {
+            if (refToClone.ContainsKey(edgeViewModel.Edge.FromNode) && refToClone.ContainsKey(edgeViewModel.Edge.ToNode))
+            {
+                Edges.Add(edgeViewModel.CloneWithNewNodes(refToClone[edgeViewModel.Edge.FromNode], refToClone[edgeViewModel.Edge.ToNode]));
+            }
         }
     }
 
     [RelayCommand(CanExecute = nameof(NodesAreSelected))]
-    private void CopyNode()
+    private void CopyNodes()
     {
-        _CopyNodes();
+        // Clear clipboard
+        CopiedNodes = new ObservableCollection<NodeViewModelBase>();
+        CopiedEdges = new ObservableCollection<EdgeViewModel>();
+
+        // Copy nodes
+        HashSet<NodeModelBase> copiedNodeBases = new HashSet<NodeModelBase>();
+        foreach (var node in SelectedNodes)
+        {
+            CopiedNodes.Add(node);
+            copiedNodeBases.Add(node.NodeBase);
+        }
+       
+        // Reorder nodes
+        CopiedNodes = new ObservableCollection<NodeViewModelBase>(CopiedNodes.OrderBy(nodevm => nodevm.NodeBase.ZIndex).ToList());
+
+        // Copy edges
+        foreach (EdgeViewModel edgeViewModel in Edges)
+        {
+            if (copiedNodeBases.Contains(edgeViewModel.Edge.FromNode) && copiedNodeBases.Contains(edgeViewModel.Edge.ToNode))
+            {
+                CopiedEdges.Add(edgeViewModel);
+            }
+        }
     }
 
     private void _CreateEmptyNode()
     {
         Nodes.Add(new NodeViewModel(new NodeModel(Nodes.Count)));
-    }
-
-    private void _CopyNodes()
-    {
-        CopiedNodes = new ObservableCollection<NodeViewModelBase>();
-        foreach (var node in SelectedNodes)
-        {
-            CopiedNodes.Add(node.Clone());
-        }
-        // Reorder nodes
-        CopiedNodes = new ObservableCollection<NodeViewModelBase>(CopiedNodes.OrderBy(nodevm => nodevm.NodeBase.ZIndex).ToList());
     }
 
     private void _DeleteNodes()
