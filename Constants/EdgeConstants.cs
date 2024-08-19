@@ -10,4 +10,6 @@ public static class EdgeConstants
     public const byte R = 50;
     public const byte G = 50;
     public const byte B = 50;
+
+    public const double distFromEdgeToNodePos = 11;
 }
