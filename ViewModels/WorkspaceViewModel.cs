@@ -16,7 +16,7 @@ public partial class WorkspaceViewModel : ObservableObject
     public ObservableCollection<NodeViewModelBase> Nodes { get; set; } = new ObservableCollection<NodeViewModelBase>();
     public EdgeCollectionModel Edges { get; set; } = new EdgeCollectionModel();
     [ObservableProperty]
-    private NodeViewModelBase _selectedNodeEdge = NodeConstants.NULL_NODEVIEWMODEL;
+    private NodeViewModelBase _nodeToCreateEdge = NodeConstants.NULL_NODEVIEWMODEL;
     [ObservableProperty]
     private Point _cursorPosition;
     [ObservableProperty]
@@ -30,6 +30,8 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>();
     [ObservableProperty]
+    private ObservableCollection<EdgeViewModel> _selectedEdges = new ObservableCollection<EdgeViewModel>();
+    [ObservableProperty]
     private SettingsModel _sharedSettings;
     [ObservableProperty]
     private ObservableCollection<NodeViewModelBase> _copiedNodes = new ObservableCollection<NodeViewModelBase>();
@@ -41,14 +43,14 @@ public partial class WorkspaceViewModel : ObservableObject
     {
         _sharedSettings = sharedSettings;
         
-        WeakReferenceMessenger.Default.Register<SelectNodeEdgeMessage>(this, (sender, message) =>
+        WeakReferenceMessenger.Default.Register<CreateNodeEdgeMessage>(this, (sender, message) =>
         {
             if (message.Value is NodeViewModelBase nodeVMBase && Nodes.Contains(nodeVMBase))
             {
                 EdgeThickness = EdgeConstants.THICKNESS;
-                SelectedNodeEdge = nodeVMBase;
+                NodeToCreateEdge = nodeVMBase;
                 // Manually assign position to where pin is
-                CursorPosition = new Point(SelectedNodeEdge.NodeBase.PositionX + (SelectedNodeEdge.NodeBase.Width / 2), SelectedNodeEdge.NodeBase.PositionY + 11);
+                CursorPosition = new Point(NodeToCreateEdge.NodeBase.PositionX + (NodeToCreateEdge.NodeBase.Width / 2), NodeToCreateEdge.NodeBase.PositionY + 11);
             }
         });
 
@@ -57,13 +59,13 @@ public partial class WorkspaceViewModel : ObservableObject
             var enteredNode = message.Value;
 
             if (Nodes.Contains(enteredNode) 
-                && Nodes.Contains(SelectedNodeEdge)
-                && !Equals(enteredNode, SelectedNodeEdge)
-                && !Edges.ContainsEdge(SelectedNodeEdge.NodeBase, enteredNode.NodeBase))
+                && Nodes.Contains(NodeToCreateEdge)
+                && !Equals(enteredNode, NodeToCreateEdge)
+                && !Edges.ContainsEdge(NodeToCreateEdge.NodeBase, enteredNode.NodeBase))
             {
-                Edges.Add(new EdgeViewModel(new EdgeModel(SelectedNodeEdge.NodeBase, enteredNode.NodeBase)));
+                Edges.Add(new EdgeViewModel(new EdgeModel(NodeToCreateEdge.NodeBase, enteredNode.NodeBase)));
             }
-            SelectedNodeEdge = NodeConstants.NULL_NODEVIEWMODEL;
+            NodeToCreateEdge = NodeConstants.NULL_NODEVIEWMODEL;
         });
 
         WeakReferenceMessenger.Default.Register<DeleteNodeMessage>(this, (sender, message) =>
@@ -163,7 +165,7 @@ public partial class WorkspaceViewModel : ObservableObject
         SelectedNodes = new ObservableCollection<NodeViewModelBase>();
     }
 
-    public void UpdateSelectedNodes(ObservableCollection<NodeViewModelBase> nodesToSelect)
+    private void _UpdateSelectedNodes(ObservableCollection<NodeViewModelBase> nodesToSelect)
     {
         foreach (var nodeVM in SelectedNodes)
         {
@@ -200,5 +202,28 @@ public partial class WorkspaceViewModel : ObservableObject
         }
 
         SelectedNodes = nodesToSelect;
+    }
+
+    private void _UpdateSelectedEdges(ObservableCollection<EdgeViewModel> edgesToSelect)
+    {
+        foreach (var edgeVM in SelectedEdges)
+        {
+            edgeVM.IsSelected = false;
+        }
+
+        foreach (EdgeViewModel edgeVM in edgesToSelect)
+        {
+            edgeVM.IsSelected = true;
+        }
+
+        SelectedEdges = edgesToSelect;
+    }
+
+    public void UpdateSelection(ObservableCollection<NodeViewModelBase>? nodesToSelect = null, ObservableCollection<EdgeViewModel>? edgesToSelect = null)
+    {
+        nodesToSelect = nodesToSelect is null ? new ObservableCollection<NodeViewModelBase> () : nodesToSelect;
+        edgesToSelect = edgesToSelect is null ? new ObservableCollection<EdgeViewModel>() : edgesToSelect;
+        _UpdateSelectedNodes(nodesToSelect);
+        _UpdateSelectedEdges(edgesToSelect);
     }
 }

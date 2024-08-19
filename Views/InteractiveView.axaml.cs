@@ -155,7 +155,7 @@ public partial class InteractiveView : Grid
         if (!clickProperties.IsLeftButtonPressed) { return; }
 
         WeakReferenceMessenger.Default.Send(new SelectNodeMessage(_vm));
-        WeakReferenceMessenger.Default.Send(new SelectNodeEdgeMessage(_vm));
+        WeakReferenceMessenger.Default.Send(new CreateNodeEdgeMessage(_vm));
     }
 
     // On releasing node edge creation, find node released on and send to workspace
