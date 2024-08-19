@@ -36,4 +36,29 @@ public partial class EdgeViewModel : ObservableObject
         WeakReferenceMessenger.Default.Send(new DeleteMessage(""));
     }
 
+    public EdgeViewModel Clone()
+    {
+        return new EdgeViewModel(new EdgeModel(
+            Edge.FromNode,
+            Edge.ToNode,
+            Edge.Description,
+            Edge.Thickness,
+            Edge.A,
+            Edge.R,
+            Edge.G,
+            Edge.B));
+    }
+
+    public EdgeViewModel CloneWithNewNodes(NodeModelBase fromNode, NodeModelBase toNode)
+    {
+        return new EdgeViewModel(new EdgeModel(
+            fromNode,
+            toNode,
+            Edge.Description,
+            Edge.Thickness,
+            Edge.A,
+            Edge.R,
+            Edge.G,
+            Edge.B));
+    }
 }
