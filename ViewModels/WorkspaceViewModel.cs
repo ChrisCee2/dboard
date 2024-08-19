@@ -37,6 +37,7 @@ public partial class WorkspaceViewModel : ObservableObject
     private ObservableCollection<NodeViewModelBase> _copiedNodes = new ObservableCollection<NodeViewModelBase>();
 
     private bool CanPaste() => CopiedNodes.Count > 0;
+    private bool ItemsAreSelected() => SelectedNodes.Count > 0 || SelectedEdges.Count > 0;
     private bool NodesAreSelected() => SelectedNodes.Count > 0;
 
     public WorkspaceViewModel(SettingsModel sharedSettings)
@@ -70,7 +71,7 @@ public partial class WorkspaceViewModel : ObservableObject
 
         WeakReferenceMessenger.Default.Register<DeleteMessage>(this, (sender, message) =>
         {
-            _DeleteSelectedItems();
+            DeleteSelectedItems();
         });
 
         WeakReferenceMessenger.Default.Register<CopyNodeMessage>(this, (sender, message) =>
@@ -98,12 +99,6 @@ public partial class WorkspaceViewModel : ObservableObject
     private void CopyNode()
     {
         _CopyNodes();
-    }
-
-    [RelayCommand(CanExecute = nameof(NodesAreSelected))]
-    private void DeleteNode()
-    {
-        _DeleteNodes();
     }
 
     private void _CreateEmptyNode()
@@ -172,7 +167,8 @@ public partial class WorkspaceViewModel : ObservableObject
         SelectedEdges = new ObservableCollection<EdgeViewModel>();
     }
 
-    private void _DeleteSelectedItems()
+    [RelayCommand(CanExecute = nameof(ItemsAreSelected))]
+    private void DeleteSelectedItems()
     {
         _DeleteNodes();
         _DeleteEdges();

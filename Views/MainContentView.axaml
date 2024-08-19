@@ -40,7 +40,7 @@
 				<MenuFlyout Placement="BottomEdgeAlignedLeft">
 					<MenuItem Header="Copy" Command="{Binding Workspace.CopyNodeCommand}"/>
 					<MenuItem Header="Paste" Command="{Binding Workspace.PasteNodeCommand}"/>
-					<MenuItem Header="Delete" Command="{Binding Workspace.DeleteNodeCommand}"/>
+					<MenuItem Header="Delete" Command="{Binding Workspace.DeleteSelectedItemsCommand}"/>
 				</MenuFlyout>
 			</Button.Flyout>
 		</Button>
