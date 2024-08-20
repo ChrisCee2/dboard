@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia;
+using Avalonia.Controls;
+using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -9,6 +11,7 @@ using DynamicData;
 using mystery_app.Constants;
 using mystery_app.Messages;
 using mystery_app.Models;
+using mystery_app.Views;
 
 namespace mystery_app.ViewModels;
 
@@ -86,11 +89,15 @@ public partial class WorkspaceViewModel : ObservableObject
     [RelayCommand]
     private void CreateNodeAtPress()
     {
-        NodeModel nodeModel = new NodeModel(Nodes.Count);
-        nodeModel.PositionX = PressedPosition.X;
-        nodeModel.PositionY = PressedPosition.Y;
-        Nodes.Add(new NodeViewModel(nodeModel));
+        CreateNodeAtPos(PressedPosition.X, PressedPosition.Y);
+    }
 
+    public void CreateNodeAtPos(double x, double y)
+    {
+        NodeModel nodeModel = new NodeModel(Nodes.Count);
+        nodeModel.PositionX = x;
+        nodeModel.PositionY = y;
+        Nodes.Add(new NodeViewModel(nodeModel));
     }
 
     [RelayCommand]

@@ -47,7 +47,7 @@
 		<PathIcon Data="{StaticResource divider_short_regular}" DockPanel.Dock="Left" Width="10" Height="12"
 				  Classes.MaxMid="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
 				  Classes.NormMid="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}"/>
-		<Button Template="{StaticResource MidTopBtn}" DockPanel.Dock="Left" Content="Create Node" Command="{Binding Workspace.CreateNodeCommand}"/>
+		<Button Template="{StaticResource MidTopBtn}" DockPanel.Dock="Left" Content="Create Node" Click="CreateNodeMidScreen"/>
 
 		<!-- Right side -->
 		<Button Template="{StaticResource RightTopBtn}" Click="Exit" DockPanel.Dock="Right">
@@ -140,5 +140,5 @@
 			</Border>
 		</SplitView.Pane>
 	</SplitView>
-	<views:WorkspaceView DataContext="{Binding Workspace}"/>
+	<views:WorkspaceView x:Name="CurrentWorkspace" DataContext="{Binding Workspace}"/>
 </DockPanel>
