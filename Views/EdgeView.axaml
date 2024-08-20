@@ -16,6 +16,7 @@
 		<ContextMenu>
 			<MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
 			<MenuItem Header="Add Description" Command="{Binding AddDescCommand}"/>
+			<MenuItem Header="Remove Description" Command="{Binding RemoveDescCommand}"/>
 		</ContextMenu>
 	</Canvas.ContextMenu>
 

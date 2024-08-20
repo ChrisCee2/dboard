@@ -21,6 +21,7 @@ public partial class EdgeViewModel : ObservableObject
     [ObservableProperty]
     private bool _isSelected;
     public bool DescIsNull() => Edge.Description is null;
+    public bool DescIsNotNull() => Edge.Description is not null;
 
     [RelayCommand]
     private void Delete()
@@ -32,6 +33,12 @@ public partial class EdgeViewModel : ObservableObject
     private void AddDesc()
     {
         Edge.Description = "";
+    }
+
+    [RelayCommand(CanExecute = nameof(DescIsNotNull))]
+    private void RemoveDesc()
+    {
+        Edge.Description = null;
     }
 
     public EdgeViewModel Clone()
