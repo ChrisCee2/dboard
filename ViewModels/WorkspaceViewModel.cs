@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -81,6 +83,16 @@ public partial class WorkspaceViewModel : ObservableObject
         {
             CopyNodes();
         });
+    }
+
+    [RelayCommand]
+    private void CreateNodeAtPress()
+    {
+        NodeModel nodeModel = new NodeModel(Nodes.Count);
+        nodeModel.PositionX = PressedPosition.X;
+        nodeModel.PositionY = PressedPosition.Y;
+        Nodes.Add(new NodeViewModel(nodeModel));
+
     }
 
     [RelayCommand]

@@ -21,8 +21,8 @@
 	</UserControl.Background>
 
 	<UserControl.ContextMenu>
-		<ContextMenu>
-			<MenuItem Header="Create Node" Command="{Binding CreateNodeCommand}"/>
+		<ContextMenu x:Name="WorkspaceCM">
+			<MenuItem Header="Create Node" Command="{Binding CreateNodeAtPressCommand}"/>
 			<MenuItem Header="Paste" Command="{Binding PasteNodesCommand}"/>
 		</ContextMenu>
 	</UserControl.ContextMenu>

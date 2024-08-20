@@ -43,6 +43,7 @@ public partial class WorkspaceView : UserControl
     // Start multiselect
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
+        ((WorkspaceViewModel)DataContext).PressedPosition = e.GetPosition(this);
         // If not left click, return
         if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) { return; }
 
@@ -52,7 +53,6 @@ public partial class WorkspaceView : UserControl
         if (((Control)hitElement).Parent == this)
         {
             ((WorkspaceViewModel)DataContext).IsMultiSelecting = true;
-            ((WorkspaceViewModel)DataContext).PressedPosition = e.GetPosition(this);
             ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
             ((WorkspaceViewModel)DataContext).MultiSelectThickness = 2;
         }
