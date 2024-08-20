@@ -9,6 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Logging;
 using Avalonia.Platform.Storage;
 using mystery_app.Constants;
 using mystery_app.Models;
@@ -38,13 +39,28 @@ public partial class MainContentView : DockPanel
         InitializeComponent();
         _notesSplitView = this.FindControl<SplitView>("NotesSplitView");
         _workspace = this.FindControl<WorkspaceView>("CurrentWorkspace");
+
+        if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            ((TopLevel)desktop.MainWindow).AddHandler(InputElement.KeyDownEvent, HandleKeyDown, handledEventsToo: true);
+        }
     }
 
-    protected async void Save(object sender, RoutedEventArgs e)
+    protected async void SaveEvent(object sender, RoutedEventArgs e)
+    {
+        Save();
+    }
+
+    protected async void SaveAsEvent(object sender, RoutedEventArgs e)
+    {
+        SaveAs();
+    }
+
+    protected async void Save()
     {
         if (((MainContentViewModel)DataContext).WorkspaceFileName == null)
         {
-            SaveAs(sender, e);
+            SaveAs();
         }
         else
         {
@@ -62,7 +78,7 @@ public partial class MainContentView : DockPanel
         }
     }
 
-    protected async void SaveAs(object sender, RoutedEventArgs e)
+    protected async void SaveAs()
     {
         if (!Directory.Exists("./Workspaces"))
         {
@@ -219,5 +235,28 @@ public partial class MainContentView : DockPanel
     {
         Point pos = (_workspace.Bounds.BottomRight - _workspace.Bounds.TopLeft) / 2 - (new Point(NodeConstants.MIN_WIDTH, NodeConstants.MIN_HEIGHT) / 2);
         ((MainContentViewModel)DataContext).Workspace.CreateNodeAtPos(pos.X, pos.Y);
+    }
+
+    private void HandleKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Source is WorkspaceView && e.KeyModifiers.HasFlag(KeyModifiers.Control))
+        {
+            if (e.Key == Key.C)
+            {
+                ((MainContentViewModel)DataContext).Workspace.CopyNodesCommand.Execute(null);
+            }
+            else if (e.Key == Key.V)
+            {
+                ((MainContentViewModel)DataContext).Workspace.PasteNodesCommand.Execute(null);
+            }
+            else if (e.Key == Key.X)
+            {
+                ((MainContentViewModel)DataContext).Workspace.DeleteSelectedItemsCommand.Execute(null);
+            }
+            else if (e.Key == Key.S)
+            {
+                Save();
+            }
+        }
     }
 }

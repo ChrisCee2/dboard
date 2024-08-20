@@ -28,8 +28,8 @@
 				<MenuFlyout Placement="BottomEdgeAlignedLeft">
 					<MenuItem Header="New" Command="{Binding NewCommand}"/>
 					<MenuItem Header="Open" Click="Open"/>
-					<MenuItem Header="Save" Click="Save"/>
-					<MenuItem Header="Save As" Click="SaveAs"/>
+					<MenuItem Header="Save" Click="SaveEvent"/>
+					<MenuItem Header="Save As" Click="SaveAsEvent"/>
 					<Separator/>
 					<MenuItem Header="Exit" Click="Exit"/>
 				</MenuFlyout>
