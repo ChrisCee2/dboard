@@ -1,8 +1,9 @@
-﻿using mystery_app.Constants;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using mystery_app.Constants;
 
 namespace mystery_app.Models;
 
-public class EdgeModel
+public partial class EdgeModel : ObservableObject
 {
     public EdgeModel() {}
 
@@ -12,7 +13,7 @@ public class EdgeModel
     {
         FromNode = fromNode;
         ToNode = toNode;
-        Description = "";
+        Description = null;
         Thickness = EdgeConstants.THICKNESS;
         A = EdgeConstants.A;
         R = EdgeConstants.R;
@@ -37,54 +38,20 @@ public class EdgeModel
         B = b;
     }
 
-
+    [ObservableProperty]
     private NodeModelBase _fromNode;
+    [ObservableProperty]
     private NodeModelBase _toNode;
-    private string _description;
+    [ObservableProperty]
+    private string? _description;
+    [ObservableProperty]
     private double _thickness;
+    [ObservableProperty]
     private byte _a;
+    [ObservableProperty]
     private byte _r;
+    [ObservableProperty]
     private byte _g;
+    [ObservableProperty]
     private byte _b;
-
-    public NodeModelBase FromNode
-    {
-        get { return _fromNode; }
-        set { _fromNode = value; }
-    }
-    public NodeModelBase ToNode
-    {
-        get { return _toNode; }
-        set { _toNode = value; }
-    }
-    public string Description
-    {
-        get { return _description; }
-        set { _description = value; }
-    }
-    public double Thickness
-    {
-        get { return _thickness; }
-        set { _thickness = value; }
-    }
-    public byte A
-    {
-        get { return _a; }
-        set { _a = value; }
-    }
-    public byte R
-    {
-        get { return _r; }
-        set { _r = value; }
-    }
-    public byte G
-    {
-        get { return _g; }
-        set { _g = value; }
-    }
-    public byte B
-    {
-        get { return _b; }
-        set { _b = value; }
-    }
 }

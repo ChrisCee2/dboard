@@ -17,6 +17,8 @@
 			<customConverters:BoolToDoubleConverter x:Key="BoolToDoubleConverter"/>
 			<customConverters:MaxHeightConverter x:Key="MaxHeightConverter"/>
 			<customConverters:WindowStateBoolConverter x:Key="WSBoolConverter"/>
+			<customConverters:IsNotNullConverter x:Key="IsNotNullConverter"/>
+			<customConverters:AddConverter x:Key="AddConverter"/>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="/Styles/ToolBarResources.axaml"/>
 			</ResourceDictionary.MergedDictionaries>
