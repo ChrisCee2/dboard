@@ -39,6 +39,30 @@
 			</MultiBinding>
 		</Canvas.Top>
 	</TextBox>
+
+	<Button Command="{Binding AddDescCommand}" CornerRadius="1000">
+		<Button.IsVisible>
+			<MultiBinding Converter="{StaticResource ShowEdgeAddDescConverter}">
+				<Binding Path="Edge.Description"/>
+				<Binding Path="IsSelected"/>
+			</MultiBinding>
+		</Button.IsVisible>
+
+		<PathIcon Data="{StaticResource add_regular}"/>
+		<Canvas.Left>
+			<MultiBinding Converter="{StaticResource MedianConverter}">
+				<Binding Path="Edge.FromNode.PositionX"/>
+				<Binding Path="Edge.ToNode.PositionX"/>
+			</MultiBinding>
+		</Canvas.Left>
+		<Canvas.Top>
+			<MultiBinding Converter="{StaticResource MedianConverter}">
+				<Binding Path="Edge.FromNode.PositionY"/>
+				<Binding Path="Edge.ToNode.PositionY"/>
+			</MultiBinding>
+		</Canvas.Top>
+	</Button>
+
 	<Border>
 		<Border.Effect>
 			<DropShadowEffect Color="#88BBFF" BlurRadius="30" OffsetX="0" OffsetY="0"
