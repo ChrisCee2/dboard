@@ -9,10 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Logging;
-using Avalonia.Media;
 using Avalonia.Platform.Storage;
-using Avalonia.VisualTree;
 using mystery_app.Constants;
 using mystery_app.Models;
 using mystery_app.ViewModels;
@@ -57,7 +54,6 @@ public partial class MainContentView : DockPanel
             }
             IStorageFolder directory = await TopLevel.GetTopLevel(this).StorageProvider.TryGetFolderFromPathAsync("./Workspaces");
             string path = directory.TryGetLocalPath() + "/" + ((MainContentViewModel)DataContext).WorkspaceFileName;
-            Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, path);
             IStorageFile file = await TopLevel.GetTopLevel(this).StorageProvider.TryGetFileFromPathAsync(path);
             if (file is not null)
             {
@@ -221,9 +217,7 @@ public partial class MainContentView : DockPanel
 
     protected void CreateNodeMidScreen(object sender, RoutedEventArgs e)
     {
-        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, _workspace.Bounds.ToString());
         Point pos = (_workspace.Bounds.BottomRight - _workspace.Bounds.TopLeft) / 2 - (new Point(NodeConstants.MIN_WIDTH, NodeConstants.MIN_HEIGHT) / 2);
-
         ((MainContentViewModel)DataContext).Workspace.CreateNodeAtPos(pos.X, pos.Y);
     }
 }

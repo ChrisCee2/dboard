@@ -49,7 +49,7 @@
 			<ItemsControl.ItemTemplate>
 				<DataTemplate>
 					<views:InteractiveView DataContext="{Binding}">
-						<views:NodeView DataContext="{Binding}" Grid.Row="1" Canvas.ZIndex="{Binding NodeBase.ZIndex}"/>
+						<views:NodeView DataContext="{Binding}" Grid.Row="1"/>
 					</views:InteractiveView>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
