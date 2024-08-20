@@ -84,6 +84,16 @@ public partial class WorkspaceViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void CreateNodeAtPress()
+    {
+        NodeModel nodeModel = new NodeModel(Nodes.Count);
+        nodeModel.PositionX = PressedPosition.X;
+        nodeModel.PositionY = PressedPosition.Y;
+        Nodes.Add(new NodeViewModel(nodeModel));
+
+    }
+
+    [RelayCommand]
     private void CreateNode()
     {
         _CreateEmptyNode();
