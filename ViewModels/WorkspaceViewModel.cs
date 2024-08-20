@@ -23,7 +23,7 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private Point _pressedPosition;
     [ObservableProperty]
-    private int _edgeThickness;
+    private double _edgeThickness;
     [ObservableProperty]
     private int _multiSelectThickness;
     [ObservableProperty]

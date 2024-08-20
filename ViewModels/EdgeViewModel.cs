@@ -1,4 +1,5 @@
-﻿using Avalonia.Media;
+﻿using Avalonia.Logging;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -15,25 +16,29 @@ public partial class EdgeViewModel : ObservableObject
         Edge = edgeModel;
     }
 
-    public EdgeViewModel(
-        NodeModelBase fromNode,
-        NodeModelBase toNode,
-        Color color,
-        string description = "",
-        double thickness = EdgeConstants.THICKNESS)
-    {
-        Edge = new EdgeModel(fromNode, toNode, description, thickness, color.A, color.R, color.G, color.B);
-    }
-
     [ObservableProperty]
     private EdgeModel _edge;
     [ObservableProperty]
     private bool _isSelected;
+    public bool DescIsNull() => Edge.Description is null;
+    public bool DescIsNotNull() => Edge.Description is not null;
 
     [RelayCommand]
     private void Delete()
     {
         WeakReferenceMessenger.Default.Send(new DeleteMessage(""));
+    }
+
+    [RelayCommand(CanExecute = nameof(DescIsNull))]
+    private void AddDesc()
+    {
+        Edge.Description = "";
+    }
+
+    [RelayCommand(CanExecute = nameof(DescIsNotNull))]
+    private void RemoveDesc()
+    {
+        Edge.Description = null;
     }
 
     public EdgeViewModel Clone()

@@ -4,6 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:vm="clr-namespace:mystery_app.ViewModels"
+	xmlns:constants="clr-namespace:mystery_app.Constants"
 	x:Class="mystery_app.Views.EdgeView"
 	x:DataType="vm:EdgeViewModel"
 	>
@@ -14,6 +15,8 @@
 	<Canvas.ContextMenu>
 		<ContextMenu>
 			<MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
+			<MenuItem Header="Add Description" Command="{Binding AddDescCommand}"/>
+			<MenuItem Header="Remove Description" Command="{Binding RemoveDescCommand}"/>
 		</ContextMenu>
 	</Canvas.ContextMenu>
 
@@ -22,7 +25,7 @@
 							  Opacity="{Binding IsSelected, Converter={StaticResource BoolToDoubleConverter}, ConverterParameter=1}"/>
 	</Canvas.Effect>
 
-	<TextBox Text="{Binding Edge.Description}">
+	<TextBox Text="{Binding Edge.Description}" IsVisible="{Binding Edge.Description, Converter={StaticResource IsNotNullConverter}}">
 		<Canvas.Left>
 			<MultiBinding Converter="{StaticResource MedianConverter}">
 				<Binding Path="Edge.FromNode.PositionX"/>
@@ -72,4 +75,28 @@
 			</Line.Stroke>
 		</Line>
 	</Border>
+
+	<Line x:Name="EdgeClickArea" Stroke="Transparent">
+		<Line.StrokeThickness>
+			<MultiBinding Converter="{StaticResource AddConverter}">
+				<Binding Path="Edge.Thickness"/>
+				<Binding Source="{x:Static constants:EdgeConstants.CLICK_THICKNESS}"/>
+			</MultiBinding>
+		</Line.StrokeThickness>
+
+		<Line.StartPoint>
+			<MultiBinding Converter="{StaticResource EdgePosConverter}">
+				<Binding Path="Edge.FromNode.PositionX"/>
+				<Binding Path="Edge.FromNode.PositionY"/>
+				<Binding Path="Edge.FromNode.Width"/>
+			</MultiBinding>
+		</Line.StartPoint>
+		<Line.EndPoint>
+			<MultiBinding Converter="{StaticResource EdgePosConverter}">
+				<Binding Path="Edge.ToNode.PositionX"/>
+				<Binding Path="Edge.ToNode.PositionY"/>
+				<Binding Path="Edge.ToNode.Width"/>
+			</MultiBinding>
+		</Line.EndPoint>
+	</Line>
 </Canvas>
