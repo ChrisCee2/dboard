@@ -12,6 +12,7 @@ using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.Media;
 using Avalonia.Platform.Storage;
+using Avalonia.VisualTree;
 using mystery_app.Constants;
 using mystery_app.Models;
 using mystery_app.ViewModels;
@@ -25,6 +26,7 @@ public partial class MainContentView : DockPanel
     private double _initialResizeX;
     private double _lastNotesLen;
     private SplitView _notesSplitView;
+    private WorkspaceView _workspace;
 
     JsonSerializerOptions options = new()
     {
@@ -38,6 +40,7 @@ public partial class MainContentView : DockPanel
     {
         InitializeComponent();
         _notesSplitView = this.FindControl<SplitView>("NotesSplitView");
+        _workspace = this.FindControl<WorkspaceView>("CurrentWorkspace");
     }
 
     protected async void Save(object sender, RoutedEventArgs e)
@@ -214,5 +217,13 @@ public partial class MainContentView : DockPanel
             double offsetX = _initialResizeX - currentPosition.X;
             ((MainContentViewModel)DataContext).Notes.PaneLength = Math.Min(ToolbarConstants.NOTES_PANE_MAX_LEN, Math.Max(ToolbarConstants.NOTES_PANE_MIN_LEN, _lastNotesLen + offsetX));
         }
+    }
+
+    protected void CreateNodeMidScreen(object sender, RoutedEventArgs e)
+    {
+        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, _workspace.Bounds.ToString());
+        Point pos = (_workspace.Bounds.BottomRight - _workspace.Bounds.TopLeft) / 2 - (new Point(NodeConstants.MIN_WIDTH, NodeConstants.MIN_HEIGHT) / 2);
+
+        ((MainContentViewModel)DataContext).Workspace.CreateNodeAtPos(pos.X, pos.Y);
     }
 }
