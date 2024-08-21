@@ -2,8 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -11,7 +9,6 @@ using DynamicData;
 using mystery_app.Constants;
 using mystery_app.Messages;
 using mystery_app.Models;
-using mystery_app.Views;
 
 namespace mystery_app.ViewModels;
 
@@ -32,6 +29,8 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private bool _isMultiSelecting;
     [ObservableProperty]
+    private bool _multiSelectHKDown;
+    [ObservableProperty]
     private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>();
     [ObservableProperty]
     private ObservableCollection<EdgeViewModel> _selectedEdges = new ObservableCollection<EdgeViewModel>();
@@ -49,7 +48,17 @@ public partial class WorkspaceViewModel : ObservableObject
     public WorkspaceViewModel(SettingsModel sharedSettings)
     {
         _sharedSettings = sharedSettings;
-        
+
+        WeakReferenceMessenger.Default.Register<EditNodeMessage>(this, (sender, message) =>
+        {
+            if (message.Value is NodeViewModelBase nodeVMBase)
+            {
+                _UpdateSelectedEdges(new ObservableCollection<EdgeViewModel>());
+                _UpdateSelectedNodes(new ObservableCollection<NodeViewModelBase>() { nodeVMBase });
+                nodeVMBase.IsEdit = true;
+            }
+        });
+
         WeakReferenceMessenger.Default.Register<CreateNodeEdgeMessage>(this, (sender, message) =>
         {
             if (message.Value is NodeViewModelBase nodeVMBase && Nodes.Contains(nodeVMBase))
@@ -275,6 +284,25 @@ public partial class WorkspaceViewModel : ObservableObject
     {
         nodesToSelect = nodesToSelect is null ? new ObservableCollection<NodeViewModelBase> () : nodesToSelect;
         edgesToSelect = edgesToSelect is null ? new ObservableCollection<EdgeViewModel>() : edgesToSelect;
+        if (MultiSelectHKDown)
+        {
+            if (nodesToSelect.Count == 1 && edgesToSelect.Count == 0 && SelectedNodes.Contains(nodesToSelect[0]))
+            {
+                SelectedNodes.Remove(nodesToSelect[0]);
+                nodesToSelect[0].IsSelected = false;
+                nodesToSelect[0].IsEdit = false;
+                return;
+            }
+            else if (edgesToSelect.Count == 1 && nodesToSelect.Count == 0 && SelectedEdges.Contains(edgesToSelect[0]))
+            {
+                SelectedEdges.Remove(edgesToSelect[0]);
+                edgesToSelect[0].IsSelected = false;
+                return;
+            }
+
+            nodesToSelect = new ObservableCollection<NodeViewModelBase>(nodesToSelect.Union(SelectedNodes));
+            edgesToSelect = new ObservableCollection<EdgeViewModel>(edgesToSelect.Union(SelectedEdges));
+        }
         _UpdateSelectedNodes(nodesToSelect);
         _UpdateSelectedEdges(edgesToSelect);
     }

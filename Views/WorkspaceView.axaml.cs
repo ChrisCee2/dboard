@@ -25,8 +25,7 @@ public partial class WorkspaceView : UserControl
         {
             if (args.Value.IsEdit)
             {
-                ((WorkspaceViewModel)DataContext).UpdateSelection(nodesToSelect: new ObservableCollection<NodeViewModelBase> { args.Value });
-                args.Value.IsEdit = true;
+                return;
             }
             else if (!((WorkspaceViewModel)DataContext).SelectedNodes.Contains(args.Value))
             {
