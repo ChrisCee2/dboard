@@ -22,6 +22,7 @@
 			<customConverters:AddConverter x:Key="AddConverter"/>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="/Styles/ToolBarResources.axaml"/>
+				<ResourceInclude Source="/Styles/WorkspaceResources.axaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>
