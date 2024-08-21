@@ -20,6 +20,8 @@
 			<customConverters:IsNotNullConverter x:Key="IsNotNullConverter"/>
 			<customConverters:ShowEdgeAddDescConverter x:Key="ShowEdgeAddDescConverter"/>
 			<customConverters:AddConverter x:Key="AddConverter"/>
+			<customConverters:BrushOpacityConverter x:Key="BrushOpacityConverter"/>
+			
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="/Styles/ToolBarResources.axaml"/>
 				<ResourceInclude Source="/Styles/WorkspaceResources.axaml"/>
