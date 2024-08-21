@@ -67,8 +67,7 @@ public partial class InteractiveView : Grid
             // If double click, make click through
             if (e.ClickCount >= 2)
             {
-                _vm.IsEdit = true;
-                WeakReferenceMessenger.Default.Send(new SelectNodeMessage(_vm));
+                WeakReferenceMessenger.Default.Send(new EditNodeMessage(_vm));
                 return;
             }
             WeakReferenceMessenger.Default.Send(new SelectNodeMessage(_vm));

@@ -9,7 +9,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Logging;
 using Avalonia.Platform.Storage;
 using mystery_app.Constants;
 using mystery_app.Models;
@@ -43,6 +42,7 @@ public partial class MainContentView : DockPanel
         if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             ((TopLevel)desktop.MainWindow).AddHandler(InputElement.KeyDownEvent, HandleKeyDown, handledEventsToo: true);
+            ((TopLevel)desktop.MainWindow).AddHandler(InputElement.KeyUpEvent, HandleKeyUp, handledEventsToo: true);
         }
     }
 
@@ -257,6 +257,19 @@ public partial class MainContentView : DockPanel
             {
                 Save();
             }
+        }
+
+        if (e.KeyModifiers.HasFlag(KeyModifiers.Control) || e.KeyModifiers.HasFlag(KeyModifiers.Shift))
+        {
+            ((MainContentViewModel)DataContext).Workspace.MultiSelectHKDown = true;
+        }
+    }
+
+    private void HandleKeyUp(object sender, KeyEventArgs e)
+    {
+        if (!(e.KeyModifiers.HasFlag(KeyModifiers.Control) || e.KeyModifiers.HasFlag(KeyModifiers.Shift)))
+        {
+            ((MainContentViewModel)DataContext).Workspace.MultiSelectHKDown = false;
         }
     }
 }
