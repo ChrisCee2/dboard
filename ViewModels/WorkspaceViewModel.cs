@@ -144,11 +144,12 @@ public partial class WorkspaceViewModel : ObservableObject
         CopiedEdges = new ObservableCollection<EdgeViewModel>();
 
         // Copy nodes
-        HashSet<NodeModelBase> copiedNodeBases = new HashSet<NodeModelBase>();
+        IDictionary<NodeModelBase, NodeModelBase> refToClone = new Dictionary<NodeModelBase, NodeModelBase>();
         foreach (var node in SelectedNodes)
         {
-            CopiedNodes.Add(node);
-            copiedNodeBases.Add(node.NodeBase);
+            var clone = node.Clone();
+            CopiedNodes.Add(clone);
+            refToClone.Add(node.NodeBase, clone.NodeBase);
         }
        
         // Reorder nodes
@@ -157,9 +158,9 @@ public partial class WorkspaceViewModel : ObservableObject
         // Copy edges
         foreach (EdgeViewModel edgeViewModel in Edges)
         {
-            if (copiedNodeBases.Contains(edgeViewModel.Edge.FromNode) && copiedNodeBases.Contains(edgeViewModel.Edge.ToNode))
+            if (refToClone.ContainsKey(edgeViewModel.Edge.FromNode) && refToClone.ContainsKey(edgeViewModel.Edge.ToNode))
             {
-                CopiedEdges.Add(edgeViewModel);
+                CopiedEdges.Add(edgeViewModel.CloneWithNewNodes(refToClone[edgeViewModel.Edge.FromNode], refToClone[edgeViewModel.Edge.ToNode]));
             }
         }
     }
