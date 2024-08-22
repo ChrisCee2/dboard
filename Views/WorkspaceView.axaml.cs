@@ -6,7 +6,6 @@ using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.LogicalTree;
-using Avalonia.Media;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Constants;
@@ -84,7 +83,6 @@ public partial class WorkspaceView : UserControl
             var offsetX = currentPosition.X - _positionInBlock.X;
             var offsetY = currentPosition.Y - _positionInBlock.Y;
             ((WorkspaceViewModel)DataContext).PanPosition = new Point(offsetX, offsetY);
-            RenderTransform = new TranslateTransform(offsetX, offsetY);
         }
         base.OnPointerMoved(e);
     }
@@ -147,5 +145,12 @@ public partial class WorkspaceView : UserControl
         context.IsMultiSelecting = false;
         context.IsPanning = false;
         base.OnPointerReleased(e);
+    }
+
+    // Handle zoom
+    protected override void OnPointerWheelChanged(PointerWheelEventArgs e)
+    {
+        ((WorkspaceViewModel)DataContext).Scale = ((WorkspaceViewModel)DataContext).Scale + (e.Delta.Y * .05);
+        base.OnPointerWheelChanged(e);
     }
 }

@@ -33,6 +33,8 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private Point _PanPosition;
     [ObservableProperty]
+    private double _scale = 1;
+    [ObservableProperty]
     private bool _multiSelectHKDown;
     [ObservableProperty]
     private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>();
