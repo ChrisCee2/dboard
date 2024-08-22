@@ -233,8 +233,11 @@ public partial class MainContentView : DockPanel
 
     protected void CreateNodeMidScreen(object sender, RoutedEventArgs e)
     {
-        Point pos = (_workspace.Bounds.BottomRight - _workspace.Bounds.TopLeft) / 2 - (new Point(NodeConstants.MIN_WIDTH, NodeConstants.MIN_HEIGHT) / 2);
-        ((MainContentViewModel)DataContext).Workspace.CreateNodeAtPos(pos.X, pos.Y);
+        if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            Point pos = _workspace.PointToClient(new PixelPoint((int)desktop.MainWindow.ClientSize.Width / 2, (int)desktop.MainWindow.ClientSize.Height / 2));
+            ((MainContentViewModel)DataContext).Workspace.CreateNodeAtPos(pos.X, pos.Y);
+        }
     }
 
     private void HandleKeyDown(object sender, KeyEventArgs e)

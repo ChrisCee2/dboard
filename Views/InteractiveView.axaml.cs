@@ -11,6 +11,7 @@ using Avalonia.VisualTree;
 using Avalonia.LogicalTree;
 using mystery_app.Models;
 using System.Threading.Tasks;
+using Avalonia.Logging;
 
 namespace mystery_app.Views;
 
@@ -50,6 +51,7 @@ public partial class InteractiveView : Grid
 
             }
 
+            Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, _vm.NodeBase.PositionX.ToString() + " " + _vm.NodeBase.PositionY.ToString());
             RenderTransform = new TranslateTransform(_vm.NodeBase.PositionX, _vm.NodeBase.PositionY);
         }
     }

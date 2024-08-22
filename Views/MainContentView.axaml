@@ -140,5 +140,15 @@
 			</Border>
 		</SplitView.Pane>
 	</SplitView>
-	<views:WorkspaceView x:Name="CurrentWorkspace" DataContext="{Binding Workspace}"/>
+	<Border ClipToBounds="True" CornerRadius="8">
+		<Border.Background>
+			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+				<Binding Path="SharedSettings.ModeModel.A"/>
+				<Binding Path="SharedSettings.ModeModel.R"/>
+				<Binding Path="SharedSettings.ModeModel.G"/>
+				<Binding Path="SharedSettings.ModeModel.B"/>
+			</MultiBinding>
+		</Border.Background>
+		<views:WorkspaceView x:Name="CurrentWorkspace" DataContext="{Binding Workspace}" Width="10000" Height="10000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	</Border>
 </DockPanel>
