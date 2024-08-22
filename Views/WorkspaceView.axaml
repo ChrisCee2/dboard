@@ -10,6 +10,8 @@
     x:DataType="vm:WorkspaceViewModel"
 	Focusable="True"
 	Opacity="{Binding SharedSettings.ModeModel.WorkspaceOpacity}"
+	BorderThickness="1"
+	BorderBrush="Black"
 	CornerRadius="8">
 	<UserControl.Background>
 		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
@@ -33,7 +35,7 @@
 		
 	<Panel>
 		<!--Nodes-->
-		<ItemsControl ItemsSource="{Binding Nodes}" Name="NodeItemsControl">
+		<ItemsControl Name="NodeItemsControl" ItemsSource="{Binding Nodes}" Width="1280" Height="720" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<Canvas/>

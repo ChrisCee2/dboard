@@ -29,6 +29,10 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private bool _isMultiSelecting;
     [ObservableProperty]
+    private bool _isPanning;
+    [ObservableProperty]
+    private Point _PanPosition;
+    [ObservableProperty]
     private bool _multiSelectHKDown;
     [ObservableProperty]
     private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>();

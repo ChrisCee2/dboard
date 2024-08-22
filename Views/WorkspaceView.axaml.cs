@@ -6,6 +6,7 @@ using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.LogicalTree;
+using Avalonia.Media;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
 using mystery_app.Constants;
@@ -17,6 +18,9 @@ namespace mystery_app.Views;
 
 public partial class WorkspaceView : UserControl
 {
+
+    private Point _positionInBlock;
+
     public WorkspaceView()
     {
         InitializeComponent();
@@ -43,17 +47,25 @@ public partial class WorkspaceView : UserControl
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
         ((WorkspaceViewModel)DataContext).PressedPosition = e.GetPosition(this);
-        // If not left click, return
-        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) { return; }
 
-        var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
-        var rootCoordinates = e.GetPosition(root);
-        var hitElement = root.InputHitTest(rootCoordinates);
-        if (((Control)hitElement).Parent == this)
+        if (e.GetCurrentPoint(this).Properties.IsMiddleButtonPressed && !((WorkspaceViewModel)DataContext).IsMultiSelecting) 
         {
-            ((WorkspaceViewModel)DataContext).IsMultiSelecting = true;
+            var pos = e.GetPosition((Visual?)Parent);
+            _positionInBlock = new Point(pos.X - ((int)((WorkspaceViewModel)DataContext).PanPosition.X), pos.Y - ((int)((WorkspaceViewModel)DataContext).PanPosition.Y));
+            ((WorkspaceViewModel)DataContext).IsPanning = true;
             ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
-            ((WorkspaceViewModel)DataContext).MultiSelectThickness = 2;
+        }
+        else if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed && !((WorkspaceViewModel)DataContext).IsPanning) 
+        {
+            var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
+            var rootCoordinates = e.GetPosition(root);
+            var hitElement = root.InputHitTest(rootCoordinates);
+            if (((Control)hitElement).Parent == this)
+            {
+                ((WorkspaceViewModel)DataContext).IsMultiSelecting = true;
+                ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
+                ((WorkspaceViewModel)DataContext).MultiSelectThickness = 2;
+            }
         }
         base.OnPointerPressed(e);
     }
@@ -64,6 +76,15 @@ public partial class WorkspaceView : UserControl
         if (((WorkspaceViewModel)DataContext).IsMultiSelecting || ((WorkspaceViewModel)DataContext).NodeToCreateEdge != NodeConstants.NULL_NODEVIEWMODEL)
         {
             ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
+        }
+        else if (((WorkspaceViewModel)DataContext).IsPanning)
+        {
+            var currentPosition = e.GetPosition((Visual?)Parent);
+
+            var offsetX = currentPosition.X - _positionInBlock.X;
+            var offsetY = currentPosition.Y - _positionInBlock.Y;
+            ((WorkspaceViewModel)DataContext).PanPosition = new Point(offsetX, offsetY);
+            RenderTransform = new TranslateTransform(offsetX, offsetY);
         }
         base.OnPointerMoved(e);
     }
@@ -124,6 +145,7 @@ public partial class WorkspaceView : UserControl
         }
 
         context.IsMultiSelecting = false;
+        context.IsPanning = false;
         base.OnPointerReleased(e);
     }
 }
