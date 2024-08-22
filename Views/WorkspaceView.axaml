@@ -29,6 +29,13 @@
 		</ContextMenu>
 	</UserControl.ContextMenu>
 
+	<UserControl.RenderTransform>
+		<TransformGroup>
+			<ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}"/>
+			<TranslateTransform X="{Binding PanPosition.X}" Y="{Binding PanPosition.Y}"/>
+		</TransformGroup>
+	</UserControl.RenderTransform>
+
 	<Design.DataContext>
         <vm:WorkspaceViewModel />
     </Design.DataContext>
