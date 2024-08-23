@@ -10,6 +10,8 @@
 	<SolidColorBrush x:Key="TogBtnHighlightColor" Color="#FFFFFFFF" />
 	<SolidColorBrush x:Key="ToolBarColor" Color="#b3969696" />
 	<SolidColorBrush x:Key="TogBtnHoverColor" Color="#1e000000" />
+	<SolidColorBrush x:Key="ClickBtnHighlightColor" Color="#88FFFFFF" />
+	<SolidColorBrush x:Key="ClickBtnDefaultColor" Color="#00000000" />
 
 	<Thickness x:Key="NormPad"> 12,8,12,8 </Thickness>
 	<Thickness x:Key="MaxLPad"> 20,8,12,8 </Thickness>
@@ -70,6 +72,24 @@
 			<Border.Styles>
 				<Style Selector="Border.Maximized">
 					<Setter Property="Padding" Value="{StaticResource MaxRPad}"/>
+				</Style>
+				<Style Selector="Border.Normal">
+					<Setter Property="Padding" Value="{StaticResource NormPad}"/>
+				</Style>
+			</Border.Styles>
+		</Border>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="LeftBarSpacer" TargetType="UserControl">
+		<Border
+			Height="10"
+			DockPanel.Dock="{TemplateBinding DockPanel.Dock}"
+			Background="Transparent"
+			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
+			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
+			<Border.Styles>
+				<Style Selector="Border.Maximized">
+					<Setter Property="Padding" Value="{StaticResource MaxLPad}"/>
 				</Style>
 				<Style Selector="Border.Normal">
 					<Setter Property="Padding" Value="{StaticResource NormPad}"/>
@@ -162,21 +182,5 @@
 				Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
 			</TextBlock>
 		</DockPanel>
-	</ControlTemplate>
-
-	<ControlTemplate x:Key="LeftBar" TargetType="UserControl">
-		<Panel
-			Background="Transparent"
-			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
-			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
-			<Panel.Styles>
-				<Style Selector="Panel.Maximized">
-					<Setter Property="Width" Value="18"/>
-				</Style>
-				<Style Selector="Panel.Normal">
-					<Setter Property="Width" Value="10"/>
-				</Style>
-			</Panel.Styles>
-		</Panel>
 	</ControlTemplate>
 </ResourceDictionary>
