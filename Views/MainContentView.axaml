@@ -82,7 +82,36 @@
 			</MultiBinding>
 		</SplitView.PaneBackground>
 
-		<UserControl Template="{StaticResource LeftBar}"/>
+		<DockPanel>
+			<UserControl Template="{StaticResource LeftBarSpacer}" DockPanel.Dock="Top"/>
+			<Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto"
+			Background="Transparent"
+			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
+			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
+				<Button Grid.Row="0" Grid.Column="0" Width="25" Height="25" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="Select">
+					<Button.Background>
+						<MultiBinding Converter="{StaticResource StrCheckBgConverter}">
+							<Binding Source="Select"/>
+							<Binding Path="Workspace.ClickMode"/>
+							<Binding Source="{StaticResource ClickBtnHighlightColor}"/>
+							<Binding Source="{StaticResource ClickBtnDefaultColor}"/>
+						</MultiBinding>
+					</Button.Background>
+					<PathIcon Data="{StaticResource cursor_regular}" Width="15" Height="15"/>
+				</Button>
+				<Button Grid.Row="0" Grid.Column="1" Width="25" Height="25" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="CreateNode">
+					<Button.Background>
+						<MultiBinding Converter="{StaticResource StrCheckBgConverter}">
+							<Binding Source="CreateNode"/>
+							<Binding Path="Workspace.ClickMode"/>
+							<Binding Source="{StaticResource ClickBtnHighlightColor}"/>
+							<Binding Source="{StaticResource ClickBtnDefaultColor}"/>
+						</MultiBinding>
+					</Button.Background>
+					<PathIcon Data="{StaticResource add_regular}" Width="15" Height="15"/>
+				</Button>
+			</Grid>
+		</DockPanel>
 
 		<SplitView.Pane>
 			<Border Padding="5" Background="{Binding SharedSettings.ModeModel.A, Converter={StaticResource BrushOpacityConverter}, ConverterParameter={StaticResource ToolBarColor}}">

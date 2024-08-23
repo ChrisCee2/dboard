@@ -17,6 +17,8 @@ public partial class WorkspaceViewModel : ObservableObject
     public ObservableCollection<NodeViewModelBase> Nodes { get; set; } = new ObservableCollection<NodeViewModelBase>();
     public EdgeCollectionModel Edges { get; set; } = new EdgeCollectionModel();
     [ObservableProperty]
+    private string _clickMode = "Select";
+    [ObservableProperty]
     private NodeViewModelBase _nodeToCreateEdge = NodeConstants.NULL_NODEVIEWMODEL;
     [ObservableProperty]
     private Point _cursorPosition;
@@ -312,5 +314,11 @@ public partial class WorkspaceViewModel : ObservableObject
         }
         _UpdateSelectedNodes(nodesToSelect);
         _UpdateSelectedEdges(edgesToSelect);
+    }
+
+    [RelayCommand]
+    private void ChangeClickMode(string mode)
+    {
+        ClickMode = mode;
     }
 }
