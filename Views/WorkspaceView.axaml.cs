@@ -8,6 +8,7 @@ using Avalonia.Input;
 using Avalonia.LogicalTree;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
+using DynamicData.Kernel;
 using mystery_app.Constants;
 using mystery_app.Messages;
 using mystery_app.Tools;
@@ -54,7 +55,7 @@ public partial class WorkspaceView : UserControl
             ((WorkspaceViewModel)DataContext).IsPanning = true;
             ((WorkspaceViewModel)DataContext).CursorPosition = e.GetPosition(this);
         }
-        else if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed && !((WorkspaceViewModel)DataContext).IsPanning) 
+        else if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed && !((WorkspaceViewModel)DataContext).IsPanning && ((WorkspaceViewModel)DataContext).ClickMode == "Select") 
         {
             var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
             var rootCoordinates = e.GetPosition(root);
@@ -141,11 +142,17 @@ public partial class WorkspaceView : UserControl
             }
             ((WorkspaceViewModel)DataContext).UpdateSelection(nodesToSelect: newSelectedNodes, edgesToSelect: newSelectedEdges);
         }
+        else if (((WorkspaceViewModel)DataContext).ClickMode == "CreateNode" && e.InitialPressMouseButton.Equals(MouseButton.Left))
+        {
+            ((WorkspaceViewModel)DataContext).PressedPosition = e.GetPosition(this);
+            ((WorkspaceViewModel)DataContext).CreateNodeAtPressCommand.Execute(this);
+        }
 
         context.IsMultiSelecting = false;
         context.IsPanning = false;
         base.OnPointerReleased(e);
     }
+    
 
     // Handle zoom
     protected override void OnPointerWheelChanged(PointerWheelEventArgs e)

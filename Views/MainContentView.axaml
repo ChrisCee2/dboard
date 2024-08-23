@@ -44,10 +44,6 @@
 				</MenuFlyout>
 			</Button.Flyout>
 		</Button>
-		<PathIcon Data="{StaticResource divider_short_regular}" DockPanel.Dock="Left" Width="10" Height="12"
-				  Classes.MaxMid="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
-				  Classes.NormMid="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}"/>
-		<Button Template="{StaticResource MidTopBtn}" DockPanel.Dock="Left" Content="Create Node" Click="CreateNodeMidScreen"/>
 
 		<!-- Right side -->
 		<Button Template="{StaticResource RightTopBtn}" Click="Exit" DockPanel.Dock="Right">
