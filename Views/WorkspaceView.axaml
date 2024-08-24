@@ -41,7 +41,7 @@
     </Design.DataContext>
 
 	<Panel>
-		<Border x:Name="VisualCanvas" Width="1280" Height="720" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8" IsHitTestVisible="False"/>
+		<Border x:Name="VisualCanvas" Width="{Binding CanvasSizeX}" Height="{Binding CanvasSizeY}" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8" IsHitTestVisible="False"/>
 		<!--Nodes-->
 		<ItemsControl Name="NodeItemsControl" ItemsSource="{Binding Nodes}">
 			<ItemsControl.ItemsPanel>
