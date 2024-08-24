@@ -20,110 +20,10 @@
 	<Thickness x:Key="MaxTPad"> 12,16,12,8 </Thickness>
 	<Thickness x:Key="MaxTRPad"> 12,16,20,8 </Thickness>
 
-	<sys:Double x:Key="TogBtnHighlightSize"> 3 </sys:Double>
+	<sys:Double x:Key="TogBtnHighlightSize"> 4 </sys:Double>
 	<sys:Double x:Key="ToolBarFontSize"> 13 </sys:Double>
 
-	<ControlTemplate x:Key="MidTopBtn" TargetType="Button">
-		<Button 
-			Content="{TemplateBinding Content}" 
-			Command="{TemplateBinding Command}"
-			DockPanel.Dock="{TemplateBinding DockPanel.Dock}"
-			Flyout="{TemplateBinding Flyout}"
-			HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-			VerticalAlignment="{TemplateBinding VerticalAlignment}"
-			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
-			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
-			<Button.Styles>
-				<Style Selector="Button.Maximized">
-					<Setter Property="Padding" Value="{StaticResource MaxTPad}"/>
-				</Style>
-				<Style Selector="Button.Normal">
-					<Setter Property="Padding" Value="{StaticResource NormPad}"/>
-				</Style>
-			</Button.Styles>
-		</Button>
-	</ControlTemplate>
-
-	<ControlTemplate x:Key="LeftSpacer" TargetType="UserControl">
-		<Border
-			Width="30"
-			DockPanel.Dock="Left"
-			Background="Transparent"
-			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
-			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
-			<Border.Styles>
-				<Style Selector="Border.Maximized">
-					<Setter Property="Padding" Value="{StaticResource MaxLPad}"/>
-				</Style>
-				<Style Selector="Border.Normal">
-					<Setter Property="Padding" Value="{StaticResource NormPad}"/>
-				</Style>
-			</Border.Styles>
-		</Border>
-	</ControlTemplate>
-
-	<ControlTemplate x:Key="RightBarSpacer" TargetType="UserControl">
-		<Border
-			Height="10"
-			DockPanel.Dock="{TemplateBinding DockPanel.Dock}"
-			Background="Transparent"
-			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
-			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
-			<Border.Styles>
-				<Style Selector="Border.Maximized">
-					<Setter Property="Padding" Value="{StaticResource MaxRPad}"/>
-				</Style>
-				<Style Selector="Border.Normal">
-					<Setter Property="Padding" Value="{StaticResource NormPad}"/>
-				</Style>
-			</Border.Styles>
-		</Border>
-	</ControlTemplate>
-
-	<ControlTemplate x:Key="LeftBarSpacer" TargetType="UserControl">
-		<Border
-			Height="10"
-			DockPanel.Dock="{TemplateBinding DockPanel.Dock}"
-			Background="Transparent"
-			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
-			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
-			<Border.Styles>
-				<Style Selector="Border.Maximized">
-					<Setter Property="Padding" Value="{StaticResource MaxLPad}"/>
-				</Style>
-				<Style Selector="Border.Normal">
-					<Setter Property="Padding" Value="{StaticResource NormPad}"/>
-				</Style>
-			</Border.Styles>
-		</Border>
-	</ControlTemplate>
-
-	<ControlTemplate x:Key="MidSpacer" TargetType="UserControl">
-		<Border
-			DockPanel.Dock="{TemplateBinding DockPanel.Dock}"
-			HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-			VerticalAlignment="{TemplateBinding VerticalAlignment}"
-			Background="Transparent"/>
-	</ControlTemplate>
-
-	<ControlTemplate x:Key="RightTopBtn" TargetType="Button">
-		<Button
-			Content="{TemplateBinding Content}"
-			DockPanel.Dock="{TemplateBinding DockPanel.Dock}"
-			Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
-			Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
-			<Button.Styles>
-				<Style Selector="Button.Maximized">
-					<Setter Property="Padding" Value="{StaticResource MaxTRPad}"/>
-				</Style>
-				<Style Selector="Button.Normal">
-					<Setter Property="Padding" Value="{StaticResource NormPad}"/>
-				</Style>
-			</Button.Styles>
-		</Button>
-	</ControlTemplate>
-
-	<ControlTemplate x:Key="BotTogBtn" TargetType="ToggleButton">
+	<ControlTemplate x:Key="TogBtnTopHighlight" TargetType="ToggleButton">
 		<DockPanel>
 			<DockPanel.Styles>
 				<Style Selector="DockPanel">
@@ -134,27 +34,20 @@
 				</Style>
 				<Style Selector="DockPanel:focus">
 					<Setter Property="Opacity" Value="1"/>
-				</Style>
-				<Style Selector="TextBlock.Maximized">
-					<Setter Property="Padding" Value="{StaticResource MaxBPad}"/>
-				</Style>
-				<Style Selector="TextBlock.Normal">
-					<Setter Property="Padding" Value="{StaticResource NormPad}"/>
 				</Style>
 			</DockPanel.Styles>
 
 			<Border DockPanel.Dock="Top" Background="{StaticResource TogBtnHighlightColor}" Height="{StaticResource TogBtnHighlightSize}"/>
 			<TextBlock
+				Padding="12,5,12,5"
 				DockPanel.Dock="Bottom"
 				Text="{TemplateBinding Content}"
-				Background="Transparent"
-				Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
-				Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
+				Background="Transparent">
 			</TextBlock>
 		</DockPanel>
 	</ControlTemplate>
 
-	<ControlTemplate x:Key="RightTogBtn" TargetType="ToggleButton">
+	<ControlTemplate x:Key="TogBtnBotHighlight" TargetType="ToggleButton">
 		<DockPanel>
 			<DockPanel.Styles>
 				<Style Selector="DockPanel">
@@ -166,20 +59,14 @@
 				<Style Selector="DockPanel:focus">
 					<Setter Property="Opacity" Value="1"/>
 				</Style>
-				<Style Selector="TextBlock.Maximized">
-					<Setter Property="Padding" Value="{StaticResource MaxTPad}"/>
-				</Style>
-				<Style Selector="TextBlock.Normal">
-					<Setter Property="Padding" Value="{StaticResource NormPad}"/>
-				</Style>
 			</DockPanel.Styles>
 
 			<Border DockPanel.Dock="Bottom" Background="{StaticResource TogBtnHighlightColor}" Height="{StaticResource TogBtnHighlightSize}"/>
 			<TextBlock
+				Padding="12,5,12,5"
+				DockPanel.Dock="Bottom"
 				Text="{TemplateBinding Content}"
-				Background="Transparent"
-				Classes.Maximized="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
-				Classes.Normal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
+				Background="Transparent">
 			</TextBlock>
 		</DockPanel>
 	</ControlTemplate>

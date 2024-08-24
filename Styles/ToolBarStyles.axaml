@@ -18,11 +18,23 @@
 		<Setter Property="BorderThickness" Value="0" />
 		<Setter Property="CornerRadius" Value="0" />
 	</Style>
+
+	<!--Toggle Button Styling-->
+	<Style Selector="ToggleButton:unchecked /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Opacity" Value=".5"/>
+	</Style>
 	<Style Selector="ToggleButton:checked /template/ ContentPresenter#PART_ContentPresenter">
 		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Opacity" Value="1"/>
 	</Style>
 	<Style Selector="ToggleButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-		<Setter Property="Background" Value="{StaticResource TogBtnHoverColor}"/>
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Opacity" Value="1"/>
+	</Style>
+	<Style Selector="ToggleButton:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Opacity" Value="1"/>
 	</Style>
 	
 	<Style Selector="#TitleBar PathIcon.Max">
@@ -41,10 +53,27 @@
 		<Setter Property="Margin" Value="0,0,0,0"/>
 	</Style>
 
-	<Style Selector="Grid.Maximized">
-		<Setter Property="Margin" Value="13,5,5,5"/>
+	<Style Selector="DockPanel.TopNormal">
 	</Style>
-	<Style Selector="Grid.Normal">
+	<Style Selector="DockPanel.TopMax">
+		<Setter Property="Margin" Value="7,7,7,0"/>
+	</Style>
+
+	<Style Selector="DockPanel.BotNormal">
+	</Style>
+	<Style Selector="DockPanel.BotMax">
+		<Setter Property="Margin" Value="7,0,7,7"/>
+	</Style>
+
+	<Style Selector="Grid.LeftNormal">
 		<Setter Property="Margin" Value="5"/>
+	</Style>
+	<Style Selector="Grid.LeftMax">
+		<Setter Property="Margin" Value="12,5,5,5"/>
+	</Style>
+
+	<Style Selector="DockPanel.RightNormal"> </Style>
+	<Style Selector="DockPanel.RightMax">
+		<Setter Property="Margin" Value="0,0,7,0"/>
 	</Style>
 </Styles>
