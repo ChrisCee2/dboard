@@ -22,7 +22,7 @@
 			<customConverters:AddConverter x:Key="AddConverter"/>
 			<customConverters:BrushOpacityConverter x:Key="BrushOpacityConverter"/>
 			<customConverters:StrCheckBgConverter x:Key="StrCheckBgConverter"/>
-			
+			<customConverters:CanvasSizeConverter x:Key="CanvasSizeConverter"/>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="/Styles/ToolBarResources.axaml"/>
 				<ResourceInclude Source="/Styles/WorkspaceResources.axaml"/>
