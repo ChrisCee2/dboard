@@ -60,8 +60,33 @@
 	<DockPanel x:Name="Bar" Background="Transparent" DockPanel.Dock="Bottom"
 			   Classes.BotMax="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
 			   Classes.BotNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
-		<Border Width="30" Background="Transparent" PointerPressed="MoveWindow"/>
+
+		<!--Left Side-->
+		<Border Width="30" Background="Transparent"/>
 		<ToggleButton Template="{StaticResource TogBtnBotHighlight}" Content="Settings" IsChecked="{Binding #SettingsSplitView.IsPaneOpen}"/>
+
+		<!--Right Side-->
+		<DockPanel x:Name="CanvasSize" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0,5,0,5">
+			<Border Width="30" Background="Transparent" DockPanel.Dock="Right"/>
+			<TextBox Text="{Binding Workspace.CanvasSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}" 
+					 DockPanel.Dock="Right" 
+					 VerticalAlignment="Center"
+					 MinHeight="0" 
+					 MaxHeight="20" 
+					 MinWidth="0"
+					 Padding="2" 
+					 BorderThickness="0"/>
+			<TextBlock Text=" x " DockPanel.Dock="Right" VerticalAlignment="Center"/>
+			<TextBox Text="{Binding Workspace.CanvasSizeX, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}" 
+					 DockPanel.Dock="Right" 
+					 VerticalAlignment="Center"
+					 MinHeight="0" 
+					 MaxHeight="20" 
+					 MinWidth="0" 
+					 Padding="2" 
+					 BorderThickness="0"/>
+			<PathIcon Data="{StaticResource resize_regular}" Width="16" Height="16" Margin="0,0,8,0" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+		</DockPanel>
 	</DockPanel>
 		
 	<!-- Left bar -->

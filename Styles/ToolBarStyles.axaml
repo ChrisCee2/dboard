@@ -43,7 +43,7 @@
 	<Style Selector="#TitleBar PathIcon.Norm">
 		<Setter Property="Data" Value="{StaticResource maximize_regular}" />
 	</Style>
-	<Style Selector="#TitleBar ToggleButton, #TitleBar MenuItem, #TitleBar Button">
+	<Style Selector="#TitleBar ToggleButton, #TitleBar MenuItem, #TitleBar Button, #CanvasSize TextBox">
 		<Setter Property="FontSize" Value="{StaticResource ToolBarFontSize}" />
 	</Style>
 	<Style Selector="#TitleBar PathIcon.MaxMid">

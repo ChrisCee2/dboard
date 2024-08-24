@@ -106,10 +106,11 @@ public partial class MainContentView : DockPanel
         // Open writing stream from the file.
         await using var stream = await file.OpenWriteAsync();
 
-        List<NodeModelBase> nodes = ((MainContentViewModel)DataContext).Workspace.Nodes.Select(x => x.NodeBase).ToList();
-        List<EdgeModel> edges = ((MainContentViewModel)DataContext).Workspace.Edges.Select(x => x.Edge).ToList();
+        WorkspaceViewModel workspaceVM = ((MainContentViewModel)DataContext).Workspace;
+        List<NodeModelBase> nodes = workspaceVM.Nodes.Select(x => x.NodeBase).ToList();
+        List<EdgeModel> edges = workspaceVM.Edges.Select(x => x.Edge).ToList();
         NotesModel notes = ((MainContentViewModel)DataContext).Notes;
-        WorkspaceModel workspace = new WorkspaceModel(nodes, edges, notes);
+        WorkspaceModel workspace = new WorkspaceModel(nodes, edges, notes, workspaceVM.CanvasSizeX, workspaceVM.CanvasSizeY);
         JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
     }
@@ -149,6 +150,8 @@ public partial class MainContentView : DockPanel
             }
             ((MainContentViewModel)DataContext).Notes = workspace.Notes;
             ((MainContentViewModel)DataContext).WorkspaceFileName = files[0].Name;
+            ((MainContentViewModel)DataContext).Workspace.CanvasSizeX = workspace.CanvasSizeX;
+            ((MainContentViewModel)DataContext).Workspace.CanvasSizeY = workspace.CanvasSizeY;
         }
     }
 

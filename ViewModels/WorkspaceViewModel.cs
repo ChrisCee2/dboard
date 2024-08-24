@@ -39,6 +39,10 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private bool _multiSelectHKDown;
     [ObservableProperty]
+    private int _canvasSizeX = 1280;
+    [ObservableProperty]
+    private int _canvasSizeY = 720;
+    [ObservableProperty]
     private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>();
     [ObservableProperty]
     private ObservableCollection<EdgeViewModel> _selectedEdges = new ObservableCollection<EdgeViewModel>();
