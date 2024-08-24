@@ -23,27 +23,21 @@
 
 		<!-- Left side -->
 		<UserControl Template="{StaticResource LeftSpacer}" PointerPressed="MoveWindow"/>
-		<Button Template="{StaticResource MidTopBtn}" Content="File" DockPanel.Dock="Left">
-			<Button.Flyout>
-				<MenuFlyout Placement="BottomEdgeAlignedLeft">
-					<MenuItem Header="New" Command="{Binding NewCommand}"/>
-					<MenuItem Header="Open" Click="Open"/>
-					<MenuItem Header="Save" Click="SaveEvent"/>
-					<MenuItem Header="Save As" Click="SaveAsEvent"/>
-					<Separator/>
-					<MenuItem Header="Exit" Click="Exit"/>
-				</MenuFlyout>
-			</Button.Flyout>
-		</Button>
-		<Button Template="{StaticResource MidTopBtn}" Content="Edit" DockPanel.Dock="Left">
-			<Button.Flyout>
-				<MenuFlyout Placement="BottomEdgeAlignedLeft">
-					<MenuItem Header="Copy" Command="{Binding Workspace.CopyNodesCommand}"/>
-					<MenuItem Header="Paste" Command="{Binding Workspace.PasteNodesCommand}"/>
-					<MenuItem Header="Delete" Command="{Binding Workspace.DeleteSelectedItemsCommand}"/>
-				</MenuFlyout>
-			</Button.Flyout>
-		</Button>
+		<Menu>
+			<MenuItem Header="File">
+				<MenuItem Header="New" Command="{Binding NewCommand}"/>
+				<MenuItem Header="Open" Click="Open"/>
+				<MenuItem Header="Save" Click="SaveEvent"/>
+				<MenuItem Header="Save As" Click="SaveAsEvent"/>
+				<Separator/>
+				<MenuItem Header="Exit" Click="Exit"/>
+			</MenuItem>
+			<MenuItem Header="Edit">
+				<MenuItem Header="Copy" Command="{Binding Workspace.CopyNodesCommand}"/>
+				<MenuItem Header="Paste" Command="{Binding Workspace.PasteNodesCommand}"/>
+				<MenuItem Header="Delete" Command="{Binding Workspace.DeleteSelectedItemsCommand}"/>
+			</MenuItem>
+		</Menu>
 
 		<!-- Right side -->
 		<Button Template="{StaticResource RightTopBtn}" Click="Exit" DockPanel.Dock="Right">
