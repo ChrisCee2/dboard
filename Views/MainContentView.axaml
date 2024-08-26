@@ -67,6 +67,9 @@
 
 		<!--Right Side-->
 		<DockPanel x:Name="CanvasSize" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0,5,0,5">
+			<Border Width="8" Background="Transparent" DockPanel.Dock="Right"/>
+			<TextBlock Text="{Binding Workspace.Scale, Converter={StaticResource PercentStringConverter}}" DockPanel.Dock="Right" VerticalAlignment="Center"/>
+			<PathIcon Data="{StaticResource full_screen_zoom_regular}" Width="16" Height="16" Margin="0,0,6,0" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 			<Border Width="30" Background="Transparent" DockPanel.Dock="Right"/>
 			<TextBox Text="{Binding Workspace.CanvasSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}" 
 					 DockPanel.Dock="Right" 
