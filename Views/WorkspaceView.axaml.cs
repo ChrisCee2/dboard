@@ -152,12 +152,4 @@ public partial class WorkspaceView : UserControl
         context.IsPanning = false;
         base.OnPointerReleased(e);
     }
-    
-
-    // Handle zoom
-    protected override void OnPointerWheelChanged(PointerWheelEventArgs e)
-    {
-        ((WorkspaceViewModel)DataContext).Scale = ((WorkspaceViewModel)DataContext).Scale + (e.Delta.Y * .05);
-        base.OnPointerWheelChanged(e);
-    }
 }

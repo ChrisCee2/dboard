@@ -278,4 +278,11 @@ public partial class MainContentView : DockPanel
             ((MainContentViewModel)DataContext).Workspace.MultiSelectHKDown = false;
         }
     }
+
+    // Handle zoom
+    protected void HandleZoom(object sender, PointerWheelEventArgs e)
+    {
+        ((MainContentViewModel)DataContext).Workspace.Scale += (e.Delta.Y * 0.1);
+        base.OnPointerWheelChanged(e);
+    }
 }
