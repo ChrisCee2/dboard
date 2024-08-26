@@ -23,6 +23,7 @@
 			<customConverters:BrushOpacityConverter x:Key="BrushOpacityConverter"/>
 			<customConverters:StrCheckBgConverter x:Key="StrCheckBgConverter"/>
 			<customConverters:CanvasSizeConverter x:Key="CanvasSizeConverter"/>
+			<customConverters:PercentStringConverter x:Key="PercentStringConverter"/>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="/Styles/ToolBarResources.axaml"/>
 				<ResourceInclude Source="/Styles/WorkspaceResources.axaml"/>
