@@ -282,7 +282,7 @@ public partial class MainContentView : DockPanel
     // Handle zoom
     protected void HandleZoom(object sender, PointerWheelEventArgs e)
     {
-        ((MainContentViewModel)DataContext).Workspace.Scale += (e.Delta.Y * 0.1);
+        ((MainContentViewModel)DataContext).Workspace.Scale = Math.Clamp(((MainContentViewModel)DataContext).Workspace.Scale + (e.Delta.Y * 0.1), 0.3, 5);
         base.OnPointerWheelChanged(e);
     }
 }
