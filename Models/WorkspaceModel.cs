@@ -6,13 +6,14 @@ public class WorkspaceModel
 {
     public WorkspaceModel() {}
 
-    public WorkspaceModel(List<NodeModelBase> nodes, List<EdgeModel> edges, NotesModel notes, int x, int y)
+    public WorkspaceModel(List<NodeModelBase> nodes, List<EdgeModel> edges, NotesModel notes, int x, int y, string canvasImagePath)
     {
         Nodes = nodes;
         Edges = edges;
         Notes = notes;
         CanvasSizeX = x; 
         CanvasSizeY = y;
+        CanvasImagePath = canvasImagePath;
     }
 
     private List<NodeModelBase> _nodes;
@@ -20,6 +21,7 @@ public class WorkspaceModel
     private NotesModel _notes;
     private int _canvasSizeX;
     private int _canvasSizeY;
+    private string _canvasImagePath;
 
     public List<NodeModelBase> Nodes
     {
@@ -45,5 +47,10 @@ public class WorkspaceModel
     {
         get { return _canvasSizeY; }
         set { _canvasSizeY = value; }
+    }
+    public string CanvasImagePath
+    {
+        get { return _canvasImagePath; }
+        set { _canvasImagePath = value; }
     }
 }
