@@ -17,6 +17,7 @@
 			<customConverters:BoolToDoubleConverter x:Key="BoolToDoubleConverter"/>
 			<customConverters:MaxHeightConverter x:Key="MaxHeightConverter"/>
 			<customConverters:WindowStateBoolConverter x:Key="WSBoolConverter"/>
+			<customConverters:IsNullConverter x:Key="IsNullConverter"/>
 			<customConverters:IsNotNullConverter x:Key="IsNotNullConverter"/>
 			<customConverters:ShowEdgeAddDescConverter x:Key="ShowEdgeAddDescConverter"/>
 			<customConverters:AddConverter x:Key="AddConverter"/>

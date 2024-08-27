@@ -93,7 +93,7 @@
 	</DockPanel>
 		
 	<!-- Left bar -->
-	<SplitView Name="SettingsSplitView" DockPanel.Dock="Left" PanePlacement="Right" DisplayMode="Inline" OpenPaneLength="200">
+	<SplitView Name="SettingsSplitView" DockPanel.Dock="Left" PanePlacement="Right" DisplayMode="Inline" OpenPaneLength="300">
 		<SplitView.PaneBackground>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 				<Binding Path="SharedSettings.ModeModel.A"/>
@@ -140,7 +140,21 @@
 								  IsChecked="{Binding #SettingsSplitView.IsPaneOpen}">
 						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_left_regular}"/>
 					</ToggleButton>
-					<views:SettingsView DataContext="{Binding Settings}"/>
+					<TabControl>
+						<TabControl.Styles>
+							<Style Selector="TabItem">
+								<Setter Property="FontSize" Value="14"/>
+								<Setter Property="MinHeight" Value="32"/>
+							</Style>
+						</TabControl.Styles>
+						
+						<TabItem Header="App">
+							<views:AppSettingsView DataContext="{Binding Settings}"/>
+						</TabItem>
+						<TabItem Header="Workspace">
+							<views:WorkspaceSettingsView DataContext="{Binding Workspace}"/>
+						</TabItem>
+					</TabControl>
 				</DockPanel>
 			</Border>
 		</SplitView.Pane>

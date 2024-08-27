@@ -9,7 +9,7 @@ using mystery_app.Models;
 
 namespace mystery_app.ViewModels;
 
-public partial class SettingsViewModel : ObservableObject
+public partial class AppSettingsViewModel : ObservableObject
 {
     [ObservableProperty]
     private SettingsModel _sharedSettings;
@@ -18,7 +18,7 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private Collection<ModeModel> _modes = new Collection<ModeModel>();
 
-    public SettingsViewModel(SettingsModel sharedSettings)
+    public AppSettingsViewModel(SettingsModel sharedSettings)
     {
         SharedSettings = sharedSettings;
         Modes.Add(SharedSettings.UserModeModel);
