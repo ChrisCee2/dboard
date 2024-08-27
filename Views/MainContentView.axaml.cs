@@ -116,7 +116,15 @@ public partial class MainContentView : DockPanel
         List<NodeModelBase> nodes = workspaceVM.Nodes.Select(x => x.NodeBase).ToList();
         List<EdgeModel> edges = workspaceVM.Edges.Select(x => x.Edge).ToList();
         NotesModel notes = ((MainContentViewModel)DataContext).Notes;
-        WorkspaceModel workspace = new WorkspaceModel(nodes, edges, notes, workspaceVM.CanvasSizeX, workspaceVM.CanvasSizeY, workspaceVM.CanvasImagePath, workspaceVM.WorkspaceImagePath);
+        WorkspaceModel workspace = new WorkspaceModel(
+            nodes, 
+            edges, 
+            notes, 
+            workspaceVM.CanvasSizeX, 
+            workspaceVM.CanvasSizeY, 
+            workspaceVM.CanvasImagePath, 
+            workspaceVM.WorkspaceImagePath,
+            workspaceVM.WindowImagePath);
         JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
     }
@@ -160,6 +168,7 @@ public partial class MainContentView : DockPanel
             ((MainContentViewModel)DataContext).Workspace.CanvasSizeY = workspace.CanvasSizeY;
             ((MainContentViewModel)DataContext).Workspace.CanvasImagePath = workspace.CanvasImagePath;
             ((MainContentViewModel)DataContext).Workspace.WorkspaceImagePath = workspace.WorkspaceImagePath;
+            ((MainContentViewModel)DataContext).Workspace.WindowImagePath = workspace.WindowImagePath;
         }
     }
 
