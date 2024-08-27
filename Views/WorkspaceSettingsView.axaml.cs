@@ -1,13 +1,13 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
-using mystery_app.Models;
+using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
 
-public partial class ImageView : Panel
+public partial class WorkspaceSettingsView : UserControl
 {
-    public ImageView()
+    public WorkspaceSettingsView()
     {
         InitializeComponent();
     }
@@ -22,7 +22,12 @@ public partial class ImageView : Panel
 
         if (files.Count == 1)
         {
-            ((NodeModel)DataContext).ImagePath = files[0].Path.LocalPath;
+            ((WorkspaceViewModel)DataContext).CanvasImagePath = files[0].Path.LocalPath;
         }
+    }
+
+    public void RemoveImage(object sender, RoutedEventArgs args)
+    {
+        ((WorkspaceViewModel)DataContext).CanvasImagePath = null;
     }
 }

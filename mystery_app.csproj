@@ -38,7 +38,7 @@
     <AvaloniaXaml Update="Views\ImageView.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
-    <AvaloniaXaml Update="Views\SettingsView.axaml">
+    <AvaloniaXaml Update="Views\AppSettingsView.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
     <AvaloniaXaml Update="Views\WorkspaceView.axaml">
@@ -47,6 +47,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\WorkspaceSettingsView.axaml.cs">
+      <DependentUpon>WorkspaceSettingsView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\InteractiveView.axaml.cs">
       <DependentUpon>InteractiveView.axaml</DependentUpon>
     </Compile>
@@ -64,9 +67,9 @@
       <SubType>Code</SubType>
       <DependentUpon>EdgeView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\SettingsView.axaml.cs">
+    <Compile Update="Views\AppSettingsView.axaml.cs">
       <SubType>Code</SubType>
-      <DependentUpon>SettingsView.axaml</DependentUpon>
+      <DependentUpon>AppSettingsView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\WorkspaceView.axaml.cs">
       <SubType>Code</SubType>
