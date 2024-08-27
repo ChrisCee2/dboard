@@ -6,6 +6,7 @@
 	xmlns:constants="clr-namespace:mystery_app.Constants"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     x:Class="mystery_app.Views.MainContentView"
     x:DataType="vm:MainContentViewModel"
 	Background="{Binding SharedSettings.ModeModel.A, Converter={StaticResource BrushOpacityConverter}, ConverterParameter={StaticResource ToolBarColor}}">
@@ -213,6 +214,9 @@
 				<Binding Path="SharedSettings.ModeModel.B"/>
 			</MultiBinding>
 		</Border.Background>
-		<views:WorkspaceView x:Name="CurrentWorkspace" DataContext="{Binding Workspace}" Width="10000" Height="10000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<Panel>
+			<Image asyncImageLoader:ImageLoader.Source="{Binding Workspace.WindowImagePath}"/>
+			<views:WorkspaceView x:Name="CurrentWorkspace" DataContext="{Binding Workspace}" Width="10000" Height="10000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		</Panel>
 	</Border>
 </DockPanel>

@@ -31,6 +31,10 @@ public partial class WorkspaceSettingsView : UserControl
             {
                 ((WorkspaceViewModel)DataContext).WorkspaceImagePath = files[0].Path.LocalPath;
             }
+            else if (((Control)sender).FindAncestorOfType<StackPanel>().Name == "WindowImage")
+            {
+                ((WorkspaceViewModel)DataContext).WindowImagePath = files[0].Path.LocalPath;
+            }
         }
     }
 
@@ -43,6 +47,10 @@ public partial class WorkspaceSettingsView : UserControl
         else if (((Control)sender).FindAncestorOfType<StackPanel>().Name == "WorkspaceImage")
         {
             ((WorkspaceViewModel)DataContext).WorkspaceImagePath = null;
+        }
+        else if (((Control)sender).FindAncestorOfType<StackPanel>().Name == "WindowImage")
+        {
+            ((WorkspaceViewModel)DataContext).WindowImagePath = null;
         }
     }
 }

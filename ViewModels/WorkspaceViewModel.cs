@@ -47,6 +47,8 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private string? _workspaceImagePath;
     [ObservableProperty]
+    private string? _windowImagePath;
+    [ObservableProperty]
     private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>();
     [ObservableProperty]
     private ObservableCollection<EdgeViewModel> _selectedEdges = new ObservableCollection<EdgeViewModel>();
