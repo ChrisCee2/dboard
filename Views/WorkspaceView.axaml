@@ -42,6 +42,7 @@
     </Design.DataContext>
 
 	<Panel>
+		<Image asyncImageLoader:ImageLoader.Source="{Binding WorkspaceImagePath}"/>
 		<Border x:Name="VisualCanvas" Width="{Binding CanvasSizeX}" Height="{Binding CanvasSizeY}" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8" IsHitTestVisible="False">
 			<Image asyncImageLoader:ImageLoader.Source="{Binding CanvasImagePath}"/>
 		</Border>
