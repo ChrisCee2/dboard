@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -7,11 +8,16 @@ using System.Text.Json.Serialization;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.LogicalTree;
 using Avalonia.Platform.Storage;
+using Avalonia.VisualTree;
 using mystery_app.Constants;
 using mystery_app.Models;
+using mystery_app.Tools;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
@@ -284,5 +290,122 @@ public partial class MainContentView : DockPanel
     {
         ((MainContentViewModel)DataContext).Workspace.Scale = Math.Clamp(((MainContentViewModel)DataContext).Workspace.Scale + (e.Delta.Y * 0.1), 0.3, 5);
         base.OnPointerWheelChanged(e);
+    }
+
+    /*  Pan & multiselect logic below */
+    private Point _positionInBlock;
+
+    // Start multiselect
+    protected void WorkspaceOnPointerPressed(object sender, PointerPressedEventArgs e)
+    {
+        WorkspaceViewModel context = ((MainContentViewModel)DataContext).Workspace;
+
+        context.PressedPosition = e.GetPosition(_workspace);
+
+        if (e.GetCurrentPoint(_workspace).Properties.IsMiddleButtonPressed && !context.IsMultiSelecting)
+        {
+            var pos = e.GetPosition((Visual?)Parent);
+            _positionInBlock = new Point(pos.X - ((int)context.PanPosition.X), pos.Y - ((int)context.PanPosition.Y));
+            context.IsPanning = true;
+            context.CursorPosition = e.GetPosition(_workspace);
+        }
+        else if (e.GetCurrentPoint(_workspace).Properties.IsLeftButtonPressed && !context.IsPanning && context.ClickMode == "Select")
+        {
+            var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
+            var rootCoordinates = e.GetPosition(root);
+            var hitElement = root.InputHitTest(rootCoordinates);
+            if (((Control)hitElement).Parent == this.Find<WorkspaceView>("CurrentWorkspace"))
+            {
+                context.IsMultiSelecting = true;
+                context.CursorPosition = e.GetPosition(_workspace);
+                context.MultiSelectThickness = 2;
+            }
+        }
+        base.OnPointerPressed(e);
+    }
+
+    protected void WorkspaceOnPointerMoved(object sender, PointerEventArgs e)
+    {
+        WorkspaceViewModel context = ((MainContentViewModel)DataContext).Workspace;
+
+        // Only update position if multiselecting or edge selecting
+        if (context.IsMultiSelecting || context.NodeToCreateEdge != NodeConstants.NULL_NODEVIEWMODEL)
+        {
+            context.CursorPosition = e.GetPosition(_workspace);
+        }
+        else if (context.IsPanning)
+        {
+            var currentPosition = e.GetPosition((Visual?)Parent);
+
+            var offsetX = currentPosition.X - _positionInBlock.X;
+            var offsetY = currentPosition.Y - _positionInBlock.Y;
+            context.PanPosition = new Point(offsetX, offsetY);
+        }
+        base.OnPointerMoved(e);
+    }
+
+    protected void WorkspaceOnPointerReleased(object sender, PointerReleasedEventArgs e)
+    {
+        WorkspaceViewModel context = ((MainContentViewModel)DataContext).Workspace;
+        // Make lines disappear
+        context.EdgeThickness = 0;
+        context.MultiSelectThickness = 0;
+
+        // Multiselect
+        if (context.IsMultiSelecting)
+        {
+            // Get points of multiselect
+            double x0 = Math.Min(context.PressedPosition.X, context.CursorPosition.X);
+            double x1 = x0 + Math.Abs(context.PressedPosition.X - context.CursorPosition.X);
+            double y0 = Math.Min(context.PressedPosition.Y, context.CursorPosition.Y);
+            double y1 = y0 + Math.Abs(context.PressedPosition.Y - context.CursorPosition.Y);
+            Point a0 = new Point(x0, y0);
+            Point a1 = new Point(x1, y1);
+
+            // Get container for interactive views (nodes)
+            var nodeItemsControl = this.Find<WorkspaceView>("CurrentWorkspace").Find<ItemsControl>("NodeItemsControl");
+
+            // Find nodes that are within bounds
+            var newSelectedNodes = new ObservableCollection<NodeViewModelBase>();
+            foreach (ContentPresenter item in nodeItemsControl.GetLogicalChildren())
+            {
+                InteractiveView node = item.FindDescendantOfType<InteractiveView>();
+                NodeViewModelBase nodeContext = (NodeViewModelBase)node.DataContext;
+                Point b0 = new Point(nodeContext.NodeBase.PositionX, nodeContext.NodeBase.PositionY + (EdgeConstants.distFromEdgeToNodePos * 2)); // Offset to account for edge occupation of interactive view
+                Point b1 = new Point(nodeContext.NodeBase.PositionX + node.Bounds.Size.Width, nodeContext.NodeBase.PositionY + node.Bounds.Size.Height);
+                if (Geo.RectInRect(a0, a1, b0, b1))
+                {
+                    newSelectedNodes.Add(nodeContext);
+                }
+            }
+
+            // Get container for edges
+            var edgeItemsControl = this.Find<WorkspaceView>("CurrentWorkspace").Find<ItemsControl>("EdgeItemsControl");
+
+            // Find edges that are within bounds
+            var newSelectedEdges = new ObservableCollection<EdgeViewModel>();
+            foreach (ContentPresenter item in edgeItemsControl.GetLogicalChildren())
+            {
+                EdgeView edgeView = item.FindDescendantOfType<EdgeView>();
+                Line edge = edgeView.FindControl<Line>("Edge");
+                EdgeViewModel edgeContext = (EdgeViewModel)edge.DataContext;
+                Point line0 = edge.StartPoint;
+                Point line1 = edge.EndPoint;
+                if (Geo.LineInRect(line0, line1, a0, a1))
+                {
+                    newSelectedEdges.Add(edgeContext);
+                }
+            }
+            context.UpdateSelection(nodesToSelect: newSelectedNodes, edgesToSelect: newSelectedEdges);
+        }
+        else if (context.ClickMode == "CreateNode" && e.InitialPressMouseButton.Equals(MouseButton.Left))
+        {
+            context.PressedPosition = e.GetPosition(_workspace);
+            context.CreateNodeAtPressCommand.Execute(this);
+        }
+
+        context.IsMultiSelecting = false;
+        context.IsPanning = false;
+        base.OnPointerReleased(e);
     }
 }

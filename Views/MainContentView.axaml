@@ -190,7 +190,7 @@
 			</Border>
 		</SplitView.Pane>
 	</SplitView>
-	<Border ClipToBounds="True" CornerRadius="8" PointerWheelChanged="HandleZoom">
+	<Border ClipToBounds="True" CornerRadius="8" PointerWheelChanged="HandleZoom" PointerPressed="WorkspaceOnPointerPressed" PointerMoved="WorkspaceOnPointerMoved" PointerReleased="WorkspaceOnPointerReleased">
 		<Border.Background>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 				<Binding Path="SharedSettings.ModeModel.A"/>
