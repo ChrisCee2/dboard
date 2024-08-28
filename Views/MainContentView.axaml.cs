@@ -316,13 +316,13 @@ public partial class MainContentView : DockPanel
         WorkspaceViewModel context = ((MainContentViewModel)DataContext).Workspace;
 
         context.PressedPosition = e.GetPosition(_workspace);
+        context.CursorPosition = e.GetPosition(_workspace);
 
         if (e.GetCurrentPoint(_workspace).Properties.IsMiddleButtonPressed && !context.IsMultiSelecting)
         {
+            context.IsPanning = true;
             var pos = e.GetPosition((Visual?)Parent);
             _positionInBlock = new Point(pos.X - ((int)context.PanPosition.X), pos.Y - ((int)context.PanPosition.Y));
-            context.IsPanning = true;
-            context.CursorPosition = e.GetPosition(_workspace);
         }
         else if (e.GetCurrentPoint(_workspace).Properties.IsLeftButtonPressed && !context.IsPanning && context.ClickMode == "Select")
         {
@@ -332,7 +332,6 @@ public partial class MainContentView : DockPanel
             if (((Control)hitElement).Parent == this.Find<WorkspaceView>("CurrentWorkspace"))
             {
                 context.IsMultiSelecting = true;
-                context.CursorPosition = e.GetPosition(_workspace);
                 context.MultiSelectThickness = 2;
             }
         }
@@ -414,8 +413,8 @@ public partial class MainContentView : DockPanel
         }
         else if (context.ClickMode == "CreateNode" && e.InitialPressMouseButton.Equals(MouseButton.Left))
         {
-            context.PressedPosition = e.GetPosition(_workspace);
-            context.CreateNodeAtPressCommand.Execute(this);
+            Point pos = e.GetPosition(_workspace);
+            context.CreateNodeAtPos(pos.X, pos.Y);
         }
 
         context.IsMultiSelecting = false;
