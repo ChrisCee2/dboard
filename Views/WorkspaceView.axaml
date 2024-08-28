@@ -110,7 +110,7 @@
 				Stroke="{StaticResource MultiselectStroke}"
 				Fill="{StaticResource MultiselectFill}"
 				StrokeDashArray="2,4"
-				StrokeThickness="{Binding MultiSelectThickness}"
+				StrokeThickness="{StaticResource MultiSelectThickness}"
 				IsHitTestVisible="False"
 				IsVisible="{Binding IsMultiSelecting}">
 				<Canvas.Left>

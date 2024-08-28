@@ -9,6 +9,7 @@
 	
 	<SolidColorBrush x:Key="MultiselectStroke" Color="#FF4477BB" />
 	<SolidColorBrush x:Key="MultiselectFill" Color="#3388BBFF" />
+	<sys:Double x:Key="MultiSelectThickness"> 2 </sys:Double>
 
 	<Color x:Key="HighlightColor">#FF88BBFF</Color>
 

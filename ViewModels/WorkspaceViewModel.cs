@@ -25,10 +25,6 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private Point _pressedPosition;
     [ObservableProperty]
-    private double _edgeThickness;
-    [ObservableProperty]
-    private int _multiSelectThickness;
-    [ObservableProperty]
     private bool _isMultiSelecting;
     [ObservableProperty]
     private bool _isPanning;
