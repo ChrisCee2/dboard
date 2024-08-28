@@ -25,7 +25,7 @@
 	</UserControl.Styles>
 
 	<Border Background="{x:Static constants:SettingsConstants.COLOR}" CornerRadius="8" Padding="20">
-		<Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="1*,1*" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+		<Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="1*,1*" HorizontalAlignment="Center" VerticalAlignment="Stretch">
 			<Grid.Styles>
 				<Style Selector="Grid > TextBlock">
 					<Setter Property="HorizontalAlignment" Value="Right"/>
@@ -94,6 +94,28 @@
 				<Button Padding="2" Margin="5,0,0,0" Click="RemoveImage" IsVisible="{Binding WindowImagePath, Converter={StaticResource IsNotNullConverter}}">
 					<PathIcon Width="20" Height="20" Data="{StaticResource delete_regular}"/>
 				</Button>
+			</StackPanel>
+
+			<Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Classes.GridBorder="true"/>
+			<TextBlock Text="Workspace Size" TextWrapping="Wrap" Grid.Row="3" Grid.Column="0" TextAlignment="Right"/>
+			<StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+				<TextBox Text="{Binding WorkspaceSizeX, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}"
+						 FontSize="{StaticResource ToolBarFontSize}"
+						 VerticalAlignment="Center"
+						 MinHeight="0"
+						 MaxHeight="20"
+						 MinWidth="0"
+						 Padding="2"
+						 BorderThickness="0"/>
+				<TextBlock Text=" x " VerticalAlignment="Center" FontSize="{StaticResource ToolBarFontSize}"/>
+				<TextBox Text="{Binding WorkspaceSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}"
+					 FontSize="{StaticResource ToolBarFontSize}"
+					 VerticalAlignment="Center"
+					 MinHeight="0"
+					 MaxHeight="20"
+					 MinWidth="0"
+					 Padding="2"
+					 BorderThickness="0"/>
 			</StackPanel>
 		</Grid>
 	</Border>

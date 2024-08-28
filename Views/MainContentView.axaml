@@ -216,7 +216,7 @@
 		</Border.Background>
 		<Panel>
 			<Image asyncImageLoader:ImageLoader.Source="{Binding Workspace.WindowImagePath}"/>
-			<views:WorkspaceView x:Name="CurrentWorkspace" DataContext="{Binding Workspace}" Width="10000" Height="10000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<views:WorkspaceView x:Name="CurrentWorkspace" DataContext="{Binding Workspace}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 		</Panel>
 	</Border>
 </DockPanel>

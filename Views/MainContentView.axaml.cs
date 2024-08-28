@@ -121,7 +121,9 @@ public partial class MainContentView : DockPanel
             edges, 
             notes, 
             workspaceVM.CanvasSizeX, 
-            workspaceVM.CanvasSizeY, 
+            workspaceVM.CanvasSizeY,
+            workspaceVM.WorkspaceSizeX,
+            workspaceVM.WorkspaceSizeY,
             workspaceVM.CanvasImagePath, 
             workspaceVM.WorkspaceImagePath,
             workspaceVM.WindowImagePath);
@@ -166,6 +168,8 @@ public partial class MainContentView : DockPanel
             ((MainContentViewModel)DataContext).WorkspaceFileName = files[0].Name;
             ((MainContentViewModel)DataContext).Workspace.CanvasSizeX = workspace.CanvasSizeX;
             ((MainContentViewModel)DataContext).Workspace.CanvasSizeY = workspace.CanvasSizeY;
+            ((MainContentViewModel)DataContext).Workspace.WorkspaceSizeX = workspace.WorkspaceSizeX;
+            ((MainContentViewModel)DataContext).Workspace.WorkspaceSizeY = workspace.WorkspaceSizeY;
             ((MainContentViewModel)DataContext).Workspace.CanvasImagePath = workspace.CanvasImagePath;
             ((MainContentViewModel)DataContext).Workspace.WorkspaceImagePath = workspace.WorkspaceImagePath;
             ((MainContentViewModel)DataContext).Workspace.WindowImagePath = workspace.WindowImagePath;
