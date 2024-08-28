@@ -17,20 +17,20 @@
 	</Design.DataContext>
 
 	<UserControl.Effect>
-		<DropShadowEffect Color="{x:Static constants:NodeConstants.HIGHLIGHT_COLOR}" BlurRadius="30" OffsetX="0" OffsetY="0"
+		<DropShadowEffect Color="{StaticResource HighlightColor}" BlurRadius="30" OffsetX="0" OffsetY="0"
 						  Opacity="{Binding IsSelected, Converter={StaticResource BoolToDoubleConverter}, ConverterParameter=1}"/>
 	</UserControl.Effect>
 
 	<UserControl.Styles>
 		<Style Selector="TextBox">
 			<Setter Property="Margin" Value="0,2,0,0"/>
-			<Setter Property="BorderBrush" Value="{x:Static constants:NodeConstants.TEXTBOX_BORDER_COLOR}"/>
+			<Setter Property="BorderBrush" Value="{StaticResource NodeTextboxBorderColor}"/>
 		</Style>
 		<Style Selector="ToggleButton:checked Border">
-			<Setter Property="Background" Value="{x:Static constants:NodeConstants.TOGGLED_COLOR}"/>
+			<Setter Property="Background" Value="{StaticResource NodeToggledColor}"/>
 		</Style>
 		<Style Selector="ToggleButton Border">
-			<Setter Property="Background" Value="{x:Static constants:NodeConstants.UNTOGGLED_COLOR}"/>
+			<Setter Property="Background" Value="{StaticResource NodeUntoggledColor}"/>
 		</Style>
 	</UserControl.Styles>
 

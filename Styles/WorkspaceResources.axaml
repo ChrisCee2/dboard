@@ -10,4 +10,17 @@
 	<SolidColorBrush x:Key="MultiselectStroke" Color="#FF4477BB" />
 	<SolidColorBrush x:Key="MultiselectFill" Color="#3388BBFF" />
 
+	<Color x:Key="HighlightColor">#FF88BBFF</Color>
+
+	<!-- Node Constants-->
+	<SolidColorBrush x:Key="NodeToggledColor" Color="#FFa58c64" />
+	<SolidColorBrush x:Key="NodeUntoggledColor" Color="#FFc8b98c" />
+	<SolidColorBrush x:Key="NodeTextboxBorderColor" Color="#FFc8b98c" />
+
+	<!-- Edge Constants -->
+	<sys:Double x:Key="EdgeClickAreaThickness"> 25 </sys:Double>
+
+	<!-- Settings Constants -->
+	<SolidColorBrush x:Key="SettingsBackgroundColor" Color="#32FFFFFF" />
+
 </ResourceDictionary>

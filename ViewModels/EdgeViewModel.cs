@@ -47,11 +47,11 @@ public partial class EdgeViewModel : ObservableObject
             Edge.FromNode,
             Edge.ToNode,
             Edge.Description,
-            Edge.Thickness,
             Edge.A,
             Edge.R,
             Edge.G,
-            Edge.B));
+            Edge.B,
+            Edge.Thickness));
     }
 
     public EdgeViewModel CloneWithNewNodes(NodeModelBase fromNode, NodeModelBase toNode)
@@ -60,10 +60,10 @@ public partial class EdgeViewModel : ObservableObject
             fromNode,
             toNode,
             Edge.Description,
-            Edge.Thickness,
             Edge.A,
             Edge.R,
             Edge.G,
-            Edge.B));
+            Edge.B,
+            Edge.Thickness));
     }
 }
