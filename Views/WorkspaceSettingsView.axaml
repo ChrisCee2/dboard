@@ -1,4 +1,4 @@
-<UserControl
+<Border
 	xmlns="https://github.com/avaloniaui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,115 +8,67 @@
 	xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
 	mc:Ignorable="d"
 	x:Class="mystery_app.Views.WorkspaceSettingsView"
-	x:DataType="vm:WorkspaceViewModel">
-	
+	x:DataType="vm:WorkspaceViewModel"
+	Background="{StaticResource SettingsBackgroundColor}" 
+	CornerRadius="8" 
+	Padding="20">
+
 	<Design.DataContext>
 		<vm:WorkspaceViewModel />
 	</Design.DataContext>
 
-	<UserControl.Styles>
+	<Border.Styles>
 		<StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
-		<Style Selector="ToggleButton:checked Panel">
-			<Setter Property="Background" Value="Green"/>
-		</Style>
-		<Style Selector="ToggleButton Panel">
-			<Setter Property="Background" Value="Red"/>
-		</Style>
-	</UserControl.Styles>
+		<StyleInclude Source="/Styles/SettingsStyles.axaml" />
+	</Border.Styles>
 
-	<Border Background="{StaticResource SettingsBackgroundColor}" CornerRadius="8" Padding="20">
-		<Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="1*,1*" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-			<Grid.Styles>
-				<Style Selector="Grid > TextBlock">
-					<Setter Property="HorizontalAlignment" Value="Right"/>
-					<Setter Property="VerticalAlignment" Value="Center"/>
-					<Setter Property="Margin" Value="0,0,2,0"/>
-				</Style>
-				<Style Selector="TextBlock">
-					<Setter Property="FontSize" Value="{StaticResource ToolBarFontSize}"/>
-				</Style>
-				<Style Selector="ComboBox">
-					<Setter Property="MinHeight" Value="20"/>
-					<Setter Property="MaxHeight" Value="20"/>
-					<Setter Property="Padding" Value="6,0,0,0"/>
-					<Setter Property="BorderThickness" Value="0"/>
-					<Setter Property="VerticalAlignment" Value="Center"/>
-					<Setter Property="Margin" Value="2,0,0,0"/>
-				</Style>
-				<Style Selector="ComboBoxItem">
-					<Setter Property="MinHeight" Value="20"/>
-					<Setter Property="MaxHeight" Value="20"/>
-					<Setter Property="Padding" Value="6,0,0,0"/>
-					<Setter Property="BorderThickness" Value="0"/>
-					<Setter Property="VerticalAlignment" Value="Center"/>
-				</Style>
-				<Style Selector="Border.GridBorder">
-					<Setter Property="Height" Value="35"/>
-					<Setter Property="BorderThickness" Value="0"/>
-					<Setter Property="HorizontalAlignment" Value="Stretch"/>
-				</Style>
-			</Grid.Styles>
+	<Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="1*,1*" HorizontalAlignment="Center" VerticalAlignment="Stretch">
 
-			<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Classes.GridBorder="true"/>
-			<TextBlock Text="Canvas Image" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" TextAlignment="Right"/>
-			<StackPanel x:Name="CanvasImage" Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-				<Panel IsVisible="{Binding CanvasImagePath, Converter={StaticResource IsNotNullConverter}}">
-					<Image asyncImageLoader:ImageLoader.Source="{Binding CanvasImagePath}" MaxWidth="100" MaxHeight="100"/>
-					<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OpenFileButton_Clicked"/>
-				</Panel>
-				<Button Content="..." Padding="2" Click="OpenFileButton_Clicked" IsVisible="{Binding CanvasImagePath, Converter={StaticResource IsNullConverter}}"/>
-				<Button Padding="2" Margin="5,0,0,0" Click="RemoveImage" IsVisible="{Binding CanvasImagePath, Converter={StaticResource IsNotNullConverter}}">
-					<PathIcon Width="20" Height="20" Data="{StaticResource delete_regular}"/>
-				</Button>
-			</StackPanel>
+		<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Classes="GridBorder"/>
+		<TextBlock Grid.Row="0" Grid.Column="0" Text="Canvas Image" TextWrapping="Wrap" TextAlignment="Right"/>
+		<StackPanel x:Name="CanvasImage" Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+			<Panel IsVisible="{Binding CanvasImagePath, Converter={StaticResource IsNotNullConverter}}">
+				<Image asyncImageLoader:ImageLoader.Source="{Binding CanvasImagePath}" MaxWidth="100" MaxHeight="100"/>
+				<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OpenFileButton_Clicked"/>
+			</Panel>
+			<Button Content="..." Padding="2" Click="OpenFileButton_Clicked" IsVisible="{Binding CanvasImagePath, Converter={StaticResource IsNullConverter}}"/>
+			<Button Padding="2" Margin="5,0,0,0" Click="RemoveImage" IsVisible="{Binding CanvasImagePath, Converter={StaticResource IsNotNullConverter}}">
+				<PathIcon Width="20" Height="20" Data="{StaticResource delete_regular}"/>
+			</Button>
+		</StackPanel>
 
-			<Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Classes.GridBorder="true"/>
-			<TextBlock Text="Workspace Image" TextWrapping="Wrap" Grid.Row="1" Grid.Column="0" TextAlignment="Right"/>
-			<StackPanel x:Name="WorkspaceImage" Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-				<Panel IsVisible="{Binding WorkspaceImagePath, Converter={StaticResource IsNotNullConverter}}">
-					<Image asyncImageLoader:ImageLoader.Source="{Binding WorkspaceImagePath}" MaxWidth="100" MaxHeight="100"/>
-					<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OpenFileButton_Clicked"/>
-				</Panel>
-				<Button Content="..." Padding="2" Click="OpenFileButton_Clicked" IsVisible="{Binding WorkspaceImagePath, Converter={StaticResource IsNullConverter}}"/>
-				<Button Padding="2" Margin="5,0,0,0" Click="RemoveImage" IsVisible="{Binding WorkspaceImagePath, Converter={StaticResource IsNotNullConverter}}">
-					<PathIcon Width="20" Height="20" Data="{StaticResource delete_regular}"/>
-				</Button>
-			</StackPanel>
+		<Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Classes="GridBorder"/>
+		<TextBlock Text="Workspace Image" TextWrapping="Wrap" Grid.Row="1" Grid.Column="0" TextAlignment="Right"/>
+		<StackPanel x:Name="WorkspaceImage" Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+			<Panel IsVisible="{Binding WorkspaceImagePath, Converter={StaticResource IsNotNullConverter}}">
+				<Image asyncImageLoader:ImageLoader.Source="{Binding WorkspaceImagePath}" MaxWidth="100" MaxHeight="100"/>
+				<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OpenFileButton_Clicked"/>
+			</Panel>
+			<Button Content="..." Padding="2" Click="OpenFileButton_Clicked" IsVisible="{Binding WorkspaceImagePath, Converter={StaticResource IsNullConverter}}"/>
+			<Button Padding="2" Margin="5,0,0,0" Click="RemoveImage" IsVisible="{Binding WorkspaceImagePath, Converter={StaticResource IsNotNullConverter}}">
+				<PathIcon Width="20" Height="20" Data="{StaticResource delete_regular}"/>
+			</Button>
+		</StackPanel>
 
-			<Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Classes.GridBorder="true"/>
-			<TextBlock Text="Window Image" TextWrapping="Wrap" Grid.Row="2" Grid.Column="0" TextAlignment="Right"/>
-			<StackPanel x:Name="WindowImage" Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
-				<Panel IsVisible="{Binding WindowImagePath, Converter={StaticResource IsNotNullConverter}}">
-					<Image asyncImageLoader:ImageLoader.Source="{Binding WindowImagePath}" MaxWidth="100" MaxHeight="100"/>
-					<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OpenFileButton_Clicked"/>
-				</Panel>
-				<Button Content="..." Padding="2" Click="OpenFileButton_Clicked" IsVisible="{Binding WindowImagePath, Converter={StaticResource IsNullConverter}}"/>
-				<Button Padding="2" Margin="5,0,0,0" Click="RemoveImage" IsVisible="{Binding WindowImagePath, Converter={StaticResource IsNotNullConverter}}">
-					<PathIcon Width="20" Height="20" Data="{StaticResource delete_regular}"/>
-				</Button>
-			</StackPanel>
+		<Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Classes="GridBorder"/>
+		<TextBlock Text="Window Image" TextWrapping="Wrap" Grid.Row="2" Grid.Column="0" TextAlignment="Right"/>
+		<StackPanel x:Name="WindowImage" Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+			<Panel IsVisible="{Binding WindowImagePath, Converter={StaticResource IsNotNullConverter}}">
+				<Image asyncImageLoader:ImageLoader.Source="{Binding WindowImagePath}" MaxWidth="100" MaxHeight="100"/>
+				<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OpenFileButton_Clicked"/>
+			</Panel>
+			<Button Content="..." Padding="2" Click="OpenFileButton_Clicked" IsVisible="{Binding WindowImagePath, Converter={StaticResource IsNullConverter}}"/>
+			<Button Padding="2" Margin="5,0,0,0" Click="RemoveImage" IsVisible="{Binding WindowImagePath, Converter={StaticResource IsNotNullConverter}}">
+				<PathIcon Width="20" Height="20" Data="{StaticResource delete_regular}"/>
+			</Button>
+		</StackPanel>
 
-			<Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Classes.GridBorder="true"/>
-			<TextBlock Text="Workspace Size" TextWrapping="Wrap" Grid.Row="3" Grid.Column="0" TextAlignment="Right"/>
-			<StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
-				<TextBox Text="{Binding WorkspaceSizeX, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}"
-						 FontSize="{StaticResource ToolBarFontSize}"
-						 VerticalAlignment="Center"
-						 MinHeight="0"
-						 MaxHeight="20"
-						 MinWidth="0"
-						 Padding="2"
-						 BorderThickness="0"/>
-				<TextBlock Text=" x " VerticalAlignment="Center" FontSize="{StaticResource ToolBarFontSize}"/>
-				<TextBox Text="{Binding WorkspaceSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}"
-					 FontSize="{StaticResource ToolBarFontSize}"
-					 VerticalAlignment="Center"
-					 MinHeight="0"
-					 MaxHeight="20"
-					 MinWidth="0"
-					 Padding="2"
-					 BorderThickness="0"/>
-			</StackPanel>
-		</Grid>
-	</Border>
-</UserControl>
+		<Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Classes="GridBorder"/>
+		<TextBlock Text="Workspace Size" TextWrapping="Wrap" Grid.Row="3" Grid.Column="0" TextAlignment="Right"/>
+		<StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+			<TextBox Text="{Binding WorkspaceSizeX, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}"/>
+			<TextBlock Text=" x " VerticalAlignment="Center" FontSize="{StaticResource ToolBarFontSize}"/>
+			<TextBox Text="{Binding WorkspaceSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}"/>
+		</StackPanel>
+	</Grid>
+</Border>
