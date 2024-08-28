@@ -164,6 +164,10 @@ public partial class InteractiveView : Grid
         {
             WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage(vm));
         }
+        else
+        {
+            WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage(NodeConstants.NULL_NODEVIEWMODEL));
+        }
     }
 
     // Handle dropping image

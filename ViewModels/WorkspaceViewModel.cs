@@ -33,6 +33,8 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private bool _isPanning;
     [ObservableProperty]
+    private bool _isEdging;
+    [ObservableProperty]
     private Point _PanPosition;
     [ObservableProperty]
     private double _scale = 1;
@@ -89,6 +91,7 @@ public partial class WorkspaceViewModel : ObservableObject
                 NodeToCreateEdge = nodeVMBase;
                 // Manually assign position to where pin is
                 CursorPosition = new Point(NodeToCreateEdge.NodeBase.PositionX + (NodeToCreateEdge.NodeBase.Width / 2), NodeToCreateEdge.NodeBase.PositionY + 11);
+                IsEdging = true;
             }
         });
 
@@ -96,7 +99,8 @@ public partial class WorkspaceViewModel : ObservableObject
         {
             var enteredNode = message.Value;
 
-            if (Nodes.Contains(enteredNode) 
+            if (enteredNode != NodeConstants.NULL_NODEVIEWMODEL
+                && Nodes.Contains(enteredNode) 
                 && Nodes.Contains(NodeToCreateEdge)
                 && !Equals(enteredNode, NodeToCreateEdge)
                 && !Edges.ContainsEdge(NodeToCreateEdge.NodeBase, enteredNode.NodeBase))
@@ -104,6 +108,7 @@ public partial class WorkspaceViewModel : ObservableObject
                 Edges.Add(new EdgeViewModel(new EdgeModel(NodeToCreateEdge.NodeBase, enteredNode.NodeBase)));
             }
             NodeToCreateEdge = NodeConstants.NULL_NODEVIEWMODEL;
+            IsEdging = false;
         });
 
         WeakReferenceMessenger.Default.Register<DeleteMessage>(this, (sender, message) =>

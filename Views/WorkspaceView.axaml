@@ -90,7 +90,8 @@
 			<Line
 				EndPoint="{Binding CursorPosition}"
 				StrokeThickness="{Binding EdgeThickness}"
-				IsHitTestVisible="False">
+				IsHitTestVisible="False"
+				IsVisible="{Binding IsEdging}">
 				<Line.StartPoint>
 					<MultiBinding Converter="{StaticResource EdgePosConverter}">
 						<Binding Path="NodeToCreateEdge.NodeBase.PositionX"/>
