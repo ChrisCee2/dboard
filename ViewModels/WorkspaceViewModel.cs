@@ -43,6 +43,10 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private int _canvasSizeY = 720;
     [ObservableProperty]
+    private int _workspaceSizeX = 2560;
+    [ObservableProperty]
+    private int _workspaceSizeY = 1440;
+    [ObservableProperty]
     private string? _canvasImagePath;
     [ObservableProperty]
     private string? _workspaceImagePath;

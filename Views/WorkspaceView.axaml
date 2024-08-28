@@ -13,7 +13,8 @@
 	Opacity="{Binding SharedSettings.ModeModel.WorkspaceOpacity}"
 	BorderThickness="1"
 	BorderBrush="Black"
-	CornerRadius="8">
+	CornerRadius="8"
+	Width="{Binding WorkspaceSizeX}" Height="{Binding WorkspaceSizeY}">
 	<UserControl.Background>
 		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 			<Binding Path="SharedSettings.ModeModel.A"/>
