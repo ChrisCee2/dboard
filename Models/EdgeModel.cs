@@ -14,7 +14,7 @@ public partial class EdgeModel : ObservableObject
         FromNode = fromNode;
         ToNode = toNode;
         Description = null;
-        Thickness = EdgeConstants.THICKNESS;
+        Thickness = EdgeConstants.DEFAULT_THICKNESS;
         A = EdgeConstants.A;
         R = EdgeConstants.R;
         G = EdgeConstants.G;
@@ -25,7 +25,7 @@ public partial class EdgeModel : ObservableObject
         NodeModelBase fromNode, 
         NodeModelBase toNode, 
         string description, 
-        double thickness = EdgeConstants.THICKNESS, 
+        double thickness = EdgeConstants.DEFAULT_THICKNESS, 
         byte a=EdgeConstants.A, byte r=EdgeConstants.R, byte g=EdgeConstants.G, byte b=EdgeConstants.B)
     {
         FromNode = fromNode;

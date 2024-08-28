@@ -363,7 +363,6 @@ public partial class MainContentView : DockPanel
     {
         WorkspaceViewModel context = ((MainContentViewModel)DataContext).Workspace;
         // Make lines disappear
-        context.EdgeThickness = 0;
         context.MultiSelectThickness = 0;
 
         // Multiselect

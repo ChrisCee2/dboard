@@ -87,7 +87,6 @@ public partial class WorkspaceViewModel : ObservableObject
         {
             if (message.Value is NodeViewModelBase nodeVMBase && Nodes.Contains(nodeVMBase))
             {
-                EdgeThickness = EdgeConstants.THICKNESS;
                 NodeToCreateEdge = nodeVMBase;
                 // Manually assign position to where pin is
                 CursorPosition = new Point(NodeToCreateEdge.NodeBase.PositionX + (NodeToCreateEdge.NodeBase.Width / 2), NodeToCreateEdge.NodeBase.PositionY + 11);

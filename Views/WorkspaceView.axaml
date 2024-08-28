@@ -89,7 +89,7 @@
 		<Canvas>
 			<Line
 				EndPoint="{Binding CursorPosition}"
-				StrokeThickness="{Binding EdgeThickness}"
+				StrokeThickness="{x:Static constants:EdgeConstants.DEFAULT_THICKNESS}"
 				IsHitTestVisible="False"
 				IsVisible="{Binding IsEdging}">
 				<Line.StartPoint>
