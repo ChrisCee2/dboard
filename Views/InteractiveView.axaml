@@ -21,6 +21,10 @@
 		</ContextMenu>
 	</Grid.ContextMenu>
 
+	<Grid.RenderTransform>
+		<TranslateTransform X="{Binding NodeBase.PositionX}" Y="{Binding NodeBase.PositionY}"/>
+	</Grid.RenderTransform>
+
 	<Design.DataContext>
 		<vm:NodeViewModelBase />
 	</Design.DataContext>

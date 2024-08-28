@@ -11,7 +11,6 @@ using Avalonia.VisualTree;
 using Avalonia.LogicalTree;
 using mystery_app.Models;
 using System.Threading.Tasks;
-using Avalonia.Logging;
 
 namespace mystery_app.Views;
 
@@ -50,9 +49,6 @@ public partial class InteractiveView : Grid
                 AddHandler(DragDrop.DropEvent, DropImage);
 
             }
-
-            Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, _vm.NodeBase.PositionX.ToString() + " " + _vm.NodeBase.PositionY.ToString());
-            RenderTransform = new TranslateTransform(_vm.NodeBase.PositionX, _vm.NodeBase.PositionY);
         }
     }
 
@@ -146,7 +142,6 @@ public partial class InteractiveView : Grid
     {
         _vm.NodeBase.PositionX = offsetX;
         _vm.NodeBase.PositionY = offsetY;
-        RenderTransform = new TranslateTransform(offsetX, offsetY);
     }
 
     // On selecting node edge creation, tell workspace this node has been selected
