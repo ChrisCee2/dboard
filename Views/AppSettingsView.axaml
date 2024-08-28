@@ -24,7 +24,7 @@
 		</Style>
 	</UserControl.Styles>
 
-	<Border Background="{x:Static constants:SettingsConstants.COLOR}" CornerRadius="8" Padding="20">
+	<Border Background="{StaticResource SettingsBackgroundColor}" CornerRadius="8" Padding="20">
 		<Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="1*,1*" HorizontalAlignment="Center" VerticalAlignment="Stretch">
 			<Grid.Styles>
 				<Style Selector="Grid > TextBlock">

@@ -89,6 +89,7 @@
 		<Canvas>
 			<Line
 				EndPoint="{Binding CursorPosition}"
+				Stroke="{x:Static constants:EdgeConstants.DEFAULT_COLOR}"
 				StrokeThickness="{x:Static constants:EdgeConstants.DEFAULT_THICKNESS}"
 				IsHitTestVisible="False"
 				IsVisible="{Binding IsEdging}">
@@ -99,14 +100,6 @@
 						<Binding Path="NodeToCreateEdge.NodeBase.Width"/>
 					</MultiBinding>
 				</Line.StartPoint>
-				<Line.Stroke>
-					<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
-						<Binding Source="{x:Static constants:EdgeConstants.A}"/>
-						<Binding Source="{x:Static constants:EdgeConstants.R}"/>
-						<Binding Source="{x:Static constants:EdgeConstants.G}"/>
-						<Binding Source="{x:Static constants:EdgeConstants.B}"/>
-					</MultiBinding>
-				</Line.Stroke>
 			</Line>
 		</Canvas>
 
@@ -117,7 +110,7 @@
 				Stroke="{StaticResource MultiselectStroke}"
 				Fill="{StaticResource MultiselectFill}"
 				StrokeDashArray="2,4"
-				StrokeThickness="{Binding MultiSelectThickness}"
+				StrokeThickness="{StaticResource MultiSelectThickness}"
 				IsHitTestVisible="False"
 				IsVisible="{Binding IsMultiSelecting}">
 				<Canvas.Left>

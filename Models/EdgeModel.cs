@@ -15,18 +15,18 @@ public partial class EdgeModel : ObservableObject
         ToNode = toNode;
         Description = null;
         Thickness = EdgeConstants.DEFAULT_THICKNESS;
-        A = EdgeConstants.A;
-        R = EdgeConstants.R;
-        G = EdgeConstants.G;
-        B = EdgeConstants.B;
+        A = EdgeConstants.DEFAULT_COLOR.Color.A;
+        R = EdgeConstants.DEFAULT_COLOR.Color.R;
+        G = EdgeConstants.DEFAULT_COLOR.Color.G;
+        B = EdgeConstants.DEFAULT_COLOR.Color.B;
     }
 
     public EdgeModel(
         NodeModelBase fromNode, 
         NodeModelBase toNode, 
-        string description, 
-        double thickness = EdgeConstants.DEFAULT_THICKNESS, 
-        byte a=EdgeConstants.A, byte r=EdgeConstants.R, byte g=EdgeConstants.G, byte b=EdgeConstants.B)
+        string description,
+        byte a, byte r, byte g, byte b,
+        double thickness = EdgeConstants.DEFAULT_THICKNESS)
     {
         FromNode = fromNode;
         ToNode = toNode;

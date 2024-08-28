@@ -332,7 +332,6 @@ public partial class MainContentView : DockPanel
             if (((Control)hitElement).Parent == this.Find<WorkspaceView>("CurrentWorkspace"))
             {
                 context.IsMultiSelecting = true;
-                context.MultiSelectThickness = 2;
             }
         }
         base.OnPointerPressed(e);
@@ -361,8 +360,6 @@ public partial class MainContentView : DockPanel
     protected void WorkspaceOnPointerReleased(object sender, PointerReleasedEventArgs e)
     {
         WorkspaceViewModel context = ((MainContentViewModel)DataContext).Workspace;
-        // Make lines disappear
-        context.MultiSelectThickness = 0;
 
         // Multiselect
         if (context.IsMultiSelecting)

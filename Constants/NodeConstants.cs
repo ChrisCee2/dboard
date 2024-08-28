@@ -12,12 +12,6 @@ public static class NodeConstants
 
     public const string DEFAULT_IMAGE_PATH = "avares://mystery_app/Assets/amongusbutt.png";
 
-    // Node Color constants
-    public static readonly IBrush TOGGLED_COLOR = new ImmutableSolidColorBrush(new Color(255, 165, 140, 100));
-    public static readonly IBrush UNTOGGLED_COLOR = new ImmutableSolidColorBrush(new Color(255, 200, 185, 140));
-    public static readonly IBrush TEXTBOX_BORDER_COLOR = new ImmutableSolidColorBrush(new Color(255, 200, 185, 140));
-    public static readonly Color HIGHLIGHT_COLOR = new Color(255, 136, 187, 255);
-
     // Size constants
     public const int MIN_WIDTH = 140;
     public const int MIN_HEIGHT = 160; // Extra 20 to account for edge

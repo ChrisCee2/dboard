@@ -66,7 +66,7 @@
 		<Line.StrokeThickness>
 			<MultiBinding Converter="{StaticResource AddConverter}">
 				<Binding Path="Edge.Thickness"/>
-				<Binding Source="{x:Static constants:EdgeConstants.CLICK_THICKNESS}"/>
+				<Binding Source="{StaticResource EdgeClickAreaThickness}"/>
 			</MultiBinding>
 		</Line.StrokeThickness>
 
