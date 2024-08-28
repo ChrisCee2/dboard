@@ -67,28 +67,14 @@
 		<ToggleButton Template="{StaticResource TogBtnBotHighlight}" Content="Settings" IsChecked="{Binding #SettingsSplitView.IsPaneOpen}"/>
 
 		<!--Right Side-->
-		<DockPanel x:Name="CanvasSize" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0,5,0,5">
+		<DockPanel x:Name="CanvasState" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0,5,0,5">
 			<Border Width="8" Background="Transparent" DockPanel.Dock="Right"/>
 			<TextBlock Text="{Binding Workspace.Scale, Converter={StaticResource PercentStringConverter}}" DockPanel.Dock="Right" VerticalAlignment="Center"/>
 			<PathIcon Data="{StaticResource full_screen_zoom_regular}" Width="16" Height="16" Margin="0,0,6,0" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 			<Border Width="30" Background="Transparent" DockPanel.Dock="Right"/>
-			<TextBox Text="{Binding Workspace.CanvasSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}" 
-					 DockPanel.Dock="Right" 
-					 VerticalAlignment="Center"
-					 MinHeight="0" 
-					 MaxHeight="20" 
-					 MinWidth="0"
-					 Padding="2" 
-					 BorderThickness="0"/>
+			<TextBox Text="{Binding Workspace.CanvasSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}" DockPanel.Dock="Right"/>
 			<TextBlock Text=" x " DockPanel.Dock="Right" VerticalAlignment="Center"/>
-			<TextBox Text="{Binding Workspace.CanvasSizeX, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}" 
-					 DockPanel.Dock="Right" 
-					 VerticalAlignment="Center"
-					 MinHeight="0" 
-					 MaxHeight="20" 
-					 MinWidth="0" 
-					 Padding="2" 
-					 BorderThickness="0"/>
+			<TextBox Text="{Binding Workspace.CanvasSizeX, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}" DockPanel.Dock="Right"/>
 			<PathIcon Data="{StaticResource resize_regular}" Width="16" Height="16" Margin="0,0,8,0" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 		</DockPanel>
 	</DockPanel>
@@ -105,11 +91,10 @@
 		</SplitView.PaneBackground>
 
 		<DockPanel>
-			<Grid ColumnDefinitions="Auto" RowDefinitions="Auto,Auto"
-			Background="Transparent"
-			Classes.LeftMax="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
-			Classes.LeftNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
-				<Button Grid.Row="0" Grid.Column="0" Width="25" Height="25" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="Select">
+			<Grid x:Name="ActionGrid" ColumnDefinitions="Auto" RowDefinitions="Auto,Auto" Background="Transparent"
+				  Classes.LeftMax="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
+				  Classes.LeftNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
+				<Button Grid.Row="0" Grid.Column="0" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="Select">
 					<Button.Background>
 						<MultiBinding Converter="{StaticResource StrCheckBgConverter}">
 							<Binding Source="Select"/>
@@ -118,9 +103,9 @@
 							<Binding Source="{StaticResource ClickBtnDefaultColor}"/>
 						</MultiBinding>
 					</Button.Background>
-					<PathIcon Data="{StaticResource cursor_regular}" Width="15" Height="15"/>
+					<PathIcon Data="{StaticResource cursor_regular}"/>
 				</Button>
-				<Button Grid.Row="1" Grid.Column="0" Width="25" Height="25" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="CreateNode">
+				<Button Grid.Row="1" Grid.Column="0" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="CreateNode">
 					<Button.Background>
 						<MultiBinding Converter="{StaticResource StrCheckBgConverter}">
 							<Binding Source="CreateNode"/>
@@ -129,7 +114,7 @@
 							<Binding Source="{StaticResource ClickBtnDefaultColor}"/>
 						</MultiBinding>
 					</Button.Background>
-					<PathIcon Data="{StaticResource add_regular}" Width="15" Height="15"/>
+					<PathIcon Data="{StaticResource add_regular}"/>
 				</Button>
 			</Grid>
 		</DockPanel>

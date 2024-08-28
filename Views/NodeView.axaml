@@ -22,16 +22,7 @@
 	</UserControl.Effect>
 
 	<UserControl.Styles>
-		<Style Selector="TextBox">
-			<Setter Property="Margin" Value="0,2,0,0"/>
-			<Setter Property="BorderBrush" Value="{StaticResource NodeTextboxBorderColor}"/>
-		</Style>
-		<Style Selector="ToggleButton:checked Border">
-			<Setter Property="Background" Value="{StaticResource NodeToggledColor}"/>
-		</Style>
-		<Style Selector="ToggleButton Border">
-			<Setter Property="Background" Value="{StaticResource NodeUntoggledColor}"/>
-		</Style>
+		<StyleInclude Source="/Styles/NodeStyles.axaml" />
 	</UserControl.Styles>
 
 	<Grid RowDefinitions="*, Auto" x:Name="RootGrid">
