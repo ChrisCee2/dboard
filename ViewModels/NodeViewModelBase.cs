@@ -50,7 +50,6 @@ public abstract partial class NodeViewModelBase : ObservableObject
                 {
                     NodeBase.PositionX += message.Value.X;
                     NodeBase.PositionY += message.Value.Y;
-                    control.RenderTransform = new TranslateTransform(NodeBase.PositionX, NodeBase.PositionY);
                 });
             }
         }
