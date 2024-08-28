@@ -7,16 +7,13 @@
 		</Border>
 	</Design.PreviewWith>
 
+	<Style Selector="#TitleBar ToggleButton, #TitleBar MenuItem, #TitleBar Button, #CanvasState TextBox">
+		<Setter Property="FontSize" Value="{StaticResource ToolBarFontSize}" />
+	</Style>
 	<Style Selector="#TitleBar Button">
 		<Setter Property="BorderThickness" Value="0" />
 		<Setter Property="CornerRadius" Value="0" />
 		<Setter Property="Background" Value="Transparent" />
-	</Style>
-	<Style Selector="ToggleButton.BarBtn">
-		<Setter Property="FontSize" Value="{StaticResource ToolBarFontSize}" />
-		<Setter Property="Margin" Value="0" />
-		<Setter Property="BorderThickness" Value="0" />
-		<Setter Property="CornerRadius" Value="0" />
 	</Style>
 
 	<!--Toggle Button Styling-->
@@ -36,31 +33,22 @@
 		<Setter Property="Background" Value="Transparent"/>
 		<Setter Property="Opacity" Value="1"/>
 	</Style>
-	
+
+	<!-- Maximize / Restore button styling -->
 	<Style Selector="#TitleBar PathIcon.Max">
 		<Setter Property="Data" Value="{StaticResource restore_regular}" />
 	</Style>
 	<Style Selector="#TitleBar PathIcon.Norm">
 		<Setter Property="Data" Value="{StaticResource maximize_regular}" />
 	</Style>
-	<Style Selector="#TitleBar ToggleButton, #TitleBar MenuItem, #TitleBar Button, #CanvasSize TextBox">
-		<Setter Property="FontSize" Value="{StaticResource ToolBarFontSize}" />
-	</Style>
-	<Style Selector="#TitleBar PathIcon.MaxMid">
-		<Setter Property="Margin" Value="0,8,0,0"/>
-	</Style>
-	<Style Selector="#TitleBar PathIcon.NormMid">
-		<Setter Property="Margin" Value="0,0,0,0"/>
-	</Style>
 
-	<Style Selector="DockPanel.TopNormal">
-	</Style>
+	<!-- Bar styling -->
+	<Style Selector="DockPanel.TopNormal"></Style>
 	<Style Selector="DockPanel.TopMax">
 		<Setter Property="Margin" Value="7,7,7,0"/>
 	</Style>
 
-	<Style Selector="DockPanel.BotNormal">
-	</Style>
+	<Style Selector="DockPanel.BotNormal"></Style>
 	<Style Selector="DockPanel.BotMax">
 		<Setter Property="Margin" Value="7,0,7,7"/>
 	</Style>
@@ -72,8 +60,28 @@
 		<Setter Property="Margin" Value="12,5,5,5"/>
 	</Style>
 
-	<Style Selector="DockPanel.RightNormal"> </Style>
+	<Style Selector="DockPanel.RightNormal"></Style>
 	<Style Selector="DockPanel.RightMax">
 		<Setter Property="Margin" Value="0,0,7,0"/>
+	</Style>
+
+	<!-- Canvas Size Styling -->
+	<Style Selector="#CanvasState > TextBox">
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="MinHeight" Value="0"/>
+		<Setter Property="MaxHeight" Value="20"/>
+		<Setter Property="MinWidth" Value="0"/>
+		<Setter Property="Padding" Value="2"/>
+		<Setter Property="BorderThickness" Value="0"/>
+	</Style>
+
+	<!-- Actions Styling -->
+	<Style Selector="#ActionGrid > Button">
+		<Setter Property="Width" Value="25"/>
+		<Setter Property="Height" Value="25"/>
+	</Style>
+	<Style Selector="#ActionGrid > Button > PathIcon">
+		<Setter Property="Width" Value="15"/>
+		<Setter Property="Height" Value="15"/>
 	</Style>
 </Styles>
