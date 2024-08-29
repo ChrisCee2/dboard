@@ -23,5 +23,7 @@
 
 	<!-- Settings Constants -->
 	<SolidColorBrush x:Key="SettingsBackgroundColor" Color="#32FFFFFF" />
+	<sys:Double x:Key="SettingsItemHeight"> 35 </sys:Double>
+	<GridLength x:Key="SettingsItemHeightGL"> 35 </GridLength>
 
 </ResourceDictionary>

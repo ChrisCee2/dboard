@@ -150,29 +150,36 @@ public partial class MainContentView : DockPanel
 
         if (files.Count == 1)
         {
-            ((MainContentViewModel)DataContext).NewCommand.Execute(null);
+            MainContentViewModel vm = (MainContentViewModel)DataContext;
+            vm.NewCommand.Execute(null);
             await using var stream = await files[0].OpenReadAsync();
             WorkspaceModel workspace = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
             foreach (var node in workspace.Nodes)
             {
                 if (node is NodeModel nodeModel)
                 {
-                    ((MainContentViewModel)DataContext).Workspace.Nodes.Add(new NodeViewModel(nodeModel));
+                    vm.Workspace.Nodes.Add(new NodeViewModel(nodeModel));
                 }
             }
             foreach (EdgeModel edgeModel in workspace.Edges)
             {
-                ((MainContentViewModel)DataContext).Workspace.Edges.Add(new EdgeViewModel(edgeModel));
+                vm.Workspace.Edges.Add(new EdgeViewModel(edgeModel));
             }
-            ((MainContentViewModel)DataContext).Notes = workspace.Notes;
-            ((MainContentViewModel)DataContext).WorkspaceFileName = files[0].Name;
-            ((MainContentViewModel)DataContext).Workspace.CanvasSizeX = workspace.CanvasSizeX;
-            ((MainContentViewModel)DataContext).Workspace.CanvasSizeY = workspace.CanvasSizeY;
-            ((MainContentViewModel)DataContext).Workspace.WorkspaceSizeX = workspace.WorkspaceSizeX;
-            ((MainContentViewModel)DataContext).Workspace.WorkspaceSizeY = workspace.WorkspaceSizeY;
-            ((MainContentViewModel)DataContext).Workspace.CanvasImagePath = workspace.CanvasImagePath;
-            ((MainContentViewModel)DataContext).Workspace.WorkspaceImagePath = workspace.WorkspaceImagePath;
-            ((MainContentViewModel)DataContext).Workspace.WindowImagePath = workspace.WindowImagePath;
+            vm.Notes = workspace.Notes;
+            vm.WorkspaceFileName = files[0].Name;
+            vm.Workspace.CanvasSizeX = workspace.CanvasSizeX;
+            vm.Workspace.CanvasSizeY = workspace.CanvasSizeY;
+            vm.Workspace.WorkspaceSizeX = workspace.WorkspaceSizeX;
+            vm.Workspace.WorkspaceSizeY = workspace.WorkspaceSizeY;
+            vm.Workspace.CanvasImagePath = workspace.CanvasImagePath;
+            vm.Workspace.WorkspaceImagePath = workspace.WorkspaceImagePath;
+            vm.Workspace.WindowImagePath = workspace.WindowImagePath;
+            vm.Workspace.ImagePaths = new ObservableCollection<ImagePathModel>()
+            {
+                vm.Workspace.CanvasImagePath,
+                vm.Workspace.WorkspaceImagePath,
+                vm.Workspace.WindowImagePath
+            };
         }
     }
 

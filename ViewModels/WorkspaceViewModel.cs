@@ -45,11 +45,13 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private int _workspaceSizeY = 1440;
     [ObservableProperty]
-    private string? _canvasImagePath;
+    private ImagePathModel _canvasImagePath = new ImagePathModel(WorkspaceConstants.CANVAS_IMAGE_NAME, null);
     [ObservableProperty]
-    private string? _workspaceImagePath;
+    private ImagePathModel _workspaceImagePath = new ImagePathModel(WorkspaceConstants.WORKSPACE_IMAGE_NAME, null);
     [ObservableProperty]
-    private string? _windowImagePath;
+    private ImagePathModel _windowImagePath = new ImagePathModel(WorkspaceConstants.WINDOW_IMAGE_NAME, null);
+    [ObservableProperty]
+    private ObservableCollection<ImagePathModel> _imagePaths;
     [ObservableProperty]
     private ObservableCollection<NodeViewModelBase> _selectedNodes = new ObservableCollection<NodeViewModelBase>();
     [ObservableProperty]
@@ -67,7 +69,13 @@ public partial class WorkspaceViewModel : ObservableObject
 
     public WorkspaceViewModel(SettingsModel sharedSettings)
     {
-        _sharedSettings = sharedSettings;
+        SharedSettings = sharedSettings;
+        ImagePaths = new ObservableCollection<ImagePathModel>()
+        {
+            CanvasImagePath,
+            WorkspaceImagePath,
+            WindowImagePath
+        };
 
         WeakReferenceMessenger.Default.Register<EditNodeMessage>(this, (sender, message) =>
         {
