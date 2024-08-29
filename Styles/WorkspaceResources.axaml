@@ -23,5 +23,6 @@
 
 	<!-- Settings Constants -->
 	<SolidColorBrush x:Key="SettingsBackgroundColor" Color="#32FFFFFF" />
+	<sys:Double x:Key="SettingsItemHeight"> 35 </sys:Double>
 
 </ResourceDictionary>
