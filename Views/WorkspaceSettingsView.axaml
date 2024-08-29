@@ -59,7 +59,7 @@
 		<!-- Other Settings -->
 		<Grid HorizontalAlignment="Center" VerticalAlignment="Stretch">
 			<Grid.RowDefinitions>
-				<RowDefinition MinHeight="{StaticResource SettingsItemHeight}"/>
+				<RowDefinition Height="{StaticResource SettingsItemHeightGL}"/>
 			</Grid.RowDefinitions>
 
 			<Grid.ColumnDefinitions>
