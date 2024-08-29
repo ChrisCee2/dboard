@@ -22,7 +22,38 @@
 		<StyleInclude Source="/Styles/SettingsStyles.axaml" />
 	</Border.Styles>
 
-	<Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="1*,1*" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+	<ItemsControl ItemsSource="{Binding ImagePaths}">
+		<ItemsControl.ItemsPanel>
+			<ItemsPanelTemplate>
+				<StackPanel/>
+			</ItemsPanelTemplate>
+		</ItemsControl.ItemsPanel>
+
+		<ItemsControl.ItemTemplate>
+			<DataTemplate>
+				<StackPanel Orientation="Horizontal">
+					<Border  Classes="GridBorder">
+						<TextBlock Text="{Binding Name}" TextWrapping="Wrap" TextAlignment="Right"/>
+					</Border>
+
+					<StackPanel Orientation="Horizontal" x:Name="{Binding Name}">
+						<Panel IsVisible="{Binding Path, Converter={StaticResource IsNotNullConverter}}">
+							<Image asyncImageLoader:ImageLoader.Source="{Binding Path}" MaxWidth="100" MaxHeight="100"/>
+							<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OpenFileButton_Clicked"/>
+						</Panel>
+						<Button Content="..." Padding="2" Click="OpenFileButton_Clicked" IsVisible="{Binding Path, Converter={StaticResource IsNullConverter}}"/>
+						<Button Padding="2" Margin="5,0,0,0" Click="RemoveImage" IsVisible="{Binding Path, Converter={StaticResource IsNotNullConverter}}">
+							<PathIcon Width="20" Height="20" Data="{StaticResource delete_regular}"/>
+						</Button>
+					</StackPanel>
+				</StackPanel>
+			</DataTemplate>
+		</ItemsControl.ItemTemplate>
+	</ItemsControl>
+</Border>
+
+<!--
+<Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="1*,1*" HorizontalAlignment="Center" VerticalAlignment="Stretch">
 
 		<Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Classes="GridBorder"/>
 		<TextBlock Grid.Row="0" Grid.Column="0" Text="Canvas Image" TextWrapping="Wrap" TextAlignment="Right"/>
@@ -71,4 +102,4 @@
 			<TextBox Text="{Binding WorkspaceSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}"/>
 		</StackPanel>
 	</Grid>
-</Border>
+-->

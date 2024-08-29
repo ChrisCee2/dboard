@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
+using mystery_app.Constants;
 using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
@@ -23,17 +24,17 @@ public partial class WorkspaceSettingsView : UserControl
 
         if (files.Count == 1)
         {
-            if (((Control)sender).FindAncestorOfType<StackPanel>().Name == "CanvasImage")
+            if (((Control)sender).FindAncestorOfType<StackPanel>().Name == WorkspaceConstants.CANVAS_IMAGE_NAME)
             {
-                ((WorkspaceViewModel)DataContext).CanvasImagePath = files[0].Path.LocalPath;
+                ((WorkspaceViewModel)DataContext).CanvasImagePath.Path = files[0].Path.LocalPath;
             }
-            else if (((Control)sender).FindAncestorOfType<StackPanel>().Name == "WorkspaceImage")
+            else if (((Control)sender).FindAncestorOfType<StackPanel>().Name == WorkspaceConstants.WORKSPACE_IMAGE_NAME)
             {
-                ((WorkspaceViewModel)DataContext).WorkspaceImagePath = files[0].Path.LocalPath;
+                ((WorkspaceViewModel)DataContext).WorkspaceImagePath.Path = files[0].Path.LocalPath;
             }
-            else if (((Control)sender).FindAncestorOfType<StackPanel>().Name == "WindowImage")
+            else if (((Control)sender).FindAncestorOfType<StackPanel>().Name == WorkspaceConstants.WINDOW_IMAGE_NAME)
             {
-                ((WorkspaceViewModel)DataContext).WindowImagePath = files[0].Path.LocalPath;
+                ((WorkspaceViewModel)DataContext).WindowImagePath.Path = files[0].Path.LocalPath;
             }
         }
     }

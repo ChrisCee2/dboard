@@ -200,7 +200,7 @@
 			</MultiBinding>
 		</Border.Background>
 		<Panel>
-			<Image asyncImageLoader:ImageLoader.Source="{Binding Workspace.WindowImagePath}"/>
+			<Image asyncImageLoader:ImageLoader.Source="{Binding Workspace.WindowImagePath.Path}"/>
 			<views:WorkspaceView x:Name="CurrentWorkspace" DataContext="{Binding Workspace}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 		</Panel>
 	</Border>
