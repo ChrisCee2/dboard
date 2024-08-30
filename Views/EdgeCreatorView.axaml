@@ -21,6 +21,28 @@
 		<vm:NodeViewModelBase />
 	</Design.DataContext>
 
+	<Border.RenderTransform>
+		<TranslateTransform>
+			<TranslateTransform.X>
+				<MultiBinding Converter="{StaticResource EdgePosConverter}">
+					<Binding Path="NodeBase.PositionX"/>
+					<Binding Path="NodeBase.PositionY"/>
+					<Binding Source="{x:Static constants:EdgeConstants.EDGE_PIN_SIZE}"/>
+					<Binding Path="NodeBase.Width"/>
+				</MultiBinding>
+			</TranslateTransform.X>
+
+			<TranslateTransform.Y>
+				<MultiBinding Converter="{StaticResource EdgePosConverter}">
+					<Binding Path="NodeBase.PositionX"/>
+					<Binding Path="NodeBase.PositionY"/>
+					<Binding Source="{x:Static constants:EdgeConstants.EDGE_PIN_SIZE}"/>
+					<Binding Path="NodeBase.Width"/>
+				</MultiBinding>
+			</TranslateTransform.Y>
+		</TranslateTransform>
+	</Border.RenderTransform>
+
 	<Border.Effect>
 		<DropShadowEffect BlurRadius="1" Opacity=".5" OffsetX="3" OffsetY="3"/>
 	</Border.Effect>

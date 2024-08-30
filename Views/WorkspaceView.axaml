@@ -104,6 +104,7 @@
 					<MultiBinding Converter="{StaticResource EdgePosConverter}">
 						<Binding Path="NodeToCreateEdge.NodeBase.PositionX"/>
 						<Binding Path="NodeToCreateEdge.NodeBase.PositionY"/>
+						<Binding Source="{x:Static constants:EdgeConstants.EDGE_PIN_SIZE}"/>
 						<Binding Path="NodeToCreateEdge.NodeBase.Width"/>
 					</MultiBinding>
 				</Line.StartPoint>

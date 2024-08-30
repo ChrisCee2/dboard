@@ -75,6 +75,7 @@
 			<MultiBinding Converter="{StaticResource EdgePosConverter}">
 				<Binding Path="Edge.FromNode.PositionX"/>
 				<Binding Path="Edge.FromNode.PositionY"/>
+				<Binding Source="{x:Static constants:EdgeConstants.EDGE_PIN_SIZE}"/>
 				<Binding Path="Edge.FromNode.Width"/>
 			</MultiBinding>
 		</Line.StartPoint>
@@ -82,6 +83,7 @@
 			<MultiBinding Converter="{StaticResource EdgePosConverter}">
 				<Binding Path="Edge.ToNode.PositionX"/>
 				<Binding Path="Edge.ToNode.PositionY"/>
+				<Binding Source="{x:Static constants:EdgeConstants.EDGE_PIN_SIZE}"/>
 				<Binding Path="Edge.ToNode.Width"/>
 			</MultiBinding>
 		</Line.EndPoint>

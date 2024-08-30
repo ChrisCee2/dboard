@@ -34,7 +34,8 @@
 			<Grid
 				Name="AdornerGrid"
 				ColumnDefinitions="Auto,*,Auto"
-				RowDefinitions="Auto,*,Auto">
+				RowDefinitions="Auto,*,Auto"
+				ZIndex="{Binding NodeBase.ZIndex}">
 				<Grid.ContextMenu>
 					<ContextMenu>
 						<MenuItem Header="Delete" Command="{Binding DeleteNodeCommand}"/>
@@ -42,12 +43,12 @@
 					</ContextMenu>
 				</Grid.ContextMenu>
 			
-				<Panel Tag="xy" Background="Transparent" Cursor="TopLeftCorner"
+				<Panel Tag="xy" Background="Blue" Cursor="TopLeftCorner"
 					   Grid.Row="0" Grid.Column="0" Width="8" Height="8"
 					   PointerPressed="ResizePointerPressed"
 					   PointerReleased="ResizePointerReleased"
 					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="Xy" Background="Transparent" Cursor="TopRightCorner"
+				<Panel Tag="Xy" Background="Red" Cursor="TopRightCorner"
 					   Grid.Row="0" Grid.Column="2" Width="8" Height="8"
 					   PointerPressed="ResizePointerPressed"
 					   PointerReleased="ResizePointerReleased"
