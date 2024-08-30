@@ -44,6 +44,7 @@
 		<ColorPicker Grid.Row="1" Grid.Column="1"
 					 HorizontalAlignment="Left" VerticalAlignment="Center" Color="{Binding Background}" MaxHeight="20"/>
 
+		<!-- NO MODES ARE WORKING RIGHT NOW
 		<TextBlock Text="Mode" Grid.Row="2" Grid.Column="0" TextAlignment="Right"/>
 		<ComboBox Grid.Row="2" Grid.Column="1"
 				  ItemsSource="{Binding Modes}" SelectedItem="{Binding SharedSettings.ModeModel}">
@@ -53,5 +54,6 @@
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
+		-->
 	</Grid>
 </Border>
