@@ -13,6 +13,11 @@
 
 	<Color x:Key="HighlightColor">#FF88BBFF</Color>
 
+	<!-- Workspace Constants -->
+	<sys:Int32 x:Key="MaxWorkspaceWidth"> 100000 </sys:Int32>
+	<sys:Int32 x:Key="MaxWorkspaceHeight"> 100000 </sys:Int32>
+
+
 	<!-- Node Constants-->
 	<SolidColorBrush x:Key="NodeToggledColor" Color="#FFa58c64" />
 	<SolidColorBrush x:Key="NodeUntoggledColor" Color="#FFc8b98c" />
@@ -30,5 +35,6 @@
 	<sys:Double x:Key="ImageIconPct"> 0.75 </sys:Double>
 	<sys:Double x:Key="AddImageIconPct"> 0.1 </sys:Double>
 	<sys:Double x:Key="AddImageIconPaddingPct"> 0.4 </sys:Double>
+
 
 </ResourceDictionary>

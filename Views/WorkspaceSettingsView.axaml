@@ -69,9 +69,9 @@
 			
 			<TextBlock Text="Workspace Size" TextWrapping="Wrap" Grid.Row="0" Grid.Column="0" TextAlignment="Right"/>
 			<StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-				<TextBox Text="{Binding WorkspaceSizeX, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}"/>
+				<TextBox Text="{Binding WorkspaceSizeX, Converter={StaticResource CanvasSizeConverter}, ConverterParameter={StaticResource MaxWorkspaceWidth}}"/>
 				<TextBlock Text=" x " VerticalAlignment="Center" FontSize="{StaticResource ToolBarFontSize}"/>
-				<TextBox Text="{Binding WorkspaceSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}"/>
+				<TextBox Text="{Binding WorkspaceSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter={StaticResource MaxWorkspaceHeight}}"/>
 			</StackPanel>
 		</Grid>
 	</StackPanel>
