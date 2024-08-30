@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
-using mystery_app.Models;
+using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
 
@@ -22,7 +22,7 @@ public partial class ImageView : Panel
 
         if (files.Count == 1)
         {
-            ((NodeModel)DataContext).ImagePath = files[0].Path.LocalPath;
+            ((NodeViewModel)DataContext).Node.ImagePath = files[0].Path.LocalPath;
         }
     }
 }
