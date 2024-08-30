@@ -22,7 +22,7 @@ using mystery_app.ViewModels;
 
 namespace mystery_app.Views;
 
-public partial class MainContentView : DockPanel
+public partial class MainContentView : Grid
 {
 
     private bool _isResizingNotes;
