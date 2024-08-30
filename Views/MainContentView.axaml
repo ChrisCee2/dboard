@@ -1,4 +1,4 @@
-<DockPanel
+<Grid
 	xmlns="https://github.com/avaloniaui"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="using:mystery_app.ViewModels"
@@ -9,23 +9,26 @@
 	xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     x:Class="mystery_app.Views.MainContentView"
     x:DataType="vm:MainContentViewModel"
-	Background="{Binding SharedSettings.ModeModel.A, Converter={StaticResource BrushOpacityConverter}, ConverterParameter={StaticResource ToolBarColor}}">
+	Background="{Binding SharedSettings.ModeModel.A, Converter={StaticResource BrushOpacityConverter}, ConverterParameter={StaticResource ToolBarColor}}"
+	RowDefinitions="Auto,*,Auto"
+	ColumnDefinitions="Auto,Auto,*,Auto">
 
     <Design.DataContext>
         <vm:MainContentViewModel/>
     </Design.DataContext>
 
-	<DockPanel.Styles>
+	<Grid.Styles>
 		<StyleInclude Source="/Styles/ToolBarStyles.axaml" />
-	</DockPanel.Styles>
+	</Grid.Styles>
+
+	<Border Grid.Row="0" Grid.Column="0" Background="Transparent" PointerPressed="MoveWindow"/>
 	
 	<!-- Title / Top bar -->
-	<DockPanel x:Name="TitleBar" DockPanel.Dock="Top" IsVisible="{Binding SharedSettings.ModeModel.ShowItems}"
+	<DockPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" x:Name="TitleBar" IsVisible="{Binding SharedSettings.ModeModel.ShowItems}"
 			   Classes.TopMax="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
 			   Classes.TopNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
 
 		<!-- Left side -->
-		<Border Width="30" Background="Transparent" PointerPressed="MoveWindow"/>
 		<Menu>
 			<MenuItem Header="File">
 				<MenuItem Header="New" Command="{Binding NewCommand}"/>
@@ -58,12 +61,11 @@
 	</DockPanel>
 		
 	<!-- Bottom bar -->
-	<DockPanel x:Name="Bar" Background="Transparent" DockPanel.Dock="Bottom"
+	<DockPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" x:Name="Bar" Background="Transparent"
 			   Classes.BotMax="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
 			   Classes.BotNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
 
 		<!--Left Side-->
-		<Border Width="30" Background="Transparent"/>
 		<ToggleButton Template="{StaticResource TogBtnBotHighlight}" Content="Settings" IsChecked="{Binding #SettingsSplitView.IsPaneOpen}"/>
 
 		<!--Right Side-->
@@ -80,7 +82,36 @@
 	</DockPanel>
 		
 	<!-- Left bar -->
-	<SplitView Name="SettingsSplitView" DockPanel.Dock="Left" PanePlacement="Right" DisplayMode="Inline" OpenPaneLength="300">
+	<DockPanel Grid.Row="1" Grid.Column="0">
+		<Grid x:Name="ActionGrid" ColumnDefinitions="Auto" RowDefinitions="Auto,Auto" Background="Transparent"
+			  Classes.LeftMax="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
+			  Classes.LeftNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
+			<Button Grid.Row="0" Grid.Column="0" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="Select">
+				<Button.Background>
+					<MultiBinding Converter="{StaticResource StrCheckBgConverter}">
+						<Binding Source="Select"/>
+						<Binding Path="Workspace.ClickMode"/>
+						<Binding Source="{StaticResource ClickBtnHighlightColor}"/>
+						<Binding Source="{StaticResource ClickBtnDefaultColor}"/>
+					</MultiBinding>
+				</Button.Background>
+				<PathIcon Data="{StaticResource cursor_regular}"/>
+			</Button>
+			<Button Grid.Row="1" Grid.Column="0" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="CreateNode">
+				<Button.Background>
+					<MultiBinding Converter="{StaticResource StrCheckBgConverter}">
+						<Binding Source="CreateNode"/>
+						<Binding Path="Workspace.ClickMode"/>
+						<Binding Source="{StaticResource ClickBtnHighlightColor}"/>
+						<Binding Source="{StaticResource ClickBtnDefaultColor}"/>
+					</MultiBinding>
+				</Button.Background>
+				<PathIcon Data="{StaticResource add_regular}"/>
+			</Button>
+		</Grid>
+	</DockPanel>
+
+	<SplitView Grid.Row="1" Grid.Column="1" Name="SettingsSplitView" PanePlacement="Right" DisplayMode="Inline" OpenPaneLength="300">
 		<SplitView.PaneBackground>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 				<Binding Path="SharedSettings.ModeModel.A"/>
@@ -89,35 +120,6 @@
 				<Binding Path="SharedSettings.ModeModel.B"/>
 			</MultiBinding>
 		</SplitView.PaneBackground>
-
-		<DockPanel>
-			<Grid x:Name="ActionGrid" ColumnDefinitions="Auto" RowDefinitions="Auto,Auto" Background="Transparent"
-				  Classes.LeftMax="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
-				  Classes.LeftNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
-				<Button Grid.Row="0" Grid.Column="0" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="Select">
-					<Button.Background>
-						<MultiBinding Converter="{StaticResource StrCheckBgConverter}">
-							<Binding Source="Select"/>
-							<Binding Path="Workspace.ClickMode"/>
-							<Binding Source="{StaticResource ClickBtnHighlightColor}"/>
-							<Binding Source="{StaticResource ClickBtnDefaultColor}"/>
-						</MultiBinding>
-					</Button.Background>
-					<PathIcon Data="{StaticResource cursor_regular}"/>
-				</Button>
-				<Button Grid.Row="1" Grid.Column="0" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="CreateNode">
-					<Button.Background>
-						<MultiBinding Converter="{StaticResource StrCheckBgConverter}">
-							<Binding Source="CreateNode"/>
-							<Binding Path="Workspace.ClickMode"/>
-							<Binding Source="{StaticResource ClickBtnHighlightColor}"/>
-							<Binding Source="{StaticResource ClickBtnDefaultColor}"/>
-						</MultiBinding>
-					</Button.Background>
-					<PathIcon Data="{StaticResource add_regular}"/>
-				</Button>
-			</Grid>
-		</DockPanel>
 
 		<SplitView.Pane>
 			<Border Padding="5" Background="{Binding SharedSettings.ModeModel.A, Converter={StaticResource BrushOpacityConverter}, ConverterParameter={StaticResource ToolBarColor}}">
@@ -147,7 +149,7 @@
 	</SplitView>
 
 	<!-- Right bar -->
-	<SplitView Name="NotesSplitView" DockPanel.Dock="Right" PanePlacement="Left" DisplayMode="Inline" OpenPaneLength="{Binding Notes.PaneLength}">
+	<SplitView Grid.Row="1" Grid.Column="3" Name="NotesSplitView" PanePlacement="Left" DisplayMode="Inline" OpenPaneLength="{Binding Notes.PaneLength}">
 		<SplitView.PaneBackground>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 				<Binding Path="SharedSettings.ModeModel.A"/>
@@ -190,7 +192,9 @@
 			</Border>
 		</SplitView.Pane>
 	</SplitView>
-	<Border ClipToBounds="True" CornerRadius="8" PointerWheelChanged="HandleZoom" PointerPressed="WorkspaceOnPointerPressed" PointerMoved="WorkspaceOnPointerMoved" PointerReleased="WorkspaceOnPointerReleased">
+
+	<!-- Workspace -->
+	<Border Grid.Row="1" Grid.Column="2" ClipToBounds="True" CornerRadius="8" PointerWheelChanged="HandleZoom" PointerPressed="WorkspaceOnPointerPressed" PointerMoved="WorkspaceOnPointerMoved" PointerReleased="WorkspaceOnPointerReleased">
 		<Border.Background>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 				<Binding Path="SharedSettings.ModeModel.A"/>
@@ -204,4 +208,4 @@
 			<views:WorkspaceView x:Name="CurrentWorkspace" DataContext="{Binding Workspace}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 		</Panel>
 	</Border>
-</DockPanel>
+</Grid>
