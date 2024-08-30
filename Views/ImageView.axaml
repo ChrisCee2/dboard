@@ -4,11 +4,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-	xmlns:models="using:mystery_app.Models"
+	xmlns:vm="using:mystery_app.ViewModels"
     x:Class="mystery_app.Views.ImageView"
-	x:DataType="models:NodeModel">
+	x:DataType="vm:NodeViewModel"
+	x:Name="ImagePanel">
 	<Design.DataContext>
-		<models:NodeModel/>
+		<vm:NodeViewModel/>
 	</Design.DataContext>
 
 	<Panel.Styles>
@@ -23,6 +24,57 @@
 		</Style>
 	</Panel.Styles>
 
-	<Image asyncImageLoader:ImageLoader.Source="{Binding ImagePath}"/>
-	<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OpenFileButton_Clicked"/>
+	<Image asyncImageLoader:ImageLoader.Source="{Binding Node.ImagePath}" 
+		   IsVisible="{Binding Node.ImagePath, Converter={StaticResource IsNotNullConverter}}"/>
+	<PathIcon Data="{StaticResource person_question_mark_regular}" MinWidth="20" MinHeight="20" Foreground="{StaticResource NodeTextboxBorderColor}"
+				IsVisible="{Binding Node.ImagePath, Converter={StaticResource IsNullConverter}}">
+		<PathIcon.Width>
+			<MultiBinding Converter="{StaticResource MultiplicationConverter}">
+				<Binding Path="#ImagePanel.Bounds.Width"/>
+				<Binding Source="{StaticResource ImageIconPct}"/>
+			</MultiBinding>
+		</PathIcon.Width>
+
+		<PathIcon.Height>
+			<MultiBinding Converter="{StaticResource MultiplicationConverter}">
+				<Binding Path="#ImagePanel.Bounds.Height"/>
+				<Binding Source="{StaticResource ImageIconPct}"/>
+			</MultiBinding>
+		</PathIcon.Height>
+	</PathIcon>
+
+	<Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="OpenFileButton_Clicked" IsVisible="{Binding IsEdit}">
+		<Border HorizontalAlignment="Right" VerticalAlignment="Bottom" CornerRadius="1000000000" Background="Gray">
+			<Border.Padding>
+				<MultiBinding Converter="{StaticResource ThicknessMultConverter}">
+					<Binding Path="#AddImageIcon.Bounds.Width"/>
+					<Binding Source="{StaticResource AddImageIconPaddingPct}"/>
+				</MultiBinding>
+			</Border.Padding>
+			<PathIcon x:Name="AddImageIcon"
+					  Data="{StaticResource image_add_regular}"
+					  HorizontalAlignment="Center"
+					  VerticalAlignment="Center">
+				<PathIcon.Width>
+					<MultiBinding Converter="{StaticResource MultiplicationConverter}">
+						<MultiBinding Converter="{StaticResource MinConverter}">
+							<Binding Path="#ImagePanel.Bounds.Width"/>
+							<Binding Path="#ImagePanel.Bounds.Height"/>
+						</MultiBinding>
+						<Binding Source="{StaticResource AddImageIconPct}"/>
+					</MultiBinding>
+				</PathIcon.Width>
+
+				<PathIcon.Height>
+					<MultiBinding Converter="{StaticResource MultiplicationConverter}">
+						<MultiBinding Converter="{StaticResource MinConverter}">
+							<Binding Path="#ImagePanel.Bounds.Width"/>
+							<Binding Path="#ImagePanel.Bounds.Height"/>
+						</MultiBinding>
+						<Binding Source="{StaticResource AddImageIconPct}"/>
+					</MultiBinding>
+				</PathIcon.Height>
+			</PathIcon>
+		</Border>
+	</Button>
 </Panel>

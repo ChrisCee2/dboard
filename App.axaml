@@ -26,6 +26,8 @@
 			<customConverters:CanvasSizeConverter x:Key="CanvasSizeConverter"/>
 			<customConverters:PercentStringConverter x:Key="PercentStringConverter"/>
 			<customConverters:GridLengthDivisionConverter x:Key="GridLengthDivisionConverter"/>
+			<customConverters:MultiplicationConverter x:Key="MultiplicationConverter"/>
+			<customConverters:ThicknessMultConverter x:Key="ThicknessMultConverter"/>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="/Styles/ToolBarResources.axaml"/>
 				<ResourceInclude Source="/Styles/WorkspaceResources.axaml"/>
