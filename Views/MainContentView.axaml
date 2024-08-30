@@ -74,9 +74,9 @@
 			<TextBlock Text="{Binding Workspace.Scale, Converter={StaticResource PercentStringConverter}}" DockPanel.Dock="Right" VerticalAlignment="Center"/>
 			<PathIcon Data="{StaticResource full_screen_zoom_regular}" Width="16" Height="16" Margin="0,0,6,0" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 			<Border Width="30" Background="Transparent" DockPanel.Dock="Right"/>
-			<TextBox Text="{Binding Workspace.CanvasSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}" DockPanel.Dock="Right"/>
+			<TextBox Text="{Binding Workspace.CanvasSizeY, Converter={StaticResource CanvasSizeConverter}, ConverterParameter={StaticResource MaxWorkspaceWidth}}" DockPanel.Dock="Right"/>
 			<TextBlock Text=" x " DockPanel.Dock="Right" VerticalAlignment="Center"/>
-			<TextBox Text="{Binding Workspace.CanvasSizeX, Converter={StaticResource CanvasSizeConverter}, ConverterParameter=10000}" DockPanel.Dock="Right"/>
+			<TextBox Text="{Binding Workspace.CanvasSizeX, Converter={StaticResource CanvasSizeConverter}, ConverterParameter={StaticResource MaxWorkspaceWidth}}" DockPanel.Dock="Right"/>
 			<PathIcon Data="{StaticResource resize_regular}" Width="16" Height="16" Margin="0,0,8,0" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 		</DockPanel>
 	</DockPanel>
@@ -124,7 +124,7 @@
 		<SplitView.Pane>
 			<Border Padding="5" Background="{Binding SharedSettings.ModeModel.A, Converter={StaticResource BrushOpacityConverter}, ConverterParameter={StaticResource ToolBarColor}}">
 				<DockPanel>
-					<ToggleButton DockPanel.Dock="Top" Margin="5" Padding="8" CornerRadius="10000" HorizontalAlignment="Right"
+					<ToggleButton DockPanel.Dock="Top" Margin="5" Padding="8" CornerRadius="10" HorizontalAlignment="Right"
 								  IsChecked="{Binding #SettingsSplitView.IsPaneOpen}">
 						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_left_regular}"/>
 					</ToggleButton>
@@ -183,7 +183,7 @@
 						   PointerReleased="ResizePointerReleased"
 						   PointerMoved="ResizePointerMoved"/>
 
-					<ToggleButton DockPanel.Dock="Top" Margin="5" Padding="8" CornerRadius="10000" HorizontalAlignment="Left"
+					<ToggleButton DockPanel.Dock="Top" Margin="5" Padding="8" CornerRadius="10" HorizontalAlignment="Left"
 								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}">
 						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
 					</ToggleButton>

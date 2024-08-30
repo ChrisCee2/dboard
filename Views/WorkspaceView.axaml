@@ -26,7 +26,7 @@
 
 	<UserControl.ContextMenu>
 		<ContextMenu>
-			<MenuItem Header="Create Node" Command="{Binding CreateNodeAtPressCommand}"/>
+			<MenuItem Header="Create Node" Command="{Binding CreateNodeAtCursorCommand}"/>
 			<MenuItem Header="Paste" Command="{Binding PasteNodesCommand}"/>
 		</ContextMenu>
 	</UserControl.ContextMenu>
@@ -42,7 +42,7 @@
         <vm:WorkspaceViewModel />
     </Design.DataContext>
 
-	<Panel>
+	<Panel Width="{StaticResource MaxWorkspaceWidthDbl}" Height="{StaticResource MaxWorkspaceHeightDbl}" x:Name="WorkspaceCanvas">
 		<Image asyncImageLoader:ImageLoader.Source="{Binding WorkspaceImagePath.Path}"/>
 		<Border x:Name="VisualCanvas" Width="{Binding CanvasSizeX}" Height="{Binding CanvasSizeY}" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8" IsHitTestVisible="False">
 			<Image asyncImageLoader:ImageLoader.Source="{Binding CanvasImagePath.Path}"/>
