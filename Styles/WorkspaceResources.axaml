@@ -17,6 +17,9 @@
 	<sys:Int32 x:Key="MaxWorkspaceWidth"> 100000 </sys:Int32>
 	<sys:Int32 x:Key="MaxWorkspaceHeight"> 100000 </sys:Int32>
 
+	<sys:Double x:Key="MaxWorkspaceWidthDbl"> 100000 </sys:Double>
+	<sys:Double x:Key="MaxWorkspaceHeightDbl"> 100000 </sys:Double>
+
 
 	<!-- Node Constants-->
 	<SolidColorBrush x:Key="NodeToggledColor" Color="#FFa58c64" />

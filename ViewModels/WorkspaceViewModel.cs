@@ -126,9 +126,9 @@ public partial class WorkspaceViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void CreateNodeAtPress()
+    private void CreateNodeAtCursor()
     {
-        CreateNodeAtPos(PressedPosition.X, PressedPosition.Y);
+        CreateNodeAtPos(CursorPosition.X, CursorPosition.Y);
     }
 
     public void CreateNodeAtPos(double x, double y)

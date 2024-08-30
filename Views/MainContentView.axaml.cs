@@ -29,7 +29,7 @@ public partial class MainContentView : Grid
     private double _initialResizeX;
     private double _lastNotesLen;
     private SplitView _notesSplitView;
-    private WorkspaceView _workspace;
+    private Control _workspaceCanvas;
 
     JsonSerializerOptions options = new()
     {
@@ -43,7 +43,7 @@ public partial class MainContentView : Grid
     {
         InitializeComponent();
         _notesSplitView = this.FindControl<SplitView>("NotesSplitView");
-        _workspace = this.FindControl<WorkspaceView>("CurrentWorkspace");
+        _workspaceCanvas = this.FindControl<WorkspaceView>("CurrentWorkspace").FindControl<Panel>("WorkspaceCanvas");
 
         if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -266,7 +266,7 @@ public partial class MainContentView : Grid
     {
         if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            Point pos = _workspace.PointToClient(new PixelPoint((int)desktop.MainWindow.ClientSize.Width / 2, (int)desktop.MainWindow.ClientSize.Height / 2));
+            Point pos = _workspaceCanvas.PointToClient(new PixelPoint((int)desktop.MainWindow.ClientSize.Width / 2, (int)desktop.MainWindow.ClientSize.Height / 2));
             ((MainContentViewModel)DataContext).Workspace.CreateNodeAtPos(pos.X, pos.Y);
         }
     }
@@ -322,16 +322,16 @@ public partial class MainContentView : Grid
     {
         WorkspaceViewModel context = ((MainContentViewModel)DataContext).Workspace;
 
-        context.PressedPosition = e.GetPosition(_workspace);
-        context.CursorPosition = e.GetPosition(_workspace);
+        context.PressedPosition = e.GetPosition(_workspaceCanvas);
+        context.CursorPosition = e.GetPosition(_workspaceCanvas);
 
-        if (e.GetCurrentPoint(_workspace).Properties.IsMiddleButtonPressed && !context.IsMultiSelecting)
+        if (e.GetCurrentPoint(_workspaceCanvas).Properties.IsMiddleButtonPressed && !context.IsMultiSelecting)
         {
             context.IsPanning = true;
             var pos = e.GetPosition((Visual?)Parent);
             _positionInBlock = new Point(pos.X - ((int)context.PanPosition.X), pos.Y - ((int)context.PanPosition.Y));
         }
-        else if (e.GetCurrentPoint(_workspace).Properties.IsLeftButtonPressed && !context.IsPanning && context.ClickMode == "Select")
+        else if (e.GetCurrentPoint(_workspaceCanvas).Properties.IsLeftButtonPressed && !context.IsPanning && context.ClickMode == "Select")
         {
             var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
             var rootCoordinates = e.GetPosition(root);
@@ -347,13 +347,9 @@ public partial class MainContentView : Grid
     protected void WorkspaceOnPointerMoved(object sender, PointerEventArgs e)
     {
         WorkspaceViewModel context = ((MainContentViewModel)DataContext).Workspace;
+        context.CursorPosition = e.GetPosition(_workspaceCanvas);
 
-        // Only update position if multiselecting or edge selecting
-        if (context.IsMultiSelecting || context.NodeToCreateEdge != NodeConstants.NULL_NODEVIEWMODEL)
-        {
-            context.CursorPosition = e.GetPosition(_workspace);
-        }
-        else if (context.IsPanning)
+        if (context.IsPanning)
         {
             var currentPosition = e.GetPosition((Visual?)Parent);
 
@@ -417,7 +413,7 @@ public partial class MainContentView : Grid
         }
         else if (context.ClickMode == "CreateNode" && e.InitialPressMouseButton.Equals(MouseButton.Left))
         {
-            Point pos = e.GetPosition(_workspace);
+            Point pos = e.GetPosition(_workspaceCanvas.FindControl<Panel>("WorkspaceCanvas"));
             context.CreateNodeAtPos(pos.X, pos.Y);
         }
 
