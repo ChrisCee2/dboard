@@ -1,0 +1,27 @@
+<Border
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="clr-namespace:mystery_app.ViewModels"
+	xmlns:views="clr-namespace:mystery_app.Views"
+	xmlns:constants="clr-namespace:mystery_app.Constants"
+	x:Class="mystery_app.Views.EdgeCreatorView"
+	x:DataType="vm:NodeViewModelBase"
+	Width="{x:Static constants:EdgeConstants.EDGE_PIN_SIZE}" 
+	Height="{x:Static constants:EdgeConstants.EDGE_PIN_SIZE}" 
+	Margin="5" 
+	BorderThickness="1" 
+	Background="Red" 
+	CornerRadius="{x:Static constants:EdgeConstants.EDGE_PIN_RAD}"
+	PointerPressed="CreateEdge"
+	PointerReleased="FinishCreateEdge"
+	>
+	<Design.DataContext>
+		<vm:NodeViewModelBase />
+	</Design.DataContext>
+
+	<Border.Effect>
+		<DropShadowEffect BlurRadius="1" Opacity=".5" OffsetX="3" OffsetY="3"/>
+	</Border.Effect>
+</Border>

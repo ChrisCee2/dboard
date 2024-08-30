@@ -50,6 +50,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\EdgeCreatorView.axaml.cs">
+      <DependentUpon>EdgeCreatorView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\WorkspaceSettingsView.axaml.cs">
       <DependentUpon>WorkspaceSettingsView.axaml</DependentUpon>
     </Compile>

@@ -47,6 +47,28 @@
 		<Border x:Name="VisualCanvas" Width="{Binding CanvasSizeX}" Height="{Binding CanvasSizeY}" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8" IsHitTestVisible="False">
 			<Image asyncImageLoader:ImageLoader.Source="{Binding CanvasImagePath.Path}"/>
 		</Border>
+
+		<!--Edges-->
+		<ItemsControl ItemsSource="{Binding Edges}" Name="EdgeItemsControl">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas/>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+
+			<ItemsControl.Styles>
+				<Style Selector="ContentPresenter" x:DataType="vm:NodeViewModel">
+					<Setter Property="ZIndex" Value="100"/>
+				</Style>
+			</ItemsControl.Styles>
+
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<views:EdgeView DataContext="{Binding}"/>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+		
 		<!--Nodes-->
 		<ItemsControl Name="NodeItemsControl" ItemsSource="{Binding Nodes}">
 			<ItemsControl.ItemsPanel>
@@ -66,21 +88,6 @@
 					<views:InteractiveView DataContext="{Binding}">
 						<views:NodeView DataContext="{Binding}" Grid.Row="1"/>
 					</views:InteractiveView>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-
-		<!--Edges-->
-		<ItemsControl ItemsSource="{Binding Edges}" Name="EdgeItemsControl">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<Canvas/>
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-				
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<views:EdgeView DataContext="{Binding}"/>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
 		</ItemsControl>

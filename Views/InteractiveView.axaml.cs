@@ -144,32 +144,6 @@ public partial class InteractiveView : Grid
         _vm.NodeBase.PositionY = offsetY;
     }
 
-    // On selecting node edge creation, tell workspace this node has been selected
-    protected void SelectNodeEdge(object sender, PointerPressedEventArgs e)
-    {
-        var clickProperties = e.GetCurrentPoint(Parent as Visual).Properties;
-        if (!clickProperties.IsLeftButtonPressed) { return; }
-
-        WeakReferenceMessenger.Default.Send(new SelectNodeMessage(_vm));
-        WeakReferenceMessenger.Default.Send(new CreateNodeEdgeMessage(_vm));
-    }
-
-    // On releasing node edge creation, find node released on and send to workspace
-    protected void ReleaseNodeEdge(object sender, PointerReleasedEventArgs e)
-    {
-        var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
-        var rootCoordinates = e.GetPosition(root);
-        var hitElement = root.InputHitTest(rootCoordinates);
-        if (((Visual)hitElement).FindLogicalAncestorOfType<InteractiveView>() is InteractiveView node && node.DataContext is NodeViewModelBase vm)
-        {
-            WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage(vm));
-        }
-        else
-        {
-            WeakReferenceMessenger.Default.Send(new ReleaseNodeEdgeMessage(NodeConstants.NULL_NODEVIEWMODEL));
-        }
-    }
-
     // Handle dropping image
     public async Task DropImage(object sender, DragEventArgs e)
     {

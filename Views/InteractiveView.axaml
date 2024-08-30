@@ -28,10 +28,6 @@
 	<Design.DataContext>
 		<vm:NodeViewModelBase />
 	</Design.DataContext>
-
-	<Border Width="12" Height="12" Margin="5" BorderThickness="1" Background="Red" CornerRadius="12"
-			PointerPressed="SelectNodeEdge"
-			PointerReleased="ReleaseNodeEdge"/>
 	
 	<AdornerLayer Grid.Row="1">
 		<AdornerLayer.Adorner>

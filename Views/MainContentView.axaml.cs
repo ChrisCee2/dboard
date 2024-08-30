@@ -388,7 +388,7 @@ public partial class MainContentView : DockPanel
             {
                 InteractiveView node = item.FindDescendantOfType<InteractiveView>();
                 NodeViewModelBase nodeContext = (NodeViewModelBase)node.DataContext;
-                Point b0 = new Point(nodeContext.NodeBase.PositionX, nodeContext.NodeBase.PositionY + (EdgeConstants.distFromEdgeToNodePos * 2)); // Offset to account for edge occupation of interactive view
+                Point b0 = new Point(nodeContext.NodeBase.PositionX, nodeContext.NodeBase.PositionY);
                 Point b1 = new Point(nodeContext.NodeBase.PositionX + node.Bounds.Size.Width, nodeContext.NodeBase.PositionY + node.Bounds.Size.Height);
                 if (Geo.RectInRect(a0, a1, b0, b1))
                 {
