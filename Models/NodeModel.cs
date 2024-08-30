@@ -9,7 +9,7 @@ public partial class NodeModel : NodeModelBase
     {
         Name = "";
         Desc = "";
-        ImagePath = NodeConstants.DEFAULT_IMAGE_PATH;
+        ImagePath = null;
         Width = NodeConstants.MIN_WIDTH;
         Height = NodeConstants.MIN_HEIGHT;
         PositionX = 0;
@@ -22,7 +22,7 @@ public partial class NodeModel : NodeModelBase
     {
         Name = "";
         Desc = "";
-        ImagePath = NodeConstants.DEFAULT_IMAGE_PATH;
+        ImagePath = null;
         Width = NodeConstants.MIN_WIDTH;
         Height = NodeConstants.MIN_HEIGHT;
         PositionX = 0;
@@ -57,7 +57,7 @@ public partial class NodeModel : NodeModelBase
     private string _name;
 
     [ObservableProperty]
-    private string _imagePath;
+    private string? _imagePath;
 
     [ObservableProperty]
     private string _notes;

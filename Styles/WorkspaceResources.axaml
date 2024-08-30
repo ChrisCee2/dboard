@@ -26,4 +26,9 @@
 	<sys:Double x:Key="SettingsItemHeight"> 35 </sys:Double>
 	<GridLength x:Key="SettingsItemHeightGL"> 35 </GridLength>
 
+	<!-- Image Constants -->
+	<sys:Double x:Key="ImageIconPct"> 0.75 </sys:Double>
+	<sys:Double x:Key="AddImageIconPct"> 0.1 </sys:Double>
+	<sys:Double x:Key="AddImageIconPaddingPct"> 0.4 </sys:Double>
+
 </ResourceDictionary>
