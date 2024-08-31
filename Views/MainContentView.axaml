@@ -9,11 +9,11 @@
 	xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
     x:Class="mystery_app.Views.MainContentView"
     x:DataType="vm:MainContentViewModel"
-	Background="{Binding SharedSettings.ModeModel.A, Converter={StaticResource BrushOpacityConverter}, ConverterParameter={StaticResource ToolBarColor}}"
 	RowDefinitions="Auto,*,Auto"
-	ColumnDefinitions="Auto,Auto,*,Auto">
-
-    <Design.DataContext>
+	ColumnDefinitions="Auto,Auto,*,Auto"
+	Classes.Accent="{Binding !SharedSettings.UseThemeAccent}">
+	
+	<Design.DataContext>
         <vm:MainContentViewModel/>
     </Design.DataContext>
 
@@ -114,15 +114,16 @@
 	<SplitView Grid.Row="1" Grid.Column="1" Name="SettingsSplitView" PanePlacement="Right" DisplayMode="Inline" OpenPaneLength="300">
 		<SplitView.PaneBackground>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
-				<Binding Path="SharedSettings.ModeModel.A"/>
-				<Binding Path="SharedSettings.ModeModel.R"/>
-				<Binding Path="SharedSettings.ModeModel.G"/>
-				<Binding Path="SharedSettings.ModeModel.B"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundA"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundR"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundG"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundB"/>
 			</MultiBinding>
 		</SplitView.PaneBackground>
 
 		<SplitView.Pane>
-			<Border Padding="5" Background="{Binding SharedSettings.ModeModel.A, Converter={StaticResource BrushOpacityConverter}, ConverterParameter={StaticResource ToolBarColor}}">
+			<Border Padding="5" Classes.Accent="{Binding !SharedSettings.UseThemeAccent}">
+
 				<DockPanel>
 					<ToggleButton DockPanel.Dock="Top" Margin="5" Padding="8" CornerRadius="10" HorizontalAlignment="Right"
 								  IsChecked="{Binding #SettingsSplitView.IsPaneOpen}">
@@ -152,10 +153,10 @@
 	<SplitView Grid.Row="1" Grid.Column="3" Name="NotesSplitView" PanePlacement="Left" DisplayMode="Inline" OpenPaneLength="{Binding Notes.PaneLength}">
 		<SplitView.PaneBackground>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
-				<Binding Path="SharedSettings.ModeModel.A"/>
-				<Binding Path="SharedSettings.ModeModel.R"/>
-				<Binding Path="SharedSettings.ModeModel.G"/>
-				<Binding Path="SharedSettings.ModeModel.B"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundA"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundR"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundG"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundB"/>
 			</MultiBinding>
 		</SplitView.PaneBackground>
 
@@ -172,7 +173,7 @@
 		</DockPanel>
 
 		<SplitView.Pane>
-			<Border Padding="0,5,5,5" Background="{Binding SharedSettings.ModeModel.A, Converter={StaticResource BrushOpacityConverter}, ConverterParameter={StaticResource ToolBarColor}}">
+			<Border Padding="0,5,5,5" Classes.Accent="{Binding !SharedSettings.UseThemeAccent}">
 				<DockPanel>
 					<Panel Cursor="LeftSide"
 						   Width="5"
@@ -187,7 +188,11 @@
 								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}">
 						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
 					</ToggleButton>
-					<TextBox Text="{Binding Notes.Text}" BorderThickness="0" TextWrapping="Wrap" MinWidth="5"/>
+					<TextBox x:Name="NotesTextBox" 
+							 Text="{Binding Notes.Text}" 
+							 TextWrapping="Wrap" 
+							 AcceptsReturn="True" 
+							 MinWidth="5"/>
 				</DockPanel>
 			</Border>
 		</SplitView.Pane>
@@ -197,10 +202,10 @@
 	<Border Grid.Row="1" Grid.Column="2" ClipToBounds="True" CornerRadius="8" PointerWheelChanged="HandleZoom" PointerPressed="WorkspaceOnPointerPressed" PointerMoved="WorkspaceOnPointerMoved" PointerReleased="WorkspaceOnPointerReleased">
 		<Border.Background>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
-				<Binding Path="SharedSettings.ModeModel.A"/>
-				<Binding Path="SharedSettings.ModeModel.R"/>
-				<Binding Path="SharedSettings.ModeModel.G"/>
-				<Binding Path="SharedSettings.ModeModel.B"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundA"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundR"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundG"/>
+				<Binding Path="SharedSettings.ModeModel.BackgroundB"/>
 			</MultiBinding>
 		</Border.Background>
 		<Panel>

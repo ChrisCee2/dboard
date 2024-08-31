@@ -10,6 +10,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Shapes;
+using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
@@ -50,6 +51,39 @@ public partial class MainContentView : Grid
             ((TopLevel)desktop.MainWindow).AddHandler(InputElement.KeyDownEvent, HandleKeyDown, handledEventsToo: true);
             ((TopLevel)desktop.MainWindow).AddHandler(InputElement.KeyUpEvent, HandleKeyUp, handledEventsToo: true);
         }
+
+        MultiBinding LightAccentMB = new MultiBinding()
+        {
+            Bindings = [
+                new Binding("ActualThemeVariant") { Source=this },
+                new Binding() { Source="Light" },
+                new Binding() { Path="SharedSettings.UseThemeAccent" },
+                ],
+            Converter = new Converters.UseThemeConverter()
+        };
+
+        MultiBinding DarkAccentMB = new MultiBinding()
+        {
+            Bindings = [
+            new Binding("ActualThemeVariant") { Source=this },
+                new Binding() { Source="Dark" },
+                new Binding() { Path="SharedSettings.UseThemeAccent" },
+                ],
+            Converter = new Converters.UseThemeConverter()
+        };
+
+        Control settingsBorder = (Control) this.FindControl<SplitView>("SettingsSplitView").Pane;
+        Control notesBorder = (Control) this.FindControl<SplitView>("NotesSplitView").Pane;
+
+        // Background bindings
+        this.BindClass("LightAccent", LightAccentMB, null);
+        this.BindClass("DarkAccent", DarkAccentMB, null);
+
+        settingsBorder.BindClass("LightAccent", LightAccentMB, null);
+        settingsBorder.BindClass("DarkAccent", DarkAccentMB, null);
+
+        notesBorder.BindClass("LightAccent", LightAccentMB, null);
+        notesBorder.BindClass("DarkAccent", DarkAccentMB, null);
     }
 
     protected async void SaveEvent(object sender, RoutedEventArgs e)

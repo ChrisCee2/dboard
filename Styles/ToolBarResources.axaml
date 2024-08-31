@@ -8,7 +8,6 @@
 	</Design.PreviewWith>
 	
 	<SolidColorBrush x:Key="TogBtnHighlightColor" Color="#FFFFFFFF" />
-	<SolidColorBrush x:Key="ToolBarColor" Color="#b3969696" />
 	<SolidColorBrush x:Key="TogBtnHoverColor" Color="#1e000000" />
 	<SolidColorBrush x:Key="ClickBtnHighlightColor" Color="#88FFFFFF" />
 	<SolidColorBrush x:Key="ClickBtnDefaultColor" Color="#00000000" />

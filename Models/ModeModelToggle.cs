@@ -14,10 +14,10 @@ public partial class ModeModelToggle : ModeModel
 
         // Settings default to off mode
         Name = OffMode.Name;
-        A = OffMode.A;
-        R = OffMode.R;
-        G = OffMode.G;
-        B = OffMode.B;
+        BackgroundA = OffMode.BackgroundA;
+        BackgroundR = OffMode.BackgroundR;
+        BackgroundG = OffMode.BackgroundG;
+        BackgroundB = OffMode.BackgroundB;
         ShowItems = OffMode.ShowItems;
         WorkspaceOpacity = OffMode.WorkspaceOpacity;
         WindowState = OffMode.WindowState;
@@ -47,10 +47,10 @@ public partial class ModeModelToggle : ModeModel
     public void UpdateMode()
     {
         var mode = IsToggled ? OnMode : OffMode;
-        A = mode.A;
-        R = mode.R;
-        G = mode.G;
-        B = mode.B;
+        BackgroundA = mode.BackgroundA;
+        BackgroundR = mode.BackgroundR;
+        BackgroundG = mode.BackgroundG;
+        BackgroundB = mode.BackgroundB;
         ShowItems = mode.ShowItems;
         WorkspaceOpacity = mode.WorkspaceOpacity;
     }

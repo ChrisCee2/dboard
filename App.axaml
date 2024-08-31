@@ -28,6 +28,8 @@
 			<customConverters:GridLengthDivisionConverter x:Key="GridLengthDivisionConverter"/>
 			<customConverters:MultiplicationConverter x:Key="MultiplicationConverter"/>
 			<customConverters:ThicknessMultConverter x:Key="ThicknessMultConverter"/>
+			<customConverters:ByteOpacityConverter x:Key="ByteOpacityConverter"/>
+			<customConverters:UseThemeConverter x:Key="UseThemeConverter"/>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="/Styles/ToolBarResources.axaml"/>
 				<ResourceInclude Source="/Styles/WorkspaceResources.axaml"/>

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace mystery_app.Models;
@@ -8,16 +9,20 @@ public partial class ModeModel: ObservableObject
 {
     public ModeModel() {}
 
-    public ModeModel(string name, bool showItems, double workspaceOpacity, string windowState, byte a, byte r, byte g, byte b)
+    public ModeModel(string name, bool showItems, double workspaceOpacity, string windowState, Color background, Color accent)
     {
         Name = name;
         ShowItems = showItems;
         WorkspaceOpacity = workspaceOpacity;
         WindowState = windowState;
-        A = a;
-        R = r;
-        G = g;
-        B = b;
+        BackgroundA = background.A;
+        BackgroundR = background.R;
+        BackgroundG = background.G;
+        BackgroundB = background.B;
+        AccentA = accent.A;
+        AccentR = accent.R;
+        AccentG = accent.G;
+        AccentB = accent.B;
     }
 
     [ObservableProperty]
@@ -29,11 +34,19 @@ public partial class ModeModel: ObservableObject
     [ObservableProperty]
     private string _windowState;
     [ObservableProperty]
-    private byte _a;
+    private byte _backgroundA;
     [ObservableProperty]
-    private byte _r;
+    private byte _backgroundR;
     [ObservableProperty]
-    private byte _g;
+    private byte _backgroundG;
     [ObservableProperty]
-    private byte _b;
+    private byte _backgroundB;
+    [ObservableProperty]
+    private byte _accentA;
+    [ObservableProperty]
+    private byte _accentR;
+    [ObservableProperty]
+    private byte _accentG;
+    [ObservableProperty]
+    private byte _accentB;
 }
