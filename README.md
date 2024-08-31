@@ -1,6 +1,6 @@
 <h1 align="center">
   <a href="https://github.com/ChrisCee2/dboard">
-    <img src="https://github.com/ChrisCee2/dboard/blob/main/ReadMeFiles/amongusbutt.png" alt="sus guy" Width=300>
+    <img src="https://github.com/ChrisCee2/dboard/blob/main/Assets/dboard_icon.ico" alt="sus guy" Width=300>
   </a>
   <br>
   dboard
