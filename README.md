@@ -7,12 +7,7 @@
 </h1>
 
 <p align="center">
-  <a href="https://github.com/ChrisCee2/dboard">
-    <img src="https://img.shields.io/badge/download-22BB44" alt="download">
-  </a>
-  <a href="https://github.com/ChrisCee2/dboard/releases">
-    <img src="https://img.shields.io/github/v/release/ChrisCee2/dboard?style=flat-square" alt="release">
-  </a>
+  <a href="https://github.com/ChrisCee2/dboard/releases"><img src="https://img.shields.io/github/v/release/ChrisCee2/dboard?style=flat-square" alt="release"></a>
   <br>
   dboard is a detective board for mystery games and more! Create hundreds of connections in a fully customizable workspace
   <br>
