@@ -3,7 +3,7 @@ using System.Globalization;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 
-namespace mystery_app.Converters;
+namespace dboard.Converters;
 public class BrushOpacityConverter : IValueConverter
 {
     public static readonly BrushOpacityConverter Instance = new();

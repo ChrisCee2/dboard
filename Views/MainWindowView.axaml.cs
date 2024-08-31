@@ -1,7 +1,7 @@
 using Avalonia.Controls;
-using mystery_app.ViewModels;
+using dboard.ViewModels;
 
-namespace mystery_app.Views;
+namespace dboard.Views;
 
 public partial class MainWindowView : Window
 {

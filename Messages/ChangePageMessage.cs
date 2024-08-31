@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-using mystery_app.Constants;
+using dboard.Constants;
 
-namespace mystery_app.Messages;
+namespace dboard.Messages;
 public class ChangePageMessage : ValueChangedMessage<PageConstants.PAGE>
 {
     public ChangePageMessage(PageConstants.PAGE value) : base(value) { }

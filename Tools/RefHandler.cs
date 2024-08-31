@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace mystery_app.Tools;
+namespace dboard.Tools;
 
 class RefHandler : ReferenceHandler
 {

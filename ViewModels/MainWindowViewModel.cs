@@ -4,14 +4,14 @@ using System.IO;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using mystery_app.Constants;
-using mystery_app.Messages;
-using mystery_app.Models;
+using dboard.Constants;
+using dboard.Messages;
+using dboard.Models;
 using System;
 using CommunityToolkit.Mvvm.Input;
 using System.Text.Json.Serialization;
 
-namespace mystery_app.ViewModels;
+namespace dboard.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {

@@ -2,7 +2,7 @@
 using Avalonia.ReactiveUI;
 using System;
 
-namespace mystery_app;
+namespace dboard;
 
 sealed class Program
 {

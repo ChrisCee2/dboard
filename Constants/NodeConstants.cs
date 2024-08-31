@@ -2,15 +2,15 @@
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
-using mystery_app.ViewModels;
+using dboard.ViewModels;
 
-namespace mystery_app.Constants;
+namespace dboard.Constants;
 
 public static class NodeConstants
 {
     public static readonly NodeViewModel NULL_NODEVIEWMODEL = new NodeViewModel();
 
-    public const string DEFAULT_IMAGE_PATH = "avares://mystery_app/Assets/amongusbutt.png";
+    public const string DEFAULT_IMAGE_PATH = "avares://dboard/Assets/amongusbutt.png";
 
     // Size constants
     public const int MIN_WIDTH = 140;
