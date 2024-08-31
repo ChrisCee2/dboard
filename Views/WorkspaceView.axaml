@@ -17,10 +17,10 @@
 	Width="{Binding WorkspaceSizeX}" Height="{Binding WorkspaceSizeY}">
 	<UserControl.Background>
 		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
-			<Binding Path="SharedSettings.ModeModel.A"/>
-			<Binding Path="SharedSettings.ModeModel.R"/>
-			<Binding Path="SharedSettings.ModeModel.G"/>
-			<Binding Path="SharedSettings.ModeModel.B"/>
+			<Binding Path="SharedSettings.ModeModel.BackgroundA"/>
+			<Binding Path="SharedSettings.ModeModel.BackgroundR"/>
+			<Binding Path="SharedSettings.ModeModel.BackgroundG"/>
+			<Binding Path="SharedSettings.ModeModel.BackgroundB"/>
 		</MultiBinding>
 	</UserControl.Background>
 

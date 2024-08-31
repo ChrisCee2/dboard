@@ -39,4 +39,9 @@
 		<Setter Property="BorderThickness" Value="0"/>
 		<Setter Property="VerticalAlignment" Value="Center"/>
 	</Style>
+
+	<!-- Path Icons -->
+	<Style Selector="PathIcon.IsChecked">
+		<Setter Property="Data" Value="{StaticResource checkmark_regular}" />
+	</Style>
 </Styles>

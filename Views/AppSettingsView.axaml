@@ -27,8 +27,9 @@
 			<RowDefinition Height="{StaticResource SettingsItemHeightGL}"/>
 			<RowDefinition Height="{StaticResource SettingsItemHeightGL}"/>
 			<RowDefinition Height="{StaticResource SettingsItemHeightGL}"/>
+			<RowDefinition Height="{StaticResource SettingsItemHeightGL}"/>
 		</Grid.RowDefinitions>
-		
+
 		<TextBlock Text="Theme" Grid.Row="0" Grid.Column="0" TextAlignment="Right"/>
 		<ComboBox Grid.Row="0" Grid.Column="1"
 				  ItemsSource="{Binding Source={x:Static constants:SettingsConstants.THEMES}}"
@@ -40,9 +41,19 @@
 			</ComboBox.ItemTemplate>
 		</ComboBox>
 
-		<TextBlock Text="Background" Grid.Row="1" Grid.Column="0" TextAlignment="Right"/>
-		<ColorPicker Grid.Row="1" Grid.Column="1"
+		<TextBlock Text="Use Theme Accent" Grid.Row="1" Grid.Column="0" TextAlignment="Right" TextWrapping="Wrap"/>
+		<Button Grid.Row="1" Grid.Column="1" Click="ToggleThemeAccent" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center">
+			<PathIcon Width="15" Height="15" Classes.IsChecked="{Binding SharedSettings.UseThemeAccent}"
+					  HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
+		</Button>
+
+		<TextBlock Text="Background" Grid.Row="2" Grid.Column="0" TextAlignment="Right"/>
+		<ColorPicker Grid.Row="2" Grid.Column="1"
 					 HorizontalAlignment="Left" VerticalAlignment="Center" Color="{Binding Background}" MaxHeight="20"/>
+
+		<TextBlock Text="Accent Color" Grid.Row="3" Grid.Column="0" TextAlignment="Right"/>
+		<ColorPicker Grid.Row="3" Grid.Column="1"
+					 HorizontalAlignment="Left" VerticalAlignment="Center" Color="{Binding Accent}" MaxHeight="20"/>
 
 		<!-- NO MODES ARE WORKING RIGHT NOW
 		<TextBlock Text="Mode" Grid.Row="2" Grid.Column="0" TextAlignment="Right"/>

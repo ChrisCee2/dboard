@@ -16,6 +16,8 @@ public partial class AppSettingsViewModel : ObservableObject
     [ObservableProperty]
     private Color _background;
     [ObservableProperty]
+    private Color _accent;
+    [ObservableProperty]
     private Collection<ModeModel> _modes = new Collection<ModeModel>();
 
     public AppSettingsViewModel(SettingsModel sharedSettings)
@@ -43,10 +45,15 @@ public partial class AppSettingsViewModel : ObservableObject
             }
         }
         Background = new Color(
-            SharedSettings.UserModeModel.A, 
-            SharedSettings.UserModeModel.R, 
-            SharedSettings.UserModeModel.G, 
-            SharedSettings.UserModeModel.B);
+            SharedSettings.UserModeModel.BackgroundA, 
+            SharedSettings.UserModeModel.BackgroundR, 
+            SharedSettings.UserModeModel.BackgroundG, 
+            SharedSettings.UserModeModel.BackgroundB);
+        Accent = new Color(
+            SharedSettings.UserModeModel.AccentA,
+            SharedSettings.UserModeModel.AccentR,
+            SharedSettings.UserModeModel.AccentG,
+            SharedSettings.UserModeModel.AccentB);
     }
 
     [RelayCommand]
@@ -57,9 +64,17 @@ public partial class AppSettingsViewModel : ObservableObject
 
     partial void OnBackgroundChanged(Color value)
     {
-        SharedSettings.UserModeModel.A = value.A;
-        SharedSettings.UserModeModel.R = value.R;
-        SharedSettings.UserModeModel.G = value.G;
-        SharedSettings.UserModeModel.B = value.B;
+        SharedSettings.UserModeModel.BackgroundA = value.A;
+        SharedSettings.UserModeModel.BackgroundR = value.R;
+        SharedSettings.UserModeModel.BackgroundG = value.G;
+        SharedSettings.UserModeModel.BackgroundB = value.B;
+    }
+
+    partial void OnAccentChanged(Color value)
+    {
+        SharedSettings.UserModeModel.AccentA = value.A;
+        SharedSettings.UserModeModel.AccentR = value.R;
+        SharedSettings.UserModeModel.AccentG = value.G;
+        SharedSettings.UserModeModel.AccentB = value.B;
     }
 }
