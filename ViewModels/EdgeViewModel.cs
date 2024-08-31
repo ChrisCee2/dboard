@@ -3,11 +3,11 @@ using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using mystery_app.Constants;
-using mystery_app.Messages;
-using mystery_app.Models;
+using dboard.Constants;
+using dboard.Messages;
+using dboard.Models;
 
-namespace mystery_app.ViewModels;
+namespace dboard.ViewModels;
 
 public partial class EdgeViewModel : ObservableObject
 {

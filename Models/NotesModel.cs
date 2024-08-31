@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using mystery_app.Constants;
+using dboard.Constants;
 
-namespace mystery_app.Models;
+namespace dboard.Models;
 
 public partial class NotesModel : ObservableObject
 {

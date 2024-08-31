@@ -16,12 +16,12 @@ using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
-using mystery_app.Constants;
-using mystery_app.Models;
-using mystery_app.Tools;
-using mystery_app.ViewModels;
+using dboard.Constants;
+using dboard.Models;
+using dboard.Tools;
+using dboard.ViewModels;
 
-namespace mystery_app.Views;
+namespace dboard.Views;
 
 public partial class MainContentView : Grid
 {

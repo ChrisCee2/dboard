@@ -4,8 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-	xmlns:vm="using:mystery_app.ViewModels"
-    x:Class="mystery_app.Views.ImageView"
+	xmlns:vm="using:dboard.ViewModels"
+    x:Class="dboard.Views.ImageView"
 	x:DataType="vm:NodeViewModel"
 	x:Name="ImagePanel">
 	<Design.DataContext>

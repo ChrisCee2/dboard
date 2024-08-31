@@ -4,7 +4,7 @@ using Avalonia.Data.Converters;
 using System.Collections.Generic;
 using Avalonia.Data;
 
-namespace mystery_app.Converters;
+namespace dboard.Converters;
 public class MinConverter : IMultiValueConverter
 {
     public static readonly MinConverter Instance = new();

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace mystery_app.Constants;
+namespace dboard.Constants;
 
 public static class ImageConstants
 {

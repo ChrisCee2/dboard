@@ -2,7 +2,7 @@
 using System.Globalization;
 using Avalonia.Data.Converters;
 
-namespace mystery_app.Converters;
+namespace dboard.Converters;
 public class MaxHeightConverter : IValueConverter
 {
     public static readonly MaxHeightConverter Instance = new();

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace mystery_app.Models;
+namespace dboard.Models;
 
 public partial class ModeModelToggle : ModeModel
 {

@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using mystery_app.Models;
+using dboard.Models;
 
-namespace mystery_app.ViewModels;
+namespace dboard.ViewModels;
 
 public partial class NodeViewModel : NodeViewModelBase
 {

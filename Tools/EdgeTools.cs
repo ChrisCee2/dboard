@@ -1,7 +1,7 @@
 ﻿using Avalonia;
-using mystery_app.Constants;
+using dboard.Constants;
 
-namespace mystery_app.Tools;
+namespace dboard.Tools;
 
 class EdgeTools
 {

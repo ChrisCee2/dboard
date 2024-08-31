@@ -5,7 +5,7 @@ using Avalonia.Data.Converters;
 using Avalonia.Logging;
 using Avalonia.Styling;
 
-namespace mystery_app.Converters;
+namespace dboard.Converters;
 public class UseThemeConverter : IMultiValueConverter
 {
     public static readonly UseThemeConverter Instance = new();

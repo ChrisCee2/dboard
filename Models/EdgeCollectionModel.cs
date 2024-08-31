@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using mystery_app.ViewModels;
+using dboard.ViewModels;
 
-namespace mystery_app.Models;
+namespace dboard.Models;
 
 
 public class EdgeCollectionModel : ObservableCollection<EdgeViewModel>

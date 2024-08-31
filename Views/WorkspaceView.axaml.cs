@@ -1,10 +1,10 @@
 using System.Collections.ObjectModel;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Messaging;
-using mystery_app.Messages;
-using mystery_app.ViewModels;
+using dboard.Messages;
+using dboard.ViewModels;
 
-namespace mystery_app.Views;
+namespace dboard.Views;
 
 public partial class WorkspaceView : UserControl
 {
