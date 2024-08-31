@@ -137,9 +137,4 @@
 	<Style Selector="Border.DarkAccent">
 		<Setter Property="Background" Value="Black"/>
 	</Style>
-
-	<!-- Notes Style -->
-	<Style Selector="TextBox#NotesTextBox">
-		<Setter Property="Background" Value="{StaticResource NotesBackgroundColor}"/>
-	</Style>
 </Styles>
