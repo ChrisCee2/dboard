@@ -107,13 +107,11 @@
 	</Style>
 
 	<Style Selector="views|MainContentView.LightAccent">
-		<Setter Property="Background" Value="White">
-		</Setter>
+		<Setter Property="Background" Value="White"/>
 	</Style>
 
 	<Style Selector="views|MainContentView.DarkAccent">
-		<Setter Property="Background" Value="Black">
-		</Setter>
+		<Setter Property="Background" Value="Black"/>
 	</Style>
 
 	<Style Selector="Border.Accent">
@@ -133,12 +131,15 @@
 	</Style>
 
 	<Style Selector="Border.LightAccent">
-		<Setter Property="Background" Value="White">
-		</Setter>
+		<Setter Property="Background" Value="White"/>
 	</Style>
 
 	<Style Selector="Border.DarkAccent">
-		<Setter Property="Background" Value="Black">
-		</Setter>
+		<Setter Property="Background" Value="Black"/>
+	</Style>
+
+	<!-- Notes Style -->
+	<Style Selector="TextBox#NotesTextBox">
+		<Setter Property="Background" Value="{StaticResource NotesBackgroundColor}"/>
 	</Style>
 </Styles>

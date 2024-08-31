@@ -30,7 +30,7 @@
 	<sys:Double x:Key="EdgeClickAreaThickness"> 25 </sys:Double>
 
 	<!-- Settings Constants -->
-	<SolidColorBrush x:Key="SettingsBackgroundColor" Color="#32FFFFFF" />
+	<SolidColorBrush x:Key="SettingsBackgroundColor" Color="#69696969" />
 	<sys:Double x:Key="SettingsItemHeight"> 35 </sys:Double>
 	<GridLength x:Key="SettingsItemHeightGL"> 35 </GridLength>
 
@@ -38,6 +38,9 @@
 	<sys:Double x:Key="ImageIconPct"> 0.75 </sys:Double>
 	<sys:Double x:Key="AddImageIconPct"> 0.1 </sys:Double>
 	<sys:Double x:Key="AddImageIconPaddingPct"> 0.4 </sys:Double>
+
+	<!-- Notes Constants -->
+	<SolidColorBrush x:Key="NotesBackgroundColor" Color="#96969696" />
 
 
 </ResourceDictionary>

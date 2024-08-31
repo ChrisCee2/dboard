@@ -188,7 +188,9 @@
 								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}">
 						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
 					</ToggleButton>
-					<TextBox Text="{Binding Notes.Text}" BorderThickness="0" TextWrapping="Wrap" MinWidth="5"/>
+					<Border BorderBrush="{StaticResource NotesBackgroundColor}" BorderThickness="1" CornerRadius="5">
+						<TextBox x:Name="NotesTextBox" Text="{Binding Notes.Text}" BorderThickness="0" TextWrapping="Wrap" AcceptsReturn="True" MinWidth="5"/>
+					</Border>
 				</DockPanel>
 			</Border>
 		</SplitView.Pane>
