@@ -161,7 +161,7 @@ public partial class MainContentView : Grid
             workspaceVM.CanvasImagePath, 
             workspaceVM.WorkspaceImagePath,
             workspaceVM.WindowImagePath);
-        JsonSerializer.SerializeAsync(stream, workspace, options);
+        await JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
     }
 
