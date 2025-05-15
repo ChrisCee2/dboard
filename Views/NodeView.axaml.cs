@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace mystery_app.Views;
+namespace dboard.Views;
 
 public partial class NodeView : UserControl
 {

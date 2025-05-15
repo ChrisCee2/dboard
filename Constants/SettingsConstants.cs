@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Avalonia.Media;
-using mystery_app.Models;
+using dboard.Models;
 
-namespace mystery_app.Constants;
+namespace dboard.Constants;
 
 public static class SettingsConstants
 {

@@ -4,7 +4,7 @@ using Avalonia.Data.Converters;
 using System.Collections.Generic;
 using Avalonia.Data;
 
-namespace mystery_app.Converters;
+namespace dboard.Converters;
 public class DiffConverter : IMultiValueConverter
 {
     public static readonly DiffConverter Instance = new();

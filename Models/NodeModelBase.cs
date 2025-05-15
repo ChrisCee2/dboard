@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace mystery_app.Models;
+namespace dboard.Models;
 
 [JsonDerivedType(typeof(NodeModel), typeDiscriminator: "")]
 public abstract partial class NodeModelBase : ObservableObject

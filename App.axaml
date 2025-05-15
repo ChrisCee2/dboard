@@ -1,9 +1,9 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="mystery_app.App"
+             x:Class="dboard.App"
 			 xmlns:converters="using:Avalonia.Markup.Xaml.Converters"
-			 xmlns:customConverters="clr-namespace:mystery_app.Converters"
-             xmlns:local="using:mystery_app">
+			 xmlns:customConverters="clr-namespace:dboard.Converters"
+             xmlns:local="using:dboard">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
 	<Application.Resources>
@@ -43,6 +43,6 @@
   
     <Application.Styles>
         <FluentTheme />
-		<StyleInclude Source="avares://mystery_app/Styles/Icons.axaml" />
+		<StyleInclude Source="avares://dboard/Styles/Icons.axaml" />
     </Application.Styles>
 </Application>

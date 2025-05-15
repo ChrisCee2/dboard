@@ -2,9 +2,9 @@
 using System.Globalization;
 using Avalonia.Data.Converters;
 using System.Collections.Generic;
-using mystery_app.Tools;
+using dboard.Tools;
 
-namespace mystery_app.Converters;
+namespace dboard.Converters;
 public class EdgePosConverter : IMultiValueConverter
 {
     public static readonly EdgePosConverter Instance = new();

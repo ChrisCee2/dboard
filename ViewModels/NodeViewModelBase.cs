@@ -3,10 +3,10 @@ using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using mystery_app.Messages;
-using mystery_app.Models;
+using dboard.Messages;
+using dboard.Models;
 
-namespace mystery_app.ViewModels;
+namespace dboard.ViewModels;
 
 public abstract partial class NodeViewModelBase : ObservableObject
 {

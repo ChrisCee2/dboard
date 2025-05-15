@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Avalonia.Data;
 using System.Linq;
 
-namespace mystery_app.Converters;
+namespace dboard.Converters;
 public class MedianConverter : IMultiValueConverter
 {
     public static readonly MedianConverter Instance = new();

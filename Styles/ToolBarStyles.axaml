@@ -1,9 +1,9 @@
 
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:views="using:mystery_app.Views"
-		xmlns:vm="using:mystery_app.ViewModels"
-		xmlns:constants="clr-namespace:mystery_app.Constants">
+		xmlns:views="using:dboard.Views"
+		xmlns:vm="using:dboard.ViewModels"
+		xmlns:constants="clr-namespace:dboard.Constants">
 	<Design.PreviewWith>
 		<Border Padding="20">
 		</Border>

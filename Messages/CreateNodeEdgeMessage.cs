@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-using mystery_app.ViewModels;
+using dboard.ViewModels;
 
-namespace mystery_app.Messages;
+namespace dboard.Messages;
 public class CreateNodeEdgeMessage : ValueChangedMessage<NodeViewModelBase>
 {
     public CreateNodeEdgeMessage(NodeViewModelBase value) : base(value) { }

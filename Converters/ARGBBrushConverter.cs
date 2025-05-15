@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
 
-namespace mystery_app.Converters;
+namespace dboard.Converters;
 public class ARGBBrushConverter : IMultiValueConverter
 {
     public static readonly ARGBBrushConverter Instance = new();

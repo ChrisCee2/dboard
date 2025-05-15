@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-using mystery_app.ViewModels;
+using dboard.ViewModels;
 
-namespace mystery_app.Messages;
+namespace dboard.Messages;
 public class SelectNodeMessage : ValueChangedMessage<NodeViewModelBase>
 {
     public SelectNodeMessage(NodeViewModelBase value) : base(value) { }

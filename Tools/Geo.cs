@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 
-namespace mystery_app.Tools;
+namespace dboard.Tools;
 
 class Geo
 {

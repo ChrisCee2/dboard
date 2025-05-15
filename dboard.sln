@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mystery_app", "mystery_app.csproj", "{0567CB70-0DB8-4CF6-B5DC-BF3E9EBDE283}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dboard", "dboard.csproj", "{0567CB70-0DB8-4CF6-B5DC-BF3E9EBDE283}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

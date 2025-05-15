@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:sys="clr-namespace:System;assembly=System.Runtime"
-		xmlns:constants="clr-namespace:mystery_app.Constants">
+		xmlns:constants="clr-namespace:dboard.Constants">
 	<Design.PreviewWith>
 		<Border Padding="20">
 		</Border>

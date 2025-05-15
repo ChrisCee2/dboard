@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using System.Text.Json;
 
-namespace mystery_app.Tools;
+namespace dboard.Tools;
 
 class RefResolver : ReferenceResolver
 {

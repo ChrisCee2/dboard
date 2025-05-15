@@ -2,9 +2,9 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using CommunityToolkit.Mvvm.ComponentModel;
-using mystery_app.ViewModels;
+using dboard.ViewModels;
 
-namespace mystery_app;
+namespace dboard;
 
 public class ViewLocator : IDataTemplate
 {

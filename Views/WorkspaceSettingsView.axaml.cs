@@ -2,10 +2,10 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
-using mystery_app.Constants;
-using mystery_app.ViewModels;
+using dboard.Constants;
+using dboard.ViewModels;
 
-namespace mystery_app.Views;
+namespace dboard.Views;
 
 public partial class WorkspaceSettingsView : UserControl
 {

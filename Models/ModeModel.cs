@@ -2,7 +2,7 @@
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace mystery_app.Models;
+namespace dboard.Models;
 
 [JsonDerivedType(typeof(ModeModelToggle), typeDiscriminator: "Toggle")]
 public partial class ModeModel: ObservableObject

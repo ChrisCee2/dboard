@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using mystery_app.ViewModels;
-using mystery_app.Views;
+using dboard.ViewModels;
+using dboard.Views;
 
-namespace mystery_app;
+namespace dboard;
 
 public partial class App : Application
 {

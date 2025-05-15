@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Avalonia.Data.Converters;
 
-namespace mystery_app.Converters;
+namespace dboard.Converters;
 public class ThicknessMultConverter : IMultiValueConverter
 {
     public static readonly ThicknessMultConverter Instance = new();

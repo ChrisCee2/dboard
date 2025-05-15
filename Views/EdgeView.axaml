@@ -3,9 +3,9 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:vm="clr-namespace:mystery_app.ViewModels"
-	xmlns:constants="clr-namespace:mystery_app.Constants"
-	x:Class="mystery_app.Views.EdgeView"
+	xmlns:vm="clr-namespace:dboard.ViewModels"
+	xmlns:constants="clr-namespace:dboard.Constants"
+	x:Class="dboard.Views.EdgeView"
 	x:DataType="vm:EdgeViewModel"
 	>
 	<Design.DataContext>

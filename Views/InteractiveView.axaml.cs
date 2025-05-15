@@ -1,18 +1,18 @@
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia;
-using mystery_app.ViewModels;
+using dboard.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
-using mystery_app.Messages;
+using dboard.Messages;
 using Avalonia.Controls;
 using System;
-using mystery_app.Constants;
+using dboard.Constants;
 using Avalonia.VisualTree;
 using Avalonia.LogicalTree;
-using mystery_app.Models;
+using dboard.Models;
 using System.Threading.Tasks;
 
-namespace mystery_app.Views;
+namespace dboard.Views;
 
 public partial class InteractiveView : Grid
 {

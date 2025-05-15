@@ -3,7 +3,7 @@ using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Data.Converters;
 
-namespace mystery_app.Converters;
+namespace dboard.Converters;
 public class GridLengthDivisionConverter : IValueConverter
 {
     public static readonly GridLengthDivisionConverter Instance = new();

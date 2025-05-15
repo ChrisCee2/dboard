@@ -1,8 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using mystery_app.ViewModels;
+using dboard.ViewModels;
 
-namespace mystery_app.Views;
+namespace dboard.Views;
 
 public partial class AppSettingsView : UserControl
 {

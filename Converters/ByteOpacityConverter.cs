@@ -4,7 +4,7 @@ using System.Globalization;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 
-namespace mystery_app.Converters;
+namespace dboard.Converters;
 public class ByteOpacityConverter : IMultiValueConverter
 {
     public static readonly ByteOpacityConverter Instance = new();
