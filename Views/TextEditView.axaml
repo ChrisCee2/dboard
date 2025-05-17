@@ -21,7 +21,8 @@
 						 MinWidth="5"
 						 Padding="11,7,11,7"
 						 Background="Black"
-						 PointerReleased="ShowTextBox"/>
+						 PointerReleased="ShowTextBox"
+						 ScrollViewer.VerticalScrollBarVisibility="Visible"/>
 	<!--TODO: Make selectabletextblock scrollable and get scroll 
 	position and set the textbox's scroll position-->
 </Panel>

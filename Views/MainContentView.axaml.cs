@@ -185,35 +185,9 @@ public partial class MainContentView : Grid
         if (files.Count == 1)
         {
             MainContentViewModel vm = (MainContentViewModel)DataContext;
-            vm.NewCommand.Execute(null);
             await using var stream = await files[0].OpenReadAsync();
             WorkspaceModel workspace = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
-            foreach (var node in workspace.Nodes)
-            {
-                if (node is NodeModel nodeModel)
-                {
-                    vm.Workspace.Nodes.Add(new NodeViewModel(nodeModel));
-                }
-            }
-            foreach (EdgeModel edgeModel in workspace.Edges)
-            {
-                vm.Workspace.Edges.Add(new EdgeViewModel(edgeModel));
-            }
-            vm.Notes = workspace.Notes;
-            vm.WorkspaceFileName = files[0].Name;
-            vm.Workspace.CanvasSizeX = workspace.CanvasSizeX;
-            vm.Workspace.CanvasSizeY = workspace.CanvasSizeY;
-            vm.Workspace.WorkspaceSizeX = workspace.WorkspaceSizeX;
-            vm.Workspace.WorkspaceSizeY = workspace.WorkspaceSizeY;
-            vm.Workspace.CanvasImagePath = workspace.CanvasImagePath;
-            vm.Workspace.WorkspaceImagePath = workspace.WorkspaceImagePath;
-            vm.Workspace.WindowImagePath = workspace.WindowImagePath;
-            vm.Workspace.ImagePaths = new ObservableCollection<ImagePathModel>()
-            {
-                vm.Workspace.CanvasImagePath,
-                vm.Workspace.WorkspaceImagePath,
-                vm.Workspace.WindowImagePath
-            };
+            vm.NewWorkspace(workspace, files[0].Name);
         }
     }
 
