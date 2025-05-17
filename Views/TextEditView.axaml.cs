@@ -24,7 +24,6 @@ public partial class TextEditView : Panel
         textBox.Focus();
         textBox.SelectionStart = selectionStart;
         textBox.SelectionEnd = selectionEnd;
-        TextEditViewModel context = (TextEditViewModel)DataContext;
     }
 
     public void HideTextBox(object sender, RoutedEventArgs e)
@@ -33,6 +32,5 @@ public partial class TextEditView : Panel
         SelectableTextBlock textBlock = this.FindControl<SelectableTextBlock>("NotesTextBlock");
         textBox.IsVisible = false;
         textBlock.IsVisible = true;
-        TextEditViewModel context = (TextEditViewModel)DataContext;
     }
 }
