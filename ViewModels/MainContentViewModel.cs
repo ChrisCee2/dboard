@@ -14,6 +14,8 @@ public partial class MainContentViewModel : ObservableObject
     [ObservableProperty]
     public AppSettingsViewModel _settings;
     [ObservableProperty]
+    public TextEditViewModel _textEditViewModel;
+    [ObservableProperty]
     public NotesModel _notes;
     [ObservableProperty]
     private SettingsModel _sharedSettings;
@@ -26,6 +28,7 @@ public partial class MainContentViewModel : ObservableObject
         Workspace = new WorkspaceViewModel(sharedSettings);
         Settings = new AppSettingsViewModel(sharedSettings);
         Notes = new NotesModel();
+        TextEditViewModel = new TextEditViewModel(Notes);
         WorkspaceFileName = null;
 
     }
@@ -47,6 +50,7 @@ public partial class MainContentViewModel : ObservableObject
 
         Workspace = new WorkspaceViewModel(SharedSettings);
         Notes = new NotesModel();
+        TextEditViewModel = new TextEditViewModel(Notes);
         WorkspaceFileName = null;
     }
 }

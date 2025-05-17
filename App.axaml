@@ -30,7 +30,6 @@
 			<customConverters:ThicknessMultConverter x:Key="ThicknessMultConverter"/>
 			<customConverters:ByteOpacityConverter x:Key="ByteOpacityConverter"/>
 			<customConverters:UseThemeConverter x:Key="UseThemeConverter"/>
-			<customConverters:DocumentStringConverter x:Key="DocumentStringConverter"/>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="/Styles/ToolBarResources.axaml"/>
 				<ResourceInclude Source="/Styles/WorkspaceResources.axaml"/>
@@ -44,7 +43,6 @@
   
     <Application.Styles>
         <FluentTheme />
-		<StyleInclude Source="avares://mystery_app/Styles/Icons.axaml" />
-		<StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
+		<StyleInclude Source="avares://dboard/Styles/Icons.axaml" />
     </Application.Styles>
 </Application>

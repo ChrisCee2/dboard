@@ -4,10 +4,10 @@
     xmlns:vm="using:dboard.ViewModels"
 	xmlns:views="clr-namespace:dboard.Views"
 	xmlns:constants="clr-namespace:dboard.Constants"
+	xmlns:helpers="clr-namespace:dboard.Helpers"	
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
-	xmlns:AvaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
     x:Class="dboard.Views.MainContentView"
     x:DataType="vm:MainContentViewModel"
 	RowDefinitions="Auto,*,Auto"
@@ -189,12 +189,7 @@
 								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}">
 						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
 					</ToggleButton>
-					<Border CornerRadius="10" BorderThickness="1" BorderBrush="Black" Padding="10">
-						<AvaloniaEdit:TextEditor x:Name="NotesTextBox"
-												 HorizontalScrollBarVisibility="Disabled"
-												 Document="{Binding Notes.Text, Converter={StaticResource DocumentStringConverter}}"> 
-						</AvaloniaEdit:TextEditor>
-					</Border>
+					<views:TextEditView DataContext="{Binding TextEditViewModel}"/>
 				</DockPanel>
 			</Border>
 		</SplitView.Pane>

@@ -1,0 +1,27 @@
+<Panel xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:dboard.ViewModels"
+             x:Class="dboard.Views.TextEditView"
+			 x:DataType="vm:TextEditViewModel">
+	<Design.DataContext>
+		<vm:TextEditViewModel />
+	</Design.DataContext>
+
+	<TextBox Name="NotesTextBox"
+			 Text="{Binding Notes.Text}"
+			 TextWrapping="Wrap"
+			 AcceptsReturn="True"
+			 MinWidth="5"
+			 LostFocus="HideTextBox"/>
+	<SelectableTextBlock Name="NotesTextBlock"
+						 Text="{Binding Notes.Text}"
+						 TextWrapping="Wrap"
+						 MinWidth="5"
+						 Padding="11,7,11,7"
+						 Background="Black"
+						 PointerReleased="ShowTextBox"/>
+	<!--TODO: Make selectabletextblock scrollable and get scroll 
+	position and set the textbox's scroll position-->
+</Panel>
