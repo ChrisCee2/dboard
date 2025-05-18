@@ -1,36 +1,34 @@
+using System;
 using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
-using dboard.ViewModels;
+using AvaloniaEdit;
+using dboard.Models;
 
 namespace dboard.Views;
 
-public partial class TextEditView : Panel
+public partial class TextEditView : Border
 {
+
+    TextEditor? _textEditor;
 
     public TextEditView()
     {
         InitializeComponent();
+        _textEditor = this.FindControl<TextEditor>("TextEdit");
+        NotesModel notesModel = (NotesModel)DataContext;
     }
 
-    public void ShowTextBox(object sender, PointerReleasedEventArgs e)
+    private void TextChanged(object sender, EventArgs eventArgs)
     {
-        TextBox textBox = this.FindControl<TextBox>("NotesTextBox");
-        SelectableTextBlock textBlock = this.FindControl<SelectableTextBlock>("NotesTextBlock");
-        int selectionStart = textBlock.SelectionStart;
-        int selectionEnd = textBlock.SelectionEnd;
-        textBlock.IsVisible = false;
-        textBox.IsVisible = true;
-        textBox.Focus();
-        textBox.SelectionStart = selectionStart;
-        textBox.SelectionEnd = selectionEnd;
-    }
-
-    public void HideTextBox(object sender, RoutedEventArgs e)
-    {
-        TextBox textBox = this.FindControl<TextBox>("NotesTextBox");
-        SelectableTextBlock textBlock = this.FindControl<SelectableTextBlock>("NotesTextBlock");
-        textBox.IsVisible = false;
-        textBlock.IsVisible = true;
+        if (_textEditor != null && _textEditor.Document != null)
+        {
+            NotesModel notesModel = (NotesModel)DataContext;
+            if (notesModel != null)
+            {
+                var caretOffset = _textEditor.CaretOffset;
+                _textEditor.CaretOffset = caretOffset;
+                notesModel.Text = _textEditor.Text;
+                _textEditor.CaretOffset = caretOffset;
+            }
+        }
     }
 }
