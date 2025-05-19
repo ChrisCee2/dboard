@@ -318,7 +318,11 @@ public partial class MainContentView : Grid
     // Handle zoom
     protected void HandleZoom(object sender, PointerWheelEventArgs e)
     {
-        ((MainContentViewModel)DataContext).Workspace.Scale = Math.Clamp(((MainContentViewModel)DataContext).Workspace.Scale + (e.Delta.Y * 0.1), 0.3, 5);
+        ((MainContentViewModel)DataContext).Workspace.Scale = Math.Clamp(
+            ((MainContentViewModel)DataContext).Workspace.Scale + (e.Delta.Y * 0.1),
+            WorkspaceConstants.MIN_ZOOM,
+            WorkspaceConstants.MAX_ZOOM
+            );
         base.OnPointerWheelChanged(e);
     }
 
