@@ -1,0 +1,23 @@
+{
+  "$id": "1",
+  "Theme": "Default",
+  "UseThemeAccent": true,
+  "UserModeModel": {
+    "$id": "2",
+    "Name": "Default",
+    "ShowItems": true,
+    "WorkspaceOpacity": 1,
+    "WindowState": "Normal",
+    "BackgroundA": 255,
+    "BackgroundR": 69,
+    "BackgroundG": 69,
+    "BackgroundB": 69,
+    "AccentA": 100,
+    "AccentR": 150,
+    "AccentG": 150,
+    "AccentB": 150
+  },
+  "ModeModel": {
+    "$ref": "2"
+  }
+}
