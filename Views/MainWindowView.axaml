@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:vm="using:dboard.ViewModels"
+	xmlns:constants="clr-namespace:dboard.Constants"
     x:Class="dboard.Views.MainWindowView"
     x:DataType="vm:MainWindowViewModel"
     Icon="/Assets/avalonia-logo.ico"
@@ -12,8 +13,8 @@
 	WindowState="{Binding SharedSettings.ModeModel.WindowState}"
 	ExtendClientAreaToDecorationsHint="True"
 	ExtendClientAreaChromeHints="NoChrome"
-	MinWidth="330"
-	MinHeight="40">
+	MinWidth="{Binding Source={x:Static constants:WindowConstants.MIN_WINDOW_WIDTH}}"
+	MinHeight="{Binding Source={x:Static constants:WindowConstants.MIN_WINDOW_HEIGHT}}">
 	<Window.Background>
 		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 			<Binding Path="SharedSettings.ModeModel.BackgroundA"/>
