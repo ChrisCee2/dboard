@@ -1,0 +1,21 @@
+<Border xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:m="clr-namespace:dboard.Models"
+		xmlns:AvaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+		x:Class="dboard.Views.TextEditView"
+		x:DataType="m:NotesModel"
+		CornerRadius="10"
+		BorderThickness="1"
+		BorderBrush="Black"
+		Padding="10">
+	<Design.DataContext>
+		<m:NotesModel />
+	</Design.DataContext>
+	<AvaloniaEdit:TextEditor
+		x:Name="TextEdit"
+		WordWrap="True"
+		Document="{Binding Text, Converter={StaticResource DocumentStringConverter}}"
+		TextChanged="TextChanged"/>
+</Border>

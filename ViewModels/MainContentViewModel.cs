@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Constants;
@@ -27,7 +28,6 @@ public partial class MainContentViewModel : ObservableObject
         Settings = new AppSettingsViewModel(sharedSettings);
         Notes = new NotesModel();
         WorkspaceFileName = null;
-
     }
 
     [RelayCommand]
@@ -48,5 +48,36 @@ public partial class MainContentViewModel : ObservableObject
         Workspace = new WorkspaceViewModel(SharedSettings);
         Notes = new NotesModel();
         WorkspaceFileName = null;
+    }
+
+    public void NewWorkspace(WorkspaceModel newWorkspace, string workspaceName)
+    {
+        New();
+        foreach (var node in newWorkspace.Nodes)
+        {
+            if (node is NodeModel nodeModel)
+            {
+                Workspace.Nodes.Add(new NodeViewModel(nodeModel));
+            }
+        }
+        foreach (EdgeModel edgeModel in newWorkspace.Edges)
+        {
+            Workspace.Edges.Add(new EdgeViewModel(edgeModel));
+        }
+        Notes = newWorkspace.Notes;
+        WorkspaceFileName = workspaceName;
+        Workspace.CanvasSizeX = newWorkspace.CanvasSizeX;
+        Workspace.CanvasSizeY = newWorkspace.CanvasSizeY;
+        Workspace.WorkspaceSizeX = newWorkspace.WorkspaceSizeX;
+        Workspace.WorkspaceSizeY = newWorkspace.WorkspaceSizeY;
+        Workspace.CanvasImagePath = newWorkspace.CanvasImagePath;
+        Workspace.WorkspaceImagePath = newWorkspace.WorkspaceImagePath;
+        Workspace.WindowImagePath = newWorkspace.WindowImagePath;
+        Workspace.ImagePaths = new ObservableCollection<ImagePathModel>()
+            {
+                Workspace.CanvasImagePath,
+                Workspace.WorkspaceImagePath,
+                Workspace.WindowImagePath
+            };
     }
 }
