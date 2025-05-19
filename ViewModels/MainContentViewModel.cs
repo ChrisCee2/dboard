@@ -20,6 +20,8 @@ public partial class MainContentViewModel : ObservableObject
     private SettingsModel _sharedSettings;
     [ObservableProperty]
     private string? _workspaceFileName;
+    [ObservableProperty]
+    private WorkspaceConstants.SAVE_STATUS _saveStatus;
 
     public MainContentViewModel(SettingsModel sharedSettings)
     {
@@ -28,6 +30,7 @@ public partial class MainContentViewModel : ObservableObject
         Settings = new AppSettingsViewModel(sharedSettings);
         Notes = new NotesModel();
         WorkspaceFileName = null;
+        SaveStatus = WorkspaceConstants.SAVE_STATUS.UNSAVED;
     }
 
     [RelayCommand]
@@ -50,7 +53,7 @@ public partial class MainContentViewModel : ObservableObject
         WorkspaceFileName = null;
     }
 
-    public void NewWorkspace(WorkspaceModel newWorkspace, string workspaceName)
+    public void LoadWorkspace(WorkspaceModel newWorkspace, string workspaceName)
     {
         New();
         foreach (var node in newWorkspace.Nodes)

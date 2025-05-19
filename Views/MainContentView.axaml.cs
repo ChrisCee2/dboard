@@ -143,13 +143,15 @@ public partial class MainContentView : Grid
 
     private async void _SaveFile(IStorageFile file)
     {
+        vm.SaveStatus = Constants.WorkspaceConstants.SAVE_STATUS.SAVING;
         // Open writing stream from the file.
         await using var stream = await file.OpenWriteAsync();
 
         WorkspaceViewModel workspaceVM = ((MainContentViewModel)DataContext).Workspace;
         List<NodeModelBase> nodes = workspaceVM.Nodes.Select(x => x.NodeBase).ToList();
         List<EdgeModel> edges = workspaceVM.Edges.Select(x => x.Edge).ToList();
-        NotesModel notes = ((MainContentViewModel)DataContext).Notes;
+        MainContentViewModel vm = (MainContentViewModel)DataContext;
+        NotesModel notes = vm.Notes;
         WorkspaceModel workspace = new WorkspaceModel(
             nodes, 
             edges, 
@@ -163,6 +165,7 @@ public partial class MainContentView : Grid
             workspaceVM.WindowImagePath);
         await JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
+        vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
     }
 
     protected async void Open(object sender, RoutedEventArgs e)
@@ -187,7 +190,8 @@ public partial class MainContentView : Grid
             MainContentViewModel vm = (MainContentViewModel)DataContext;
             await using var stream = await files[0].OpenReadAsync();
             WorkspaceModel workspace = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
-            vm.NewWorkspace(workspace, files[0].Name);
+            vm.LoadWorkspace(workspace, files[0].Name);
+            vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
         }
     }
 

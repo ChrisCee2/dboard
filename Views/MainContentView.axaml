@@ -45,6 +45,7 @@
 				<MenuItem Header="Paste" Command="{Binding Workspace.PasteNodesCommand}"/>
 				<MenuItem Header="Delete" Command="{Binding Workspace.DeleteSelectedItemsCommand}"/>
 			</MenuItem>
+			<MenuItem x:Name="WorkspaceStatus" Header="WORKSPACE_NAME* - Saving"/>
 		</Menu>
 
 		<!-- Right side -->
