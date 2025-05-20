@@ -83,4 +83,13 @@ public partial class MainContentViewModel : ObservableObject
                 Workspace.WindowImagePath
             };
     }
+
+    public bool Equals(MainContentViewModel viewModel)
+    {
+        if (Workspace.Equals(viewModel.Workspace))
+        {
+            return true;
+        }
+        return false;
+    }
 }

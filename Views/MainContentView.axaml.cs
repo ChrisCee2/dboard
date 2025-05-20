@@ -31,6 +31,7 @@ public partial class MainContentView : Grid
     private double _lastNotesLen;
     private SplitView _notesSplitView;
     private Control _workspaceCanvas;
+    private MainContentViewModel _previousVM;
 
     JsonSerializerOptions options = new()
     {
@@ -84,6 +85,8 @@ public partial class MainContentView : Grid
 
         notesBorder.BindClass("LightAccent", LightAccentMB, null);
         notesBorder.BindClass("DarkAccent", DarkAccentMB, null);
+
+        _previousVM = (MainContentViewModel)DataContext;
     }
 
     protected async void SaveEvent(object sender, RoutedEventArgs e)
@@ -143,14 +146,14 @@ public partial class MainContentView : Grid
 
     private async void _SaveFile(IStorageFile file)
     {
-        vm.SaveStatus = Constants.WorkspaceConstants.SAVE_STATUS.SAVING;
+        MainContentViewModel vm = (MainContentViewModel)DataContext;
+        vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVING;
         // Open writing stream from the file.
         await using var stream = await file.OpenWriteAsync();
 
         WorkspaceViewModel workspaceVM = ((MainContentViewModel)DataContext).Workspace;
         List<NodeModelBase> nodes = workspaceVM.Nodes.Select(x => x.NodeBase).ToList();
         List<EdgeModel> edges = workspaceVM.Edges.Select(x => x.Edge).ToList();
-        MainContentViewModel vm = (MainContentViewModel)DataContext;
         NotesModel notes = vm.Notes;
         WorkspaceModel workspace = new WorkspaceModel(
             nodes, 
@@ -166,6 +169,7 @@ public partial class MainContentView : Grid
         await JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
         vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
+        _previousVM = vm;
     }
 
     protected async void Open(object sender, RoutedEventArgs e)
@@ -192,6 +196,7 @@ public partial class MainContentView : Grid
             WorkspaceModel workspace = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
             vm.LoadWorkspace(workspace, files[0].Name);
             vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
+            _previousVM = vm;
         }
     }
 

@@ -2,7 +2,6 @@
 using System.Globalization;
 using Avalonia.Data.Converters;
 using System.Collections.Generic;
-using Avalonia.Media;
 using dboard.Constants;
 
 namespace dboard.Converters;
@@ -12,11 +11,12 @@ public class SaveStatusConverter : IMultiValueConverter
 
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (values.Count == 2 && values[0] is string workspace_name && values[1] is WorkspaceConstants.SAVE_STATUS save_status)
+        if (values[1] is WorkspaceConstants.SAVE_STATUS save_status)
         {
-            return new Color(a, r, g, b);
+            string workspace_name = values[0] is null | values[0] is not string ? "New Workspace" : (string)values[0];
+            return workspace_name + " - " + WorkspaceConstants.save_status_text[save_status];
         }
-        return null;
+        return "";
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

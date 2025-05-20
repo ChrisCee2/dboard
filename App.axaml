@@ -31,6 +31,7 @@
 			<customConverters:ByteOpacityConverter x:Key="ByteOpacityConverter"/>
 			<customConverters:UseThemeConverter x:Key="UseThemeConverter"/>
 			<customConverters:DocumentStringConverter x:Key="DocumentStringConverter"/>
+			<customConverters:SaveStatusConverter x:Key="SaveStatusConverter"/>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="/Styles/ToolBarResources.axaml"/>
 				<ResourceInclude Source="/Styles/WorkspaceResources.axaml"/>

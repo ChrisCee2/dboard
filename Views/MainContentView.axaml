@@ -45,7 +45,14 @@
 				<MenuItem Header="Paste" Command="{Binding Workspace.PasteNodesCommand}"/>
 				<MenuItem Header="Delete" Command="{Binding Workspace.DeleteSelectedItemsCommand}"/>
 			</MenuItem>
-			<MenuItem x:Name="WorkspaceStatus" Header="WORKSPACE_NAME* - Saving"/>
+			<MenuItem x:Name="WorkspaceStatus">
+				<MenuItem.Header>
+					<MultiBinding Converter="{StaticResource SaveStatusConverter}">
+						<Binding Path="WorkspaceFileName"/>
+						<Binding Path="SaveStatus"/>
+					</MultiBinding>
+				</MenuItem.Header>
+			</MenuItem>
 		</Menu>
 
 		<!-- Right side -->
