@@ -31,7 +31,46 @@ public partial class MainContentView : Grid
     private double _lastNotesLen;
     private SplitView _notesSplitView;
     private Control _workspaceCanvas;
-    private MainContentViewModel _previousVM;
+    private List<NodeActionModelBase> _actionHistory = new List<NodeActionModelBase>();
+    private int _maxActions = 30;
+    private int _lastActionIndex = -1;
+
+    public void Undo()
+    {
+        if (_lastActionIndex >= 0)
+        {
+            _actionHistory[_lastActionIndex].Undo();
+            _lastActionIndex -= 1;
+        }
+    }
+
+    public void Redo()
+    {
+        if (_lastActionIndex < _actionHistory.Count - 1)
+        {
+            _actionHistory[_lastActionIndex].Redo();
+            _lastActionIndex += 1;
+        }
+    }
+
+    public void LogAction(NodeActionModelBase action)
+    {
+        // Remove undone actions
+        int actionCount = _actionHistory.Count;
+        for (int i = actionCount - 1; i > _lastActionIndex; i--)
+        {
+            _actionHistory.RemoveAt(i);
+        }
+
+        // Pop least recent action if there are too many
+        actionCount = _actionHistory.Count;
+        for (int i = actionCount; i > _maxActions; i--)
+        {
+            _actionHistory.RemoveAt(0);
+        }
+
+        _actionHistory.Add(action);
+    }
 
     JsonSerializerOptions options = new()
     {
@@ -85,8 +124,6 @@ public partial class MainContentView : Grid
 
         notesBorder.BindClass("LightAccent", LightAccentMB, null);
         notesBorder.BindClass("DarkAccent", DarkAccentMB, null);
-
-        _previousVM = (MainContentViewModel)DataContext;
     }
 
     protected async void SaveEvent(object sender, RoutedEventArgs e)
@@ -169,7 +206,6 @@ public partial class MainContentView : Grid
         await JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
         vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
-        _previousVM = vm;
     }
 
     protected async void Open(object sender, RoutedEventArgs e)
@@ -196,7 +232,6 @@ public partial class MainContentView : Grid
             WorkspaceModel workspace = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
             vm.LoadWorkspace(workspace, files[0].Name);
             vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
-            _previousVM = vm;
         }
     }
 

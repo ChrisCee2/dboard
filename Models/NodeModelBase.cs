@@ -23,4 +23,6 @@ public abstract partial class NodeModelBase : ObservableObject
 
     [ObservableProperty]
     private int _zIndex;
+
+    abstract public NodeModelBase Clone();
 }
