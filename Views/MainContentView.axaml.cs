@@ -16,7 +16,9 @@ using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
+using CommunityToolkit.Mvvm.Messaging;
 using dboard.Constants;
+using dboard.Messages;
 using dboard.Models;
 using dboard.Tools;
 using dboard.ViewModels;
@@ -124,6 +126,12 @@ public partial class MainContentView : Grid
 
         notesBorder.BindClass("LightAccent", LightAccentMB, null);
         notesBorder.BindClass("DarkAccent", DarkAccentMB, null);
+
+        // Set up for logging
+        WeakReferenceMessenger.Default.Register<LogActionMessage>(this, (sender, message) =>
+        {
+            LogAction(message.Value);
+        });
     }
 
     protected async void SaveEvent(object sender, RoutedEventArgs e)
