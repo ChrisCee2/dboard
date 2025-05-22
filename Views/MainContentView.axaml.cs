@@ -36,6 +36,16 @@ public partial class MainContentView : Grid
     private List<NodeActionModelBase> _actionHistory = new List<NodeActionModelBase>();
     private int _maxActions = 30;
     private int _lastActionIndex = -1;
+    // TODO: Logic for tracking save status
+    // Have two variables, lastActionSinceSave and actionHistoryCanBeUsedToGoBackToLastSave (rename this lol), default to true
+    // If in new workspace / open a workspace, have variable lastActionSinceSave be null, actionHistoryCanBeUsedToGoBackToLastSave be true
+    // If actionHistory ever passes maxActions / need to delete history, set actionHistoryCanBeUsedToGoBackToLastSave to false
+    // If just saving a workspace, set lastActionSinceSave to last action (can be null if there is no history)
+    // If the last action since save (if not null) gets popped, set actionHistoryCanBeUsedToGoBackToLastSave to false
+
+    // To determine status (Saved or Unsaved)
+    // If lastAction is not null, check if action at lastActionIndex is same as lastAction, if so then saved, otherwise no. Also use actionHistoryCanBeUsedToGoBackToLastSave
+    // If lastAction is null, check if lastActionIndex is -1 and also actionHistoryCanBeUsedToGoBackToLastSave (since -1 doesn't always mean back to the start, since actionHistory has max
 
     public void Undo()
     {
