@@ -38,7 +38,7 @@ public partial class MainContentView : Grid
     private int _lastActionIndex = -1;
     // Action history states
     private NodeActionModelBase? _lastActionSinceSave = null;
-    private bool _lastActionGone = false;
+    private bool _shouldAlwaysBeUnsaved = true;
 
     // History logging starts here
     public void UpdateSaveStatus()
@@ -46,7 +46,13 @@ public partial class MainContentView : Grid
         MainContentViewModel vm = (MainContentViewModel)DataContext;
         if (vm is not null)
         {
-            if (_actionHistory[_lastActionIndex] == _lastActionSinceSave)
+            if (
+                !_shouldAlwaysBeUnsaved &&
+                (
+                (_lastActionSinceSave is null && _lastActionIndex == -1) ||
+                (_lastActionIndex != -1 && _actionHistory[_lastActionIndex] == _lastActionSinceSave)
+                )
+            )
             {
                 vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
             }
@@ -94,12 +100,13 @@ public partial class MainContentView : Grid
         }
 
         _actionHistory.Add(action);
+        _lastActionIndex = _actionHistory.Count - 1;
         UpdateSaveStatus();
     }
 
-    private void ResetActionHistoryStates(bool isSave, bool resetActionHistory)
+    private void ResetActionHistoryStates(bool isSave, bool resetActionHistory, bool shouldAlwaysBeUnsaved)
     {
-        _lastActionGone = false;
+        _shouldAlwaysBeUnsaved = shouldAlwaysBeUnsaved;
         if (resetActionHistory)
         {
             _lastActionSinceSave = null;
@@ -108,8 +115,12 @@ public partial class MainContentView : Grid
         }
         if (isSave)
         {
-            _lastActionSinceSave = _actionHistory[_lastActionIndex];
+            if (_lastActionIndex != -1)
+            {
+                _lastActionSinceSave = _actionHistory[_lastActionIndex];
+            }
         }
+        UpdateSaveStatus();
     }
     // History logging ends here
 
@@ -175,7 +186,7 @@ public partial class MainContentView : Grid
         WeakReferenceMessenger.Default.Register<ResetActionHistoryStatesMessage>(this, (sender, message) =>
         {
             ResetActionHistoryStatesModel val = message.Value;
-            ResetActionHistoryStates(val.IsSave, val.ResetActionHistory);
+            ResetActionHistoryStates(val.IsSave, val.ResetActionHistory, val.ShouldAlwaysBeUnsaved);
         });
     }
 
@@ -259,7 +270,7 @@ public partial class MainContentView : Grid
         await JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
         vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
-        ResetActionHistoryStates(true, false);
+        ResetActionHistoryStates(true, false, false);
     }
 
     protected async void Open(object sender, RoutedEventArgs e)
@@ -288,7 +299,7 @@ public partial class MainContentView : Grid
             vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
         }
 
-        ResetActionHistoryStates(false, true);
+        ResetActionHistoryStates(false, true, false);
     }
 
     protected void Exit(object sender, RoutedEventArgs e)

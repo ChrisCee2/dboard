@@ -51,7 +51,7 @@ public partial class MainContentViewModel : ObservableObject
         Workspace = new WorkspaceViewModel(SharedSettings);
         Notes = new NotesModel();
         WorkspaceFileName = null;
-        WeakReferenceMessenger.Default.Send(new ResetActionHistoryStatesMessage(new ResetActionHistoryStatesModel(false, true)));
+        WeakReferenceMessenger.Default.Send(new ResetActionHistoryStatesMessage(new ResetActionHistoryStatesModel(false, true, true)));
     }
 
     public void LoadWorkspace(WorkspaceModel newWorkspace, string workspaceName)

@@ -9,10 +9,13 @@ public partial class ResetActionHistoryStatesModel : ObservableObject
     private bool _isSave;
     [ObservableProperty]
     private bool _resetActionHistory;
+    [ObservableProperty]
+    private bool _shouldAlwaysBeUnsaved;
 
-    public ResetActionHistoryStatesModel(bool isSave, bool resetActionHistory)
+    public ResetActionHistoryStatesModel(bool isSave, bool resetActionHistory, bool shouldAlwaysBeUnsaved)
     {
         IsSave = isSave;
         ResetActionHistory = resetActionHistory;
+        ShouldAlwaysBeUnsaved = shouldAlwaysBeUnsaved;
     }
 }
