@@ -100,4 +100,16 @@ public partial class MainWindowViewModel : ObservableObject
             }
         }
     }
+
+    [RelayCommand]
+    private void Undo()
+    {
+        WeakReferenceMessenger.Default.Send(new HistoryActionMessage(WorkspaceConstants.HISTORY_ACTION.UNDO));
+    }
+
+    [RelayCommand]
+    private void Redo()
+    {
+        WeakReferenceMessenger.Default.Send(new HistoryActionMessage(WorkspaceConstants.HISTORY_ACTION.REDO));
+    }
 }

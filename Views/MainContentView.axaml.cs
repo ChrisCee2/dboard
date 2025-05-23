@@ -69,18 +69,18 @@ public partial class MainContentView : Grid
         {
             _actionHistory[_lastActionIndex].Undo();
             _lastActionIndex -= 1;
+            UpdateSaveStatus();
         }
-        UpdateSaveStatus();
     }
 
     public void Redo()
     {
         if (_lastActionIndex < _actionHistory.Count - 1)
         {
-            _actionHistory[_lastActionIndex].Redo();
             _lastActionIndex += 1;
+            _actionHistory[_lastActionIndex].Redo();
+            UpdateSaveStatus();
         }
-        UpdateSaveStatus();
     }
 
     public void LogAction(NodeActionModelBase action)
@@ -187,6 +187,19 @@ public partial class MainContentView : Grid
         {
             ResetActionHistoryStatesModel val = message.Value;
             ResetActionHistoryStates(val.IsSave, val.ResetActionHistory, val.ShouldAlwaysBeUnsaved);
+        });
+
+        WeakReferenceMessenger.Default.Register<HistoryActionMessage>(this, (sender, message) =>
+        {
+            WorkspaceConstants.HISTORY_ACTION historyAction = message.Value;
+            if (historyAction == WorkspaceConstants.HISTORY_ACTION.UNDO)
+            {
+                Undo();
+            }
+            else if (historyAction == WorkspaceConstants.HISTORY_ACTION.REDO)
+            {
+                Redo();
+            }
         });
     }
 

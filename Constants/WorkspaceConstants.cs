@@ -18,6 +18,12 @@ public static class WorkspaceConstants
         SAVED
     }
 
+    public enum HISTORY_ACTION
+    {
+        UNDO,
+        REDO
+    }
+
     public static readonly Dictionary<SAVE_STATUS, string> save_status_text = new Dictionary<SAVE_STATUS, string>
     {
         { SAVE_STATUS.UNSAVED, "Unsaved" },
