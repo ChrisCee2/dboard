@@ -36,16 +36,26 @@ public partial class MainContentView : Grid
     private List<NodeActionModelBase> _actionHistory = new List<NodeActionModelBase>();
     private int _maxActions = 30;
     private int _lastActionIndex = -1;
-    // TODO: Logic for tracking save status
-    // Have two variables, lastActionSinceSave and actionHistoryCanBeUsedToGoBackToLastSave (rename this lol), default to true
-    // If in new workspace / open a workspace, have variable lastActionSinceSave be null, actionHistoryCanBeUsedToGoBackToLastSave be true
-    // If actionHistory ever passes maxActions / need to delete history, set actionHistoryCanBeUsedToGoBackToLastSave to false
-    // If just saving a workspace, set lastActionSinceSave to last action (can be null if there is no history)
-    // If the last action since save (if not null) gets popped, set actionHistoryCanBeUsedToGoBackToLastSave to false
+    // Action history states
+    private NodeActionModelBase? _lastActionSinceSave = null;
+    private bool _lastActionGone = false;
 
-    // To determine status (Saved or Unsaved)
-    // If lastAction is not null, check if action at lastActionIndex is same as lastAction, if so then saved, otherwise no. Also use actionHistoryCanBeUsedToGoBackToLastSave
-    // If lastAction is null, check if lastActionIndex is -1 and also actionHistoryCanBeUsedToGoBackToLastSave (since -1 doesn't always mean back to the start, since actionHistory has max
+    // History logging starts here
+    public void UpdateSaveStatus()
+    {
+        MainContentViewModel vm = (MainContentViewModel)DataContext;
+        if (vm is not null)
+        {
+            if (_actionHistory[_lastActionIndex] == _lastActionSinceSave)
+            {
+                vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
+            }
+            else
+            {
+                vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.UNSAVED;
+            }
+        }
+    }
 
     public void Undo()
     {
@@ -54,6 +64,7 @@ public partial class MainContentView : Grid
             _actionHistory[_lastActionIndex].Undo();
             _lastActionIndex -= 1;
         }
+        UpdateSaveStatus();
     }
 
     public void Redo()
@@ -63,6 +74,7 @@ public partial class MainContentView : Grid
             _actionHistory[_lastActionIndex].Redo();
             _lastActionIndex += 1;
         }
+        UpdateSaveStatus();
     }
 
     public void LogAction(NodeActionModelBase action)
@@ -82,7 +94,24 @@ public partial class MainContentView : Grid
         }
 
         _actionHistory.Add(action);
+        UpdateSaveStatus();
     }
+
+    private void ResetActionHistoryStates(bool isSave, bool resetActionHistory)
+    {
+        _lastActionGone = false;
+        if (resetActionHistory)
+        {
+            _lastActionSinceSave = null;
+            _actionHistory.Clear();
+            _lastActionIndex = -1;
+        }
+        if (isSave)
+        {
+            _lastActionSinceSave = _actionHistory[_lastActionIndex];
+        }
+    }
+    // History logging ends here
 
     JsonSerializerOptions options = new()
     {
@@ -141,6 +170,12 @@ public partial class MainContentView : Grid
         WeakReferenceMessenger.Default.Register<LogActionMessage>(this, (sender, message) =>
         {
             LogAction(message.Value);
+        });
+        
+        WeakReferenceMessenger.Default.Register<ResetActionHistoryStatesMessage>(this, (sender, message) =>
+        {
+            ResetActionHistoryStatesModel val = message.Value;
+            ResetActionHistoryStates(val.IsSave, val.ResetActionHistory);
         });
     }
 
@@ -224,6 +259,7 @@ public partial class MainContentView : Grid
         await JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
         vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
+        ResetActionHistoryStates(true, false);
     }
 
     protected async void Open(object sender, RoutedEventArgs e)
@@ -251,6 +287,8 @@ public partial class MainContentView : Grid
             vm.LoadWorkspace(workspace, files[0].Name);
             vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
         }
+
+        ResetActionHistoryStates(false, true);
     }
 
     protected void Exit(object sender, RoutedEventArgs e)
