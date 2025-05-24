@@ -65,9 +65,11 @@ public partial class MainContentView : Grid
 
     public void Undo()
     {
-        if (_lastActionIndex >= 0)
+        MainContentViewModel vm = (MainContentViewModel)DataContext;
+        
+        if (_lastActionIndex >= 0 && vm is not null)
         {
-            _actionHistory[_lastActionIndex].Undo();
+            _actionHistory[_lastActionIndex].Undo(vm.Workspace);
             _lastActionIndex -= 1;
             UpdateSaveStatus();
         }
@@ -75,10 +77,11 @@ public partial class MainContentView : Grid
 
     public void Redo()
     {
-        if (_lastActionIndex < _actionHistory.Count - 1)
+        MainContentViewModel vm = (MainContentViewModel)DataContext;
+        if (_lastActionIndex < _actionHistory.Count - 1 && vm is not null)
         {
             _lastActionIndex += 1;
-            _actionHistory[_lastActionIndex].Redo();
+            _actionHistory[_lastActionIndex].Redo(vm.Workspace);
             UpdateSaveStatus();
         }
     }

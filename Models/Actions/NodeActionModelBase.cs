@@ -7,7 +7,6 @@ namespace dboard.Models;
 
 public abstract partial class NodeActionModelBase : ObservableObject
 {
-    public ObservableCollection<NodeViewModelBase> Nodes;
     [ObservableProperty]
     private NodeViewModelBase _nodeAfterAction;
     [ObservableProperty]
@@ -15,15 +14,14 @@ public abstract partial class NodeActionModelBase : ObservableObject
     [ObservableProperty]
     private NodeViewModelBase? _node;
 
-    public NodeActionModelBase(ObservableCollection<NodeViewModelBase> nodes, NodeViewModelBase nodeBefore, NodeViewModelBase node)
+    public NodeActionModelBase(NodeViewModelBase nodeBefore, NodeViewModelBase node)
     {
-        Nodes = nodes;
         NodeBeforeAction = nodeBefore;
         Node = node;
         NodeAfterAction = node.Clone();
     }
 
-    abstract public void Undo();
+    abstract public void Undo(WorkspaceViewModel workspaceVM);
 
-    abstract public void Redo();
+    abstract public void Redo(WorkspaceViewModel workspaceVM);
 }

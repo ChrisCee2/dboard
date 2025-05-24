@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using dboard.ViewModels;
+﻿using dboard.ViewModels;
 
 namespace dboard.Models;
 
@@ -7,28 +6,27 @@ namespace dboard.Models;
 public partial class CreateNodeActionModel : NodeActionModelBase
 {
     public CreateNodeActionModel(
-        ObservableCollection<NodeViewModelBase> nodes,
         NodeViewModelBase nodeBefore, 
         NodeViewModelBase node
-    ) : base(nodes, nodeBefore, node) { }
+    ) : base(nodeBefore, node) { }
 
-    public override void Undo()
+    public override void Undo(WorkspaceViewModel workspaceVM)
     {
         if (Node is not null)
         {
-            Nodes.Remove(Node);
+            workspaceVM.Nodes.Remove(Node);
             Node = null;
         }
     }
 
-    public override void Redo()
+    public override void Redo(WorkspaceViewModel workspaceVM)
     {
         NodeViewModelBase NewNode = NodeAfterAction.Clone();
         if (Node is not null)
         {
-            Nodes.Remove(Node);
+            workspaceVM.Nodes.Remove(Node);
         }
-        Nodes.Add(NewNode);
+        workspaceVM.Nodes.Add(NewNode);
         Node = NewNode;
     }
 }
