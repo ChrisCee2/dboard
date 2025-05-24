@@ -16,7 +16,9 @@ using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
+using CommunityToolkit.Mvvm.Messaging;
 using dboard.Constants;
+using dboard.Messages;
 using dboard.Models;
 using dboard.Tools;
 using dboard.ViewModels;
@@ -31,6 +33,99 @@ public partial class MainContentView : Grid
     private double _lastNotesLen;
     private SplitView _notesSplitView;
     private Control _workspaceCanvas;
+    private List<NodeActionModelBase> _actionHistory = new List<NodeActionModelBase>();
+    private int _maxActions = 30;
+    private int _lastActionIndex = -1;
+    // Action history states
+    private NodeActionModelBase? _lastActionSinceSave = null;
+    private bool _shouldAlwaysBeUnsaved = true;
+
+    // History logging starts here
+    public void UpdateSaveStatus()
+    {
+        MainContentViewModel vm = (MainContentViewModel)DataContext;
+        if (vm is not null)
+        {
+            if (
+                !_shouldAlwaysBeUnsaved &&
+                (
+                (_lastActionSinceSave is null && _lastActionIndex == -1) ||
+                (_lastActionIndex != -1 && _actionHistory[_lastActionIndex] == _lastActionSinceSave)
+                )
+            )
+            {
+                vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
+            }
+            else
+            {
+                vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.UNSAVED;
+            }
+        }
+    }
+
+    public void Undo()
+    {
+        MainContentViewModel vm = (MainContentViewModel)DataContext;
+        
+        if (_lastActionIndex >= 0 && vm is not null)
+        {
+            _actionHistory[_lastActionIndex].Undo(vm.Workspace);
+            _lastActionIndex -= 1;
+            UpdateSaveStatus();
+        }
+    }
+
+    public void Redo()
+    {
+        MainContentViewModel vm = (MainContentViewModel)DataContext;
+        if (_lastActionIndex < _actionHistory.Count - 1 && vm is not null)
+        {
+            _lastActionIndex += 1;
+            _actionHistory[_lastActionIndex].Redo(vm.Workspace);
+            UpdateSaveStatus();
+        }
+    }
+
+    public void LogAction(NodeActionModelBase action)
+    {
+        // Remove undone actions
+        int actionCount = _actionHistory.Count;
+        for (int i = actionCount - 1; i > _lastActionIndex; i--)
+        {
+            _actionHistory.RemoveAt(i);
+        }
+
+        // Pop least recent action if there are too many
+        actionCount = _actionHistory.Count;
+        for (int i = actionCount; i > _maxActions; i--)
+        {
+            _actionHistory.RemoveAt(0);
+        }
+
+        _actionHistory.Add(action);
+        _lastActionIndex = _actionHistory.Count - 1;
+        UpdateSaveStatus();
+    }
+
+    private void ResetActionHistoryStates(bool isSave, bool resetActionHistory, bool shouldAlwaysBeUnsaved)
+    {
+        _shouldAlwaysBeUnsaved = shouldAlwaysBeUnsaved;
+        if (resetActionHistory)
+        {
+            _lastActionSinceSave = null;
+            _actionHistory.Clear();
+            _lastActionIndex = -1;
+        }
+        if (isSave)
+        {
+            if (_lastActionIndex != -1)
+            {
+                _lastActionSinceSave = _actionHistory[_lastActionIndex];
+            }
+        }
+        UpdateSaveStatus();
+    }
+    // History logging ends here
 
     JsonSerializerOptions options = new()
     {
@@ -84,6 +179,31 @@ public partial class MainContentView : Grid
 
         notesBorder.BindClass("LightAccent", LightAccentMB, null);
         notesBorder.BindClass("DarkAccent", DarkAccentMB, null);
+
+        // Set up for logging
+        WeakReferenceMessenger.Default.Register<LogActionMessage>(this, (sender, message) =>
+        {
+            LogAction(message.Value);
+        });
+        
+        WeakReferenceMessenger.Default.Register<ResetActionHistoryStatesMessage>(this, (sender, message) =>
+        {
+            ResetActionHistoryStatesModel val = message.Value;
+            ResetActionHistoryStates(val.IsSave, val.ResetActionHistory, val.ShouldAlwaysBeUnsaved);
+        });
+
+        WeakReferenceMessenger.Default.Register<HistoryActionMessage>(this, (sender, message) =>
+        {
+            WorkspaceConstants.HISTORY_ACTION historyAction = message.Value;
+            if (historyAction == WorkspaceConstants.HISTORY_ACTION.UNDO)
+            {
+                Undo();
+            }
+            else if (historyAction == WorkspaceConstants.HISTORY_ACTION.REDO)
+            {
+                Redo();
+            }
+        });
     }
 
     protected async void SaveEvent(object sender, RoutedEventArgs e)
@@ -143,13 +263,15 @@ public partial class MainContentView : Grid
 
     private async void _SaveFile(IStorageFile file)
     {
+        MainContentViewModel vm = (MainContentViewModel)DataContext;
+        vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVING;
         // Open writing stream from the file.
         await using var stream = await file.OpenWriteAsync();
 
         WorkspaceViewModel workspaceVM = ((MainContentViewModel)DataContext).Workspace;
         List<NodeModelBase> nodes = workspaceVM.Nodes.Select(x => x.NodeBase).ToList();
         List<EdgeModel> edges = workspaceVM.Edges.Select(x => x.Edge).ToList();
-        NotesModel notes = ((MainContentViewModel)DataContext).Notes;
+        NotesModel notes = vm.Notes;
         WorkspaceModel workspace = new WorkspaceModel(
             nodes, 
             edges, 
@@ -163,6 +285,8 @@ public partial class MainContentView : Grid
             workspaceVM.WindowImagePath);
         await JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
+        vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
+        ResetActionHistoryStates(true, false, false);
     }
 
     protected async void Open(object sender, RoutedEventArgs e)
@@ -187,8 +311,11 @@ public partial class MainContentView : Grid
             MainContentViewModel vm = (MainContentViewModel)DataContext;
             await using var stream = await files[0].OpenReadAsync();
             WorkspaceModel workspace = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
-            vm.NewWorkspace(workspace, files[0].Name);
+            vm.LoadWorkspace(workspace, files[0].Name);
+            vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
         }
+
+        ResetActionHistoryStates(false, true, false);
     }
 
     protected void Exit(object sender, RoutedEventArgs e)

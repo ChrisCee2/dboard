@@ -31,6 +31,8 @@
 	<Window.KeyBindings>
 		<KeyBinding Gesture="Tab" Command="{Binding ToggleModeCommand}" />
 		<KeyBinding Gesture="Ctrl+F" Command="{Binding ToggleFullScreenCommand}" />
+		<KeyBinding Gesture="Ctrl+Z" Command="{Binding UndoCommand}" />
+		<KeyBinding Gesture="Ctrl+Shift+Z" Command="{Binding RedoCommand}" />
 	</Window.KeyBindings>
 
 	<TransitioningContentControl Content="{Binding CurrentPage}" />

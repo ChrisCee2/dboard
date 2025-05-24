@@ -64,4 +64,19 @@ public partial class NodeModel : NodeModelBase
 
     [ObservableProperty]
     private bool _notesToggled;
+
+    public override NodeModel Clone()
+    {
+        return new NodeModel(
+            Name,
+            Desc,
+            ImagePath,
+            Width,
+            Height,
+            PositionX,
+            PositionY,
+            Notes,
+            ZIndex
+        );
+    }
 }

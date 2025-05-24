@@ -20,6 +20,8 @@ public partial class MainContentViewModel : ObservableObject
     private SettingsModel _sharedSettings;
     [ObservableProperty]
     private string? _workspaceFileName;
+    [ObservableProperty]
+    private WorkspaceConstants.SAVE_STATUS _saveStatus;
 
     public MainContentViewModel(SettingsModel sharedSettings)
     {
@@ -28,6 +30,7 @@ public partial class MainContentViewModel : ObservableObject
         Settings = new AppSettingsViewModel(sharedSettings);
         Notes = new NotesModel();
         WorkspaceFileName = null;
+        SaveStatus = WorkspaceConstants.SAVE_STATUS.UNSAVED;
     }
 
     [RelayCommand]
@@ -48,9 +51,10 @@ public partial class MainContentViewModel : ObservableObject
         Workspace = new WorkspaceViewModel(SharedSettings);
         Notes = new NotesModel();
         WorkspaceFileName = null;
+        WeakReferenceMessenger.Default.Send(new ResetActionHistoryStatesMessage(new ResetActionHistoryStatesModel(false, true, true)));
     }
 
-    public void NewWorkspace(WorkspaceModel newWorkspace, string workspaceName)
+    public void LoadWorkspace(WorkspaceModel newWorkspace, string workspaceName)
     {
         New();
         foreach (var node in newWorkspace.Nodes)
@@ -79,5 +83,14 @@ public partial class MainContentViewModel : ObservableObject
                 Workspace.WorkspaceImagePath,
                 Workspace.WindowImagePath
             };
+    }
+
+    public bool Equals(MainContentViewModel viewModel)
+    {
+        if (Workspace.Equals(viewModel.Workspace))
+        {
+            return true;
+        }
+        return false;
     }
 }
