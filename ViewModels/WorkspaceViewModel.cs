@@ -138,7 +138,7 @@ public partial class WorkspaceViewModel : ObservableObject
         nodeModel.PositionY = y;
         NodeViewModel nodeVM = new NodeViewModel(nodeModel);
         Nodes.Add(nodeVM);
-        WeakReferenceMessenger.Default.Send(new LogActionMessage(new CreateNodeActionModel(nodeVM.Clone(), nodeVM)));
+        WeakReferenceMessenger.Default.Send(new LogActionMessage(new CreateNodeActionModel(nodeVM)));
     }
 
     [RelayCommand]
@@ -201,7 +201,7 @@ public partial class WorkspaceViewModel : ObservableObject
     {
         NodeViewModel nodeVM = new NodeViewModel(new NodeModel(Nodes.Count));
         Nodes.Add(nodeVM);
-        WeakReferenceMessenger.Default.Send(new CreateNodeActionModel(nodeVM.Clone(), nodeVM));
+        WeakReferenceMessenger.Default.Send(new CreateNodeActionModel(nodeVM));
     }
 
     private void _DeleteNodes()

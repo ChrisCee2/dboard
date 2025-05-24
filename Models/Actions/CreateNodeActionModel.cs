@@ -6,14 +6,14 @@ namespace dboard.Models;
 public partial class CreateNodeActionModel : NodeActionModelBase
 {
     public CreateNodeActionModel(
-        NodeViewModelBase nodeBefore, 
         NodeViewModelBase node
-    ) : base(nodeBefore, node) { }
+    ) : base(node) { }
 
     public override void Undo(WorkspaceViewModel workspaceVM)
     {
         if (Node is not null)
         {
+            NodeBeforeHistoryAction = Node.Clone();
             workspaceVM.Nodes.Remove(Node);
             Node = null;
         }
@@ -21,12 +21,15 @@ public partial class CreateNodeActionModel : NodeActionModelBase
 
     public override void Redo(WorkspaceViewModel workspaceVM)
     {
-        NodeViewModelBase NewNode = NodeAfterAction.Clone();
         if (Node is not null)
         {
             workspaceVM.Nodes.Remove(Node);
         }
-        workspaceVM.Nodes.Add(NewNode);
-        Node = NewNode;
+        if (NodeBeforeHistoryAction is not null)
+        {
+            workspaceVM.Nodes.Add(NodeBeforeHistoryAction);
+            Node = NodeBeforeHistoryAction;
+            NodeBeforeHistoryAction = null;
+        }
     }
 }

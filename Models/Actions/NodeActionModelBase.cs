@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using dboard.ViewModels;
 
 namespace dboard.Models;
@@ -8,17 +7,13 @@ namespace dboard.Models;
 public abstract partial class NodeActionModelBase : ObservableObject
 {
     [ObservableProperty]
-    private NodeViewModelBase _nodeAfterAction;
-    [ObservableProperty]
-    private NodeViewModelBase _nodeBeforeAction;
+    private NodeViewModelBase? _nodeBeforeHistoryAction;
     [ObservableProperty]
     private NodeViewModelBase? _node;
 
-    public NodeActionModelBase(NodeViewModelBase nodeBefore, NodeViewModelBase node)
+    public NodeActionModelBase(NodeViewModelBase node)
     {
-        NodeBeforeAction = nodeBefore;
         Node = node;
-        NodeAfterAction = node.Clone();
     }
 
     abstract public void Undo(WorkspaceViewModel workspaceVM);
