@@ -204,6 +204,15 @@ public partial class WorkspaceViewModel : ObservableObject
         WeakReferenceMessenger.Default.Send(new CreateNodeActionModel(nodeVM));
     }
 
+    private void _RemoveNodes(ObservableCollection<NodeViewModelBase> nodes)
+    {
+        foreach (var nodeVM in nodes)
+        {
+            WeakReferenceMessenger.Default.Send(new LogActionMessage(new DeleteNodeActionModel(nodeVM)));
+        }
+        Nodes.RemoveMany(SelectedNodes);
+    }
+
     private void _DeleteNodes()
     {
         // Deregisters move messenger through the property listener in InteractiveView
@@ -213,7 +222,7 @@ public partial class WorkspaceViewModel : ObservableObject
         }
 
         // Remove nodes
-        Nodes.RemoveMany(SelectedNodes);
+        _RemoveNodes(SelectedNodes);
 
         // Remove edges
         var edgesToRemove = new Collection<EdgeViewModel>();
