@@ -33,11 +33,11 @@ public partial class MainContentView : Grid
     private double _lastNotesLen;
     private SplitView _notesSplitView;
     private Control _workspaceCanvas;
-    private List<NodeActionModelBase> _actionHistory = new List<NodeActionModelBase>();
+    private List<ActionModelBase> _actionHistory = new List<ActionModelBase>();
     private int _maxActions = 30;
     private int _lastActionIndex = -1;
     // Action history states
-    private NodeActionModelBase? _lastActionSinceSave = null;
+    private ActionModelBase? _lastActionSinceSave = null;
     private bool _shouldAlwaysBeUnsaved = true;
 
     // History logging starts here
@@ -86,7 +86,7 @@ public partial class MainContentView : Grid
         }
     }
 
-    public void LogAction(NodeActionModelBase action)
+    public void LogAction(ActionModelBase action)
     {
         // Remove undone actions
         int actionCount = _actionHistory.Count;
