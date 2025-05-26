@@ -50,4 +50,10 @@ public partial class NodeViewModel : NodeViewModelBase
             Node.Notes,
             zIndex));
     }
+
+    public override void Copy(NodeViewModelBase nodeToCopy)
+    {
+        NodeViewModel nodeViewModel = (NodeViewModel)nodeToCopy;
+        Node.Copy(nodeViewModel.Node);
+    }
 }
