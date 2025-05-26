@@ -25,4 +25,6 @@ public abstract partial class NodeModelBase : ObservableObject
     private int _zIndex;
 
     abstract public NodeModelBase Clone();
+
+    abstract public void Copy(NodeModelBase nodeModelToCopy);
 }

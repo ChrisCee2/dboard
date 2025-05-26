@@ -79,4 +79,18 @@ public partial class NodeModel : NodeModelBase
             ZIndex
         );
     }
+
+    public override void Copy(NodeModelBase nodeModelToCopy)
+    {
+        NodeModel nodeModel = (NodeModel)nodeModelToCopy;
+        Name = nodeModel.Name;
+        Desc = nodeModel.Desc;
+        ImagePath = nodeModel.ImagePath;
+        Width = nodeModel.Width;
+        Height = nodeModel.Height;
+        PositionX = nodeModel.PositionX;
+        PositionY = nodeModel.PositionY;
+        Notes = nodeModel.Notes;
+        ZIndex = nodeModel.ZIndex;
+    }
 }

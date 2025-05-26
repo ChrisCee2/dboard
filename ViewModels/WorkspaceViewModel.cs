@@ -84,6 +84,7 @@ public partial class WorkspaceViewModel : ObservableObject
                 _UpdateSelectedEdges(new ObservableCollection<EdgeViewModel>());
                 _UpdateSelectedNodes(new ObservableCollection<NodeViewModelBase>() { nodeVMBase });
                 nodeVMBase.IsEdit = true;
+                WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditNodeActionModel(nodeVMBase)));
             }
         });
 

@@ -40,6 +40,8 @@ public abstract partial class NodeViewModelBase : ObservableObject
 
     public abstract NodeViewModelBase Clone(int zIndex);
 
+    public abstract void Copy(NodeViewModelBase nodeToCopy);
+
     partial void OnIsSelectedChanged(bool value)
     {
         if (value)
