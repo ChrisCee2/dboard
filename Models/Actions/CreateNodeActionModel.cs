@@ -11,25 +11,14 @@ public partial class CreateNodeActionModel : NodeActionModelBase
 
     public override void Undo(WorkspaceViewModel workspaceVM)
     {
-        if (Node is not null)
-        {
-            NodeBeforeHistoryAction = Node.Clone();
-            workspaceVM.Nodes.Remove(Node);
-            Node = null;
-        }
+        workspaceVM.Nodes.Remove(Node);
     }
 
     public override void Redo(WorkspaceViewModel workspaceVM)
     {
-        if (Node is not null)
+        if (!workspaceVM.Nodes.Contains(Node))
         {
-            workspaceVM.Nodes.Remove(Node);
-        }
-        if (NodeBeforeHistoryAction is not null)
-        {
-            workspaceVM.Nodes.Add(NodeBeforeHistoryAction);
-            Node = NodeBeforeHistoryAction;
-            NodeBeforeHistoryAction = null;
+            workspaceVM.Nodes.Add(Node);
         }
     }
 }

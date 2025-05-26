@@ -7,24 +7,18 @@ public partial class DeleteNodeActionModel : NodeActionModelBase
 {
     public DeleteNodeActionModel(
         NodeViewModelBase node
-    ) : base(node) { NodeBeforeHistoryAction = node.Clone(); }
+    ) : base(node) { }
 
     public override void Undo(WorkspaceViewModel workspaceVM)
     {
-        if (NodeBeforeHistoryAction is not null)
+        if (!workspaceVM.Nodes.Contains(Node))
         {
-            workspaceVM.Nodes.Add(NodeBeforeHistoryAction);
-            Node = NodeBeforeHistoryAction;
-            NodeBeforeHistoryAction = null;
+            workspaceVM.Nodes.Add(Node);
         }
     }
 
     public override void Redo(WorkspaceViewModel workspaceVM)
     {
-        if (Node is not null)
-        {
-            NodeBeforeHistoryAction = Node.Clone();
-            workspaceVM.Nodes.Remove(Node);
-        }
+        workspaceVM.Nodes.Remove(Node);
     }
 }
