@@ -2,7 +2,7 @@
 using dboard.Models;
 
 namespace dboard.Messages;
-public class LogActionMessage : ValueChangedMessage<NodeActionModelBase>
+public class LogActionMessage : ValueChangedMessage<ActionModelBase>
 {
-    public LogActionMessage(NodeActionModelBase value) : base(value) { }
+    public LogActionMessage(ActionModelBase value) : base(value) { }
 }

@@ -1,6 +1,6 @@
 ﻿using dboard.ViewModels;
 
-namespace dboard.Models;
+namespace dboard.Models.Actions.Node;
 
 
 public partial class EditNodeActionModel : NodeActionModelBase
@@ -14,7 +14,7 @@ public partial class EditNodeActionModel : NodeActionModelBase
 
     public override void Undo(WorkspaceViewModel workspaceVM)
     {
-        if (_nodeBeforeEdit != null )
+        if (_nodeBeforeEdit != null)
         {
             _nodeAfterEdit = Node.Clone();
             Node.Copy(_nodeBeforeEdit);
