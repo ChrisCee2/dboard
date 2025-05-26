@@ -217,6 +217,15 @@ public partial class WorkspaceViewModel : ObservableObject
         Nodes.RemoveMany(SelectedNodes);
     }
 
+    private void _RemoveEdges(ObservableCollection<EdgeViewModel> edges)
+    {
+        foreach (var edgeVM in edges)
+        {
+            WeakReferenceMessenger.Default.Send(new LogActionMessage(new DeleteEdgeActionModel(edgeVM)));
+        }
+        Edges.RemoveMany(edges);
+    }
+
     private void _DeleteNodes()
     {
         // Deregisters move messenger through the property listener in InteractiveView
@@ -229,7 +238,7 @@ public partial class WorkspaceViewModel : ObservableObject
         _RemoveNodes(SelectedNodes);
 
         // Remove edges
-        var edgesToRemove = new Collection<EdgeViewModel>();
+        var edgesToRemove = new ObservableCollection<EdgeViewModel>();
         foreach (EdgeViewModel edgeViewModel in Edges)
         {
             foreach (NodeViewModelBase nodeVM in SelectedNodes)
@@ -241,7 +250,7 @@ public partial class WorkspaceViewModel : ObservableObject
                 }
             }
         }
-        Edges.RemoveMany(edgesToRemove);
+        _RemoveEdges(edgesToRemove);
 
         // Reorder z indexes
         foreach (var nodeVM in Nodes)
@@ -263,13 +272,15 @@ public partial class WorkspaceViewModel : ObservableObject
     private void _DeleteEdges()
     {
         // Remove edges
-        Edges.RemoveMany(SelectedEdges);
+        _RemoveEdges(SelectedEdges);
+
         SelectedEdges = new ObservableCollection<EdgeViewModel>();
     }
 
     [RelayCommand(CanExecute = nameof(ItemsAreSelected))]
     private void DeleteSelectedItems()
     {
+        // TODO: Where we would try to do a grouped action for deleting multiple items at the same time
         _DeleteNodes();
         _DeleteEdges();
     }
