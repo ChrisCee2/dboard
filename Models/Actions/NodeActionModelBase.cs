@@ -7,9 +7,7 @@ namespace dboard.Models;
 public abstract partial class NodeActionModelBase : ObservableObject
 {
     [ObservableProperty]
-    private NodeViewModelBase? _nodeBeforeHistoryAction;
-    [ObservableProperty]
-    private NodeViewModelBase? _node;
+    private NodeViewModelBase _node;
 
     public NodeActionModelBase(NodeViewModelBase node)
     {
