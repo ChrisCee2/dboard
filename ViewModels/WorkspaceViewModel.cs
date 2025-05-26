@@ -9,6 +9,7 @@ using DynamicData;
 using dboard.Constants;
 using dboard.Messages;
 using dboard.Models;
+using dboard.Models.Actions.Node;
 
 namespace dboard.ViewModels;
 
@@ -109,7 +110,9 @@ public partial class WorkspaceViewModel : ObservableObject
                 && !Equals(enteredNode, NodeToCreateEdge)
                 && !Edges.ContainsEdge(NodeToCreateEdge.NodeBase, enteredNode.NodeBase))
             {
-                Edges.Add(new EdgeViewModel(new EdgeModel(NodeToCreateEdge.NodeBase, enteredNode.NodeBase)));
+                EdgeViewModel edge = new EdgeViewModel(new EdgeModel(NodeToCreateEdge.NodeBase, enteredNode.NodeBase));
+                Edges.Add(edge);
+                WeakReferenceMessenger.Default.Send(new LogActionMessage(new CreateEdgeActionModel(edge)));
             }
             NodeToCreateEdge = NodeConstants.NULL_NODEVIEWMODEL;
             IsEdging = false;

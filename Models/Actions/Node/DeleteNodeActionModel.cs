@@ -1,6 +1,6 @@
 ﻿using dboard.ViewModels;
 
-namespace dboard.Models;
+namespace dboard.Models.Actions.Node;
 
 
 public partial class DeleteNodeActionModel : NodeActionModelBase
