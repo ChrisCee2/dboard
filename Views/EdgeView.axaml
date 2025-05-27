@@ -109,6 +109,7 @@
 	</Button>
 
 	<TextBox Text="{Binding Edge.Description}" 
+			 GotFocus="OnTextBoxFocused"
 			 IsVisible="{Binding Edge.Description, Converter={StaticResource IsNotNullConverter}}">
 		<Canvas.Left>
 			<MultiBinding Converter="{StaticResource MedianConverter}">
