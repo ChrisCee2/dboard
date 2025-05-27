@@ -108,7 +108,8 @@
 		</Canvas.Top>
 	</Button>
 
-	<TextBox Text="{Binding Edge.Description}" IsVisible="{Binding Edge.Description, Converter={StaticResource IsNotNullConverter}}">
+	<TextBox Text="{Binding Edge.Description}" 
+			 IsVisible="{Binding Edge.Description, Converter={StaticResource IsNotNullConverter}}">
 		<Canvas.Left>
 			<MultiBinding Converter="{StaticResource MedianConverter}">
 				<Binding Path="Edge.FromNode.PositionX"/>

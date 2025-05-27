@@ -1,9 +1,6 @@
-﻿using Avalonia.Logging;
-using Avalonia.Media;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using dboard.Constants;
 using dboard.Messages;
 using dboard.Models;
 
@@ -32,12 +29,16 @@ public partial class EdgeViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(DescIsNull))]
     private void AddDesc()
     {
+        // TODO: Can optimize this by just storing the description and reference to this
+        WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditEdgeActionModel(this)));
         Edge.Description = "";
     }
 
     [RelayCommand(CanExecute = nameof(DescIsNotNull))]
     private void RemoveDesc()
     {
+        // TODO: Can optimize this by just storing the description and reference to this
+        WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditEdgeActionModel(this)));
         Edge.Description = null;
     }
 
@@ -65,5 +66,10 @@ public partial class EdgeViewModel : ObservableObject
             Edge.G,
             Edge.B,
             Edge.Thickness));
+    }
+
+    public void Copy(EdgeViewModel edgeToCopy)
+    {
+        Edge.Copy(edgeToCopy.Edge);
     }
 }

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia;
+using CommunityToolkit.Mvvm.ComponentModel;
 using dboard.Constants;
 
 namespace dboard.Models;
@@ -36,6 +37,18 @@ public partial class EdgeModel : ObservableObject
         R = r;
         G = g;
         B = b;
+    }
+
+    public void Copy(EdgeModel edgeModelToCopy)
+    {
+        FromNode = edgeModelToCopy.FromNode;
+        ToNode = edgeModelToCopy.ToNode;
+        Description = edgeModelToCopy.Description;
+        Thickness = edgeModelToCopy.Thickness;
+        A = edgeModelToCopy.A;
+        R = edgeModelToCopy.R;
+        G = edgeModelToCopy.G;
+        B = edgeModelToCopy.B;
     }
 
     [ObservableProperty]
