@@ -5,12 +5,21 @@ namespace dboard.ViewModels;
 
 public partial class TextEditViewModel : ObservableObject
 {
+    [ObservableProperty]
+    public NotesModel _notes;
 
     public TextEditViewModel(NotesModel notes)
     {
         Notes = notes;
     }
 
-    [ObservableProperty]
-    public NotesModel _notes;
+    public TextEditViewModel Clone()
+    {
+        return new TextEditViewModel(Notes.Clone());
+    }
+
+    public void Copy(TextEditViewModel textEditToCopy)
+    {
+        Notes.Copy(textEditToCopy.Notes);
+    }
 }
