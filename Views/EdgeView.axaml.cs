@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Messages;
+using dboard.Models;
 using dboard.ViewModels;
 
 namespace dboard.Views;
@@ -17,5 +18,14 @@ public partial class EdgeView : Canvas
     {
         base.OnPointerReleased(e);
         WeakReferenceMessenger.Default.Send(new SelectNodeEdgeMessage((EdgeViewModel)DataContext));
+    }
+
+    protected void OnTextBoxFocused(object sender, GotFocusEventArgs e)
+    {
+        EdgeViewModel vm = (EdgeViewModel)DataContext;
+        if (vm != null)
+        {
+            WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditEdgeActionModel(vm)));
+        }
     }
 }
