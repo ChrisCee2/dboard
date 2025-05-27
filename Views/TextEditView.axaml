@@ -17,5 +17,6 @@
 		x:Name="TextEdit"
 		WordWrap="True"
 		Document="{Binding Text, Converter={StaticResource DocumentStringConverter}}"
-		TextChanged="TextChanged"/>
+		TextChanged="TextChanged"
+		LostFocus="OnTextEditorLostFocus"/>
 </Border>

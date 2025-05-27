@@ -13,6 +13,17 @@ public partial class NotesModel : ObservableObject
         PaneLength = paneLength;
     }
 
+    public void Copy(NotesModel notesModelToCopy)
+    {
+        Text = notesModelToCopy.Text;
+        PaneLength = notesModelToCopy.PaneLength;
+    }
+
+    public NotesModel Clone()
+    {
+        return new NotesModel(Text, PaneLength);
+    }
+
     [ObservableProperty]
     private string _text;
     [ObservableProperty]
