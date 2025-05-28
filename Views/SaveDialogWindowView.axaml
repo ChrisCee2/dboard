@@ -10,17 +10,27 @@
     Title="dboard"
 	ExtendClientAreaToDecorationsHint="True"
 	ExtendClientAreaChromeHints="NoChrome"
-	Width="256"
-	Height="128"
+	Width="312"
+	Height="168"
+	CanResize="False"
 	>
 
-	<Grid ColumnDefinitions="Auto,Auto,Auto" RowDefinitions="Auto,Auto,Auto">
-		<TextBlock Text="The workspace __ has unsaved changes" TextWrapping="Wrap" 
-				   Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
-		<TextBlock Text="Do you want to save your workspace?" TextWrapping="Wrap"
-				   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
-		<Button Content="Save" Grid.Row="2" Grid.Column="0"/>
-		<Button Content="Don't save" Grid.Row="2" Grid.Column="1"/>
-		<Button Content="Cancel" Grid.Row="2" Grid.Column="2"/>
-	</Grid>
+	<Border Padding="10">
+		<DockPanel>
+			<Border Height="20" DockPanel.Dock="Top">
+				<Image Source="/Assets/dboard_icon.ico" HorizontalAlignment="Left"/>
+			</Border>
+			<Border Height="8" DockPanel.Dock="Top"/>
+			<TextBlock FontSize="16" Text="Do you want to save your workspace?" TextWrapping="Wrap"
+					   DockPanel.Dock="Top"/>
+			<Border Height="16" DockPanel.Dock="Top"/>
+			<TextBlock Text="The workspace __ has unsaved changes" TextWrapping="Wrap"
+				   DockPanel.Dock="Top"/>
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Spacing="10">
+				<Button FontSize="16" Content="Save"/>
+				<Button FontSize="16" Content="Don't save"/>
+				<Button FontSize="16" Content="Cancel"/>
+			</StackPanel>
+		</DockPanel>
+	</Border>
 </Window>
