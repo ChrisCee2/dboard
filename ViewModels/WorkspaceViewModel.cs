@@ -10,6 +10,7 @@ using dboard.Constants;
 using dboard.Messages;
 using dboard.Models;
 using dboard.Models.Actions.Node;
+using System.Xml.Linq;
 
 namespace dboard.ViewModels;
 
@@ -208,25 +209,21 @@ public partial class WorkspaceViewModel : ObservableObject
         WeakReferenceMessenger.Default.Send(new CreateNodeActionModel(nodeVM));
     }
 
-    private void _RemoveNodes(ObservableCollection<NodeViewModelBase> nodes)
+    private List<NodeViewModelBase> _RemoveNodes(ObservableCollection<NodeViewModelBase> nodes)
     {
-        foreach (var nodeVM in nodes)
-        {
-            WeakReferenceMessenger.Default.Send(new LogActionMessage(new DeleteNodeActionModel(nodeVM)));
-        }
         Nodes.RemoveMany(SelectedNodes);
+
+        return nodes.ToList();
     }
 
-    private void _RemoveEdges(ObservableCollection<EdgeViewModel> edges)
+    private List<EdgeViewModel> _RemoveEdges(ObservableCollection<EdgeViewModel> edges)
     {
-        foreach (var edgeVM in edges)
-        {
-            WeakReferenceMessenger.Default.Send(new LogActionMessage(new DeleteEdgeActionModel(edgeVM)));
-        }
         Edges.RemoveMany(edges);
+
+        return edges.ToList();
     }
 
-    private void _DeleteNodes()
+    private List<ActionModelBase> _DeleteNodes()
     {
         // Deregisters move messenger through the property listener in InteractiveView
         foreach (var nodeVM in SelectedNodes)
@@ -235,7 +232,7 @@ public partial class WorkspaceViewModel : ObservableObject
         }
 
         // Remove nodes
-        _RemoveNodes(SelectedNodes);
+        List<NodeViewModelBase> nodesRemoved =  _RemoveNodes(SelectedNodes);
 
         // Remove edges
         var edgesToRemove = new ObservableCollection<EdgeViewModel>();
@@ -250,7 +247,7 @@ public partial class WorkspaceViewModel : ObservableObject
                 }
             }
         }
-        _RemoveEdges(edgesToRemove);
+        List<EdgeViewModel> edgesRemoved = _RemoveEdges(edgesToRemove);
 
         // Reorder z indexes
         foreach (var nodeVM in Nodes)
@@ -267,22 +264,47 @@ public partial class WorkspaceViewModel : ObservableObject
         }
 
         SelectedNodes = new ObservableCollection<NodeViewModelBase>();
+
+        // Create actions
+        List<ActionModelBase> actions = new List<ActionModelBase>();
+        foreach (EdgeViewModel edgeViewModel in edgesRemoved)
+        {
+            actions.Add(new DeleteEdgeActionModel(edgeViewModel));
+        }
+
+        foreach (NodeViewModelBase nodeViewModel in nodesRemoved)
+        {
+            actions.Add(new DeleteNodeActionModel(nodeViewModel));
+        }
+
+        return actions;
     }
 
-    private void _DeleteEdges()
+    private List<ActionModelBase> _DeleteEdges()
     {
         // Remove edges
-        _RemoveEdges(SelectedEdges);
+        List<EdgeViewModel> edgesRemoved = _RemoveEdges(SelectedEdges);
 
         SelectedEdges = new ObservableCollection<EdgeViewModel>();
+
+        // Create actions
+        List<ActionModelBase> actions = new List<ActionModelBase>();
+        foreach (EdgeViewModel edgeViewModel in edgesRemoved)
+        {
+            actions.Add(new DeleteEdgeActionModel(edgeViewModel));
+        }
+
+        return actions;
     }
 
     [RelayCommand(CanExecute = nameof(ItemsAreSelected))]
     private void DeleteSelectedItems()
     {
-        // TODO: Where we would try to do a grouped action for deleting multiple items at the same time
-        _DeleteNodes();
-        _DeleteEdges();
+        List<ActionModelBase> actionsFromDeleteNodes = _DeleteNodes();
+        List<ActionModelBase> actionsFromDeleteEdges = _DeleteEdges();
+        MultiActionModel actionsGrouped = new MultiActionModel(actionsFromDeleteNodes.Concat(actionsFromDeleteEdges).ToList());
+
+        WeakReferenceMessenger.Default.Send(new LogActionMessage(actionsGrouped));
     }
 
     private void _UpdateSelectedNodes(ObservableCollection<NodeViewModelBase> nodesToSelect)
