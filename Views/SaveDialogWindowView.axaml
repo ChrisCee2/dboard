@@ -1,0 +1,26 @@
+<Window 
+	xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="using:dboard.ViewModels"
+	xmlns:constants="clr-namespace:dboard.Constants"
+    x:Class="dboard.Views.SaveDialogWindowView"
+    Icon="/Assets/avalonia-logo.ico"
+    Title="dboard"
+	ExtendClientAreaToDecorationsHint="True"
+	ExtendClientAreaChromeHints="NoChrome"
+	Width="256"
+	Height="128"
+	>
+
+	<Grid ColumnDefinitions="Auto,Auto,Auto" RowDefinitions="Auto,Auto,Auto">
+		<TextBlock Text="The workspace __ has unsaved changes" TextWrapping="Wrap" 
+				   Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
+		<TextBlock Text="Do you want to save your workspace?" TextWrapping="Wrap"
+				   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
+		<Button Content="Save" Grid.Row="2" Grid.Column="0"/>
+		<Button Content="Don't save" Grid.Row="2" Grid.Column="1"/>
+		<Button Content="Cancel" Grid.Row="2" Grid.Column="2"/>
+	</Grid>
+</Window>

@@ -10,6 +10,7 @@ using dboard.Models;
 using System;
 using CommunityToolkit.Mvvm.Input;
 using System.Text.Json.Serialization;
+using dboard.Views;
 
 namespace dboard.ViewModels;
 
@@ -26,6 +27,7 @@ public partial class MainWindowViewModel : ObservableObject
     private ObservableObject _currentPage;
     [ObservableProperty]
     private SettingsModel _sharedSettings;
+    private Window? _saveDialog;
 
     public MainWindowViewModel()
     {
@@ -74,6 +76,12 @@ public partial class MainWindowViewModel : ObservableObject
     public void OnWindowClosing(object sender, WindowClosingEventArgs e)
     {
         SaveSettings();
+        e.Cancel = true;
+        if (_saveDialog is null)
+        {
+            _saveDialog = new SaveDialogWindowView();
+            _saveDialog.Show();
+        }
     }
 
     [RelayCommand]

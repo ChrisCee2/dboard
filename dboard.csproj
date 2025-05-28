@@ -62,6 +62,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\SaveDialogWindowView.axaml.cs">
+      <DependentUpon>SaveDialogWindowView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\WorkspaceSettingsView.axaml.cs">
       <DependentUpon>WorkspaceSettingsView.axaml</DependentUpon>
     </Compile>

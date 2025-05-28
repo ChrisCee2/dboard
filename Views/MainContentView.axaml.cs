@@ -38,7 +38,35 @@ public partial class MainContentView : Grid
     private int _lastActionIndex = -1;
     // Action history states
     private ActionModelBase? _lastActionSinceSave = null;
-    private bool _shouldAlwaysBeUnsaved = true;
+    private bool _shouldAlwaysBeUnsaved = false;
+    private bool _isNewWorkspace = true;
+    private bool _shouldQuit = false;
+
+    public bool ShouldShowSaveDialog()
+    {
+        if (_shouldQuit)
+        {
+            return false;
+        }
+        else if (_isNewWorkspace)
+        {
+            // If it is a new workspace, no edits have been made / action history can be reverted to beginning and has been
+            if (!_shouldAlwaysBeUnsaved && (_lastActionSinceSave is null && _lastActionIndex == -1))
+            {
+                return false;
+            }
+            return true;
+        }
+        else
+        {
+            MainContentViewModel vm = (MainContentViewModel)DataContext;
+            if (vm is not null && vm.SaveStatus == WorkspaceConstants.SAVE_STATUS.UNSAVED)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 
     // History logging starts here
     public void UpdateSaveStatus()
@@ -47,7 +75,7 @@ public partial class MainContentView : Grid
         if (vm is not null)
         {
             if (
-                !_shouldAlwaysBeUnsaved &&
+                !_shouldAlwaysBeUnsaved && !_isNewWorkspace &&
                 (
                 (_lastActionSinceSave is null && _lastActionIndex == -1) ||
                 (_lastActionIndex != -1 && _actionHistory[_lastActionIndex] == _lastActionSinceSave)
@@ -107,7 +135,7 @@ public partial class MainContentView : Grid
         UpdateSaveStatus();
     }
 
-    private void ResetActionHistoryStates(bool isSave, bool resetActionHistory, bool shouldAlwaysBeUnsaved)
+    private void ResetActionHistoryStates(bool isSave, bool resetActionHistory, bool shouldAlwaysBeUnsaved, bool isNew)
     {
         _shouldAlwaysBeUnsaved = shouldAlwaysBeUnsaved;
         if (resetActionHistory)
@@ -123,6 +151,7 @@ public partial class MainContentView : Grid
                 _lastActionSinceSave = _actionHistory[_lastActionIndex];
             }
         }
+        _isNewWorkspace = isNew;
         UpdateSaveStatus();
     }
     // History logging ends here
@@ -189,7 +218,7 @@ public partial class MainContentView : Grid
         WeakReferenceMessenger.Default.Register<ResetActionHistoryStatesMessage>(this, (sender, message) =>
         {
             ResetActionHistoryStatesModel val = message.Value;
-            ResetActionHistoryStates(val.IsSave, val.ResetActionHistory, val.ShouldAlwaysBeUnsaved);
+            ResetActionHistoryStates(val.IsSave, val.ResetActionHistory, val.ShouldAlwaysBeUnsaved, val.IsNew);
         });
 
         WeakReferenceMessenger.Default.Register<HistoryActionMessage>(this, (sender, message) =>
@@ -286,7 +315,7 @@ public partial class MainContentView : Grid
         await JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
         vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
-        ResetActionHistoryStates(true, false, false);
+        ResetActionHistoryStates(true, false, false, false);
     }
 
     protected async void Open(object sender, RoutedEventArgs e)
@@ -315,7 +344,7 @@ public partial class MainContentView : Grid
             vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
         }
 
-        ResetActionHistoryStates(false, true, false);
+        ResetActionHistoryStates(false, true, false, false);
     }
 
     protected void Exit(object sender, RoutedEventArgs e)
