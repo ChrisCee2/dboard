@@ -28,12 +28,12 @@ public partial class MainWindowView : Window
         MainWindowViewModel viewModel = (MainWindowViewModel)DataContext;
         if (viewModel != null)
         {
-            if (viewModel.ShouldClose == true)
+            viewModel.SaveSettings();
+            if (viewModel.ShouldClose == true || viewModel.ShouldShowSaveDialog())
             {
                 return;
             }
 
-            viewModel.SaveSettings();
             e.Cancel = true;
             Window dialogWindow = new SaveDialogWindowView(new SaveDialogWindowViewModel(viewModel.SharedSettings));
 

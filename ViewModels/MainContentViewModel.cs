@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -20,8 +21,24 @@ public partial class MainContentViewModel : ObservableObject
     private SettingsModel _sharedSettings;
     [ObservableProperty]
     private string? _workspaceFileName;
+
+    // Undo Redo properties
+    [ObservableProperty]
+    private List<ActionModelBase> _actionHistory = new List<ActionModelBase>();
+    [ObservableProperty]
+    private int _maxActions = 30;
+    [ObservableProperty]
+    private int _lastActionIndex = -1;
+
+    // Save status properties
+    [ObservableProperty]
+    private ActionModelBase? _lastActionSinceSave = null;
     [ObservableProperty]
     private WorkspaceConstants.SAVE_STATUS _saveStatus;
+    [ObservableProperty]
+    private bool _isNewWorkspace = false;
+    [ObservableProperty]
+    private bool _shouldAlwaysBeUnsaved = false;
 
     public MainContentViewModel(SettingsModel sharedSettings)
     {
@@ -31,6 +48,31 @@ public partial class MainContentViewModel : ObservableObject
         Notes = new NotesModel();
         WorkspaceFileName = null;
         SaveStatus = WorkspaceConstants.SAVE_STATUS.UNSAVED;
+
+        // History logging
+        WeakReferenceMessenger.Default.Register<LogActionMessage>(this, (sender, message) =>
+        {
+            LogAction(message.Value);
+        });
+
+        WeakReferenceMessenger.Default.Register<ResetActionHistoryStatesMessage>(this, (sender, message) =>
+        {
+            ResetActionHistoryStatesModel val = message.Value;
+            ResetActionHistoryStates(val.IsSave, val.ResetActionHistory, val.ShouldAlwaysBeUnsaved, val.IsNew);
+        });
+
+        WeakReferenceMessenger.Default.Register<HistoryActionMessage>(this, (sender, message) =>
+        {
+            WorkspaceConstants.HISTORY_ACTION historyAction = message.Value;
+            if (historyAction == WorkspaceConstants.HISTORY_ACTION.UNDO)
+            {
+                Undo();
+            }
+            else if (historyAction == WorkspaceConstants.HISTORY_ACTION.REDO)
+            {
+                Redo();
+            }
+        });
     }
 
     [RelayCommand]
@@ -93,4 +135,85 @@ public partial class MainContentViewModel : ObservableObject
         }
         return false;
     }
+
+    // History logging starts here
+    public void UpdateSaveStatus()
+    {
+        if (
+            !ShouldAlwaysBeUnsaved && !IsNewWorkspace &&
+            (
+            (LastActionSinceSave is null && LastActionIndex == -1) ||
+            (LastActionIndex != -1 && ActionHistory[LastActionIndex] == LastActionSinceSave)
+            )
+        )
+        {
+            SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
+        }
+        else
+        {
+            SaveStatus = WorkspaceConstants.SAVE_STATUS.UNSAVED;
+        }
+    }
+
+    public void Undo()
+    {
+        if (LastActionIndex >= 0)
+        {
+            ActionHistory[LastActionIndex].Undo(Workspace);
+            LastActionIndex -= 1;
+            UpdateSaveStatus();
+        }
+    }
+
+    public void Redo()
+    {
+        if (LastActionIndex < ActionHistory.Count - 1)
+        {
+            LastActionIndex += 1;
+            ActionHistory[LastActionIndex].Redo(Workspace);
+            UpdateSaveStatus();
+        }
+    }
+
+    public void LogAction(ActionModelBase action)
+    {
+        // Remove undone actions
+        int actionCount = ActionHistory.Count;
+        for (int i = actionCount - 1; i > LastActionIndex; i--)
+        {
+            ActionHistory.RemoveAt(i);
+        }
+
+        // Pop least recent action if there are too many
+        actionCount = ActionHistory.Count;
+        for (int i = actionCount; i > MaxActions; i--)
+        {
+            ActionHistory.RemoveAt(0);
+        }
+
+        ActionHistory.Add(action);
+        LastActionIndex = ActionHistory.Count - 1;
+        UpdateSaveStatus();
+    }
+
+    private void ResetActionHistoryStates(bool isSave, bool resetActionHistory, bool shouldAlwaysBeUnsaved, bool isNew)
+    {
+        if (resetActionHistory)
+        {
+            LastActionSinceSave = null;
+            ActionHistory.Clear();
+            LastActionIndex = -1;
+        }
+        if (isSave)
+        {
+            if (LastActionIndex != -1)
+            {
+                LastActionSinceSave = ActionHistory[LastActionIndex];
+            }
+        }
+        IsNewWorkspace = isNew;
+        ShouldAlwaysBeUnsaved = shouldAlwaysBeUnsaved;
+        UpdateSaveStatus();
+    }
+    // History logging ends here
 }

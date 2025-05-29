@@ -116,4 +116,29 @@ public partial class MainWindowViewModel : ObservableObject
             WeakReferenceMessenger.Default.Send(new CloseAppMessage(""));
         }
     }
+
+    public bool ShouldShowSaveDialog()
+    {
+        // Try to get the main content view model
+        ObservableObject? value;
+        Pages.TryGetValue(PageConstants.PAGE.MainContent, out value);
+
+        if (value is not null && value is MainContentViewModel viewModel)
+        {
+            if (viewModel.IsNewWorkspace)
+            {
+                // If it is a new workspace, no edits have been made / action history can be reverted to beginning and has been
+                if (!viewModel.ShouldAlwaysBeUnsaved && (viewModel.LastActionSinceSave is null && _lastActionIndex == -1))
+                {
+                    return false;
+                }
+                return true;
+            }
+            else if(viewModel is not null && viewModel.SaveStatus == WorkspaceConstants.SAVE_STATUS.UNSAVED)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
