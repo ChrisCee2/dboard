@@ -1,8 +1,10 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Logging;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Messages;
 using dboard.ViewModels;
+using Tmds.DBus.Protocol;
 
 namespace dboard.Views;
 

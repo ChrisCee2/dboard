@@ -10,10 +10,12 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Logging;
 using Avalonia.LogicalTree;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
@@ -237,7 +239,7 @@ public partial class MainContentView : Grid
 
         WeakReferenceMessenger.Default.Register<SaveDialogSaveMessage>(this, (sender, message) =>
         {
-            SaveDialogSave(message.Value);
+            SaveDialogSaveCloseWindow(message.Value);
         });
     }
 
@@ -251,7 +253,7 @@ public partial class MainContentView : Grid
         SaveAs();
     }
 
-    protected async void Save(Window? windowToCloseAfterSave=null)
+    protected async void Save(Window? windowToCloseAfterSave = null)
     {
         if (((MainContentViewModel)DataContext).WorkspaceFileName == null)
         {
@@ -333,9 +335,9 @@ public partial class MainContentView : Grid
         }
     }
 
-    protected void SaveDialogSave(Window saveDialogWindow)
+    protected void SaveDialogSaveCloseWindow(Window saveDialogWindow)
     {
-        Save();
+        Save(saveDialogWindow);
         saveDialogWindow.Hide();
     }
 
