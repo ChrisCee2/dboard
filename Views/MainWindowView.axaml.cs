@@ -1,5 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
+using CommunityToolkit.Mvvm.Messaging;
+using dboard.Messages;
 using dboard.ViewModels;
 
 namespace dboard.Views;
@@ -9,6 +11,10 @@ public partial class MainWindowView : Window
     public MainWindowView()
     {
         InitializeComponent();
+        WeakReferenceMessenger.Default.Register<CloseAppMessage>(this, (sender, message) =>
+        {
+            Close();
+        });
     }
 
     protected override void OnDataContextEndUpdate()
@@ -22,15 +28,20 @@ public partial class MainWindowView : Window
         MainWindowViewModel viewModel = (MainWindowViewModel)DataContext;
         if (viewModel != null)
         {
+            if (viewModel.ShouldClose == true)
+            {
+                return;
+            }
+
             viewModel.SaveSettings();
             e.Cancel = true;
-            Window dialogWindow = new SaveDialogWindowView();
+            Window dialogWindow = new SaveDialogWindowView(new SaveDialogWindowViewModel(viewModel.SharedSettings));
 
             var centerX = Position.X + (int)((ClientSize.Width - dialogWindow.Width) / 2);
             var centerY = Position.Y + (int)((ClientSize.Height - dialogWindow.Height) / 2);
             dialogWindow.Position = new PixelPoint(centerX, centerY);
 
-            await dialogWindow.ShowDialog(this);
+            viewModel.ShouldClose = await dialogWindow.ShowDialog<bool>(this);
         }
     }
 }

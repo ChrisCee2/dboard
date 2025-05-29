@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Avalonia.Controls;
 using System.IO;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,9 +9,6 @@ using dboard.Models;
 using System;
 using CommunityToolkit.Mvvm.Input;
 using System.Text.Json.Serialization;
-using dboard.Views;
-using Avalonia.Logging;
-using Avalonia.Styling;
 
 namespace dboard.ViewModels;
 
@@ -29,7 +25,8 @@ public partial class MainWindowViewModel : ObservableObject
     private ObservableObject _currentPage;
     [ObservableProperty]
     private SettingsModel _sharedSettings;
-    private Window? _saveDialog;
+    [ObservableProperty]
+    private bool? _shouldClose = false;
 
     public MainWindowViewModel()
     {
@@ -110,5 +107,13 @@ public partial class MainWindowViewModel : ObservableObject
     private void Redo()
     {
         WeakReferenceMessenger.Default.Send(new HistoryActionMessage(WorkspaceConstants.HISTORY_ACTION.REDO));
+    }
+
+    partial void OnShouldCloseChanged(bool? value)
+    {
+        if (ShouldClose == true)
+        {
+            WeakReferenceMessenger.Default.Send(new CloseAppMessage(""));
+        }
     }
 }

@@ -6,6 +6,7 @@
 	xmlns:vm="using:dboard.ViewModels"
 	xmlns:constants="clr-namespace:dboard.Constants"
     x:Class="dboard.Views.SaveDialogWindowView"
+	x:DataType="vm:SaveDialogWindowViewModel"
     Icon="/Assets/avalonia-logo.ico"
     Title="dboard"
 	ExtendClientAreaToDecorationsHint="True"
@@ -13,7 +14,21 @@
 	Width="312"
 	Height="168"
 	CanResize="False"
+	RequestedThemeVariant="{Binding SharedSettings.Theme}"
+	WindowState="{Binding SharedSettings.ModeModel.WindowState}"
 	>
+	<Window.Background>
+		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+			<Binding Path="SharedSettings.ModeModel.BackgroundA"/>
+			<Binding Path="SharedSettings.ModeModel.BackgroundR"/>
+			<Binding Path="SharedSettings.ModeModel.BackgroundG"/>
+			<Binding Path="SharedSettings.ModeModel.BackgroundB"/>
+		</MultiBinding>
+	</Window.Background>
+
+	<Design.DataContext>
+		<vm:SaveDialogWindowViewModel/>
+	</Design.DataContext>
 
 	<Border Padding="10">
 		<DockPanel>
@@ -27,9 +42,9 @@
 			<TextBlock Text="The workspace __ has unsaved changes" TextWrapping="Wrap"
 				   DockPanel.Dock="Top"/>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Spacing="10">
-				<Button FontSize="16" Content="Save"/>
-				<Button FontSize="16" Content="Don't save"/>
-				<Button FontSize="16" Content="Cancel"/>
+				<Button FontSize="16" Content="Save" Click="Save"/>
+				<Button FontSize="16" Content="Don't save" Click="Continue"/>
+				<Button FontSize="16" Content="Cancel" Click="Cancel"/>
 			</StackPanel>
 		</DockPanel>
 	</Border>

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -233,6 +234,11 @@ public partial class MainContentView : Grid
                 Redo();
             }
         });
+
+        WeakReferenceMessenger.Default.Register<SaveDialogSaveMessage>(this, (sender, message) =>
+        {
+            SaveDialogSave(message.Value);
+        });
     }
 
     protected async void SaveEvent(object sender, RoutedEventArgs e)
@@ -245,11 +251,11 @@ public partial class MainContentView : Grid
         SaveAs();
     }
 
-    protected async void Save()
+    protected async void Save(Window? windowToCloseAfterSave=null)
     {
         if (((MainContentViewModel)DataContext).WorkspaceFileName == null)
         {
-            SaveAs();
+            SaveAs(windowToCloseAfterSave);
         }
         else
         {
@@ -262,12 +268,12 @@ public partial class MainContentView : Grid
             IStorageFile file = await TopLevel.GetTopLevel(this).StorageProvider.TryGetFileFromPathAsync(path);
             if (file is not null)
             {
-                _SaveFile(file);
+                _SaveFile(file, windowToCloseAfterSave);
             }
         }
     }
 
-    protected async void SaveAs()
+    protected async void SaveAs(Window? windowToCloseAfterSave = null)
     {
         if (!Directory.Exists("./Workspaces"))
         {
@@ -286,11 +292,15 @@ public partial class MainContentView : Grid
 
         if (file is not null)
         {
-            _SaveFile(file);
+            _SaveFile(file, windowToCloseAfterSave);
+        }
+        else if (windowToCloseAfterSave != null)
+        {
+            windowToCloseAfterSave.Close(false);
         }
     }
 
-    private async void _SaveFile(IStorageFile file)
+    private async void _SaveFile(IStorageFile file, Window? windowToCloseAfterSave)
     {
         MainContentViewModel vm = (MainContentViewModel)DataContext;
         vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVING;
@@ -316,6 +326,17 @@ public partial class MainContentView : Grid
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
         vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
         ResetActionHistoryStates(true, false, false, false);
+
+        if (windowToCloseAfterSave != null)
+        {
+            windowToCloseAfterSave.Close(true);
+        }
+    }
+
+    protected void SaveDialogSave(Window saveDialogWindow)
+    {
+        Save();
+        saveDialogWindow.Hide();
     }
 
     protected async void Open(object sender, RoutedEventArgs e)

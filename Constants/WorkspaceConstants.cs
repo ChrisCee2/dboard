@@ -30,4 +30,10 @@ public static class WorkspaceConstants
         { SAVE_STATUS.SAVING, "Saving" },
         { SAVE_STATUS.SAVED, "Saved" },
     };
+
+    public enum SAVE_DIALOG_ACTION
+    {
+        CLOSE_WINDOW,
+        OPEN_WORKSPACE
+    }
 }
