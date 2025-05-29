@@ -11,6 +11,8 @@ using System;
 using CommunityToolkit.Mvvm.Input;
 using System.Text.Json.Serialization;
 using dboard.Views;
+using Avalonia.Logging;
+using Avalonia.Styling;
 
 namespace dboard.ViewModels;
 
@@ -71,17 +73,6 @@ public partial class MainWindowViewModel : ObservableObject
     {
         string settings = JsonSerializer.Serialize(SharedSettings, options);
         File.WriteAllText("./Settings.json", settings);
-    }
-
-    public void OnWindowClosing(object sender, WindowClosingEventArgs e)
-    {
-        SaveSettings();
-        e.Cancel = true;
-        if (_saveDialog is null)
-        {
-            _saveDialog = new SaveDialogWindowView();
-            _saveDialog.Show();
-        }
     }
 
     [RelayCommand]
