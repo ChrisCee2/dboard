@@ -1,7 +1,7 @@
-using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Messages;
+using dboard.Tools;
 using dboard.ViewModels;
 
 namespace dboard.Views;
@@ -33,15 +33,13 @@ public partial class MainWindowView : Window
             {
                 return;
             }
+            else if (SaveDialogTool.CanShowSaveDialog())
+            {
+                e.Cancel = true;
 
+                viewModel.ShouldClose = await SaveDialogTool.ShowSaveDialog(this, viewModel.SharedSettings);
+            }
             e.Cancel = true;
-            Window dialogWindow = new SaveDialogWindowView(new SaveDialogWindowViewModel(viewModel.SharedSettings));
-
-            var centerX = Position.X + (int)((ClientSize.Width - dialogWindow.Width) / 2);
-            var centerY = Position.Y + (int)((ClientSize.Height - dialogWindow.Height) / 2);
-            dialogWindow.Position = new PixelPoint(centerX, centerY);
-
-            viewModel.ShouldClose = await dialogWindow.ShowDialog<bool>(this);
         }
     }
 }

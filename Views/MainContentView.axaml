@@ -34,7 +34,7 @@
 		<Menu>
 			<MenuItem Header="File">
 				<MenuItem Header="New" Command="{Binding NewCommand}"/>
-				<MenuItem Header="Open" Click="Open"/>
+				<MenuItem Header="Open" Click="ChooseWorkspace"/>
 				<MenuItem Header="Save" Click="SaveEvent"/>
 				<MenuItem Header="Save As" Click="SaveAsEvent"/>
 				<Separator/>

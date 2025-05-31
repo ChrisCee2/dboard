@@ -191,7 +191,7 @@ public partial class MainContentView : Grid
         saveDialogWindow.Hide();
     }
 
-    protected async void Open(object sender, RoutedEventArgs e)
+    protected async void ChooseWorkspace(object sender, RoutedEventArgs e)
     {
         if (!Directory.Exists("./Workspaces"))
         {
@@ -208,16 +208,31 @@ public partial class MainContentView : Grid
             FileTypeFilter = new[] { jsonFileType }
         });
 
-        MainContentViewModel vm = (MainContentViewModel)DataContext;
         if (files.Count == 1)
         {
-            await using var stream = await files[0].OpenReadAsync();
-            WorkspaceModel workspace = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
-            vm.LoadWorkspace(workspace, files[0].Name);
-            vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
-        }
+            MainContentViewModel viewModel = (MainContentViewModel)DataContext;
+            if (viewModel is not null)
+            {
+                await using var stream = await files[0].OpenReadAsync();
+                viewModel.WorkspaceToLoad = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
+                viewModel.WorkspaceNameToLoad = files[0].Name;
+                if (!viewModel.ShouldShowSaveDialog())
+                {
+                    if (viewModel.WorkspaceToLoad != null && viewModel.WorkspaceNameToLoad != null)
+                    {
+                        viewModel.LoadWorkspace(viewModel.WorkspaceToLoad, viewModel.WorkspaceNameToLoad);
+                    }
+                }
+                else if (SaveDialogTool.CanShowSaveDialog())
+                {
+                    if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                    {
+                        viewModel.ShouldLoadWorkspace = await SaveDialogTool.ShowSaveDialog(desktop.MainWindow, viewModel.SharedSettings);
+                    }
 
-        vm.ResetActionHistoryStates(false, true, false, false);
+                }
+            }
+        }
     }
 
     protected void Exit(object sender, RoutedEventArgs e)

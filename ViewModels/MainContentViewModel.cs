@@ -40,6 +40,14 @@ public partial class MainContentViewModel : ObservableObject
     [ObservableProperty]
     private bool _shouldAlwaysBeUnsaved = false;
 
+    // Opening workspace properties
+    [ObservableProperty]
+    private WorkspaceModel? _workspaceToLoad = null;
+    [ObservableProperty]
+    private string? _workspaceNameToLoad = null;
+    [ObservableProperty]
+    private bool? _shouldLoadWorkspace = false;
+
     public MainContentViewModel(SettingsModel sharedSettings)
     {
         SharedSettings = sharedSettings;
@@ -96,6 +104,7 @@ public partial class MainContentViewModel : ObservableObject
         WeakReferenceMessenger.Default.Send(new ResetActionHistoryStatesMessage(new ResetActionHistoryStatesModel(false, true, false, true)));
     }
 
+    // Parameterized just incase we aren't loading by the stored WorkspaceToLoad variable
     public void LoadWorkspace(WorkspaceModel newWorkspace, string workspaceName)
     {
         New();
@@ -125,6 +134,13 @@ public partial class MainContentViewModel : ObservableObject
                 Workspace.WorkspaceImagePath,
                 Workspace.WindowImagePath
             };
+
+        SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
+        ResetActionHistoryStates(false, true, false, false);
+
+        WorkspaceToLoad = null;
+        WorkspaceNameToLoad = null;
+        ShouldLoadWorkspace = null;
     }
 
     public bool Equals(MainContentViewModel viewModel)
@@ -215,5 +231,31 @@ public partial class MainContentViewModel : ObservableObject
         ShouldAlwaysBeUnsaved = shouldAlwaysBeUnsaved;
         UpdateSaveStatus();
     }
+
+    public bool ShouldShowSaveDialog()
+    {
+        if (IsNewWorkspace)
+        {
+            // If it is a new workspace, no edits have been made / action history can be reverted to beginning and has been
+            if (!ShouldAlwaysBeUnsaved && (LastActionSinceSave is null && LastActionIndex == -1))
+            {
+                return false;
+            }
+            return true;
+        }
+        else if (SaveStatus == WorkspaceConstants.SAVE_STATUS.UNSAVED)
+        {
+            return true;
+        }
+        return false;
+    }
     // History logging ends here
+
+    partial void OnShouldLoadWorkspaceChanged(bool? shouldLoadWorkspace)
+    {
+        if (shouldLoadWorkspace is true && WorkspaceToLoad != null && WorkspaceNameToLoad != null)
+        {
+            LoadWorkspace(WorkspaceToLoad, WorkspaceNameToLoad);
+        }
+    }
 }

@@ -125,19 +125,7 @@ public partial class MainWindowViewModel : ObservableObject
 
         if (value is not null && value is MainContentViewModel viewModel)
         {
-            if (viewModel.IsNewWorkspace)
-            {
-                // If it is a new workspace, no edits have been made / action history can be reverted to beginning and has been
-                if (!viewModel.ShouldAlwaysBeUnsaved && (viewModel.LastActionSinceSave is null && viewModel.LastActionIndex == -1))
-                {
-                    return false;
-                }
-                return true;
-            }
-            else if(viewModel is not null && viewModel.SaveStatus == WorkspaceConstants.SAVE_STATUS.UNSAVED)
-            {
-                return true;
-            }
+            return viewModel.ShouldShowSaveDialog();
         }
         return false;
     }
