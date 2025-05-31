@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using dboard.ViewModels;
@@ -11,6 +12,11 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+        // Ensure all windows close if the main window is closed
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.ShutdownMode = ShutdownMode.OnMainWindowClose;
+        }
     }
 
     public override void OnFrameworkInitializationCompleted()

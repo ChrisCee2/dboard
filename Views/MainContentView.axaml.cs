@@ -33,99 +33,6 @@ public partial class MainContentView : Grid
     private double _lastNotesLen;
     private SplitView _notesSplitView;
     private Control _workspaceCanvas;
-    private List<ActionModelBase> _actionHistory = new List<ActionModelBase>();
-    private int _maxActions = 30;
-    private int _lastActionIndex = -1;
-    // Action history states
-    private ActionModelBase? _lastActionSinceSave = null;
-    private bool _shouldAlwaysBeUnsaved = true;
-
-    // History logging starts here
-    public void UpdateSaveStatus()
-    {
-        MainContentViewModel vm = (MainContentViewModel)DataContext;
-        if (vm is not null)
-        {
-            if (
-                !_shouldAlwaysBeUnsaved &&
-                (
-                (_lastActionSinceSave is null && _lastActionIndex == -1) ||
-                (_lastActionIndex != -1 && _actionHistory[_lastActionIndex] == _lastActionSinceSave)
-                )
-            )
-            {
-                vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
-            }
-            else
-            {
-                vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.UNSAVED;
-            }
-        }
-    }
-
-    public void Undo()
-    {
-        MainContentViewModel vm = (MainContentViewModel)DataContext;
-        
-        if (_lastActionIndex >= 0 && vm is not null)
-        {
-            _actionHistory[_lastActionIndex].Undo(vm.Workspace);
-            _lastActionIndex -= 1;
-            UpdateSaveStatus();
-        }
-    }
-
-    public void Redo()
-    {
-        MainContentViewModel vm = (MainContentViewModel)DataContext;
-        if (_lastActionIndex < _actionHistory.Count - 1 && vm is not null)
-        {
-            _lastActionIndex += 1;
-            _actionHistory[_lastActionIndex].Redo(vm.Workspace);
-            UpdateSaveStatus();
-        }
-    }
-
-    public void LogAction(ActionModelBase action)
-    {
-        // Remove undone actions
-        int actionCount = _actionHistory.Count;
-        for (int i = actionCount - 1; i > _lastActionIndex; i--)
-        {
-            _actionHistory.RemoveAt(i);
-        }
-
-        // Pop least recent action if there are too many
-        actionCount = _actionHistory.Count;
-        for (int i = actionCount; i > _maxActions; i--)
-        {
-            _actionHistory.RemoveAt(0);
-        }
-
-        _actionHistory.Add(action);
-        _lastActionIndex = _actionHistory.Count - 1;
-        UpdateSaveStatus();
-    }
-
-    private void ResetActionHistoryStates(bool isSave, bool resetActionHistory, bool shouldAlwaysBeUnsaved)
-    {
-        _shouldAlwaysBeUnsaved = shouldAlwaysBeUnsaved;
-        if (resetActionHistory)
-        {
-            _lastActionSinceSave = null;
-            _actionHistory.Clear();
-            _lastActionIndex = -1;
-        }
-        if (isSave)
-        {
-            if (_lastActionIndex != -1)
-            {
-                _lastActionSinceSave = _actionHistory[_lastActionIndex];
-            }
-        }
-        UpdateSaveStatus();
-    }
-    // History logging ends here
 
     JsonSerializerOptions options = new()
     {
@@ -180,29 +87,9 @@ public partial class MainContentView : Grid
         notesBorder.BindClass("LightAccent", LightAccentMB, null);
         notesBorder.BindClass("DarkAccent", DarkAccentMB, null);
 
-        // Set up for logging
-        WeakReferenceMessenger.Default.Register<LogActionMessage>(this, (sender, message) =>
+        WeakReferenceMessenger.Default.Register<SaveDialogSaveMessage>(this, (sender, message) =>
         {
-            LogAction(message.Value);
-        });
-        
-        WeakReferenceMessenger.Default.Register<ResetActionHistoryStatesMessage>(this, (sender, message) =>
-        {
-            ResetActionHistoryStatesModel val = message.Value;
-            ResetActionHistoryStates(val.IsSave, val.ResetActionHistory, val.ShouldAlwaysBeUnsaved);
-        });
-
-        WeakReferenceMessenger.Default.Register<HistoryActionMessage>(this, (sender, message) =>
-        {
-            WorkspaceConstants.HISTORY_ACTION historyAction = message.Value;
-            if (historyAction == WorkspaceConstants.HISTORY_ACTION.UNDO)
-            {
-                Undo();
-            }
-            else if (historyAction == WorkspaceConstants.HISTORY_ACTION.REDO)
-            {
-                Redo();
-            }
+            SaveDialogSaveCloseWindow(message.Value);
         });
     }
 
@@ -216,11 +103,11 @@ public partial class MainContentView : Grid
         SaveAs();
     }
 
-    protected async void Save()
+    protected async void Save(Window? windowToCloseAfterSave = null)
     {
         if (((MainContentViewModel)DataContext).WorkspaceFileName == null)
         {
-            SaveAs();
+            SaveAs(windowToCloseAfterSave);
         }
         else
         {
@@ -233,12 +120,12 @@ public partial class MainContentView : Grid
             IStorageFile file = await TopLevel.GetTopLevel(this).StorageProvider.TryGetFileFromPathAsync(path);
             if (file is not null)
             {
-                _SaveFile(file);
+                _SaveFile(file, windowToCloseAfterSave);
             }
         }
     }
 
-    protected async void SaveAs()
+    protected async void SaveAs(Window? windowToCloseAfterSave = null)
     {
         if (!Directory.Exists("./Workspaces"))
         {
@@ -257,11 +144,15 @@ public partial class MainContentView : Grid
 
         if (file is not null)
         {
-            _SaveFile(file);
+            _SaveFile(file, windowToCloseAfterSave);
+        }
+        else if (windowToCloseAfterSave != null)
+        {
+            windowToCloseAfterSave.Close(false);
         }
     }
 
-    private async void _SaveFile(IStorageFile file)
+    private async void _SaveFile(IStorageFile file, Window? windowToCloseAfterSave)
     {
         MainContentViewModel vm = (MainContentViewModel)DataContext;
         vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVING;
@@ -286,10 +177,21 @@ public partial class MainContentView : Grid
         await JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
         vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
-        ResetActionHistoryStates(true, false, false);
+        vm.ResetActionHistoryStates(true, false, false, false);
+
+        if (windowToCloseAfterSave != null)
+        {
+            windowToCloseAfterSave.Close(true);
+        }
     }
 
-    protected async void Open(object sender, RoutedEventArgs e)
+    protected void SaveDialogSaveCloseWindow(Window saveDialogWindow)
+    {
+        Save(saveDialogWindow);
+        saveDialogWindow.Hide();
+    }
+
+    protected async void ChooseWorkspace(object sender, RoutedEventArgs e)
     {
         if (!Directory.Exists("./Workspaces"))
         {
@@ -308,14 +210,29 @@ public partial class MainContentView : Grid
 
         if (files.Count == 1)
         {
-            MainContentViewModel vm = (MainContentViewModel)DataContext;
-            await using var stream = await files[0].OpenReadAsync();
-            WorkspaceModel workspace = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
-            vm.LoadWorkspace(workspace, files[0].Name);
-            vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
-        }
+            MainContentViewModel viewModel = (MainContentViewModel)DataContext;
+            if (viewModel is not null)
+            {
+                await using var stream = await files[0].OpenReadAsync();
+                viewModel.WorkspaceToLoad = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
+                viewModel.WorkspaceNameToLoad = files[0].Name;
+                if (!viewModel.ShouldShowSaveDialog())
+                {
+                    if (viewModel.WorkspaceToLoad != null && viewModel.WorkspaceNameToLoad != null)
+                    {
+                        viewModel.LoadWorkspace(viewModel.WorkspaceToLoad, viewModel.WorkspaceNameToLoad);
+                    }
+                }
+                else if (SaveDialogTool.CanShowSaveDialog())
+                {
+                    if (Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                    {
+                        viewModel.ShouldLoadWorkspace = await SaveDialogTool.ShowSaveDialog(desktop.MainWindow, viewModel.SharedSettings);
+                    }
 
-        ResetActionHistoryStates(false, true, false);
+                }
+            }
+        }
     }
 
     protected void Exit(object sender, RoutedEventArgs e)

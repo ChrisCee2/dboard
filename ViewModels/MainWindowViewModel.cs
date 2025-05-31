@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Avalonia.Controls;
 using System.IO;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -26,6 +25,8 @@ public partial class MainWindowViewModel : ObservableObject
     private ObservableObject _currentPage;
     [ObservableProperty]
     private SettingsModel _sharedSettings;
+    [ObservableProperty]
+    private bool? _shouldClose = false;
 
     public MainWindowViewModel()
     {
@@ -71,11 +72,6 @@ public partial class MainWindowViewModel : ObservableObject
         File.WriteAllText("./Settings.json", settings);
     }
 
-    public void OnWindowClosing(object sender, WindowClosingEventArgs e)
-    {
-        SaveSettings();
-    }
-
     [RelayCommand]
     private void ToggleMode()
     {
@@ -111,5 +107,26 @@ public partial class MainWindowViewModel : ObservableObject
     private void Redo()
     {
         WeakReferenceMessenger.Default.Send(new HistoryActionMessage(WorkspaceConstants.HISTORY_ACTION.REDO));
+    }
+
+    partial void OnShouldCloseChanged(bool? value)
+    {
+        if (ShouldClose == true)
+        {
+            WeakReferenceMessenger.Default.Send(new CloseAppMessage(""));
+        }
+    }
+
+    public bool ShouldShowSaveDialog()
+    {
+        // Try to get the main content view model
+        ObservableObject? value;
+        Pages.TryGetValue(PageConstants.PAGE.MainContent, out value);
+
+        if (value is not null && value is MainContentViewModel viewModel)
+        {
+            return viewModel.ShouldShowSaveDialog();
+        }
+        return false;
     }
 }

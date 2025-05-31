@@ -1,0 +1,51 @@
+<Window 
+	xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="using:dboard.ViewModels"
+	xmlns:constants="clr-namespace:dboard.Constants"
+    x:Class="dboard.Views.SaveDialogWindowView"
+	x:DataType="vm:SaveDialogWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    Title="dboard"
+	ExtendClientAreaToDecorationsHint="True"
+	ExtendClientAreaChromeHints="NoChrome"
+	Width="312"
+	Height="168"
+	CanResize="False"
+	RequestedThemeVariant="{Binding SharedSettings.Theme}"
+	WindowState="{Binding SharedSettings.ModeModel.WindowState}"
+	>
+	<Window.Background>
+		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+			<Binding Path="SharedSettings.ModeModel.BackgroundA"/>
+			<Binding Path="SharedSettings.ModeModel.BackgroundR"/>
+			<Binding Path="SharedSettings.ModeModel.BackgroundG"/>
+			<Binding Path="SharedSettings.ModeModel.BackgroundB"/>
+		</MultiBinding>
+	</Window.Background>
+
+	<Design.DataContext>
+		<vm:SaveDialogWindowViewModel/>
+	</Design.DataContext>
+
+	<Border Padding="10">
+		<DockPanel>
+			<Border Height="20" DockPanel.Dock="Top">
+				<Image Source="/Assets/dboard_icon.ico" HorizontalAlignment="Left"/>
+			</Border>
+			<Border Height="8" DockPanel.Dock="Top"/>
+			<TextBlock FontSize="16" Text="Do you want to save your workspace?" TextWrapping="Wrap"
+					   DockPanel.Dock="Top"/>
+			<Border Height="16" DockPanel.Dock="Top"/>
+			<TextBlock Text="The workspace __ has unsaved changes" TextWrapping="Wrap"
+				   DockPanel.Dock="Top"/>
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" Spacing="10">
+				<Button FontSize="16" Content="Save" Click="Save"/>
+				<Button FontSize="16" Content="Don't save" Click="Continue"/>
+				<Button FontSize="16" Content="Cancel" Click="Cancel"/>
+			</StackPanel>
+		</DockPanel>
+	</Border>
+</Window>
