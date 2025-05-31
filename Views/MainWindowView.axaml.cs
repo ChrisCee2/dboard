@@ -29,7 +29,7 @@ public partial class MainWindowView : Window
         if (viewModel != null)
         {
             viewModel.SaveSettings();
-            if (viewModel.ShouldClose == true || viewModel.ShouldShowSaveDialog())
+            if (viewModel.ShouldClose == true || !viewModel.ShouldShowSaveDialog())
             {
                 return;
             }

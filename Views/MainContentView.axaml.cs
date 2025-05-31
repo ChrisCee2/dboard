@@ -5,17 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Presenters;
-using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Logging;
 using Avalonia.LogicalTree;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
@@ -180,7 +177,7 @@ public partial class MainContentView : Grid
         await JsonSerializer.SerializeAsync(stream, workspace, options);
         ((MainContentViewModel)DataContext).WorkspaceFileName = file.Name;
         vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
-        ResetActionHistoryStates(true, false, false, false);
+        vm.ResetActionHistoryStates(true, false, false, false);
 
         if (windowToCloseAfterSave != null)
         {
@@ -211,16 +208,16 @@ public partial class MainContentView : Grid
             FileTypeFilter = new[] { jsonFileType }
         });
 
+        MainContentViewModel vm = (MainContentViewModel)DataContext;
         if (files.Count == 1)
         {
-            MainContentViewModel vm = (MainContentViewModel)DataContext;
             await using var stream = await files[0].OpenReadAsync();
             WorkspaceModel workspace = JsonSerializer.Deserialize<WorkspaceModel>(stream, options);
             vm.LoadWorkspace(workspace, files[0].Name);
             vm.SaveStatus = WorkspaceConstants.SAVE_STATUS.SAVED;
         }
 
-        ResetActionHistoryStates(false, true, false, false);
+        vm.ResetActionHistoryStates(false, true, false, false);
     }
 
     protected void Exit(object sender, RoutedEventArgs e)

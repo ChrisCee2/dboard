@@ -128,7 +128,7 @@ public partial class MainWindowViewModel : ObservableObject
             if (viewModel.IsNewWorkspace)
             {
                 // If it is a new workspace, no edits have been made / action history can be reverted to beginning and has been
-                if (!viewModel.ShouldAlwaysBeUnsaved && (viewModel.LastActionSinceSave is null && _lastActionIndex == -1))
+                if (!viewModel.ShouldAlwaysBeUnsaved && (viewModel.LastActionSinceSave is null && viewModel.LastActionIndex == -1))
                 {
                     return false;
                 }

@@ -36,7 +36,7 @@ public partial class MainContentViewModel : ObservableObject
     [ObservableProperty]
     private WorkspaceConstants.SAVE_STATUS _saveStatus;
     [ObservableProperty]
-    private bool _isNewWorkspace = false;
+    private bool _isNewWorkspace = true;
     [ObservableProperty]
     private bool _shouldAlwaysBeUnsaved = false;
 
@@ -196,7 +196,7 @@ public partial class MainContentViewModel : ObservableObject
         UpdateSaveStatus();
     }
 
-    private void ResetActionHistoryStates(bool isSave, bool resetActionHistory, bool shouldAlwaysBeUnsaved, bool isNew)
+    public void ResetActionHistoryStates(bool isSave, bool resetActionHistory, bool shouldAlwaysBeUnsaved, bool isNew)
     {
         if (resetActionHistory)
         {
