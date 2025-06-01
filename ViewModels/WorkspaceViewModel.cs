@@ -154,6 +154,8 @@ public partial class WorkspaceViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanPaste))]
     private void PasteNodes()
     {
+        List<ActionModelBase> actions = new List<ActionModelBase>();
+
         // Clone nodes
         IDictionary<NodeModelBase, NodeModelBase> refToClone = new Dictionary<NodeModelBase, NodeModelBase>();
         foreach (var node in CopiedNodes)
@@ -161,15 +163,20 @@ public partial class WorkspaceViewModel : ObservableObject
             var clone = node.Clone(Nodes.Count);
             refToClone.Add(node.NodeBase, clone.NodeBase);
             Nodes.Add(clone);
+            actions.Add(new CreateNodeActionModel(clone));
         }
         // Clone edges
         foreach (EdgeViewModel edgeViewModel in CopiedEdges)
         {
             if (refToClone.ContainsKey(edgeViewModel.Edge.FromNode) && refToClone.ContainsKey(edgeViewModel.Edge.ToNode))
             {
-                Edges.Add(edgeViewModel.CloneWithNewNodes(refToClone[edgeViewModel.Edge.FromNode], refToClone[edgeViewModel.Edge.ToNode]));
+                var clone = edgeViewModel.CloneWithNewNodes(refToClone[edgeViewModel.Edge.FromNode], refToClone[edgeViewModel.Edge.ToNode]);
+                Edges.Add(clone);
+                actions.Add(new CreateEdgeActionModel(clone));
             }
         }
+
+        WeakReferenceMessenger.Default.Send(new LogActionMessage(new MultiActionModel(actions)));
     }
 
     [RelayCommand(CanExecute = nameof(NodesAreSelected))]
