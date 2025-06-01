@@ -18,6 +18,8 @@ public partial class AppSettingsViewModel : ObservableObject
     [ObservableProperty]
     private Color _accent;
     [ObservableProperty]
+    private Color _canvas;
+    [ObservableProperty]
     private Collection<ModeModel> _modes = new Collection<ModeModel>();
 
     public AppSettingsViewModel(SettingsModel sharedSettings)
@@ -54,6 +56,11 @@ public partial class AppSettingsViewModel : ObservableObject
             SharedSettings.UserModeModel.AccentR,
             SharedSettings.UserModeModel.AccentG,
             SharedSettings.UserModeModel.AccentB);
+        Canvas = new Color(
+            SharedSettings.UserModeModel.CanvasA,
+            SharedSettings.UserModeModel.CanvasR,
+            SharedSettings.UserModeModel.CanvasG,
+            SharedSettings.UserModeModel.CanvasB);
     }
 
     [RelayCommand]
@@ -76,5 +83,13 @@ public partial class AppSettingsViewModel : ObservableObject
         SharedSettings.UserModeModel.AccentR = value.R;
         SharedSettings.UserModeModel.AccentG = value.G;
         SharedSettings.UserModeModel.AccentB = value.B;
+    }
+
+    partial void OnCanvasChanged(Color value)
+    {
+        SharedSettings.UserModeModel.CanvasA = value.A;
+        SharedSettings.UserModeModel.CanvasR = value.R;
+        SharedSettings.UserModeModel.CanvasG = value.G;
+        SharedSettings.UserModeModel.CanvasB = value.B;
     }
 }

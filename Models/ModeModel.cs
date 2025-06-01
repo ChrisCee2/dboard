@@ -9,7 +9,7 @@ public partial class ModeModel: ObservableObject
 {
     public ModeModel() {}
 
-    public ModeModel(string name, bool showItems, double workspaceOpacity, string windowState, Color background, Color accent)
+    public ModeModel(string name, bool showItems, double workspaceOpacity, string windowState, Color background, Color accent, Color canvas)
     {
         Name = name;
         ShowItems = showItems;
@@ -23,6 +23,10 @@ public partial class ModeModel: ObservableObject
         AccentR = accent.R;
         AccentG = accent.G;
         AccentB = accent.B;
+        CanvasA = canvas.A;
+        CanvasR = canvas.R;
+        CanvasG = canvas.G;
+        CanvasB = canvas.B;
     }
 
     [ObservableProperty]
@@ -49,4 +53,12 @@ public partial class ModeModel: ObservableObject
     private byte _accentG;
     [ObservableProperty]
     private byte _accentB;
+    [ObservableProperty]
+    private byte _canvasA;
+    [ObservableProperty]
+    private byte _canvasR;
+    [ObservableProperty]
+    private byte _canvasG;
+    [ObservableProperty]
+    private byte _canvasB;
 }

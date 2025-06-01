@@ -28,6 +28,7 @@
 			<RowDefinition Height="{StaticResource SettingsItemHeightGL}"/>
 			<RowDefinition Height="{StaticResource SettingsItemHeightGL}"/>
 			<RowDefinition Height="{StaticResource SettingsItemHeightGL}"/>
+			<RowDefinition Height="{StaticResource SettingsItemHeightGL}"/>
 		</Grid.RowDefinitions>
 
 		<TextBlock Text="Theme" Grid.Row="0" Grid.Column="0" TextAlignment="Right"/>
@@ -54,6 +55,9 @@
 		<TextBlock Text="Accent Color" Grid.Row="3" Grid.Column="0" TextAlignment="Right"/>
 		<ColorPicker Grid.Row="3" Grid.Column="1"
 					 HorizontalAlignment="Left" VerticalAlignment="Center" Color="{Binding Accent}" MaxHeight="20"/>
+		<TextBlock Text="Canvas Color" Grid.Row="4" Grid.Column="0" TextAlignment="Right"/>
+		<ColorPicker Grid.Row="4" Grid.Column="1"
+					 HorizontalAlignment="Left" VerticalAlignment="Center" Color="{Binding Canvas}" MaxHeight="20"/>
 
 		<!-- NO MODES ARE WORKING RIGHT NOW
 		<TextBlock Text="Mode" Grid.Row="2" Grid.Column="0" TextAlignment="Right"/>

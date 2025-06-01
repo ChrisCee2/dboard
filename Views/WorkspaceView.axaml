@@ -42,9 +42,19 @@
         <vm:WorkspaceViewModel />
     </Design.DataContext>
 
-	<Panel Width="{StaticResource MaxWorkspaceWidthDbl}" Height="{StaticResource MaxWorkspaceHeightDbl}" x:Name="WorkspaceCanvas">
+	<Panel x:Name="WorkspaceCanvas"
+		   Width="{StaticResource MaxWorkspaceWidthDbl}" 
+		   Height="{StaticResource MaxWorkspaceHeightDbl}">
 		<Image asyncImageLoader:ImageLoader.Source="{Binding WorkspaceImagePath.Path}"/>
 		<Border x:Name="VisualCanvas" Width="{Binding CanvasSizeX}" Height="{Binding CanvasSizeY}" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8" IsHitTestVisible="False">
+			<Border.Background>
+				<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+					<Binding Path="SharedSettings.ModeModel.CanvasA"/>
+					<Binding Path="SharedSettings.ModeModel.CanvasR"/>
+					<Binding Path="SharedSettings.ModeModel.CanvasG"/>
+					<Binding Path="SharedSettings.ModeModel.CanvasB"/>
+				</MultiBinding>
+			</Border.Background>
 			<Image asyncImageLoader:ImageLoader.Source="{Binding CanvasImagePath.Path}"/>
 		</Border>
 		<!--Nodes-->
