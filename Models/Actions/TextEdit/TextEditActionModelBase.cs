@@ -7,9 +7,9 @@ namespace dboard.Models.Actions.TextEdit;
 public abstract partial class TextEditActionModelBase : ActionModelBase
 {
     [ObservableProperty]
-    private NotesModel _textEdit;
+    private NoteModel _textEdit;
 
-    public TextEditActionModelBase(NotesModel textEdit)
+    public TextEditActionModelBase(NoteModel textEdit)
     {
         TextEdit = textEdit;
     }

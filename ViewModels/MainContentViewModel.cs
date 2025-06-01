@@ -16,7 +16,7 @@ public partial class MainContentViewModel : ObservableObject
     [ObservableProperty]
     public AppSettingsViewModel _settings;
     [ObservableProperty]
-    public NotesModel _notes;
+    public NoteModel _notes;
     [ObservableProperty]
     private SettingsModel _sharedSettings;
     [ObservableProperty]
@@ -53,7 +53,7 @@ public partial class MainContentViewModel : ObservableObject
         SharedSettings = sharedSettings;
         Workspace = new WorkspaceViewModel(sharedSettings);
         Settings = new AppSettingsViewModel(sharedSettings);
-        Notes = new NotesModel();
+        Notes = new NoteModel();
         WorkspaceFileName = null;
         SaveStatus = WorkspaceConstants.SAVE_STATUS.UNSAVED;
 
@@ -99,7 +99,7 @@ public partial class MainContentViewModel : ObservableObject
         }
 
         Workspace = new WorkspaceViewModel(SharedSettings);
-        Notes = new NotesModel();
+        Notes = new NoteModel();
         WorkspaceFileName = null;
         WeakReferenceMessenger.Default.Send(new ResetActionHistoryStatesMessage(new ResetActionHistoryStatesModel(false, true, false, true)));
     }

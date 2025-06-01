@@ -162,7 +162,7 @@ public partial class MainContentView : Grid
         WorkspaceViewModel workspaceVM = ((MainContentViewModel)DataContext).Workspace;
         List<NodeModelBase> nodes = workspaceVM.Nodes.Select(x => x.NodeBase).ToList();
         List<EdgeModel> edges = workspaceVM.Edges.Select(x => x.Edge).ToList();
-        NotesModel notes = vm.Notes;
+        NoteModel notes = vm.Notes;
         WorkspaceModel workspace = new WorkspaceModel(
             nodes, 
             edges, 

@@ -56,12 +56,22 @@
     <AvaloniaXaml Update="Views\AppSettingsView.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
+    <AvaloniaXaml Update="Views\MiniNoteView.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
     <AvaloniaXaml Update="Views\WorkspaceView.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\NotesView.axaml.cs">
+      <DependentUpon>NotesView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MiniNoteView.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MiniNoteView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\SaveDialogWindowView.axaml.cs">
       <DependentUpon>SaveDialogWindowView.axaml</DependentUpon>
     </Compile>

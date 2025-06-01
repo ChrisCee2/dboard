@@ -3,27 +3,29 @@ using dboard.Constants;
 
 namespace dboard.Models;
 
-public partial class NotesModel : ObservableObject
+public partial class NoteModel : ObservableObject
 {
-    public NotesModel() {}
+    public NoteModel() {}
 
-    public NotesModel(string text, double paneLength)
+    public NoteModel(string text, double paneLength)
     {
         Text = text;
         PaneLength = paneLength;
     }
 
-    public void Copy(NotesModel notesModelToCopy)
+    public void Copy(NoteModel notesModelToCopy)
     {
         Text = notesModelToCopy.Text;
         PaneLength = notesModelToCopy.PaneLength;
     }
 
-    public NotesModel Clone()
+    public NoteModel Clone()
     {
-        return new NotesModel(Text, PaneLength);
+        return new NoteModel(Text, PaneLength);
     }
 
+    [ObservableProperty]
+    private string _title = "";
     [ObservableProperty]
     private string _text;
     [ObservableProperty]

@@ -19,7 +19,7 @@ public partial class TextEditView : Border
     {
         InitializeComponent();
         _textEditor = this.FindControl<TextEditor>("TextEdit");
-        NotesModel notesModel = (NotesModel)DataContext;
+        NoteModel notesModel = (NoteModel)DataContext;
         if (notesModel is not null)
         {
             _previousText = notesModel.Text;
@@ -30,7 +30,7 @@ public partial class TextEditView : Border
     {
         if (_textEditor != null && _textEditor.Document != null)
         {
-            NotesModel notesModel = (NotesModel)DataContext;
+            NoteModel notesModel = (NoteModel)DataContext;
             if (notesModel != null)
             {
                 var caretOffset = _textEditor.CaretOffset;
@@ -43,7 +43,7 @@ public partial class TextEditView : Border
 
     protected void OnTextEditorLostFocus(object sender, RoutedEventArgs e)
     {
-        NotesModel notesModel = (NotesModel)DataContext;
+        NoteModel notesModel = (NoteModel)DataContext;
         if (notesModel is not null && notesModel.Text != _previousText)
         {
                 string currentText = notesModel.Text;
