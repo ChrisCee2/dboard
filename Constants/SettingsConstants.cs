@@ -13,9 +13,10 @@ public static class SettingsConstants
 
     public static readonly Color DEFAULT_COLOR = new Color(255, 69, 69, 69);
     public static readonly Color DEFAULT_ACCENT_COLOR = new Color(100, 150, 150, 150);
+    public static readonly Color DEFAULT_CANVAS_COLOR = new Color(255, 255, 255, 255);
     public static readonly Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
-    public static readonly ModeModel DEFAULT_MODE = new ModeModel("Default", true, 1, "Normal", DEFAULT_COLOR, DEFAULT_ACCENT_COLOR);
-    public static readonly ModeModel TRANSPARENT_MODE = new ModeModel("Transparent", false, 0.5, "FullScreen", TRANSPARENT_COLOR, DEFAULT_ACCENT_COLOR);
+    public static readonly ModeModel DEFAULT_MODE = new ModeModel("Default", true, 1, "Normal", DEFAULT_COLOR, DEFAULT_ACCENT_COLOR, DEFAULT_CANVAS_COLOR);
+    public static readonly ModeModel TRANSPARENT_MODE = new ModeModel("Transparent", false, 0.5, "FullScreen", TRANSPARENT_COLOR, DEFAULT_ACCENT_COLOR, DEFAULT_CANVAS_COLOR);
     public static readonly List<ModeModel> AVAILABLE_MODES = new List<ModeModel>()
     {
         new ModeModelToggle("Transparent", TRANSPARENT_MODE, DEFAULT_MODE)
