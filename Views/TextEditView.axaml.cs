@@ -4,7 +4,6 @@ using Avalonia.Interactivity;
 using AvaloniaEdit;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Messages;
-using dboard.Models;
 using dboard.Models.Actions.TextEdit;
 using dboard.ViewModels;
 

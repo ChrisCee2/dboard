@@ -13,12 +13,12 @@ public partial class NoteViewModel : ObservableObject
         Note = note;
     }
 
-    public TextEditViewModel Clone()
+    public NoteViewModel Clone()
     {
-        return new TextEditViewModel(Note.Clone());
+        return new NoteViewModel(Note.Clone());
     }
 
-    public void Copy(TextEditViewModel textEditToCopy)
+    public void Copy(NoteViewModel textEditToCopy)
     {
         Note.Copy(textEditToCopy.Note);
     }
