@@ -198,7 +198,16 @@
 								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}">
 						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
 					</ToggleButton>
-					<views:TextEditView DataContext="{Binding Notes}" Background="Black"/>
+					<views:MiniNoteView DataContext="{Binding Notes}">
+						<views:MiniNoteView.Background>
+							<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+								<Binding Path="A"/>
+								<Binding Path="R"/>
+								<Binding Path="G"/>
+								<Binding Path="B"/>
+							</MultiBinding>
+						</views:MiniNoteView.Background>
+					</views:MiniNoteView>
 				</DockPanel>
 			</Border>
 		</SplitView.Pane>

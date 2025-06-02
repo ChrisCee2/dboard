@@ -22,7 +22,7 @@ public class StringToTextEditConverter : IValueConverter
     {
         if (value is string text)
         {
-            return viewModel.Text;
+            return new TextEditViewModel(text);
         }
 
         return "";

@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace dboard.Views;
 
-public partial class NodeView : UserControl
+public partial class NotesView : UserControl
 {
-    public NodeView()
+    public NotesView()
     {
         InitializeComponent();
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -53,7 +54,14 @@ public partial class MainContentViewModel : ObservableObject
         SharedSettings = sharedSettings;
         Workspace = new WorkspaceViewModel(sharedSettings);
         Settings = new AppSettingsViewModel(sharedSettings);
-        Notes = new NoteModel();
+        Notes = new NoteModel(
+            new Color(
+                sharedSettings.ModeModel.BackgroundA,
+                sharedSettings.ModeModel.BackgroundR,
+                sharedSettings.ModeModel.BackgroundG,
+                sharedSettings.ModeModel.BackgroundB
+            )
+        );
         WorkspaceFileName = null;
         SaveStatus = WorkspaceConstants.SAVE_STATUS.UNSAVED;
 

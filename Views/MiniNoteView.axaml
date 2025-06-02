@@ -16,7 +16,7 @@
 	</Design.DataContext>
 
 	<StackPanel>
-		<views:TextEditView/>
-		<views:TextEditView/>
+		<views:TextEditView DataContext="{Binding Title}" />
+		<views:TextEditView DataContext="{Binding Text}" />
 	</StackPanel>
 </Border>
