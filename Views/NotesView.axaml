@@ -8,11 +8,38 @@
 	xmlns:constants="clr-namespace:dboard.Constants"
 	x:Class="dboard.Views.NotesView"
 	x:DataType="vm:NotesViewModel"
+	Background="{StaticResource NotesBackgroundColor}"
 	>
 	<Design.DataContext>
 		<vm:NotesViewModel />
 	</Design.DataContext>
 
-		<StackPanel Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-		</StackPanel>
+	<ItemsControl Name="NoteItemsControl" ItemsSource="{Binding Notes}">
+		<ItemsControl.ItemsPanel>
+			<ItemsPanelTemplate>
+				<StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+			</ItemsPanelTemplate>
+		</ItemsControl.ItemsPanel>
+
+		<ItemsControl.Styles>
+			<Style Selector="ContentPresenter" x:DataType="vm:NoteViewModel">
+				<Setter Property="Background">
+					<Setter.Value>
+						<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+							<Binding Path="Note.A"/>
+							<Binding Path="Note.R"/>
+							<Binding Path="Note.G"/>
+							<Binding Path="Note.B"/>
+						</MultiBinding>
+					</Setter.Value>
+				</Setter>
+			</Style>
+		</ItemsControl.Styles>
+
+		<ItemsControl.ItemTemplate>
+			<DataTemplate>
+				<views:MiniNoteView DataContext="{Binding}"/>
+			</DataTemplate>
+		</ItemsControl.ItemTemplate>
+	</ItemsControl>
 </UserControl>

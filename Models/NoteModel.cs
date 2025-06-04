@@ -1,6 +1,5 @@
 ﻿using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
-using dboard.Constants;
 
 namespace dboard.Models;
 
@@ -16,10 +15,9 @@ public partial class NoteModel : ObservableObject
         B = color.B;
     }
 
-    public NoteModel(string text, double paneLength, Color color)
+    public NoteModel(string text, Color color)
     {
         Text = text;
-        PaneLength = paneLength;
         A = color.A;
         R = color.R;
         G = color.G;
@@ -29,7 +27,6 @@ public partial class NoteModel : ObservableObject
     public void Copy(NoteModel notesModelToCopy)
     {
         Text = notesModelToCopy.Text;
-        PaneLength = notesModelToCopy.PaneLength;
         A = notesModelToCopy.A;
         R = notesModelToCopy.R;
         G = notesModelToCopy.G;
@@ -38,15 +35,13 @@ public partial class NoteModel : ObservableObject
 
     public NoteModel Clone()
     {
-        return new NoteModel(Text, PaneLength, new Color(A, R, G, B));
+        return new NoteModel(Text, new Color(A, R, G, B));
     }
 
     [ObservableProperty]
     private string _title = "";
     [ObservableProperty]
     private string _text;
-    [ObservableProperty]
-    private double _paneLength = ToolbarConstants.NOTES_PANE_DEFAULT_LEN;
 
     [ObservableProperty]
     private byte _a;

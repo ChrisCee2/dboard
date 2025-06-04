@@ -160,7 +160,7 @@
 	</SplitView>
 
 	<!-- Right bar -->
-	<SplitView Grid.Row="1" Grid.Column="3" Name="NotesSplitView" PanePlacement="Left" DisplayMode="Inline" OpenPaneLength="{Binding Notes.PaneLength}">
+	<SplitView Grid.Row="1" Grid.Column="3" Name="NotesSplitView" PanePlacement="Left" DisplayMode="Inline" OpenPaneLength="{Binding NotesPaneLength}">
 		<SplitView.PaneBackground>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 				<Binding Path="SharedSettings.ModeModel.BackgroundA"/>
@@ -194,20 +194,17 @@
 						   PointerReleased="ResizePointerReleased"
 						   PointerMoved="ResizePointerMoved"/>
 
-					<ToggleButton DockPanel.Dock="Top" Margin="5" Padding="8" CornerRadius="10" HorizontalAlignment="Left"
+					<DockPanel DockPanel.Dock="Top">
+						<ToggleButton DockPanel.Dock="Left" Margin="5" Padding="8" CornerRadius="10" HorizontalAlignment="Left"
 								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}">
-						<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
-					</ToggleButton>
-					<views:MiniNoteView DataContext="{Binding Notes}">
-						<views:MiniNoteView.Background>
-							<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
-								<Binding Path="A"/>
-								<Binding Path="R"/>
-								<Binding Path="G"/>
-								<Binding Path="B"/>
-							</MultiBinding>
-						</views:MiniNoteView.Background>
-					</views:MiniNoteView>
+							<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
+						</ToggleButton>
+						<Button DockPanel.Dock="Right" Margin="5" Padding="8" CornerRadius="10" HorizontalAlignment="Right"
+								Command="{Binding CreateNoteCommand}">
+							<PathIcon Width="10" Height="10" Data="{StaticResource add_regular}"/>
+						</Button>
+					</DockPanel>
+					<views:NotesView DataContext="{Binding Notes}" CornerRadius="8"/>
 				</DockPanel>
 			</Border>
 		</SplitView.Pane>

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -17,11 +16,13 @@ public partial class MainContentViewModel : ObservableObject
     [ObservableProperty]
     public AppSettingsViewModel _settings;
     [ObservableProperty]
-    public NoteModel _notes;
+    public NotesViewModel _notes;
     [ObservableProperty]
     private SettingsModel _sharedSettings;
     [ObservableProperty]
     private string? _workspaceFileName;
+    [ObservableProperty]
+    private double _notesPaneLength = WorkspaceConstants.DEFAULT_PANE_LENGTH;
 
     // Undo Redo properties
     [ObservableProperty]
@@ -54,14 +55,15 @@ public partial class MainContentViewModel : ObservableObject
         SharedSettings = sharedSettings;
         Workspace = new WorkspaceViewModel(sharedSettings);
         Settings = new AppSettingsViewModel(sharedSettings);
-        Notes = new NoteModel(
-            new Color(
-                sharedSettings.ModeModel.BackgroundA,
-                sharedSettings.ModeModel.BackgroundR,
-                sharedSettings.ModeModel.BackgroundG,
-                sharedSettings.ModeModel.BackgroundB
-            )
-        );
+        Notes = new NotesViewModel(sharedSettings);
+        //Notes = new NoteModel(
+        //    new Color(
+        //        sharedSettings.ModeModel.BackgroundA,
+        //        sharedSettings.ModeModel.BackgroundR,
+        //        sharedSettings.ModeModel.BackgroundG,
+        //        sharedSettings.ModeModel.BackgroundB
+        //    )
+        //);
         WorkspaceFileName = null;
         SaveStatus = WorkspaceConstants.SAVE_STATUS.UNSAVED;
 
@@ -107,9 +109,15 @@ public partial class MainContentViewModel : ObservableObject
         }
 
         Workspace = new WorkspaceViewModel(SharedSettings);
-        Notes = new NoteModel();
+        Notes = new NotesViewModel(SharedSettings);
         WorkspaceFileName = null;
         WeakReferenceMessenger.Default.Send(new ResetActionHistoryStatesMessage(new ResetActionHistoryStatesModel(false, true, false, true)));
+    }
+
+    [RelayCommand]
+    private void CreateNote()
+    {
+        Notes.CreateNote();
     }
 
     // Parameterized just incase we aren't loading by the stored WorkspaceToLoad variable
@@ -127,7 +135,7 @@ public partial class MainContentViewModel : ObservableObject
         {
             Workspace.Edges.Add(new EdgeViewModel(edgeModel));
         }
-        Notes = newWorkspace.Notes;
+        Notes = new NotesViewModel(SharedSettings, newWorkspace.Notes);
         WorkspaceFileName = workspaceName;
         Workspace.CanvasSizeX = newWorkspace.CanvasSizeX;
         Workspace.CanvasSizeY = newWorkspace.CanvasSizeY;
