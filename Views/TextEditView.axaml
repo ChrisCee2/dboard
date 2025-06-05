@@ -13,7 +13,7 @@
 	</Design.DataContext>
 	<AvaloniaEdit:TextEditor
 		x:Name="TextEdit"
-		WordWrap="True"
+		WordWrap="{Binding IsWordWrap}"
 		Document="{Binding Text, Converter={StaticResource DocumentStringConverter}}"
 		TextChanged="TextChanged"
 		LostFocus="OnTextEditorLostFocus"/>

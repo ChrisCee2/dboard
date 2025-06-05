@@ -166,6 +166,7 @@ public partial class MainContentView : Grid
         List<NoteModel> notes = new List<NoteModel>();
         foreach (NoteViewModel noteViewModel in noteViewModels)
         {
+            noteViewModel.UpdateNoteModel();
             notes.Add(noteViewModel.Note);
         }
         WorkspaceModel workspace = new WorkspaceModel(

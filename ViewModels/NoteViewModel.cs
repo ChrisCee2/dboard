@@ -15,14 +15,14 @@ public partial class NoteViewModel : ObservableObject
     public NoteViewModel()
     {
         Note = new NoteModel();
-        Title = new TextEditViewModel(Note.Title);
+        Title = new TextEditViewModel(Note.Title, false);
         Text = new TextEditViewModel(Note.Text);
     }
 
     public NoteViewModel(NoteModel note)
     {
         Note = note;
-        Title = new TextEditViewModel(note.Title);
+        Title = new TextEditViewModel(note.Title, false);
         Text = new TextEditViewModel(note.Text);
     }
 
@@ -37,13 +37,10 @@ public partial class NoteViewModel : ObservableObject
         Text = noteToCopy.Text;
     }
 
-    partial void OnTitleChanged(TextEditViewModel value)
+    // Jank way to handle updating note model, this is done when saving the notes
+    public void UpdateNoteModel()
     {
-        Note.Title = value.Text;
-    }
-
-    partial void OnTextChanged(TextEditViewModel value)
-    {
-        Note.Text = value.Text;
+        Note.Title = Title.Text;
+        Note.Text = Text.Text;
     }
 }
