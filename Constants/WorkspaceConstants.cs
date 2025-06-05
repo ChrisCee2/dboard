@@ -11,6 +11,8 @@ public static class WorkspaceConstants
     public const double MIN_ZOOM = 0.2;
     public const double MAX_ZOOM = 3.0;
 
+    public const double DEFAULT_PANE_LENGTH = 250;
+
     public enum SAVE_STATUS
     {
         UNSAVED,

@@ -162,7 +162,13 @@ public partial class MainContentView : Grid
         WorkspaceViewModel workspaceVM = ((MainContentViewModel)DataContext).Workspace;
         List<NodeModelBase> nodes = workspaceVM.Nodes.Select(x => x.NodeBase).ToList();
         List<EdgeModel> edges = workspaceVM.Edges.Select(x => x.Edge).ToList();
-        NotesModel notes = vm.Notes;
+        List<NoteViewModel> noteViewModels = vm.Notes.Notes.ToList();
+        List<NoteModel> notes = new List<NoteModel>();
+        foreach (NoteViewModel noteViewModel in noteViewModels)
+        {
+            noteViewModel.UpdateNoteModel();
+            notes.Add(noteViewModel.Note);
+        }
         WorkspaceModel workspace = new WorkspaceModel(
             nodes, 
             edges, 
@@ -310,7 +316,7 @@ public partial class MainContentView : Grid
         {
             // Offset found by subtracting original cursor position on resize press from the current cursor position
             double offsetX = _initialResizeX - currentPosition.X;
-            ((MainContentViewModel)DataContext).Notes.PaneLength = Math.Min(ToolbarConstants.NOTES_PANE_MAX_LEN, Math.Max(ToolbarConstants.NOTES_PANE_MIN_LEN, _lastNotesLen + offsetX));
+            ((MainContentViewModel)DataContext).NotesPaneLength = Math.Min(ToolbarConstants.NOTES_PANE_MAX_LEN, Math.Max(ToolbarConstants.NOTES_PANE_MIN_LEN, _lastNotesLen + offsetX));
         }
     }
 

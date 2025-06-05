@@ -5,11 +5,11 @@ namespace dboard.Models.Actions.TextEdit;
 
 public partial class OpenTextEditActionModel : TextEditActionModelBase
 {
-    NotesModel? _textEditBeforeEdit;
-    NotesModel? _textEditAfterEdit;
+    TextEditViewModel? _textEditBeforeEdit;
+    TextEditViewModel? _textEditAfterEdit;
 
     public OpenTextEditActionModel(
-        NotesModel textEdit
+        TextEditViewModel textEdit
     ) : base(textEdit) { _textEditBeforeEdit = textEdit.Clone(); }
 
     public override void Undo(WorkspaceViewModel workspaceVM)

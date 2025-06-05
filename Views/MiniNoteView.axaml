@@ -1,0 +1,36 @@
+<Border
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="clr-namespace:dboard.ViewModels"
+	xmlns:views="clr-namespace:dboard.Views"
+	xmlns:constants="clr-namespace:dboard.Constants"
+	x:Class="dboard.Views.MiniNoteView"
+	x:DataType="vm:NoteViewModel"
+	Padding="10"
+	CornerRadius="10"
+	>
+	<Design.DataContext>
+		<vm:NoteViewModel />
+	</Design.DataContext>
+
+	<Border.Background>
+		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+			<Binding Path="Note.A"/>
+			<Binding Path="Note.R"/>
+			<Binding Path="Note.G"/>
+			<Binding Path="Note.B"/>
+		</MultiBinding>
+	</Border.Background>
+
+	<StackPanel>
+		<views:TextEditView DataContext="{Binding Title}" 
+							Margin="0,0,0,5" 
+							Background="{StaticResource NoteBackgroundColor}"
+							MaxHeight="41"/>
+		<views:TextEditView DataContext="{Binding Text}"  
+							Background="{StaticResource NoteBackgroundColor}"
+							MaxHeight="150"/>
+	</StackPanel>
+</Border>

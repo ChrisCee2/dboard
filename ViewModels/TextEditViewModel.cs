@@ -1,25 +1,27 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using dboard.Models;
 
 namespace dboard.ViewModels;
 
 public partial class TextEditViewModel : ObservableObject
 {
     [ObservableProperty]
-    public NotesModel _notes;
+    public string _text;
+    [ObservableProperty]
+    private bool _isWordWrap;
 
-    public TextEditViewModel(NotesModel notes)
+    public TextEditViewModel(string text, bool isWordWrap = true)
     {
-        Notes = notes;
+        Text = text;
+        IsWordWrap = isWordWrap;
     }
 
     public TextEditViewModel Clone()
     {
-        return new TextEditViewModel(Notes.Clone());
+        return new TextEditViewModel(Text);
     }
 
     public void Copy(TextEditViewModel textEditToCopy)
     {
-        Notes.Copy(textEditToCopy.Notes);
+        Text = textEditToCopy.Text;
     }
 }

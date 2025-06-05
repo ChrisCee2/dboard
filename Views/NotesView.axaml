@@ -1,0 +1,26 @@
+<UserControl
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="clr-namespace:dboard.ViewModels"
+	xmlns:views="clr-namespace:dboard.Views"
+	xmlns:constants="clr-namespace:dboard.Constants"
+	x:Class="dboard.Views.NotesView"
+	x:DataType="vm:NotesViewModel"
+	Background="{StaticResource NotesBackgroundColor}"
+	>
+	<Design.DataContext>
+		<vm:NotesViewModel />
+	</Design.DataContext>
+
+	<StackPanel>
+		<ItemsControl Name="NoteItemsControl" ItemsSource="{Binding Notes}">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<views:MiniNoteView DataContext="{Binding}" Margin="10,5,10,0" CornerRadius="8" />
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</StackPanel>
+</UserControl>

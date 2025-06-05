@@ -4,8 +4,8 @@ using Avalonia.Interactivity;
 using AvaloniaEdit;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Messages;
-using dboard.Models;
 using dboard.Models.Actions.TextEdit;
+using dboard.ViewModels;
 
 namespace dboard.Views;
 
@@ -19,10 +19,10 @@ public partial class TextEditView : Border
     {
         InitializeComponent();
         _textEditor = this.FindControl<TextEditor>("TextEdit");
-        NotesModel notesModel = (NotesModel)DataContext;
-        if (notesModel is not null)
+        TextEditViewModel textEditViewModel = (TextEditViewModel)DataContext;
+        if (textEditViewModel is not null)
         {
-            _previousText = notesModel.Text;
+            _previousText = textEditViewModel.Text;
         }
     }
 
@@ -30,26 +30,28 @@ public partial class TextEditView : Border
     {
         if (_textEditor != null && _textEditor.Document != null)
         {
-            NotesModel notesModel = (NotesModel)DataContext;
-            if (notesModel != null)
+            TextEditViewModel textEditViewModel = (TextEditViewModel)DataContext;
+            if (textEditViewModel != null)
             {
-                var caretOffset = _textEditor.CaretOffset;
-                _textEditor.CaretOffset = caretOffset;
-                notesModel.Text = _textEditor.Text;
-                _textEditor.CaretOffset = caretOffset;
+                //var vertOffset = _textEditor.VerticalOffset;
+                //var caretOffset = _textEditor.CaretOffset;
+                //_textEditor.CaretOffset = caretOffset;
+                textEditViewModel._text = _textEditor.Text;
+                //_textEditor.CaretOffset = caretOffset;
+                //_textEditor.ScrollToVerticalOffset(vertOffset);
             }
         }
     }
 
     protected void OnTextEditorLostFocus(object sender, RoutedEventArgs e)
     {
-        NotesModel notesModel = (NotesModel)DataContext;
-        if (notesModel is not null && notesModel.Text != _previousText)
+        TextEditViewModel textEditViewModel = (TextEditViewModel)DataContext;
+        if (textEditViewModel is not null && textEditViewModel.Text != _previousText)
         {
-                string currentText = notesModel.Text;
-                notesModel.Text = _previousText;
-                WeakReferenceMessenger.Default.Send(new LogActionMessage(new OpenTextEditActionModel(notesModel)));
-                notesModel.Text = currentText;
+                string currentText = textEditViewModel.Text;
+                textEditViewModel.Text = _previousText;
+                WeakReferenceMessenger.Default.Send(new LogActionMessage(new OpenTextEditActionModel(textEditViewModel)));
+                textEditViewModel.Text = currentText;
                 _previousText = currentText;
         }
     }
