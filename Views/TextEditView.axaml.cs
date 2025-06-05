@@ -33,10 +33,12 @@ public partial class TextEditView : Border
             TextEditViewModel textEditViewModel = (TextEditViewModel)DataContext;
             if (textEditViewModel != null)
             {
-                var caretOffset = _textEditor.CaretOffset;
-                _textEditor.CaretOffset = caretOffset;
-                textEditViewModel.Text = _textEditor.Text;
-                _textEditor.CaretOffset = caretOffset;
+                //var vertOffset = _textEditor.VerticalOffset;
+                //var caretOffset = _textEditor.CaretOffset;
+                //_textEditor.CaretOffset = caretOffset;
+                textEditViewModel._text = _textEditor.Text;
+                //_textEditor.CaretOffset = caretOffset;
+                //_textEditor.ScrollToVerticalOffset(vertOffset);
             }
         }
     }

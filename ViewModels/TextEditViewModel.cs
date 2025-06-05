@@ -6,10 +6,13 @@ public partial class TextEditViewModel : ObservableObject
 {
     [ObservableProperty]
     public string _text;
+    [ObservableProperty]
+    private bool _isWordWrap;
 
-    public TextEditViewModel(string text)
+    public TextEditViewModel(string text, bool isWordWrap = true)
     {
         Text = text;
+        IsWordWrap = isWordWrap;
     }
 
     public TextEditViewModel Clone()
