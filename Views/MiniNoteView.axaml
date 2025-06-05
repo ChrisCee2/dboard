@@ -25,7 +25,10 @@
 	</Border.Background>
 
 	<StackPanel>
-		<views:TextEditView DataContext="{Binding Title}" />
-		<views:TextEditView DataContext="{Binding Text}" />
+		<views:TextEditView DataContext="{Binding Title}" 
+							Margin="0,0,0,5" 
+							Background="{StaticResource NoteBackgroundColor}"/>
+		<views:TextEditView DataContext="{Binding Text}"  
+							Background="{StaticResource NoteBackgroundColor}"/>
 	</StackPanel>
 </Border>

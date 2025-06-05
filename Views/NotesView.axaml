@@ -14,32 +14,13 @@
 		<vm:NotesViewModel />
 	</Design.DataContext>
 
-	<ItemsControl Name="NoteItemsControl" ItemsSource="{Binding Notes}">
-		<ItemsControl.ItemsPanel>
-			<ItemsPanelTemplate>
-				<StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-			</ItemsPanelTemplate>
-		</ItemsControl.ItemsPanel>
-
-		<ItemsControl.Styles>
-			<Style Selector="ContentPresenter" x:DataType="vm:NoteViewModel">
-				<Setter Property="Background">
-					<Setter.Value>
-						<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
-							<Binding Path="Note.A"/>
-							<Binding Path="Note.R"/>
-							<Binding Path="Note.G"/>
-							<Binding Path="Note.B"/>
-						</MultiBinding>
-					</Setter.Value>
-				</Setter>
-			</Style>
-		</ItemsControl.Styles>
-
-		<ItemsControl.ItemTemplate>
-			<DataTemplate>
-				<views:MiniNoteView DataContext="{Binding}"/>
-			</DataTemplate>
-		</ItemsControl.ItemTemplate>
-	</ItemsControl>
+	<StackPanel>
+		<ItemsControl Name="NoteItemsControl" ItemsSource="{Binding Notes}">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<views:MiniNoteView DataContext="{Binding}" Margin="10,5,10,0" CornerRadius="8" />
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</StackPanel>
 </UserControl>

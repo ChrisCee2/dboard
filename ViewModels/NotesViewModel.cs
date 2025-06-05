@@ -9,13 +9,14 @@ namespace dboard.ViewModels;
 public partial class NotesViewModel : ObservableObject
 {
     [ObservableProperty]
-    public Collection<NoteViewModel> _notes = new Collection<NoteViewModel>();
+    public Collection<NoteViewModel> _notes;
     [ObservableProperty]
     private SettingsModel _sharedSettings;
 
     public NotesViewModel(SettingsModel sharedSettings)
     {
         SharedSettings = sharedSettings;
+        Notes = new ObservableCollection<NoteViewModel>();
     }
 
     public NotesViewModel(SettingsModel sharedSettings, List<NoteViewModel> noteViewModels)

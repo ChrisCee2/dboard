@@ -7,8 +7,6 @@
 		x:Class="dboard.Views.TextEditView"
 		x:DataType="vm:TextEditViewModel"
 		CornerRadius="10"
-		BorderThickness="1"
-		BorderBrush="Black"
 		Padding="10">
 	<Design.DataContext>
 		<vm:TextEditViewModel/>

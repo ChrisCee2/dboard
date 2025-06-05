@@ -12,6 +12,13 @@ public partial class NoteViewModel : ObservableObject
     [ObservableProperty]
     public TextEditViewModel _text;
 
+    public NoteViewModel()
+    {
+        Note = new NoteModel();
+        Title = new TextEditViewModel(Note.Title);
+        Text = new TextEditViewModel(Note.Text);
+    }
+
     public NoteViewModel(NoteModel note)
     {
         Note = note;
