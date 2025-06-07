@@ -2,6 +2,10 @@
 using System.Collections.ObjectModel;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using dboard.Constants;
+using dboard.Messages;
 using dboard.Models;
 
 namespace dboard.ViewModels;
@@ -44,5 +48,11 @@ public partial class NotesViewModel : ObservableObject
             SharedSettings.ModeModel.AccentB
         );
         Notes.Add(new NoteViewModel(new NoteModel(noteColor)));
+    }
+
+    [RelayCommand]
+    private void DeleteNote(NoteViewModel noteViewModel)
+    {
+        Notes.Remove(noteViewModel);
     }
 }
