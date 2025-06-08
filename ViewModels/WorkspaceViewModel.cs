@@ -34,7 +34,7 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private bool _isEdging;
     [ObservableProperty]
-    private Point _PanPosition;
+    private Point _panPosition;
     [ObservableProperty]
     private double _scale = 1;
     [ObservableProperty]

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -9,10 +9,12 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Logging;
 using Avalonia.LogicalTree;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
@@ -368,11 +370,38 @@ public partial class MainContentView : Grid
     // Handle zoom
     protected void HandleZoom(object sender, PointerWheelEventArgs e)
     {
-        ((MainContentViewModel)DataContext).Workspace.Scale = Math.Clamp(
-            ((MainContentViewModel)DataContext).Workspace.Scale + (e.Delta.Y * 0.1),
+        if (DataContext is not MainContentViewModel viewModel || sender is not Control control)
+        {
+            return;
+        }
+
+        viewModel.Workspace.Scale = Math.Clamp(
+            viewModel.Workspace.Scale + (e.Delta.Y * 0.1),
             WorkspaceConstants.MIN_ZOOM,
             WorkspaceConstants.MAX_ZOOM
-            );
+        );
+
+        // Determine the anchor point (in screen coordinates)
+        if (e.Delta.Y > 0)
+        {
+            var center = new Point(control.Bounds.Width, control.Bounds.Height) / 2;
+
+            Point cursorPosition = e.GetCurrentPoint(control).Position;
+            var pan = (center - cursorPosition) * WorkspaceConstants.ZOOM_PAN_EASE * Math.Min(1, 1.0 / viewModel.Workspace.Scale);
+
+            viewModel.Workspace.PanPosition += pan;
+        }
+        else
+        {
+            // TODO: Figure out how to zoom out relative to center of screen, cuz zooming out feels like its zooming out not like that
+            var center = new Point(control.Bounds.Width, control.Bounds.Height) / 2;
+            
+            var pan = center * WorkspaceConstants.ZOOM_PAN_EASE * Math.Min(1, 1.0 / viewModel.Workspace.Scale);
+
+            Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, Math.Min(1, 1.0 / viewModel.Workspace.Scale).ToString());
+            viewModel.Workspace.PanPosition += pan;
+        }
+
         base.OnPointerWheelChanged(e);
     }
 
