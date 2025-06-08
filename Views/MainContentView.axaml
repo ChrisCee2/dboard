@@ -204,7 +204,7 @@
 							<PathIcon Width="10" Height="10" Data="{StaticResource add_regular}"/>
 						</Button>
 					</DockPanel>
-					<views:NotesView DataContext="{Binding Notes}" CornerRadius="8"/>
+					<views:NotesView DataContext="{Binding Workspace.Notes}" CornerRadius="8"/>
 				</DockPanel>
 			</Border>
 		</SplitView.Pane>

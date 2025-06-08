@@ -18,6 +18,8 @@ public partial class WorkspaceViewModel : ObservableObject
     public ObservableCollection<NodeViewModelBase> Nodes { get; set; } = new ObservableCollection<NodeViewModelBase>();
     public EdgeCollectionModel Edges { get; set; } = new EdgeCollectionModel();
     [ObservableProperty]
+    public NotesViewModel _notes;
+    [ObservableProperty]
     private string _clickMode = "Select";
     [ObservableProperty]
     private NodeViewModelBase _nodeToCreateEdge = NodeConstants.NULL_NODEVIEWMODEL;
