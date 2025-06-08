@@ -4,9 +4,9 @@ using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using dboard.Constants;
 using dboard.Messages;
 using dboard.Models;
+using dboard.Models.Actions.Notes;
 
 namespace dboard.ViewModels;
 
@@ -53,6 +53,8 @@ public partial class NotesViewModel : ObservableObject
     [RelayCommand]
     private void DeleteNote(NoteViewModel noteViewModel)
     {
-        Notes.Remove(noteViewModel);
+        var index = Notes.IndexOf(noteViewModel);
+        Notes.RemoveAt(index);
+        WeakReferenceMessenger.Default.Send(new LogActionMessage(new DeleteNoteActionModel(index, noteViewModel)));
     }
 }
