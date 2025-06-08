@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -47,7 +48,10 @@ public partial class NotesViewModel : ObservableObject
             SharedSettings.ModeModel.AccentG,
             SharedSettings.ModeModel.AccentB
         );
-        Notes.Add(new NoteViewModel(new NoteModel(noteColor)));
+        NoteViewModel noteViewModel = new NoteViewModel(new NoteModel(noteColor));
+        Notes.Add(noteViewModel);
+        int index = Notes.IndexOf(noteViewModel);
+        WeakReferenceMessenger.Default.Send(new LogActionMessage(new CreateNoteActionModel(index, noteViewModel)));
     }
 
     [RelayCommand]

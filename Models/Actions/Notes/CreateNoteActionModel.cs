@@ -3,25 +3,25 @@
 namespace dboard.Models.Actions.Notes;
 
 
-public partial class DeleteNoteActionModel : NoteActionModelBase
+public partial class CreateNoteActionModel : NoteActionModelBase
 {
     int _index;
 
-    public DeleteNoteActionModel(
+    public CreateNoteActionModel(
         int index,
         NoteViewModel note
     ) : base(note) { _index = index; }
 
     public override void Undo(WorkspaceViewModel workspaceVM)
     {
-        if (!workspaceVM.Notes.Notes.Contains(Note))
-        {
-            workspaceVM.Notes.Notes.Insert(_index, Note);
-        }
+        workspaceVM.Notes.Notes.RemoveAt(_index);
     }
 
     public override void Redo(WorkspaceViewModel workspaceVM)
     {
-        workspaceVM.Notes.Notes.RemoveAt(_index);
+        if (!workspaceVM.Notes.Notes.Contains(Note))
+        {
+            workspaceVM.Notes.Notes.Insert(_index, Note);
+        }
     }
 }
