@@ -17,6 +17,7 @@ using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.LogicalTree;
 using Avalonia.Platform.Storage;
+using Avalonia.Styling;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Constants;
@@ -375,6 +376,25 @@ public partial class MainContentView : Grid
             return;
         }
 
+        if (
+            Application.Current is not Application app || 
+            app.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || 
+            desktop.MainWindow is not Window mainWindow
+            )
+        {
+            return;
+        }
+
+        Point center = mainWindow.Bounds.Center;
+        // PixelPoint screenPoint = mainWindow.PointToScreen(center);
+        Point centerOfWindowOnScreen = mainWindow.Bounds.Center + mainWindow.Position.ToPoint(1);
+        if (control.TranslatePoint(center, mainWindow) is not Point centerRelativeToControl)
+        {
+            centerRelativeToControl = center;
+        }
+        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, centerRelativeToControl.ToString());
+        RenderTransformOrigin = new RelativePoint(centerRelativeToControl, RelativeUnit.Absolute);
+
         viewModel.Workspace.Scale = Math.Clamp(
             viewModel.Workspace.Scale + (e.Delta.Y * 0.1),
             WorkspaceConstants.MIN_ZOOM,
@@ -384,21 +404,9 @@ public partial class MainContentView : Grid
         // Determine the anchor point (in screen coordinates)
         if (e.Delta.Y > 0)
         {
-            var center = new Point(control.Bounds.Width, control.Bounds.Height) / 2;
-
-            Point cursorPosition = e.GetCurrentPoint(control).Position;
+            Point cursorPosition = e.GetPosition(control);
             var pan = (center - cursorPosition) * WorkspaceConstants.ZOOM_PAN_EASE * Math.Min(1, 1.0 / viewModel.Workspace.Scale);
 
-            viewModel.Workspace.PanPosition += pan;
-        }
-        else
-        {
-            // TODO: Figure out how to zoom out relative to center of screen, cuz zooming out feels like its zooming out not like that
-            var center = new Point(control.Bounds.Width, control.Bounds.Height) / 2;
-            
-            var pan = center * WorkspaceConstants.ZOOM_PAN_EASE * Math.Min(1, 1.0 / viewModel.Workspace.Scale);
-
-            Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, Math.Min(1, 1.0 / viewModel.Workspace.Scale).ToString());
             viewModel.Workspace.PanPosition += pan;
         }
 
