@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -9,12 +9,15 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Logging;
 using Avalonia.LogicalTree;
 using Avalonia.Platform.Storage;
+using Avalonia.Styling;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Constants;
@@ -368,11 +371,32 @@ public partial class MainContentView : Grid
     // Handle zoom
     protected void HandleZoom(object sender, PointerWheelEventArgs e)
     {
-        ((MainContentViewModel)DataContext).Workspace.Scale = Math.Clamp(
-            ((MainContentViewModel)DataContext).Workspace.Scale + (e.Delta.Y * 0.1),
+        // Make sure these exist and instatiate them as variables
+        if (
+            DataContext is not MainContentViewModel viewModel || 
+            sender is not Control control ||
+            Application.Current is not Application app ||
+            app.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
+            desktop.MainWindow is not Window mainWindow
+            )
+        {
+            return;
+        }
+
+        viewModel.Workspace.Scale = Math.Clamp(
+            viewModel.Workspace.Scale + (e.Delta.Y * 0.1),
             WorkspaceConstants.MIN_ZOOM,
             WorkspaceConstants.MAX_ZOOM
-            );
+        );
+
+        if (e.Delta.Y > 0)
+        {
+            Point cursorPosition = e.GetPosition(control);
+            var pan = (mainWindow.Bounds.Center - cursorPosition) * WorkspaceConstants.ZOOM_PAN_EASE * Math.Min(1, 1.0 / viewModel.Workspace.Scale);
+
+            viewModel.Workspace.PanPosition += pan;
+        }
+
         base.OnPointerWheelChanged(e);
     }
 
