@@ -3,6 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
 	xmlns:vm="clr-namespace:dboard.ViewModels"
 	xmlns:views="clr-namespace:dboard.Views"
 	xmlns:constants="clr-namespace:dboard.Constants"
@@ -26,7 +27,9 @@
 	</UserControl.Styles>
 
 	<Grid RowDefinitions="*, Auto" x:Name="RootGrid">
-		<views:ImageView Grid.Row="0" DataContext="{Binding}" MinWidth="20"/>
+		<Image Grid.Row="0"
+			   asyncImageLoader:ImageLoader.Source="{Binding Node.ImagePath}"
+			   IsVisible="{Binding Node.ImagePath, Converter={StaticResource IsNotNullConverter}}"/>
 		<StackPanel Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 			<StackPanel.MaxHeight>
 				<Binding

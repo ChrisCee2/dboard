@@ -1,5 +1,8 @@
 using System.Collections.ObjectModel;
+using System.Reflection;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Messages;
 using dboard.ViewModels;
@@ -28,5 +31,27 @@ public partial class WorkspaceView : UserControl
         {
             ((WorkspaceViewModel)DataContext).UpdateSelection(edgesToSelect: new ObservableCollection<EdgeViewModel> { args.Value });
         });
+
+        WeakReferenceMessenger.Default.Register<SetImageMessage>(this, (sender, message) =>
+        {
+            SetImage(message.Value);
+        });
+    }
+
+    public async void SetImage(NodeViewModelBase nodeViewModel)
+    {
+        var files = await TopLevel.GetTopLevel(this).StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = "Insert Image",
+            AllowMultiple = false
+        });
+
+        if (files.Count == 1)
+        {
+            if (nodeViewModel.NodeBase.GetType().GetProperty("ImagePath") is PropertyInfo property)
+            {
+                property.SetValue(nodeViewModel.NodeBase, files[0].Path.LocalPath, null);
+            }
+        }
     }
 }
