@@ -371,29 +371,17 @@ public partial class MainContentView : Grid
     // Handle zoom
     protected void HandleZoom(object sender, PointerWheelEventArgs e)
     {
-        if (DataContext is not MainContentViewModel viewModel || sender is not Control control)
-        {
-            return;
-        }
-
+        // Make sure these exist and instatiate them as variables
         if (
-            Application.Current is not Application app || 
-            app.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || 
+            DataContext is not MainContentViewModel viewModel || 
+            sender is not Control control ||
+            Application.Current is not Application app ||
+            app.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
             desktop.MainWindow is not Window mainWindow
             )
         {
             return;
         }
-
-        Point center = mainWindow.Bounds.Center;
-        // PixelPoint screenPoint = mainWindow.PointToScreen(center);
-        Point centerOfWindowOnScreen = mainWindow.Bounds.Center + mainWindow.Position.ToPoint(1);
-        if (control.TranslatePoint(center, mainWindow) is not Point centerRelativeToControl)
-        {
-            centerRelativeToControl = center;
-        }
-        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, centerRelativeToControl.ToString());
-        RenderTransformOrigin = new RelativePoint(centerRelativeToControl, RelativeUnit.Absolute);
 
         viewModel.Workspace.Scale = Math.Clamp(
             viewModel.Workspace.Scale + (e.Delta.Y * 0.1),
@@ -401,11 +389,10 @@ public partial class MainContentView : Grid
             WorkspaceConstants.MAX_ZOOM
         );
 
-        // Determine the anchor point (in screen coordinates)
         if (e.Delta.Y > 0)
         {
             Point cursorPosition = e.GetPosition(control);
-            var pan = (center - cursorPosition) * WorkspaceConstants.ZOOM_PAN_EASE * Math.Min(1, 1.0 / viewModel.Workspace.Scale);
+            var pan = (mainWindow.Bounds.Center - cursorPosition) * WorkspaceConstants.ZOOM_PAN_EASE * Math.Min(1, 1.0 / viewModel.Workspace.Scale);
 
             viewModel.Workspace.PanPosition += pan;
         }
