@@ -5,6 +5,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Messages;
+using dboard.Models.Actions.Node;
 using dboard.ViewModels;
 
 namespace dboard.Views;
@@ -50,6 +51,7 @@ public partial class WorkspaceView : UserControl
         {
             if (nodeViewModel.NodeBase.GetType().GetProperty("ImagePath") is PropertyInfo property)
             {
+                WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditNodeActionModel(nodeViewModel)));
                 property.SetValue(nodeViewModel.NodeBase, files[0].Path.LocalPath, null);
             }
         }
