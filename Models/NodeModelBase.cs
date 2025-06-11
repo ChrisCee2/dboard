@@ -10,6 +10,12 @@ public abstract partial class NodeModelBase : ObservableObject
     private string _desc;
 
     [ObservableProperty]
+    private double _minWidth;
+
+    [ObservableProperty]
+    private double _minHeight;
+
+    [ObservableProperty]
     private double _width;
 
     [ObservableProperty]

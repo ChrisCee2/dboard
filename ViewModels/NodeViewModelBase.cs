@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -24,6 +23,8 @@ public abstract partial class NodeViewModelBase : ObservableObject
     [ObservableProperty]
     private Control control;
 
+    public bool NodeBaseHasImagePathField() => NodeBase.GetType().GetProperty("ImagePath") != null;
+
     [RelayCommand]
     private void DeleteNode()
     {
@@ -34,6 +35,12 @@ public abstract partial class NodeViewModelBase : ObservableObject
     private void CopyNode()
     {
         WeakReferenceMessenger.Default.Send(new CopyNodeMessage(this));
+    }
+
+    [RelayCommand(CanExecute = nameof(NodeBaseHasImagePathField))]
+    private void SetImage()
+    {
+        WeakReferenceMessenger.Default.Send(new SetImageMessage(this));
     }
 
     public abstract NodeViewModelBase Clone();
