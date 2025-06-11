@@ -8,7 +8,22 @@ public partial class NodeModel : NodeModelBase
     private int defaultMinHeight = 60;
     private int defaultMinWidth = 100;
 
-    public NodeModel(int zIndex = 0)
+    public NodeModel()
+    {
+        Name = "";
+        Desc = "";
+        ImagePath = null;
+        MinWidth = defaultMinWidth;
+        MinHeight = defaultMinHeight + NodeConstants.EDGE_HEIGHT;
+        Width = MinWidth;
+        Height = MinHeight;
+        PositionX = 0;
+        PositionY = 0;
+        Notes = "";
+        ZIndex = 0;
+    }
+
+    public NodeModel(int zIndex)
     {
         Name = "";
         Desc = "";
