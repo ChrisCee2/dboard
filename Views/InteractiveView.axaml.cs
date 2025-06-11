@@ -11,6 +11,7 @@ using Avalonia.VisualTree;
 using Avalonia.LogicalTree;
 using dboard.Models;
 using System.Threading.Tasks;
+using dboard.Models.Actions.Node;
 
 namespace dboard.Views;
 
@@ -173,12 +174,14 @@ public partial class InteractiveView : Grid
     // Handle dropping image
     public async Task DropImage(object sender, DragEventArgs e)
     {
+        // TODO: Instead check if it has an ImagePath property
         if (_vm is NodeViewModel vm)
         {
             NodeModel node = vm.Node;
             if (e.Data.GetText() is string url && _IsImage(e.Data.GetText()))
             {
-                node.ImagePath = e.Data.GetText();
+                Tuple<NodeViewModelBase, string?> nodeAndImagePath = Tuple.Create((NodeViewModelBase)vm, e.Data.GetText());
+                WeakReferenceMessenger.Default.Send(new SetImageMessage(nodeAndImagePath));
             }
             else if (e.Data.GetFileNames() is { } fileNames && fileNames is not null)
             {
@@ -186,7 +189,8 @@ public partial class InteractiveView : Grid
                 {
                     if (_IsImage(file))
                     {
-                        node.ImagePath = file;
+                        Tuple<NodeViewModelBase, string?> nodeAndImagePath = Tuple.Create((NodeViewModelBase)vm, file);
+                        WeakReferenceMessenger.Default.Send(new SetImageMessage(nodeAndImagePath));
                     }
                 }
             }

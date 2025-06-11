@@ -1,8 +1,9 @@
-﻿using CommunityToolkit.Mvvm.Messaging.Messages;
+﻿using System;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using dboard.ViewModels;
 
 namespace dboard.Messages;
-public class SetImageMessage : ValueChangedMessage<NodeViewModelBase>
+public class SetImageMessage : ValueChangedMessage<Tuple<NodeViewModelBase, string?>>
 {
-    public SetImageMessage(NodeViewModelBase value) : base(value) { }
+    public SetImageMessage(Tuple<NodeViewModelBase, string?> value) : base(value) { }
 }

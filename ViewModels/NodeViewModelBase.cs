@@ -38,9 +38,9 @@ public abstract partial class NodeViewModelBase : ObservableObject
     }
 
     [RelayCommand(CanExecute = nameof(NodeBaseHasImagePathField))]
-    private void SetImage()
+    private void OpenImageDialog()
     {
-        WeakReferenceMessenger.Default.Send(new SetImageMessage(this));
+        WeakReferenceMessenger.Default.Send(new OpenImageDialogMessage(this));
     }
 
     public abstract NodeViewModelBase Clone();
