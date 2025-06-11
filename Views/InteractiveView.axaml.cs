@@ -180,8 +180,8 @@ public partial class InteractiveView : Grid
             NodeModel node = vm.Node;
             if (e.Data.GetText() is string url && _IsImage(e.Data.GetText()))
             {
-                WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditNodeActionModel(vm)));
-                node.ImagePath = e.Data.GetText();
+                Tuple<NodeViewModelBase, string?> nodeAndImagePath = Tuple.Create((NodeViewModelBase)vm, e.Data.GetText());
+                WeakReferenceMessenger.Default.Send(new SetImageMessage(nodeAndImagePath));
             }
             else if (e.Data.GetFileNames() is { } fileNames && fileNames is not null)
             {
@@ -189,8 +189,8 @@ public partial class InteractiveView : Grid
                 {
                     if (_IsImage(file))
                     {
-                        WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditNodeActionModel(vm)));
-                        node.ImagePath = file;
+                        Tuple<NodeViewModelBase, string?> nodeAndImagePath = Tuple.Create((NodeViewModelBase)vm, file);
+                        WeakReferenceMessenger.Default.Send(new SetImageMessage(nodeAndImagePath));
                     }
                 }
             }

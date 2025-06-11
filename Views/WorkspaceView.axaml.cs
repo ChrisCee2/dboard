@@ -35,11 +35,18 @@ public partial class WorkspaceView : UserControl
 
         WeakReferenceMessenger.Default.Register<SetImageMessage>(this, (sender, message) =>
         {
-            SetImage(message.Value);
+            NodeViewModelBase nodeViewModel = message.Value.Item1;
+            string? filePath = message.Value.Item2;
+            SetImage(nodeViewModel, filePath);
+        });
+
+        WeakReferenceMessenger.Default.Register<OpenImageDialogMessage>(this, (sender, message) =>
+        {
+            OpenImageDialog(message.Value);
         });
     }
 
-    public async void SetImage(NodeViewModelBase nodeViewModel)
+    public async void OpenImageDialog(NodeViewModelBase nodeViewModel)
     {
         var files = await TopLevel.GetTopLevel(this).StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
@@ -49,11 +56,16 @@ public partial class WorkspaceView : UserControl
 
         if (files.Count == 1)
         {
-            if (nodeViewModel.NodeBase.GetType().GetProperty("ImagePath") is PropertyInfo property)
-            {
-                WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditNodeActionModel(nodeViewModel)));
-                property.SetValue(nodeViewModel.NodeBase, files[0].Path.LocalPath, null);
-            }
+            SetImage(nodeViewModel, files[0].Path.LocalPath);
+        }
+    }
+
+    private void SetImage(NodeViewModelBase nodeViewModel, string? filePath)
+    {
+        if (nodeViewModel.NodeBase.GetType().GetProperty("ImagePath") is PropertyInfo property)
+        {
+            WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditNodeActionModel(nodeViewModel)));
+            property.SetValue(nodeViewModel.NodeBase, filePath, null);
         }
     }
 }

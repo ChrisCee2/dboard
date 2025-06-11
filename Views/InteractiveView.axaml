@@ -16,7 +16,7 @@
 
 	<Grid.ContextMenu>
 		<ContextMenu>
-			<MenuItem Header="Set Image" Command="{Binding SetImageCommand}"/>
+			<MenuItem Header="Set Image" Command="{Binding OpenImageDialogCommand}"/>
 			<MenuItem Header="Copy" Command="{Binding CopyNodeCommand}"/>
 			<MenuItem Header="Delete" Command="{Binding DeleteNodeCommand}"/>
 		</ContextMenu>
@@ -42,7 +42,7 @@
 				RowDefinitions="Auto,*,Auto">
 				<Grid.ContextMenu>
 					<ContextMenu>
-						<MenuItem Header="Set Image" Command="{Binding SetImageCommand}"/>
+						<MenuItem Header="Set Image" Command="{Binding OpenImageDialogCommand}"/>
 						<MenuItem Header="Copy" Command="{Binding CopyNodeCommand}"/>
 						<MenuItem Header="Delete" Command="{Binding DeleteNodeCommand}"/>
 					</ContextMenu>
