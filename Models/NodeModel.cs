@@ -5,26 +5,18 @@ namespace dboard.Models;
 
 public partial class NodeModel : NodeModelBase
 {
-    public NodeModel()
-    {
-        Name = "";
-        Desc = "";
-        ImagePath = null;
-        Width = NodeConstants.MIN_WIDTH;
-        Height = NodeConstants.MIN_HEIGHT;
-        PositionX = 0;
-        PositionY = 0;
-        Notes = "";
-        ZIndex = 0;
-    }
+    private int defaultMinHeight = 60;
+    private int defaultMinWidth = 100;
 
-    public NodeModel(int zIndex)
+    public NodeModel(int zIndex = 0)
     {
         Name = "";
         Desc = "";
         ImagePath = null;
-        Width = NodeConstants.MIN_WIDTH;
-        Height = NodeConstants.MIN_HEIGHT;
+        MinWidth = defaultMinWidth;
+        MinHeight = defaultMinHeight + NodeConstants.EDGE_HEIGHT;
+        Width = MinWidth;
+        Height = MinHeight;
         PositionX = 0;
         PositionY = 0;
         Notes = "";
@@ -35,6 +27,8 @@ public partial class NodeModel : NodeModelBase
         string name,
         string desc,
         string imagePath,
+        double minWidth,
+        double minHeight,
         double width,
         double height,
         double x,
@@ -45,6 +39,8 @@ public partial class NodeModel : NodeModelBase
         Name = name;
         Desc = desc;
         ImagePath = imagePath;
+        MinWidth = minWidth;
+        MinHeight = minHeight;
         Width = width;
         Height = height;
         PositionX = x;
@@ -71,6 +67,8 @@ public partial class NodeModel : NodeModelBase
             Name,
             Desc,
             ImagePath,
+            MinWidth,
+            MinHeight,
             Width,
             Height,
             PositionX,
@@ -88,9 +86,42 @@ public partial class NodeModel : NodeModelBase
         ImagePath = nodeModel.ImagePath;
         Width = nodeModel.Width;
         Height = nodeModel.Height;
+        MinWidth = nodeModel.MinWidth;
+        MinHeight = nodeModel.MinHeight;
         PositionX = nodeModel.PositionX;
         PositionY = nodeModel.PositionY;
         Notes = nodeModel.Notes;
         ZIndex = nodeModel.ZIndex;
+    }
+
+    partial void OnImagePathChanged(string? value)
+    {
+        HandleResize();
+    }
+
+    partial void OnNotesToggledChanged(bool value)
+    {
+        HandleResize();
+    }
+
+    private void HandleResize()
+    {
+        double finalMinHeight = defaultMinHeight;
+
+        if (NotesToggled)
+        {
+            finalMinHeight += defaultMinHeight;
+        }
+
+        if (ImagePath is not null)
+        {
+            finalMinHeight = finalMinHeight + NodeConstants.IMAGE_MIN_HEIGHT;
+        }
+
+        MinHeight = finalMinHeight + NodeConstants.EDGE_HEIGHT;
+        if (Height < MinHeight)
+        {
+            Height = MinHeight;
+        }
     }
 }

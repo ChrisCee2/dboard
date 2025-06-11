@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using Avalonia;
-using Avalonia.Media;
-using Avalonia.Media.Immutable;
 using dboard.ViewModels;
 
 namespace dboard.Constants;
@@ -13,8 +11,14 @@ public static class NodeConstants
     public const string DEFAULT_IMAGE_PATH = "avares://dboard/Assets/amongusbutt.png";
 
     // Size constants
-    public const int MIN_WIDTH = 140;
-    public const int MIN_HEIGHT = 160; // Extra 20 to account for edge
+    public const int DEFAULT_WIDTH = 140;
+    public const int DEFAULT_HEIGHT = 160;
+
+    public const int DEFAULT_MIN_WIDTH = 140;
+    public const int DEFAULT_MIN_HEIGHT = 160; // Extra 20 to account for edge
+
+    public const int EDGE_HEIGHT = 20; // Extra 20 to account for edge
+    public const int IMAGE_MIN_HEIGHT = 40;
 
     // Resize constants
     public enum RESIZE

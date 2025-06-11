@@ -31,14 +31,10 @@
 			   asyncImageLoader:ImageLoader.Source="{Binding Node.ImagePath}"
 			   IsVisible="{Binding Node.ImagePath, Converter={StaticResource IsNotNullConverter}}"/>
 		<StackPanel Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-			<StackPanel.MaxHeight>
-				<Binding
-					Converter="{StaticResource MaxHeightConverter}"
-					ElementName="RootGrid"
-					Path="Bounds.Size.Height"
-					ConverterParameter="0.7"/>
-			</StackPanel.MaxHeight>
-			<TextBox Text="{Binding Node.Name}" MinHeight="20" MaxHeight="40" FontSize="16"
+			<TextBox Text="{Binding Node.Name}" 
+					 MinHeight="20" 
+					 FontSize="16"
+					 VerticalAlignment="Stretch"
 					 TextWrapping="Wrap"/>
 			<TextBox
 					Text="{Binding Node.Notes}"

@@ -125,8 +125,8 @@ public partial class InteractiveView : Grid
             double offsetX = (currentPosition.X - _lastPosition.X) * resizeDir.X;
             double offsetY = (currentPosition.Y - _lastPosition.Y) * resizeDir.Y;
 
-            _vm.NodeBase.Width = Math.Max(_lastWidth + offsetX, NodeConstants.MIN_WIDTH);
-            _vm.NodeBase.Height = Math.Max(_lastHeight + offsetY, NodeConstants.MIN_HEIGHT);
+            _vm.NodeBase.Width = Math.Max(_lastWidth + offsetX, _vm.NodeBase.MinWidth);
+            _vm.NodeBase.Height = Math.Max(_lastHeight + offsetY, _vm.NodeBase.MinHeight);
             if ((int)_resizeAxis > 2)
             {
                 var moveOffsetX = (_lastPosition.X - _positionInBlock.X) + ((_vm.NodeBase.Width - _lastWidth) * resizeDir.X);
