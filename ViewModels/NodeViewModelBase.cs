@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using System;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -24,6 +25,7 @@ public abstract partial class NodeViewModelBase : ObservableObject
     private Control control;
 
     public bool NodeBaseHasImagePathField() => NodeBase.GetType().GetProperty("ImagePath") != null;
+    public bool NodeBaseHasImage() => NodeBase.GetType().GetProperty("ImagePath") != null && NodeBase.GetType().GetProperty("ImagePath").GetValue(NodeBase) != null;
 
     [RelayCommand]
     private void DeleteNode()
@@ -41,6 +43,13 @@ public abstract partial class NodeViewModelBase : ObservableObject
     private void OpenImageDialog()
     {
         WeakReferenceMessenger.Default.Send(new OpenImageDialogMessage(this));
+    }
+
+    [RelayCommand(CanExecute = nameof(NodeBaseHasImage))]
+    private void RemoveImage()
+    {
+        Tuple<NodeViewModelBase, string?> nodeAndImagePath = Tuple.Create<NodeViewModelBase, string?>(this, null);
+        WeakReferenceMessenger.Default.Send(new SetImageMessage(nodeAndImagePath));
     }
 
     public abstract NodeViewModelBase Clone();
