@@ -16,6 +16,8 @@ public partial class NotesViewModel : ObservableObject
     [ObservableProperty]
     public Collection<NoteViewModel> _notes;
     [ObservableProperty]
+    private NoteViewModel? _selectedNote = null;
+    [ObservableProperty]
     private SettingsModel _sharedSettings;
 
     public NotesViewModel(SettingsModel sharedSettings)
@@ -57,8 +59,18 @@ public partial class NotesViewModel : ObservableObject
     [RelayCommand]
     private void DeleteNote(NoteViewModel noteViewModel)
     {
+        if (SelectedNote == noteViewModel)
+        {
+            SelectedNote = null;
+        }
         var index = Notes.IndexOf(noteViewModel);
         Notes.RemoveAt(index);
         WeakReferenceMessenger.Default.Send(new LogActionMessage(new DeleteNoteActionModel(index, noteViewModel)));
+    }
+
+    [RelayCommand]
+    private void SelectNote(NoteViewModel? noteViewModel)
+    {
+        SelectedNote = noteViewModel;
     }
 }

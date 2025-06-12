@@ -200,11 +200,15 @@
 							<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
 						</ToggleButton>
 						<Button DockPanel.Dock="Right" Margin="5" Padding="8" CornerRadius="10" HorizontalAlignment="Right"
-								Command="{Binding CreateNoteCommand}">
+								Command="{Binding CreateNoteCommand}"
+								IsVisible="{Binding Workspace.Notes.SelectedNote, Converter={StaticResource IsNullConverter}}">
 							<PathIcon Width="10" Height="10" Data="{StaticResource add_regular}"/>
 						</Button>
 					</DockPanel>
-					<views:NotesView DataContext="{Binding Workspace.Notes}" CornerRadius="8"/>
+					<views:NotesView DataContext="{Binding Workspace.Notes}" CornerRadius="8" 
+									 IsVisible="{Binding SelectedNote, Converter={StaticResource IsNullConverter}}"/>
+					<views:NoteView DataContext="{Binding Workspace.Notes.SelectedNote}" CornerRadius="8" 
+									IsVisible="{Binding, Converter={StaticResource IsNotNullConverter}}"/>
 				</DockPanel>
 			</Border>
 		</SplitView.Pane>

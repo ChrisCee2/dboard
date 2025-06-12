@@ -1,0 +1,92 @@
+<Border
+	xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="using:dboard.ViewModels"
+    x:Class="dboard.Views.InteractiveNoteView"
+	x:DataType="vm:NoteViewModel"
+	RowDefinitions="Auto,*">
+
+	<!--
+	<Border.ContextMenu>
+		<ContextMenu>
+			<MenuItem Header="Delete" Command="{Binding DeleteNoteCommand}"/>
+		</ContextMenu>
+	</Border.ContextMenu>
+	-->
+
+	<!--
+	<Grid.RenderTransform>
+		<TranslateTransform X="{Binding NodeBase.PositionX}" Y="{Binding NodeBase.PositionY}"/>
+	</Grid.RenderTransform>
+	-->
+
+	<Design.DataContext>
+		<vm:NoteViewModel />
+	</Design.DataContext>
+
+	<!--
+	<AdornerLayer Grid.Row="1">
+		<AdornerLayer.Adorner>
+			<Grid
+				Name="AdornerGrid"
+				ColumnDefinitions="Auto,*,Auto"
+				RowDefinitions="Auto,*,Auto">
+				<Grid.ContextMenu>
+					<ContextMenu>
+						<MenuItem Header="Delete" Command="{Binding DeleteNoteCommand}"/>
+					</ContextMenu>
+				</Grid.ContextMenu>
+
+				<Panel Tag="xy" Background="Transparent" Cursor="TopLeftCorner"
+					   Grid.Row="0" Grid.Column="0" Width="8" Height="8"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="Xy" Background="Transparent" Cursor="TopRightCorner"
+					   Grid.Row="0" Grid.Column="2" Width="8" Height="8"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="xY" Background="Transparent" Cursor="BottomLeftCorner"
+					   Grid.Row="2" Grid.Column="0" Width="8" Height="8"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="XY" Background="Transparent" Cursor="BottomRightCorner"
+					   Grid.Row="2" Grid.Column="2" Width="8" Height="8"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="y" Background="Transparent" Cursor="TopSide"
+					   Grid.Row="0" Grid.Column="1"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="x" Background="Transparent" Cursor="LeftSide"
+					   Grid.Row="1" Grid.Column="0"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="X" Background="Transparent" Cursor="RightSide"
+					   Grid.Row="1" Grid.Column="2"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Tag="Y" Background="Transparent" Cursor="BottomSide"
+					   Grid.Row="2" Grid.Column="1"
+					   PointerPressed="ResizePointerPressed"
+					   PointerReleased="ResizePointerReleased"
+					   PointerMoved="ResizePointerMoved" />
+				<Panel Background="Transparent"
+					   Grid.Row="1" Grid.Column="1" Opacity="0.3"
+					   IsHitTestVisible="{Binding !IsEdit}"
+					   PointerPressed="MovePointerPressed"
+					   PointerReleased="MovePointerReleased"
+					   PointerMoved="MovePointerMoved"/>
+			</Grid>
+		</AdornerLayer.Adorner>
+	</AdornerLayer>
+	-->
+</Border>
