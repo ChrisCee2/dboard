@@ -16,5 +16,6 @@
 		WordWrap="{Binding IsWordWrap}"
 		Document="{Binding Text, Converter={StaticResource DocumentStringConverter}}"
 		TextChanged="TextChanged"
-		LostFocus="OnTextEditorLostFocus"/>
+		LostFocus="OnTextEditorLostFocus"
+		HorizontalScrollBarVisibility="Hidden"/>
 </Border>

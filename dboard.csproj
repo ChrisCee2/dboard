@@ -56,7 +56,7 @@
     <AvaloniaXaml Update="Views\AppSettingsView.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
-    <AvaloniaXaml Update="Views\NoteView.axaml">
+    <AvaloniaXaml Update="Views\NoteTextView.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
     <AvaloniaXaml Update="Views\MiniNoteView.axaml">
@@ -71,9 +71,9 @@
     <Compile Update="Views\InteractiveNoteView.axaml.cs">
       <DependentUpon>InteractiveNoteView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\NoteView.axaml.cs">
+    <Compile Update="Views\NoteTextView.axaml.cs">
       <SubType>Code</SubType>
-      <DependentUpon>NoteView.axaml</DependentUpon>
+      <DependentUpon>NoteTextView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\NotesView.axaml.cs">
       <DependentUpon>NotesView.axaml</DependentUpon>

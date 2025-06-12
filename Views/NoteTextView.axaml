@@ -6,7 +6,7 @@
 	xmlns:vm="clr-namespace:dboard.ViewModels"
 	xmlns:views="clr-namespace:dboard.Views"
 	xmlns:constants="clr-namespace:dboard.Constants"
-	x:Class="dboard.Views.NoteView"
+	x:Class="dboard.Views.NoteTextView"
 	x:DataType="vm:NoteViewModel"
 	Padding="10"
 	CornerRadius="10"
@@ -26,12 +26,13 @@
 		</MultiBinding>
 	</Border.Background>
 
-	<StackPanel>
-		<views:TextEditView DataContext="{Binding Title}" 
+	<Grid RowDefinitions="*,Auto">
+		<views:TextEditView DataContext="{Binding Text}" 
+							Grid.Row="0"
 							Margin="0,0,0,5" 
-							Background="{StaticResource NoteBackgroundColor}"
-							MaxHeight="40"/>
-		<views:TextEditView DataContext="{Binding Text}"  
 							Background="{StaticResource NoteBackgroundColor}"/>
-	</StackPanel>
+		<Button Click="Collapse" Grid.Row="1" HorizontalAlignment="Stretch" MaxHeight="20">
+			<PathIcon Width="10" Height="10" Data="{StaticResource chevron_up_regular}"/>
+		</Button>
+	</Grid>
 </Border>

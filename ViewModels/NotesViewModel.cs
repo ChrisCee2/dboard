@@ -5,6 +5,7 @@ using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using dboard.Constants;
 using dboard.Messages;
 using dboard.Models;
 using dboard.Models.Actions.Notes;
@@ -20,16 +21,26 @@ public partial class NotesViewModel : ObservableObject
     [ObservableProperty]
     private SettingsModel _sharedSettings;
 
+    public void SetUpMessengers()
+    {
+        WeakReferenceMessenger.Default.Register<SelectNoteMessage>(this, (sender, message) =>
+        {
+            SelectedNote = message.Value;
+        });
+    }
+
     public NotesViewModel(SettingsModel sharedSettings)
     {
         SharedSettings = sharedSettings;
         Notes = new ObservableCollection<NoteViewModel>();
+        SetUpMessengers();
     }
 
     public NotesViewModel(SettingsModel sharedSettings, List<NoteViewModel> noteViewModels)
     {
         SharedSettings = sharedSettings;
         Notes = new ObservableCollection<NoteViewModel>(noteViewModels);
+        SetUpMessengers();
     }
 
     public NotesViewModel(SettingsModel sharedSettings, List<NoteModel> noteModels)
@@ -40,6 +51,7 @@ public partial class NotesViewModel : ObservableObject
         {
             Notes.Add(new NoteViewModel(noteModel));
         }
+        SetUpMessengers();
     }
 
     public void CreateNote()
@@ -66,11 +78,5 @@ public partial class NotesViewModel : ObservableObject
         var index = Notes.IndexOf(noteViewModel);
         Notes.RemoveAt(index);
         WeakReferenceMessenger.Default.Send(new LogActionMessage(new DeleteNoteActionModel(index, noteViewModel)));
-    }
-
-    [RelayCommand]
-    private void SelectNote(NoteViewModel? noteViewModel)
-    {
-        SelectedNote = noteViewModel;
     }
 }

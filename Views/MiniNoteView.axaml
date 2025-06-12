@@ -30,7 +30,11 @@
 							Background="{StaticResource NoteBackgroundColor}"
 							MaxHeight="41"/>
 		<views:TextEditView DataContext="{Binding Text}"  
+							Margin="0,0,0,5" 
 							Background="{StaticResource NoteBackgroundColor}"
 							MaxHeight="150"/>
+		<Button Click="Expand" HorizontalAlignment="Stretch" MaxHeight="20">
+			<PathIcon Width="10" Height="10" Data="{StaticResource chevron_down_regular}"/>
+		</Button>
 	</StackPanel>
 </Border>

@@ -19,17 +19,15 @@
 			<ItemsControl Name="NoteItemsControl" ItemsSource="{Binding Notes}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<views:InteractiveNoteView DataContext="Binding">
-							<views:MiniNoteView DataContext="{Binding}" Margin="10,5,10,0" CornerRadius="8">
-								<views:MiniNoteView.ContextMenu>
-									<ContextMenu>
-										<MenuItem Header="Delete Note"
-													Command="{Binding $parent[views:NotesView].((vm:NotesViewModel)DataContext).DeleteNoteCommand}"
-													CommandParameter="{Binding}"/>
-									</ContextMenu>
-								</views:MiniNoteView.ContextMenu>
-							</views:MiniNoteView>
-						</views:InteractiveNoteView>
+						<views:MiniNoteView DataContext="{Binding}" Margin="10,5,10,0" CornerRadius="8">
+							<views:MiniNoteView.ContextMenu>
+								<ContextMenu>
+									<MenuItem Header="Delete Note"
+												Command="{Binding $parent[views:NotesView].((vm:NotesViewModel)DataContext).DeleteNoteCommand}"
+												CommandParameter="{Binding}"/>
+								</ContextMenu>
+							</views:MiniNoteView.ContextMenu>
+						</views:MiniNoteView>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
