@@ -199,12 +199,28 @@
 								  IsChecked="{Binding #NotesSplitView.IsPaneOpen}">
 							<PathIcon Width="10" Height="10" Data="{StaticResource chevron_right_regular}"/>
 						</ToggleButton>
-						<Button DockPanel.Dock="Right" Margin="5" Padding="8" CornerRadius="10" HorizontalAlignment="Right"
-								Command="{Binding CreateNoteCommand}">
-							<PathIcon Width="10" Height="10" Data="{StaticResource add_regular}"/>
-						</Button>
+						<Grid RowDefinitions="*">
+							<Button DockPanel.Dock="Right" Margin="5" Padding="8" CornerRadius="10" HorizontalAlignment="Right"
+															Command="{Binding CreateNoteCommand}"
+															IsVisible="{Binding Workspace.Notes.SelectedNote, Converter={StaticResource IsNullConverter}}">
+								<PathIcon Width="10" Height="10" Data="{StaticResource add_regular}"/>
+							</Button>
+							<views:TextEditView DataContext="{Binding Workspace.Notes.SelectedNote.Title}" Grid.Row="0"
+												IsVisible="{Binding, Converter={StaticResource IsNotNullConverter}}"
+												BorderThickness="0,0,0,2"
+												BorderBrush="{StaticResource NotesBackgroundColor}"
+												CornerRadius="0"
+												Padding="0"
+												MaxHeight="20"
+												Margin="5,5,15,5"/>
+						</Grid>
 					</DockPanel>
-					<views:NotesView DataContext="{Binding Workspace.Notes}" CornerRadius="8"/>
+					<Grid RowDefinitions="*">
+						<views:NotesView DataContext="{Binding Workspace.Notes}" CornerRadius="8" Grid.Row="0"
+									 IsVisible="{Binding SelectedNote, Converter={StaticResource IsNullConverter}}"/>
+						<views:NoteTextView DataContext="{Binding Workspace.Notes.SelectedNote}" CornerRadius="8" Grid.Row="0"
+										IsVisible="{Binding, Converter={StaticResource IsNotNullConverter}}"/>
+					</Grid>
 				</DockPanel>
 			</Border>
 		</SplitView.Pane>
