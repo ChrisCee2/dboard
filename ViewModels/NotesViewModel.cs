@@ -21,6 +21,14 @@ public partial class NotesViewModel : ObservableObject
     [ObservableProperty]
     private SettingsModel _sharedSettings;
 
+    // For note moving
+    [ObservableProperty]
+    private NoteViewModel? _noteToMove = null;
+    [ObservableProperty]
+    private NoteViewModel? _lastNoteCursorWasOver = null;
+    [ObservableProperty]
+    private bool _cursorIsAboveCurrentNote = false;
+
     public void SetUpMessengers()
     {
         WeakReferenceMessenger.Default.Register<SelectNoteMessage>(this, (sender, message) =>
