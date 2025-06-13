@@ -32,6 +32,7 @@
 			<customConverters:UseThemeConverter x:Key="UseThemeConverter"/>
 			<customConverters:DocumentStringConverter x:Key="DocumentStringConverter"/>
 			<customConverters:SaveStatusConverter x:Key="SaveStatusConverter"/>
+			<customConverters:NoteMoveDividerConverter x:Key="NoteMoveDividerConverter"/>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="/Styles/ToolBarResources.axaml"/>
 				<ResourceInclude Source="/Styles/WorkspaceResources.axaml"/>

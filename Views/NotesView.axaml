@@ -27,6 +27,18 @@
 								Background="Transparent"
 								Padding="10,5,10,0"
 								Tag="NoteContainer">
+							<Border Background="{StaticResource HighlightColor}"
+									Height="1"
+									CornerRadius="10">
+								<Border.IsVisible>
+									<MultiBinding Converter="{StaticResource NoteMoveDividerConverter}">
+										<Binding Path="SharedSettings.ModeModel.AccentR"/>
+										<Binding Path="{Binding $parent.}"/>
+										<Binding Path="{Binding}"/>
+										<Binding Path="SharedSettings.ModeModel.AccentB"/>
+									</MultiBinding>
+								</Border.IsVisible>	
+							</Border>
 							<views:MiniNoteView DataContext="{Binding}"
 												Margin="10,5,10,0"
 												CornerRadius="8">
