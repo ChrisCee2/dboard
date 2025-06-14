@@ -67,24 +67,11 @@ public partial class NotesView : UserControl
     {
         if (
             args.InitialPressMouseButton != MouseButton.Left ||
-            DataContext is not NotesViewModel notesViewModel || 
-            notesViewModel.LastNoteCursorWasOver is not NoteViewModel lastNoteCursorWasOver || 
-            notesViewModel.NoteToMove is not NoteViewModel noteToMove)
+            DataContext is not NotesViewModel notesViewModel)
         {
             return;
         }
-        int oldIndex = notesViewModel.Notes.IndexOf(noteToMove);
-        int newIndex = notesViewModel.Notes.IndexOf(notesViewModel.LastNoteCursorWasOver);
-        newIndex += notesViewModel.CursorIsAboveCurrentNote ? 0 : 1;
-        if (oldIndex != newIndex)
-        {
-            notesViewModel.Notes.Insert(newIndex, noteToMove);
-            int indexToRemoveAt = newIndex < oldIndex ? oldIndex + 1 : oldIndex;
-            notesViewModel.Notes.RemoveAt(indexToRemoveAt);
-        }
-
-        notesViewModel.NoteToMove = null;
-        notesViewModel.LastNoteCursorWasOver = null;
+        notesViewModel.MoveNote();
     }
 
     private Control? GetParentWithTag(Control control, string tag)
