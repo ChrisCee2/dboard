@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Avalonia.Input;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using dboard.Constants;
 using dboard.Messages;
 using dboard.Models;
 using dboard.Models.Actions.Notes;
@@ -20,6 +20,14 @@ public partial class NotesViewModel : ObservableObject
     private NoteViewModel? _selectedNote = null;
     [ObservableProperty]
     private SettingsModel _sharedSettings;
+
+    // For note moving
+    [ObservableProperty]
+    private NoteViewModel? _noteToMove = null;
+    [ObservableProperty]
+    private NoteViewModel? _lastNoteCursorWasOver = null;
+    [ObservableProperty]
+    private bool _cursorIsAboveCurrentNote = false;
 
     public void SetUpMessengers()
     {
@@ -78,5 +86,51 @@ public partial class NotesViewModel : ObservableObject
         var index = Notes.IndexOf(noteViewModel);
         Notes.RemoveAt(index);
         WeakReferenceMessenger.Default.Send(new LogActionMessage(new DeleteNoteActionModel(index, noteViewModel)));
+    }
+
+    public void MoveNote()
+    {
+        if (NoteToMove is null || LastNoteCursorWasOver is null)
+        {
+            return;
+        }
+        int oldIndex = Notes.IndexOf(NoteToMove);
+        int newIndex = Notes.IndexOf(LastNoteCursorWasOver);
+        newIndex += CursorIsAboveCurrentNote ? 0 : 1;
+        bool noteIndexChanged = SetNoteIndex(NoteToMove, newIndex);
+        if (noteIndexChanged)
+        {
+            WeakReferenceMessenger.Default.Send(
+                new LogActionMessage(
+                    new MoveNoteActionModel(oldIndex, newIndex, NoteToMove)
+                )
+            );
+        }
+
+        NoteToMove = null;
+        LastNoteCursorWasOver = null;
+    }
+
+    // Returns whether or not note was inserted at index
+    public bool SetNoteIndex(NoteViewModel noteViewModel, int index)
+    {
+        int? oldIndex = null;
+        if (Notes.Contains(noteViewModel))
+        {
+            oldIndex = Notes.IndexOf(noteViewModel);
+        }
+        if (oldIndex != index)
+        {
+            Notes.Insert(index, noteViewModel);
+            if (oldIndex is int previousIndex)
+            {
+                int indexToRemoveAt = index < previousIndex ? previousIndex + 1 : previousIndex;
+                Notes.RemoveAt(indexToRemoveAt);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

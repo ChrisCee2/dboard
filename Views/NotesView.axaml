@@ -15,22 +15,70 @@
 	</Design.DataContext>
 
 	<ScrollViewer>
-		<StackPanel>
+		<StackPanel 
+			Background="Transparent"
+			PointerReleased="PointerReleasedHandler">
 			<ItemsControl Name="NoteItemsControl" ItemsSource="{Binding Notes}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<views:MiniNoteView DataContext="{Binding}" Margin="10,5,10,0" CornerRadius="8">
-							<views:MiniNoteView.ContextMenu>
-								<ContextMenu>
-									<MenuItem Header="Delete Note"
-												Command="{Binding $parent[views:NotesView].((vm:NotesViewModel)DataContext).DeleteNoteCommand}"
-												CommandParameter="{Binding}"/>
-								</ContextMenu>
-							</views:MiniNoteView.ContextMenu>
-						</views:MiniNoteView>
+						<Border DataContext="{Binding}"
+								PointerPressed="PointerPressedHandler"
+								PointerMoved="PointerMovedHandler"
+								Background="Transparent"
+								Padding="10,5,10,0"
+								Tag="NoteContainer">
+							<StackPanel>
+								<Border Background="{StaticResource HighlightColor}"
+										Margin="5,0,5,5"
+										HorizontalAlignment="Stretch"
+										Height="2"
+										CornerRadius="10">
+									<Border.IsVisible>
+										<MultiBinding Converter="{StaticResource NoteMoveDividerConverter}">
+											<Binding Path="$parent[views:NotesView].((vm:NotesViewModel)DataContext).CursorIsAboveCurrentNote"/>
+											<Binding Path="."/>
+											<Binding Path="$parent[views:NotesView].((vm:NotesViewModel)DataContext).LastNoteCursorWasOver"/>
+										</MultiBinding>
+									</Border.IsVisible>	
+								</Border>
+								<views:MiniNoteView DataContext="{Binding}"
+													Margin="10,0,10,0"
+													CornerRadius="8">
+									<views:MiniNoteView.BoxShadow>
+										<MultiBinding Converter="{StaticResource NoteMoveHighlightConverter}">
+											<Binding Path="."/>
+											<Binding Path="$parent[views:NotesView].((vm:NotesViewModel)DataContext).NoteToMove"/>
+											<Binding Source="{StaticResource HighlightColor}"/>
+										</MultiBinding>
+									</views:MiniNoteView.BoxShadow>
+									<views:MiniNoteView.ContextMenu>
+										<ContextMenu>
+											<MenuItem Header="Delete Note"
+														Command="{Binding $parent[views:NotesView].((vm:NotesViewModel)DataContext).DeleteNoteCommand}"
+														CommandParameter="{Binding}"/>
+										</ContextMenu>
+									</views:MiniNoteView.ContextMenu>
+								</views:MiniNoteView>
+								<Border Background="{StaticResource HighlightColor}"
+										Margin="5,5,5,0"
+										HorizontalAlignment="Stretch"
+										Height="2"
+										CornerRadius="10">
+									<Border.IsVisible>
+										<MultiBinding Converter="{StaticResource NoteMoveDividerConverter}">
+											<Binding Path="!$parent[views:NotesView].((vm:NotesViewModel)DataContext).CursorIsAboveCurrentNote"/>
+											<Binding Path="."/>
+											<Binding Path="$parent[views:NotesView].((vm:NotesViewModel)DataContext).LastNoteCursorWasOver"/>
+										</MultiBinding>
+									</Border.IsVisible>
+								</Border>
+							</StackPanel>
+						</Border>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
 		</StackPanel>
 	</ScrollViewer>
 </UserControl>
+
+<!-- TODO: Shadow of last note is cut off for some reason and shadow stays for some reason if note was not moved -->
