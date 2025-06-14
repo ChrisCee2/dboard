@@ -80,3 +80,5 @@
 		</StackPanel>
 	</ScrollViewer>
 </UserControl>
+
+<!-- TODO: Shadow of last note is cut off for some reason and shadow stays for some reason if note was not moved -->
