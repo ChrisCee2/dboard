@@ -12,13 +12,13 @@ public class NoteMoveDividerConverter : IMultiValueConverter
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
         if (
-            values[0] is bool isTopDivider &&
-            values[1] is bool cursorIsAboveNote &&
-            values[2] is NoteViewModel noteToMove &&
-            values[3] is NoteViewModel noteCursorWasLastOn)
+            values[0] is bool cursorIsInRightDivider &&
+            values[1] is NoteViewModel currentNote &&
+            values[2] is NoteViewModel noteCursorWasLastOn)
         {
-            return isTopDivider == cursorIsAboveNote && noteToMove == noteCursorWasLastOn;
+            return cursorIsInRightDivider && currentNote == noteCursorWasLastOn;
         }
+
         return false;
     }
 
