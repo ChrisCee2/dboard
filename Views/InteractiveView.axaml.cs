@@ -1,5 +1,4 @@
 using Avalonia.Input;
-using Avalonia.Media;
 using Avalonia;
 using dboard.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
@@ -11,7 +10,6 @@ using Avalonia.VisualTree;
 using Avalonia.LogicalTree;
 using dboard.Models;
 using System.Threading.Tasks;
-using dboard.Models.Actions.Node;
 
 namespace dboard.Views;
 
@@ -43,11 +41,13 @@ public partial class InteractiveView : Grid
             // Set drag drop image
             if (_vm is NodeViewModel nodeVM)
             {
-                Grid adorner = this.FindControl<Grid>("AdornerGrid");
-                DragDrop.SetAllowDrop(this, true);
-                DragDrop.SetAllowDrop(adorner, true);
-                adorner.AddHandler(DragDrop.DropEvent, DropImage);
-                AddHandler(DragDrop.DropEvent, DropImage);
+                if (this.FindControl<Grid>("InteractiveGrid") is Grid interactiveGrid)
+                {
+                    DragDrop.SetAllowDrop(this, true);
+                    DragDrop.SetAllowDrop(interactiveGrid, true);
+                    interactiveGrid.AddHandler(DragDrop.DropEvent, DropImage);
+                    AddHandler(DragDrop.DropEvent, DropImage);
+                }
 
             }
         }
@@ -196,7 +196,6 @@ public partial class InteractiveView : Grid
             }
         }
     }
-
     private bool _IsImage(string url)
     {
         return ImageConstants.IMAGE_URL_REGEX.IsMatch(url);
