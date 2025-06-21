@@ -27,8 +27,11 @@
 	<StackPanel>
 		<views:TextEditView DataContext="{Binding Title}" 
 							Margin="0,0,0,5" 
-							Background="{StaticResource NoteBackgroundColor}"
-							MaxHeight="41"/>
+							MaxHeight="41"
+							BorderThickness="0,0,0,2"
+							BorderBrush="{StaticResource NotesBackgroundColor}"
+							CornerRadius="0"
+							Padding="0,10,0,0"/>
 		<views:TextEditView DataContext="{Binding Text}"  
 							Margin="0,0,0,5" 
 							Background="{StaticResource NoteBackgroundColor}"
