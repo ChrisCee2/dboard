@@ -25,34 +25,14 @@ public partial class NodeViewModel : NodeViewModelBase
 
     public override NodeViewModelBase Clone()
     {
-        return new NodeViewModel(new NodeModel(
-            Node.Name,
-            Node.Desc,
-            Node.ImagePath,
-            Node.MinWidth,
-            Node.MinHeight,
-            Node.Width,
-            Node.Height,
-            Node.PositionX,
-            Node.PositionY,
-            Node.Notes,
-            Node.ZIndex));
+        return new NodeViewModel(Node.Clone());
     }
 
     public override NodeViewModelBase Clone(int zIndex)
     {
-        return new NodeViewModel(new NodeModel(
-            Node.Name,
-            Node.Desc,
-            Node.ImagePath,
-            Node.MinWidth,
-            Node.MinHeight,
-            Node.Width,
-            Node.Height,
-            Node.PositionX,
-            Node.PositionY,
-            Node.Notes,
-            zIndex));
+        NodeModel node = Node.Clone();
+        node.ZIndex = zIndex;
+        return new NodeViewModel(node);
     }
 
     public override void Copy(NodeViewModelBase nodeToCopy)

@@ -21,6 +21,10 @@ public partial class NodeModel : NodeModelBase
         PositionY = 0;
         Notes = "";
         ZIndex = 0;
+        A = 255;
+        R = 255;
+        G = 255;
+        B = 255;
     }
 
     public NodeModel(int zIndex)
@@ -36,6 +40,10 @@ public partial class NodeModel : NodeModelBase
         PositionY = 0;
         Notes = "";
         ZIndex = zIndex;
+        A = 255;
+        R = 255;
+        G = 255;
+        B = 255;
     }
 
     public NodeModel(
@@ -49,7 +57,11 @@ public partial class NodeModel : NodeModelBase
         double x,
         double y,
         string notes,
-        int zIndex)
+        int zIndex,
+        byte a,
+        byte r,
+        byte g,
+        byte b)
     {
         Name = name;
         Desc = desc;
@@ -62,6 +74,10 @@ public partial class NodeModel : NodeModelBase
         PositionY = y;
         Notes = notes;
         ZIndex = zIndex;
+        A = a;
+        R = r;
+        G = g;
+        B = b;
     }
 
     [ObservableProperty]
@@ -89,7 +105,11 @@ public partial class NodeModel : NodeModelBase
             PositionX,
             PositionY,
             Notes,
-            ZIndex
+            ZIndex,
+            A,
+            R,
+            G,
+            B
         );
     }
 
@@ -107,6 +127,10 @@ public partial class NodeModel : NodeModelBase
         PositionY = nodeModel.PositionY;
         Notes = nodeModel.Notes;
         ZIndex = nodeModel.ZIndex;
+        A = nodeModel.A;
+        R = nodeModel.R;
+        G = nodeModel.G;
+        B = nodeModel.B;
     }
 
     partial void OnImagePathChanged(string? value)

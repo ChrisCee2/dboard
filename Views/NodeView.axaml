@@ -10,12 +10,20 @@
 	x:Class="dboard.Views.NodeView"
 	x:DataType="vm:NodeViewModel"
 	Padding="10"
-	Background="{StaticResource NodeColor}"
 	CornerRadius="10"
 	>
 	<Design.DataContext>
 		<vm:NodeViewModel />
 	</Design.DataContext>
+
+	<UserControl.Background>
+		<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+			<Binding Path="Node.A"/>
+			<Binding Path="Node.R"/>
+			<Binding Path="Node.G"/>
+			<Binding Path="Node.B"/>
+		</MultiBinding>
+	</UserControl.Background>
 
 	<UserControl.Effect>
 		<DropShadowEffect Color="{StaticResource HighlightColor}" BlurRadius="30" OffsetX="0" OffsetY="0"

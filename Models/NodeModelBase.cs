@@ -30,6 +30,18 @@ public abstract partial class NodeModelBase : ObservableObject
     [ObservableProperty]
     private int _zIndex;
 
+    [ObservableProperty]
+    private byte _A;
+
+    [ObservableProperty]
+    private byte _R;
+    
+    [ObservableProperty]
+    private byte _G;
+    
+    [ObservableProperty]
+    private byte _B;
+
     abstract public NodeModelBase Clone();
 
     abstract public void Copy(NodeModelBase nodeModelToCopy);
