@@ -35,68 +35,65 @@
 			PointerPressed="SelectNodeEdge"
 			PointerReleased="ReleaseNodeEdge"/>
 	
-	<AdornerLayer Grid.Row="1">
-		<AdornerLayer.Adorner>
-			<Grid
-				Name="AdornerGrid"
-				ColumnDefinitions="Auto,*,Auto"
-				RowDefinitions="Auto,*,Auto">
-				<Grid.ContextMenu>
-					<ContextMenu>
-						<MenuItem Header="Set Image" Command="{Binding OpenImageDialogCommand}"/>
-						<MenuItem Header="Remove Image" Command="{Binding RemoveImageCommand}"/>
-						<MenuItem Header="Copy" Command="{Binding CopyNodeCommand}"/>
-						<MenuItem Header="Delete" Command="{Binding DeleteNodeCommand}"/>
-					</ContextMenu>
-				</Grid.ContextMenu>
-			
-				<Panel Tag="xy" Background="Transparent" Cursor="TopLeftCorner"
-					   Grid.Row="0" Grid.Column="0" Width="8" Height="8"
-					   PointerPressed="ResizePointerPressed"
-					   PointerReleased="ResizePointerReleased"
-					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="Xy" Background="Transparent" Cursor="TopRightCorner"
-					   Grid.Row="0" Grid.Column="2" Width="8" Height="8"
-					   PointerPressed="ResizePointerPressed"
-					   PointerReleased="ResizePointerReleased"
-					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="xY" Background="Transparent" Cursor="BottomLeftCorner"
-					   Grid.Row="2" Grid.Column="0" Width="8" Height="8"
-					   PointerPressed="ResizePointerPressed"
-					   PointerReleased="ResizePointerReleased"
-					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="XY" Background="Transparent" Cursor="BottomRightCorner"
-					   Grid.Row="2" Grid.Column="2" Width="8" Height="8"
-					   PointerPressed="ResizePointerPressed"
-					   PointerReleased="ResizePointerReleased"
-					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="y" Background="Transparent" Cursor="TopSide"
-					   Grid.Row="0" Grid.Column="1"
-					   PointerPressed="ResizePointerPressed"
-					   PointerReleased="ResizePointerReleased"
-					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="x" Background="Transparent" Cursor="LeftSide"
-					   Grid.Row="1" Grid.Column="0"
-					   PointerPressed="ResizePointerPressed"
-					   PointerReleased="ResizePointerReleased"
-					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="X" Background="Transparent" Cursor="RightSide"
-					   Grid.Row="1" Grid.Column="2"
-					   PointerPressed="ResizePointerPressed"
-					   PointerReleased="ResizePointerReleased"
-					   PointerMoved="ResizePointerMoved" />
-				<Panel Tag="Y" Background="Transparent" Cursor="BottomSide"
-					   Grid.Row="2" Grid.Column="1"
-					   PointerPressed="ResizePointerPressed"
-					   PointerReleased="ResizePointerReleased"
-					   PointerMoved="ResizePointerMoved" />
-				<Panel Background="Transparent"
-					   Grid.Row="1" Grid.Column="1" Opacity="0.3"
-					   IsHitTestVisible="{Binding !IsEdit}"
-					   PointerPressed="MovePointerPressed"
-					   PointerReleased="MovePointerReleased"
-					   PointerMoved="MovePointerMoved"/>
-			</Grid>
-		</AdornerLayer.Adorner>
-	</AdornerLayer>
+
+	<Grid Grid.Row="1"
+			ZIndex="10000"
+			Name="InteractiveGrid"
+			ColumnDefinitions="Auto,*,Auto"
+			RowDefinitions="Auto,*,Auto">
+		<Grid.ContextMenu>
+			<ContextMenu>
+				<MenuItem Header="Set Image" Command="{Binding OpenImageDialogCommand}"/>
+				<MenuItem Header="Remove Image" Command="{Binding RemoveImageCommand}"/>
+				<MenuItem Header="Copy" Command="{Binding CopyNodeCommand}"/>
+				<MenuItem Header="Delete" Command="{Binding DeleteNodeCommand}"/>
+			</ContextMenu>
+		</Grid.ContextMenu>
+		<Panel Tag="xy" Background="Transparent" Cursor="TopLeftCorner"
+				Grid.Row="0" Grid.Column="0" Width="8" Height="8"
+				PointerPressed="ResizePointerPressed"
+				PointerReleased="ResizePointerReleased"
+				PointerMoved="ResizePointerMoved" />
+		<Panel Tag="Xy" Background="Transparent" Cursor="TopRightCorner"
+				Grid.Row="0" Grid.Column="2" Width="8" Height="8"
+				PointerPressed="ResizePointerPressed"
+				PointerReleased="ResizePointerReleased"
+				PointerMoved="ResizePointerMoved" />
+		<Panel Tag="xY" Background="Transparent" Cursor="BottomLeftCorner"
+				Grid.Row="2" Grid.Column="0" Width="8" Height="8"
+				PointerPressed="ResizePointerPressed"
+				PointerReleased="ResizePointerReleased"
+				PointerMoved="ResizePointerMoved" />
+		<Panel Tag="XY" Background="Transparent" Cursor="BottomRightCorner"
+				Grid.Row="2" Grid.Column="2" Width="8" Height="8"
+				PointerPressed="ResizePointerPressed"
+				PointerReleased="ResizePointerReleased"
+				PointerMoved="ResizePointerMoved" />
+		<Panel Tag="y" Background="Transparent" Cursor="TopSide"
+				Grid.Row="0" Grid.Column="1"
+				PointerPressed="ResizePointerPressed"
+				PointerReleased="ResizePointerReleased"
+				PointerMoved="ResizePointerMoved" />
+		<Panel Tag="x" Background="Transparent" Cursor="LeftSide"
+				Grid.Row="1" Grid.Column="0"
+				PointerPressed="ResizePointerPressed"
+				PointerReleased="ResizePointerReleased"
+				PointerMoved="ResizePointerMoved" />
+		<Panel Tag="X" Background="Transparent" Cursor="RightSide"
+				Grid.Row="1" Grid.Column="2"
+				PointerPressed="ResizePointerPressed"
+				PointerReleased="ResizePointerReleased"
+				PointerMoved="ResizePointerMoved" />
+		<Panel Tag="Y" Background="Transparent" Cursor="BottomSide"
+				Grid.Row="2" Grid.Column="1"
+				PointerPressed="ResizePointerPressed"
+				PointerReleased="ResizePointerReleased"
+				PointerMoved="ResizePointerMoved" />
+		<Panel Background="Transparent"
+				Grid.Row="1" Grid.Column="1"
+				IsHitTestVisible="{Binding !IsEdit}"
+				PointerPressed="MovePointerPressed"
+				PointerReleased="MovePointerReleased"
+				PointerMoved="MovePointerMoved" />
+	</Grid>
 </Grid>

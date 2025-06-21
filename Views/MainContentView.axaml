@@ -227,7 +227,11 @@
 	</SplitView>
 
 	<!-- Workspace -->
-	<Border Grid.Row="1" Grid.Column="2" ClipToBounds="True" CornerRadius="8" PointerWheelChanged="HandleZoom" PointerPressed="WorkspaceOnPointerPressed" PointerMoved="WorkspaceOnPointerMoved" PointerReleased="WorkspaceOnPointerReleased">
+	<Border Grid.Row="1" Grid.Column="2" ClipToBounds="True" CornerRadius="8" 
+			PointerWheelChanged="HandleZoom" 
+			PointerPressed="WorkspaceOnPointerPressed" 
+			PointerMoved="WorkspaceOnPointerMoved" 
+			PointerReleased="WorkspaceOnPointerReleased">
 		<Border.Background>
 			<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
 				<Binding Path="SharedSettings.ModeModel.BackgroundA"/>
