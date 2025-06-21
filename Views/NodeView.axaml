@@ -10,7 +10,7 @@
 	x:Class="dboard.Views.NodeView"
 	x:DataType="vm:NodeViewModel"
 	Padding="10"
-	Background="Beige"
+	Background="{StaticResource NodeColor}"
 	CornerRadius="10"
 	>
 	<Design.DataContext>
