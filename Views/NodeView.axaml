@@ -66,6 +66,7 @@
 					<TextBlock>Notes</TextBlock>
 				</Border>
 			</ToggleButton>
+			<ColorPicker IsVisible="True"/>
 		</StackPanel>
 	</Grid>
 </UserControl>

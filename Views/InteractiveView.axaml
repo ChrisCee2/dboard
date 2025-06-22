@@ -16,6 +16,7 @@
 
 	<Grid.ContextMenu>
 		<ContextMenu>
+			<MenuItem Header="Change Color" Command="{Binding ChangeColorCommand}"/>
 			<MenuItem Header="Set Image" Command="{Binding OpenImageDialogCommand}"/>
 			<MenuItem Header="Remove Image" Command="{Binding RemoveImageCommand}"/>
 			<MenuItem Header="Copy" Command="{Binding CopyNodeCommand}"/>
@@ -43,6 +44,7 @@
 			RowDefinitions="Auto,*,Auto">
 		<Grid.ContextMenu>
 			<ContextMenu>
+				<MenuItem Header="Change Color" Command="{Binding ChangeColorCommand}"/>
 				<MenuItem Header="Set Image" Command="{Binding OpenImageDialogCommand}"/>
 				<MenuItem Header="Remove Image" Command="{Binding RemoveImageCommand}"/>
 				<MenuItem Header="Copy" Command="{Binding CopyNodeCommand}"/>

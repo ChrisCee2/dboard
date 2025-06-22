@@ -52,6 +52,12 @@ public abstract partial class NodeViewModelBase : ObservableObject
         WeakReferenceMessenger.Default.Send(new SetImageMessage(nodeAndImagePath));
     }
 
+    [RelayCommand]
+    private void ChangeColor()
+    {
+        WeakReferenceMessenger.Default.Send(new ChangeColorMessage(this));
+    }
+
     public abstract NodeViewModelBase Clone();
 
     public abstract NodeViewModelBase Clone(int zIndex);

@@ -1,0 +1,23 @@
+<Window 
+	xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="using:dboard.ViewModels"
+	xmlns:constants="clr-namespace:dboard.Constants"
+    x:Class="dboard.Views.NodeColorChangeWindowView"
+	x:DataType="vm:NodeColorChangeViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    Title="Color Picker"
+	ExtendClientAreaToDecorationsHint="True"
+	ExtendClientAreaChromeHints="NoChrome"
+	CanResize="False"
+	Background="{Binding NodeColor}"
+	>
+
+	<Design.DataContext>
+		<vm:NodeColorChangeViewModel/>
+	</Design.DataContext>
+
+	<ColorView Color="{Binding NodeColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+</Window>
