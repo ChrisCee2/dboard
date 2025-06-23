@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Reflection;
 using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Input;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Messages;
@@ -66,6 +66,14 @@ public partial class WorkspaceView : UserControl
         {
             WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditNodeActionModel(nodeViewModel)));
             property.SetValue(nodeViewModel.NodeBase, filePath, null);
+        }
+    }
+
+    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    {
+        if (DataContext is WorkspaceViewModel workspaceViewModel)
+        {
+            workspaceViewModel.NodeToChangeColor = null;
         }
     }
 }

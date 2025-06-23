@@ -82,8 +82,8 @@
       <SubType>Code</SubType>
       <DependentUpon>MiniNoteView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\NodeColorChangeWindowView.axaml.cs">
-      <DependentUpon>NodeColorChangeWindowView.axaml</DependentUpon>
+    <Compile Update="Views\NodeColorChangeView.axaml.cs">
+      <DependentUpon>NodeColorChangeView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\SaveDialogWindowView.axaml.cs">
       <DependentUpon>SaveDialogWindowView.axaml</DependentUpon>

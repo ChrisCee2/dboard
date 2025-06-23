@@ -66,6 +66,10 @@ public partial class WorkspaceViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<EdgeViewModel> _copiedEdges = new ObservableCollection<EdgeViewModel>();
 
+    // Color changing properties
+    [ObservableProperty]
+    private NodeColorChangeViewModel? _nodeToChangeColor;
+
     private bool CanPaste() => CopiedNodes.Count > 0;
     private bool ItemsAreSelected() => SelectedNodes.Count > 0 || SelectedEdges.Count > 0;
     private bool NodesAreSelected() => SelectedNodes.Count > 0;
@@ -128,6 +132,11 @@ public partial class WorkspaceViewModel : ObservableObject
         WeakReferenceMessenger.Default.Register<CopyNodeMessage>(this, (sender, message) =>
         {
             CopyNodes();
+        });
+
+        WeakReferenceMessenger.Default.Register<ChangeColorMessage>(this, (sender, message) =>
+        {
+            NodeToChangeColor = new NodeColorChangeViewModel(message.Value);
         });
     }
 
