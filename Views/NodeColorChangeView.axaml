@@ -1,4 +1,4 @@
-<ColorView
+<UserControl
 	xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,10 +7,12 @@
 	xmlns:constants="clr-namespace:dboard.Constants"
     x:Class="dboard.Views.NodeColorChangeView"
 	x:DataType="vm:NodeColorChangeViewModel"
-	Width="144"
-	Height="144"
-	Color="{Binding NodeColor}"
+	Background="{StaticResource ColorChangerColor}"
+	CornerRadius="8"
 	>
+	<UserControl.Styles>
+		<StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+	</UserControl.Styles>
 
 	<Design.DataContext>
 		<vm:NodeColorChangeViewModel/>
@@ -20,4 +22,6 @@
 	<Panel Background="Black" Width="1000" Height="1000"></Panel>
 	<ColorView Color="{Binding NodeColor}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 	-->
-</ColorView>
+	<ColorView Color="{Binding NodeColor}"
+			   IsAccentColorsVisible="False"/>
+</UserControl>

@@ -155,11 +155,23 @@
 
 		<!--Color picker-->
 		<Canvas>
+			<Canvas.RenderTransform>
+				<TransformGroup>
+					<TranslateTransform X="{Binding NodeToChangeColor.ViewModel.NodeBase.PositionX}"
+										Y="{Binding NodeToChangeColor.ViewModel.NodeBase.PositionY}"/>
+					<ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}"/>
+				</TransformGroup>
+			</Canvas.RenderTransform>
 			<views:NodeColorChangeView DataContext="{Binding NodeToChangeColor}"
 									   IsVisible="{Binding, Converter={StaticResource IsNotNullConverter}}">
+				<!--
 				<views:NodeColorChangeView.RenderTransform>
-					<TranslateTransform X="{Binding ViewModel.NodeBase.PositionX}" Y="{Binding ViewModel.NodeBase.PositionY}"/>
+					<TransformGroup>
+						<TranslateTransform X="{Binding ViewModel.NodeBase.PositionX}" Y="{Binding ViewModel.NodeBase.PositionY}"/>
+						<ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}"/>
+					</TransformGroup>
 				</views:NodeColorChangeView.RenderTransform>
+				-->
 			</views:NodeColorChangeView>
 		</Canvas>
 	</Panel>

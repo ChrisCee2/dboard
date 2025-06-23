@@ -3,7 +3,7 @@ using dboard.ViewModels;
 
 namespace dboard.Views;
 
-public partial class NodeColorChangeView : ColorView
+public partial class NodeColorChangeView : UserControl
 {
     public NodeColorChangeView()
     {
