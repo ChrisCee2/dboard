@@ -10,6 +10,7 @@ using dboard.Constants;
 using dboard.Messages;
 using dboard.Models;
 using dboard.Models.Actions.Node;
+using Avalonia.Media;
 
 namespace dboard.ViewModels;
 
@@ -146,9 +147,22 @@ public partial class WorkspaceViewModel : ObservableObject
         CreateNodeAtPos(CursorPosition.X, CursorPosition.Y);
     }
 
+    public NodeModel CreateNodeModel()
+    {
+        return new NodeModel(
+            Nodes.Count,
+            new Color(
+                SharedSettings.UserModeModel.DefaultNodeA,
+                SharedSettings.UserModeModel.DefaultNodeR,
+                SharedSettings.UserModeModel.DefaultNodeG,
+                SharedSettings.UserModeModel.DefaultNodeB
+                )
+            );
+    }
+
     public void CreateNodeAtPos(double x, double y)
     {
-        NodeModel nodeModel = new NodeModel(Nodes.Count);
+        NodeModel nodeModel = CreateNodeModel();
         nodeModel.PositionX = x;
         nodeModel.PositionY = y;
         NodeViewModel nodeVM = new NodeViewModel(nodeModel);
@@ -221,7 +235,7 @@ public partial class WorkspaceViewModel : ObservableObject
 
     private void _CreateEmptyNode()
     {
-        NodeViewModel nodeVM = new NodeViewModel(new NodeModel(Nodes.Count));
+        NodeViewModel nodeVM = new NodeViewModel(CreateNodeModel());
         Nodes.Add(nodeVM);
         WeakReferenceMessenger.Default.Send(new CreateNodeActionModel(nodeVM));
     }

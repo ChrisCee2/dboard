@@ -9,7 +9,7 @@ public partial class ModeModel: ObservableObject
 {
     public ModeModel() {}
 
-    public ModeModel(string name, bool showItems, double workspaceOpacity, string windowState, Color background, Color accent, Color canvas)
+    public ModeModel(string name, bool showItems, double workspaceOpacity, string windowState, Color background, Color accent, Color canvas, Color defaultNode)
     {
         Name = name;
         ShowItems = showItems;
@@ -27,6 +27,10 @@ public partial class ModeModel: ObservableObject
         CanvasR = canvas.R;
         CanvasG = canvas.G;
         CanvasB = canvas.B;
+        DefaultNodeA = defaultNode.A;
+        DefaultNodeR = defaultNode.R;
+        DefaultNodeG = defaultNode.G;
+        DefaultNodeB = defaultNode.B;
     }
 
     [ObservableProperty]
@@ -61,4 +65,12 @@ public partial class ModeModel: ObservableObject
     private byte _canvasG;
     [ObservableProperty]
     private byte _canvasB;
+    [ObservableProperty]
+    private byte _defaultNodeA;
+    [ObservableProperty]
+    private byte _defaultNodeR;
+    [ObservableProperty]
+    private byte _defaultNodeG;
+    [ObservableProperty]
+    private byte _defaultNodeB;
 }

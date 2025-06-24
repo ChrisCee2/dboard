@@ -20,6 +20,8 @@ public partial class AppSettingsViewModel : ObservableObject
     [ObservableProperty]
     private Color _canvas;
     [ObservableProperty]
+    private Color _defaultNode;
+    [ObservableProperty]
     private Collection<ModeModel> _modes = new Collection<ModeModel>();
 
     public AppSettingsViewModel(SettingsModel sharedSettings)
@@ -61,6 +63,11 @@ public partial class AppSettingsViewModel : ObservableObject
             SharedSettings.UserModeModel.CanvasR,
             SharedSettings.UserModeModel.CanvasG,
             SharedSettings.UserModeModel.CanvasB);
+        DefaultNode = new Color(
+            SharedSettings.UserModeModel.DefaultNodeA,
+            SharedSettings.UserModeModel.DefaultNodeR,
+            SharedSettings.UserModeModel.DefaultNodeG,
+            SharedSettings.UserModeModel.DefaultNodeB);
     }
 
     [RelayCommand]
@@ -91,5 +98,13 @@ public partial class AppSettingsViewModel : ObservableObject
         SharedSettings.UserModeModel.CanvasR = value.R;
         SharedSettings.UserModeModel.CanvasG = value.G;
         SharedSettings.UserModeModel.CanvasB = value.B;
+    }
+
+    partial void OnDefaultNodeChanged(Color value)
+    {
+        SharedSettings.UserModeModel.DefaultNodeA = value.A;
+        SharedSettings.UserModeModel.DefaultNodeR = value.R;
+        SharedSettings.UserModeModel.DefaultNodeG = value.G;
+        SharedSettings.UserModeModel.DefaultNodeB = value.B;
     }
 }

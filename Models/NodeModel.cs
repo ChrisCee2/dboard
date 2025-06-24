@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Media;
+using CommunityToolkit.Mvvm.ComponentModel;
 using dboard.Constants;
 
 namespace dboard.Models;
@@ -21,10 +22,10 @@ public partial class NodeModel : NodeModelBase
         PositionY = 0;
         Notes = "";
         ZIndex = 0;
-        A = 255;
-        R = 255;
-        G = 255;
-        B = 255;
+        A = SettingsConstants.DEFAULT_NODE_COLOR.A;
+        R = SettingsConstants.DEFAULT_NODE_COLOR.R;
+        G = SettingsConstants.DEFAULT_NODE_COLOR.G;
+        B = SettingsConstants.DEFAULT_NODE_COLOR.B;
     }
 
     public NodeModel(int zIndex)
@@ -40,10 +41,48 @@ public partial class NodeModel : NodeModelBase
         PositionY = 0;
         Notes = "";
         ZIndex = zIndex;
-        A = 255;
-        R = 255;
-        G = 255;
-        B = 255;
+        A = SettingsConstants.DEFAULT_NODE_COLOR.A;
+        R = SettingsConstants.DEFAULT_NODE_COLOR.R;
+        G = SettingsConstants.DEFAULT_NODE_COLOR.G;
+        B = SettingsConstants.DEFAULT_NODE_COLOR.B;
+    }
+
+    public NodeModel(Color color)
+    {
+        Name = "";
+        Desc = "";
+        ImagePath = null;
+        MinWidth = defaultMinWidth;
+        MinHeight = defaultMinHeight + NodeConstants.EDGE_HEIGHT;
+        Width = MinWidth;
+        Height = MinHeight;
+        PositionX = 0;
+        PositionY = 0;
+        Notes = "";
+        ZIndex = 0;
+        A = color.A;
+        R = color.R;
+        G = color.G;
+        B = color.B;
+    }
+
+    public NodeModel(int zIndex, Color color)
+    {
+        Name = "";
+        Desc = "";
+        ImagePath = null;
+        MinWidth = defaultMinWidth;
+        MinHeight = defaultMinHeight + NodeConstants.EDGE_HEIGHT;
+        Width = MinWidth;
+        Height = MinHeight;
+        PositionX = 0;
+        PositionY = 0;
+        Notes = "";
+        ZIndex = zIndex;
+        A = color.A;
+        R = color.R;
+        G = color.G;
+        B = color.B;
     }
 
     public NodeModel(
