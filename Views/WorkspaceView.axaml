@@ -155,24 +155,29 @@
 
 		<!--Color picker-->
 		<Canvas>
-			<Canvas.RenderTransform>
-				<TransformGroup>
-					<TranslateTransform X="{Binding NodeToChangeColor.ViewModel.NodeBase.PositionX}"
-										Y="{Binding NodeToChangeColor.ViewModel.NodeBase.PositionY}"/>
-					<ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}"/>
-				</TransformGroup>
-			</Canvas.RenderTransform>
-			<views:NodeColorChangeView DataContext="{Binding NodeToChangeColor}"
-									   IsVisible="{Binding, Converter={StaticResource IsNotNullConverter}}">
-				<!--
-				<views:NodeColorChangeView.RenderTransform>
+			<Border>
+				<Border.RenderTransform>
 					<TransformGroup>
-						<TranslateTransform X="{Binding ViewModel.NodeBase.PositionX}" Y="{Binding ViewModel.NodeBase.PositionY}"/>
-						<ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}"/>
+						<ScaleTransform ScaleX=".8"
+										ScaleY=".8"/>
+						<ScaleTransform ScaleX="{Binding Scale, Converter={StaticResource ReverseScaleConverter}}"
+										ScaleY="{Binding Scale, Converter={StaticResource ReverseScaleConverter}}"/>
+						<TranslateTransform X="{Binding NodeToChangeColor.ViewModel.NodeBase.PositionX}"
+											Y="{Binding NodeToChangeColor.ViewModel.NodeBase.PositionY}"/>
 					</TransformGroup>
-				</views:NodeColorChangeView.RenderTransform>
-				-->
-			</views:NodeColorChangeView>
+				</Border.RenderTransform>
+				<views:NodeColorChangeView DataContext="{Binding NodeToChangeColor}"
+										   IsVisible="{Binding, Converter={StaticResource IsNotNullConverter}}">
+					<!--
+					<views:NodeColorChangeView.RenderTransform>
+						<TransformGroup>
+							<TranslateTransform X="{Binding ViewModel.NodeBase.PositionX}" Y="{Binding ViewModel.NodeBase.PositionY}"/>
+							<ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}"/>
+						</TransformGroup>
+					</views:NodeColorChangeView.RenderTransform>
+					-->
+				</views:NodeColorChangeView>
+			</Border>
 		</Canvas>
 	</Panel>
 </UserControl>

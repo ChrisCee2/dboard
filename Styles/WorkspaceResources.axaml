@@ -45,7 +45,7 @@
 	<SolidColorBrush x:Key="NoteBackgroundColor" Color="#32969696" />
 
 	<!-- Color Changer -->
-	<SolidColorBrush x:Key="ColorChangerColor" Color="#aa969696" />
+	<SolidColorBrush x:Key="ColorChangerColor" Color="#dd969696" />
 
 
 </ResourceDictionary>
