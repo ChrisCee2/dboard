@@ -41,11 +41,13 @@
 	<Design.DataContext>
         <vm:WorkspaceViewModel />
     </Design.DataContext>
-
+	
 	<Panel x:Name="WorkspaceCanvas"
 		   Width="{StaticResource MaxWorkspaceWidthDbl}" 
 		   Height="{StaticResource MaxWorkspaceHeightDbl}">
 		<Image asyncImageLoader:ImageLoader.Source="{Binding WorkspaceImagePath.Path}"/>
+
+		<!--Visual canvas-->
 		<Border x:Name="VisualCanvas" Width="{Binding CanvasSizeX}" Height="{Binding CanvasSizeY}" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8" IsHitTestVisible="False">
 			<Border.Background>
 				<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
@@ -57,6 +59,7 @@
 			</Border.Background>
 			<Image asyncImageLoader:ImageLoader.Source="{Binding CanvasImagePath.Path}"/>
 		</Border>
+		
 		<!--Nodes-->
 		<ItemsControl Name="NodeItemsControl" ItemsSource="{Binding Nodes}">
 			<ItemsControl.ItemsPanel>
@@ -148,6 +151,33 @@
 					</MultiBinding>
 				</Rectangle.Height>
 			</Rectangle>
+		</Canvas>
+
+		<!--Color picker-->
+		<Canvas>
+			<Border>
+				<Border.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX=".8"
+										ScaleY=".8"/>
+						<ScaleTransform ScaleX="{Binding Scale, Converter={StaticResource ReverseScaleConverter}}"
+										ScaleY="{Binding Scale, Converter={StaticResource ReverseScaleConverter}}"/>
+						<TranslateTransform X="{Binding NodeToChangeColor.ViewModel.NodeBase.PositionX}"
+											Y="{Binding NodeToChangeColor.ViewModel.NodeBase.PositionY}"/>
+					</TransformGroup>
+				</Border.RenderTransform>
+				<views:NodeColorChangeView DataContext="{Binding NodeToChangeColor}"
+										   IsVisible="{Binding, Converter={StaticResource IsNotNullConverter}}">
+					<!--
+					<views:NodeColorChangeView.RenderTransform>
+						<TransformGroup>
+							<TranslateTransform X="{Binding ViewModel.NodeBase.PositionX}" Y="{Binding ViewModel.NodeBase.PositionY}"/>
+							<ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}"/>
+						</TransformGroup>
+					</views:NodeColorChangeView.RenderTransform>
+					-->
+				</views:NodeColorChangeView>
+			</Border>
 		</Canvas>
 	</Panel>
 </UserControl>

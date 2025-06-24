@@ -22,9 +22,10 @@
 
 
 	<!-- Node Constants-->
-	<SolidColorBrush x:Key="NodeToggledColor" Color="#FFa58c64" />
-	<SolidColorBrush x:Key="NodeUntoggledColor" Color="#FFc8b98c" />
-	<SolidColorBrush x:Key="NodeTextboxBorderColor" Color="#FFc8b98c" />
+	<SolidColorBrush x:Key="NodeColor" Color="#ffffdc79" />
+	<SolidColorBrush x:Key="NodeToggledColor" Color="#aa888899" />
+	<SolidColorBrush x:Key="NodeUntoggledColor" Color="#aabbbbbb" />
+	<SolidColorBrush x:Key="NodeTextboxBorderColor" Color="#aabbbbbb" />
 
 	<!-- Edge Constants -->
 	<sys:Double x:Key="EdgeClickAreaThickness"> 25 </sys:Double>
@@ -42,6 +43,9 @@
 	<!-- Notes Constants -->
 	<SolidColorBrush x:Key="NotesBackgroundColor" Color="#96969696" />
 	<SolidColorBrush x:Key="NoteBackgroundColor" Color="#32969696" />
+
+	<!-- Color Changer -->
+	<SolidColorBrush x:Key="ColorChangerColor" Color="#dd969696" />
 
 
 </ResourceDictionary>

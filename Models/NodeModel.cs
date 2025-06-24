@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Media;
+using CommunityToolkit.Mvvm.ComponentModel;
 using dboard.Constants;
 
 namespace dboard.Models;
@@ -21,6 +22,10 @@ public partial class NodeModel : NodeModelBase
         PositionY = 0;
         Notes = "";
         ZIndex = 0;
+        A = SettingsConstants.DEFAULT_NODE_COLOR.A;
+        R = SettingsConstants.DEFAULT_NODE_COLOR.R;
+        G = SettingsConstants.DEFAULT_NODE_COLOR.G;
+        B = SettingsConstants.DEFAULT_NODE_COLOR.B;
     }
 
     public NodeModel(int zIndex)
@@ -36,6 +41,48 @@ public partial class NodeModel : NodeModelBase
         PositionY = 0;
         Notes = "";
         ZIndex = zIndex;
+        A = SettingsConstants.DEFAULT_NODE_COLOR.A;
+        R = SettingsConstants.DEFAULT_NODE_COLOR.R;
+        G = SettingsConstants.DEFAULT_NODE_COLOR.G;
+        B = SettingsConstants.DEFAULT_NODE_COLOR.B;
+    }
+
+    public NodeModel(Color color)
+    {
+        Name = "";
+        Desc = "";
+        ImagePath = null;
+        MinWidth = defaultMinWidth;
+        MinHeight = defaultMinHeight + NodeConstants.EDGE_HEIGHT;
+        Width = MinWidth;
+        Height = MinHeight;
+        PositionX = 0;
+        PositionY = 0;
+        Notes = "";
+        ZIndex = 0;
+        A = color.A;
+        R = color.R;
+        G = color.G;
+        B = color.B;
+    }
+
+    public NodeModel(int zIndex, Color color)
+    {
+        Name = "";
+        Desc = "";
+        ImagePath = null;
+        MinWidth = defaultMinWidth;
+        MinHeight = defaultMinHeight + NodeConstants.EDGE_HEIGHT;
+        Width = MinWidth;
+        Height = MinHeight;
+        PositionX = 0;
+        PositionY = 0;
+        Notes = "";
+        ZIndex = zIndex;
+        A = color.A;
+        R = color.R;
+        G = color.G;
+        B = color.B;
     }
 
     public NodeModel(
@@ -49,7 +96,11 @@ public partial class NodeModel : NodeModelBase
         double x,
         double y,
         string notes,
-        int zIndex)
+        int zIndex,
+        byte a,
+        byte r,
+        byte g,
+        byte b)
     {
         Name = name;
         Desc = desc;
@@ -62,6 +113,10 @@ public partial class NodeModel : NodeModelBase
         PositionY = y;
         Notes = notes;
         ZIndex = zIndex;
+        A = a;
+        R = r;
+        G = g;
+        B = b;
     }
 
     [ObservableProperty]
@@ -89,7 +144,11 @@ public partial class NodeModel : NodeModelBase
             PositionX,
             PositionY,
             Notes,
-            ZIndex
+            ZIndex,
+            A,
+            R,
+            G,
+            B
         );
     }
 
@@ -107,6 +166,10 @@ public partial class NodeModel : NodeModelBase
         PositionY = nodeModel.PositionY;
         Notes = nodeModel.Notes;
         ZIndex = nodeModel.ZIndex;
+        A = nodeModel.A;
+        R = nodeModel.R;
+        G = nodeModel.G;
+        B = nodeModel.B;
     }
 
     partial void OnImagePathChanged(string? value)
