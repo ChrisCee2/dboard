@@ -401,30 +401,34 @@ public partial class MainContentView : Grid
     }
 
     /*  Pan & multiselect logic below */
-    private Point _positionInBlock;
+    private Point _lastPanClickPosition;
+    private Point _lastPanPositionSincePanClick;
 
     // Start multiselect
     protected void WorkspaceOnPointerPressed(object sender, PointerPressedEventArgs e)
     {
-        WorkspaceViewModel context = ((MainContentViewModel)DataContext).Workspace;
-
-        context.PressedPosition = e.GetPosition(_workspaceCanvas);
-        context.CursorPosition = e.GetPosition(_workspaceCanvas);
-
-        if (e.GetCurrentPoint(_workspaceCanvas).Properties.IsMiddleButtonPressed && !context.IsMultiSelecting)
+        if (DataContext is not MainContentViewModel mcViewModel || mcViewModel.Workspace is not WorkspaceViewModel workspaceViewModel)
         {
-            context.IsPanning = true;
-            var pos = e.GetPosition((Visual?)Parent);
-            _positionInBlock = new Point(pos.X - ((int)context.PanPosition.X), pos.Y - ((int)context.PanPosition.Y));
+            return;
         }
-        else if (e.GetCurrentPoint(_workspaceCanvas).Properties.IsLeftButtonPressed && !context.IsPanning && context.ClickMode == "Select")
+
+        workspaceViewModel.PressedPosition = e.GetPosition(_workspaceCanvas);
+        workspaceViewModel.CursorPosition = e.GetPosition(_workspaceCanvas);
+
+        if (e.GetCurrentPoint(_workspaceCanvas).Properties.IsMiddleButtonPressed && !workspaceViewModel.IsMultiSelecting)
+        {
+            workspaceViewModel.IsPanning = true;
+            _lastPanClickPosition = e.GetPosition((Visual?)Parent);
+            _lastPanPositionSincePanClick = workspaceViewModel.PanPosition;
+        }
+        else if (e.GetCurrentPoint(_workspaceCanvas).Properties.IsLeftButtonPressed && !workspaceViewModel.IsPanning && workspaceViewModel.ClickMode == "Select")
         {
             var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
             var rootCoordinates = e.GetPosition(root);
             var hitElement = root.InputHitTest(rootCoordinates);
             if (((Control)hitElement).Parent == this.Find<WorkspaceView>("CurrentWorkspace"))
             {
-                context.IsMultiSelecting = true;
+                workspaceViewModel.IsMultiSelecting = true;
             }
         }
         base.OnPointerPressed(e);
@@ -432,16 +436,19 @@ public partial class MainContentView : Grid
 
     protected void WorkspaceOnPointerMoved(object sender, PointerEventArgs e)
     {
-        WorkspaceViewModel context = ((MainContentViewModel)DataContext).Workspace;
-        context.CursorPosition = e.GetPosition(_workspaceCanvas);
-
-        if (context.IsPanning)
+        if (DataContext is MainContentViewModel mainContentViewModel && 
+            mainContentViewModel.Workspace is WorkspaceViewModel workspaceViewModel)
         {
-            var currentPosition = e.GetPosition((Visual?)Parent);
+            workspaceViewModel.CursorPosition = e.GetPosition(_workspaceCanvas);
 
-            var offsetX = currentPosition.X - _positionInBlock.X;
-            var offsetY = currentPosition.Y - _positionInBlock.Y;
-            context.PanPosition = new Point(offsetX, offsetY);
+            if (workspaceViewModel.IsPanning)
+            {
+                var currentPosition = e.GetPosition((Visual?)Parent);
+
+                Point offset = _lastPanPositionSincePanClick + ((currentPosition - _lastPanClickPosition) / workspaceViewModel.Scale);
+                // workspaceViewModel.PanPosition += (new Point(offsetX, offsetY) - workspaceViewModel.PanPosition) / workspaceViewModel.Scale;
+                workspaceViewModel.PanPosition = offset;
+            }
         }
         base.OnPointerMoved(e);
     }

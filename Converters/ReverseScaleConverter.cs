@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using Avalonia.Controls.Primitives;
 using Avalonia.Data.Converters;
-using Avalonia.Logging;
 
 namespace dboard.Converters;
 public class ReverseScaleConverter : IValueConverter
@@ -13,7 +11,6 @@ public class ReverseScaleConverter : IValueConverter
     {
         if (value is double scale)
         {
-            Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, (Math.Round(1.0 / scale, 3)).ToString());
             return Math.Round(1.0 / scale, 3);
         }
 
