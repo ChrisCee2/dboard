@@ -354,7 +354,7 @@ public partial class MainContentView : Grid
             }
         }
 
-        if (e.KeyModifiers.HasFlag(KeyModifiers.Control) || e.KeyModifiers.HasFlag(KeyModifiers.Shift))
+        if (e.KeyModifiers.HasFlag(KeyModifiers.Shift))
         {
             ((MainContentViewModel)DataContext).Workspace.MultiSelectHKDown = true;
         }
@@ -362,7 +362,7 @@ public partial class MainContentView : Grid
 
     private void HandleKeyUp(object sender, KeyEventArgs e)
     {
-        if (!(e.KeyModifiers.HasFlag(KeyModifiers.Control) || e.KeyModifiers.HasFlag(KeyModifiers.Shift)))
+        if (!(e.KeyModifiers.HasFlag(KeyModifiers.Shift)))
         {
             ((MainContentViewModel)DataContext).Workspace.MultiSelectHKDown = false;
         }

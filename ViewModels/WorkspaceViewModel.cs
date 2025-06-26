@@ -11,6 +11,8 @@ using dboard.Messages;
 using dboard.Models;
 using dboard.Models.Actions.Node;
 using Avalonia.Media;
+using Avalonia.Controls.Primitives;
+using Avalonia.Logging;
 
 namespace dboard.ViewModels;
 
@@ -179,7 +181,17 @@ public partial class WorkspaceViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanPaste))]
     private void PasteNodes()
     {
+        if (CopiedNodes.Count == 0 && CopiedEdges.Count == 0) { return; }
+
+        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, "A");
         List<ActionModelBase> actions = new List<ActionModelBase>();
+
+        // For making the pasted objects selected
+        ObservableCollection<NodeViewModelBase> PastedNodes = new ObservableCollection<NodeViewModelBase>();
+        ObservableCollection<EdgeViewModel> PastedEdges = new ObservableCollection<EdgeViewModel>();
+
+        // Clear selection
+        UpdateSelection(null, null);
 
         // Clone nodes
         IDictionary<NodeModelBase, NodeModelBase> refToClone = new Dictionary<NodeModelBase, NodeModelBase>();
@@ -188,6 +200,7 @@ public partial class WorkspaceViewModel : ObservableObject
             var clone = node.Clone(Nodes.Count);
             refToClone.Add(node.NodeBase, clone.NodeBase);
             Nodes.Add(clone);
+            PastedNodes.Add(clone);
             actions.Add(new CreateNodeActionModel(clone));
         }
         // Clone edges
@@ -197,10 +210,12 @@ public partial class WorkspaceViewModel : ObservableObject
             {
                 var clone = edgeViewModel.CloneWithNewNodes(refToClone[edgeViewModel.Edge.FromNode], refToClone[edgeViewModel.Edge.ToNode]);
                 Edges.Add(clone);
+                PastedEdges.Add(clone);
                 actions.Add(new CreateEdgeActionModel(clone));
             }
         }
 
+        UpdateSelection(PastedNodes, PastedEdges);
         WeakReferenceMessenger.Default.Send(new LogActionMessage(new MultiActionModel(actions)));
     }
 
@@ -396,6 +411,7 @@ public partial class WorkspaceViewModel : ObservableObject
     {
         nodesToSelect = nodesToSelect is null ? new ObservableCollection<NodeViewModelBase> () : nodesToSelect;
         edgesToSelect = edgesToSelect is null ? new ObservableCollection<EdgeViewModel>() : edgesToSelect;
+        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, MultiSelectHKDown.ToString());
         if (MultiSelectHKDown)
         {
             if (nodesToSelect.Count == 1 && edgesToSelect.Count == 0 && SelectedNodes.Contains(nodesToSelect[0]))
@@ -411,10 +427,11 @@ public partial class WorkspaceViewModel : ObservableObject
                 edgesToSelect[0].IsSelected = false;
                 return;
             }
-
+            Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, SelectedNodes.Count.ToString());
             nodesToSelect = new ObservableCollection<NodeViewModelBase>(nodesToSelect.Union(SelectedNodes));
             edgesToSelect = new ObservableCollection<EdgeViewModel>(edgesToSelect.Union(SelectedEdges));
         }
+        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, SelectedNodes.Count.ToString());
         _UpdateSelectedNodes(nodesToSelect);
         _UpdateSelectedEdges(edgesToSelect);
     }
