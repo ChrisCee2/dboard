@@ -20,11 +20,12 @@
     </Design.DataContext>
 
 	<Grid.Styles>
+		<StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
 		<StyleInclude Source="/Styles/ToolBarStyles.axaml" />
 	</Grid.Styles>
 
 	<Border Grid.Row="0" Grid.Column="0" Background="Transparent" PointerPressed="MoveWindow"/>
-	
+
 	<!-- Title / Top bar -->
 	<DockPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" x:Name="TitleBar" IsVisible="{Binding SharedSettings.ModeModel.ShowItems}"
 			   Classes.TopMax="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
@@ -93,10 +94,13 @@
 		
 	<!-- Left bar -->
 	<DockPanel Grid.Row="1" Grid.Column="0">
-		<Grid x:Name="ActionGrid" ColumnDefinitions="Auto" RowDefinitions="Auto,Auto" Background="Transparent"
+		<Grid x:Name="ActionGrid" ColumnDefinitions="Auto" RowDefinitions="Auto,Auto,Auto" Background="Transparent" DockPanel.Dock="Top"
 			  Classes.LeftMax="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Maximized}"
 			  Classes.LeftNormal="{Binding $parent[Window].WindowState, Converter={StaticResource WSBoolConverter}, ConverterParameter=Normal}">
-			<Button Grid.Row="0" Grid.Column="0" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="Select">
+			<Button Grid.Row="0" Grid.Column="0" 
+					Command="{Binding Workspace.ChangeClickModeCommand}"
+					CommandParameter="Select"
+					ToolTip.Tip="Select">
 				<Button.Background>
 					<MultiBinding Converter="{StaticResource StrCheckBgConverter}">
 						<Binding Source="Select"/>
@@ -107,7 +111,10 @@
 				</Button.Background>
 				<PathIcon Data="{StaticResource cursor_regular}"/>
 			</Button>
-			<Button Grid.Row="1" Grid.Column="0" Command="{Binding Workspace.ChangeClickModeCommand}" CommandParameter="CreateNode">
+			<Button Grid.Row="1" Grid.Column="0" 
+					Command="{Binding Workspace.ChangeClickModeCommand}" 
+					CommandParameter="CreateNode"
+					ToolTip.Tip="Create Node">
 				<Button.Background>
 					<MultiBinding Converter="{StaticResource StrCheckBgConverter}">
 						<Binding Source="CreateNode"/>
@@ -118,7 +125,39 @@
 				</Button.Background>
 				<PathIcon Data="{StaticResource add_regular}"/>
 			</Button>
+			<Button Grid.Row="2" Grid.Column="0"
+					Command="{Binding Workspace.ChangeClickModeCommand}"
+					CommandParameter="PaintFill"
+					ToolTip.Tip="Fill">
+				<Button.Background>
+					<MultiBinding Converter="{StaticResource StrCheckBgConverter}">
+						<Binding Source="PaintFill"/>
+						<Binding Path="Workspace.ClickMode"/>
+						<Binding Source="{StaticResource ClickBtnHighlightColor}"/>
+						<Binding Source="{StaticResource ClickBtnDefaultColor}"/>
+					</MultiBinding>
+				</Button.Background>
+				<PathIcon Data="{StaticResource paint_bucket_regular}"/>
+			</Button>
 		</Grid>
+
+		<DockPanel DockPanel.Dock="Bottom">
+			<Separator DockPanel.Dock="Top" Width="20" Margin="4"/>
+			<Button Background="{Binding PaintColor}" DockPanel.Dock="Bottom" 
+					Command="{Binding TogglePaintColorViewCommand}"
+					VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5"
+					Height="20" MinHeight="20" MaxHeight="20"
+					Width="20" MinWidth="20" MaxWidth="20">
+				<Button.Background>
+					<MultiBinding Converter="{StaticResource ARGBBrushConverter}">
+						<Binding Path="PaintColor.A"/>
+						<Binding Path="PaintColor.R"/>
+						<Binding Path="PaintColor.G"/>
+						<Binding Path="PaintColor.B"/>
+					</MultiBinding>
+				</Button.Background>
+			</Button>
+		</DockPanel>
 	</DockPanel>
 
 	<SplitView Grid.Row="1" Grid.Column="1" Name="SettingsSplitView" PanePlacement="Right" DisplayMode="Inline" OpenPaneLength="300">
@@ -248,4 +287,10 @@
 								 VerticalAlignment="Center"/>
 		</Panel>
 	</Border>
+
+	<Canvas Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="4">
+		<Border Background="Gray" Canvas.Left="40" Canvas.Top="100" CornerRadius="8">
+			<ColorView Color="{Binding PaintColor}" IsVisible="{Binding PaintColorViewIsOpen}"/>
+		</Border>
+	</Canvas>
 </Grid>

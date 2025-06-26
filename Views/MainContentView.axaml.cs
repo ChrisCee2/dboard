@@ -17,7 +17,6 @@ using Avalonia.Interactivity;
 using Avalonia.Logging;
 using Avalonia.LogicalTree;
 using Avalonia.Platform.Storage;
-using Avalonia.Styling;
 using Avalonia.VisualTree;
 using CommunityToolkit.Mvvm.Messaging;
 using dboard.Constants;
@@ -411,6 +410,7 @@ public partial class MainContentView : Grid
         {
             return;
         }
+        mcViewModel.PaintColorViewIsOpen = false;
 
         workspaceViewModel.PressedPosition = e.GetPosition(_workspaceCanvas);
         workspaceViewModel.CursorPosition = e.GetPosition(_workspaceCanvas);
@@ -455,16 +455,20 @@ public partial class MainContentView : Grid
 
     protected void WorkspaceOnPointerReleased(object sender, PointerReleasedEventArgs e)
     {
-        WorkspaceViewModel context = ((MainContentViewModel)DataContext).Workspace;
+        if (DataContext is not MainContentViewModel mainContentViewModel ||
+            mainContentViewModel.Workspace is not WorkspaceViewModel workspaceViewModel)
+        {
+            return;
+        }
 
         // Multiselect
-        if (context.IsMultiSelecting)
+        if (workspaceViewModel.IsMultiSelecting)
         {
             // Get points of multiselect
-            double x0 = Math.Min(context.PressedPosition.X, context.CursorPosition.X);
-            double x1 = x0 + Math.Abs(context.PressedPosition.X - context.CursorPosition.X);
-            double y0 = Math.Min(context.PressedPosition.Y, context.CursorPosition.Y);
-            double y1 = y0 + Math.Abs(context.PressedPosition.Y - context.CursorPosition.Y);
+            double x0 = Math.Min(workspaceViewModel.PressedPosition.X, workspaceViewModel.CursorPosition.X);
+            double x1 = x0 + Math.Abs(workspaceViewModel.PressedPosition.X - workspaceViewModel.CursorPosition.X);
+            double y0 = Math.Min(workspaceViewModel.PressedPosition.Y, workspaceViewModel.CursorPosition.Y);
+            double y1 = y0 + Math.Abs(workspaceViewModel.PressedPosition.Y - workspaceViewModel.CursorPosition.Y);
             Point a0 = new Point(x0, y0);
             Point a1 = new Point(x1, y1);
 
@@ -502,16 +506,32 @@ public partial class MainContentView : Grid
                     newSelectedEdges.Add(edgeContext);
                 }
             }
-            context.UpdateSelection(nodesToSelect: newSelectedNodes, edgesToSelect: newSelectedEdges);
+            workspaceViewModel.UpdateSelection(nodesToSelect: newSelectedNodes, edgesToSelect: newSelectedEdges);
         }
-        else if (context.ClickMode == "CreateNode" && e.InitialPressMouseButton.Equals(MouseButton.Left))
+        else if (workspaceViewModel.ClickMode == "CreateNode" && e.InitialPressMouseButton.Equals(MouseButton.Left))
         {
             Point pos = e.GetPosition(_workspaceCanvas.FindControl<Panel>("WorkspaceCanvas"));
-            context.CreateNodeAtPos(pos.X, pos.Y);
+            workspaceViewModel.CreateNodeAtPos(pos.X, pos.Y);
         }
-
-        context.IsMultiSelecting = false;
-        context.IsPanning = false;
+        else if (workspaceViewModel.ClickMode == "PaintFill" && e.InitialPressMouseButton.Equals(MouseButton.Left))
+        {
+            var root = (TopLevel)((Visual)e.Source).GetVisualRoot();
+            var rootCoordinates = e.GetPosition(root);
+            var hitElement = root.InputHitTest(rootCoordinates);
+            if (hitElement is Control control && 
+                control.FindAncestorOfType<InteractiveView>() is InteractiveView interactiveView &&
+                interactiveView.FindDescendantOfType<NodeView>() is NodeView nodeView &&
+                nodeView.DataContext is NodeViewModelBase nodeViewModel)
+            {
+                Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, mainContentViewModel.PaintColor.ToString());
+                nodeViewModel.NodeBase.A = mainContentViewModel.PaintColor.A;
+                nodeViewModel.NodeBase.R = mainContentViewModel.PaintColor.R;
+                nodeViewModel.NodeBase.G = mainContentViewModel.PaintColor.G;
+                nodeViewModel.NodeBase.B = mainContentViewModel.PaintColor.B;
+            }
+        }
+        workspaceViewModel.IsMultiSelecting = false;
+        workspaceViewModel.IsPanning = false;
         base.OnPointerReleased(e);
     }
 }

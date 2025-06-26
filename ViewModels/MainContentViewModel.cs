@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -47,6 +48,12 @@ public partial class MainContentViewModel : ObservableObject
     private string? _workspaceNameToLoad = null;
     [ObservableProperty]
     private bool? _shouldLoadWorkspace = false;
+
+    // Paint fill properties
+    [ObservableProperty]
+    private Color _paintColor = new Color(255, 255, 255, 255);
+    [ObservableProperty]
+    private bool _paintColorViewIsOpen = false;
 
     public MainContentViewModel(SettingsModel sharedSettings)
     {
@@ -108,6 +115,12 @@ public partial class MainContentViewModel : ObservableObject
     private void CreateNote()
     {
         Workspace.Notes.CreateNote();
+    }
+
+    [RelayCommand]
+    private void TogglePaintColorView()
+    {
+        PaintColorViewIsOpen = !PaintColorViewIsOpen;
     }
 
     // Parameterized just incase we aren't loading by the stored WorkspaceToLoad variable
