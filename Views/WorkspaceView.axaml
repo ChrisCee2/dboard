@@ -71,6 +71,7 @@
 			<ItemsControl.Styles>
 				<Style Selector="ContentPresenter" x:DataType="vm:NodeViewModel">
 					<Setter Property="ZIndex" Value="{Binding NodeBase.ZIndex}"/>
+					<Setter Property="Tag" Value="Node"/>
 				</Style>
 			</ItemsControl.Styles>
 				
@@ -168,14 +169,6 @@
 				</Border.RenderTransform>
 				<views:NodeColorChangeView DataContext="{Binding NodeToChangeColor}"
 										   IsVisible="{Binding, Converter={StaticResource IsNotNullConverter}}">
-					<!--
-					<views:NodeColorChangeView.RenderTransform>
-						<TransformGroup>
-							<TranslateTransform X="{Binding ViewModel.NodeBase.PositionX}" Y="{Binding ViewModel.NodeBase.PositionY}"/>
-							<ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}"/>
-						</TransformGroup>
-					</views:NodeColorChangeView.RenderTransform>
-					-->
 				</views:NodeColorChangeView>
 			</Border>
 		</Canvas>
