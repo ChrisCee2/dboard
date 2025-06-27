@@ -8,7 +8,7 @@
 
 	<Application.Resources>
 		<ResourceDictionary>
-			<customConverters:MedianConverter x:Key="MedianConverter"/>
+			<customConverters:EdgeDescPositionConverter x:Key="EdgeDescPositionConverter"/>
 			<customConverters:MinConverter x:Key="MinConverter"/>
 			<customConverters:DiffConverter x:Key="DiffConverter"/>
 			<customConverters:EdgePosConverter x:Key="EdgePosConverter"/>

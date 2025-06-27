@@ -39,29 +39,31 @@
 			   asyncImageLoader:ImageLoader.Source="{Binding Node.ImagePath}"
 			   IsVisible="{Binding Node.ImagePath, Converter={StaticResource IsNotNullConverter}}"/>
 		<StackPanel Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-			<TextBox Text="{Binding Node.Name}" 
-					 MinHeight="20" 
-					 FontSize="16"
-					 VerticalAlignment="Stretch"
-					 TextWrapping="Wrap"/>
-			<TextBox
-					Text="{Binding Node.Notes}"
-					MinHeight="20"
-					VerticalAlignment="Stretch"
-					TextWrapping="Wrap"
-					AcceptsReturn="True"
-					IsVisible="{Binding Node.NotesToggled}">
-				<TextBox.MaxHeight>
+			<views:TextEditView DataContext="{Binding Name}" 
+								Background="{StaticResource NodeTextColor}"
+								MinHeight="20" 
+								VerticalAlignment="Stretch"
+								Margin="0,0,0,5" 
+								BorderThickness="0,0,0,2"
+								BorderBrush="{StaticResource NotesBackgroundColor}"
+								CornerRadius="0"
+								Padding="0,10,0,0"/>
+			<views:TextEditView DataContext="{Binding Notes}"
+								Background="{StaticResource NodeTextColor}"
+								MinHeight="20"
+								VerticalAlignment="Stretch"
+								IsVisible="{Binding $parent[views:NodeView].((vm:NodeViewModel)DataContext).Node.NotesToggled}">
+				<views:TextEditView.MaxHeight>
 					<Binding
 						Converter="{StaticResource MaxHeightConverter}"
 						ElementName="RootGrid"
 						Path="Bounds.Size.Height"
 						ConverterParameter="0.5"/>
-				</TextBox.MaxHeight>
-			</TextBox>
+				</views:TextEditView.MaxHeight>
+			</views:TextEditView>
 			<ToggleButton Margin="0,2,0,0" Padding="0" HorizontalAlignment="Stretch" CornerRadius="8"
-						  IsVisible="{Binding IsEdit}"
-						  IsChecked="{Binding Node.NotesToggled}">
+						  IsVisible="{Binding $parent[views:NodeView].((vm:NodeViewModel)DataContext).IsEdit}"
+						  IsChecked="{Binding $parent[views:NodeView].((vm:NodeViewModel)DataContext).Node.NotesToggled}">
 				<Border Padding="8,4,0,4" Opacity="1" CornerRadius="8">
 					<TextBlock>Notes</TextBlock>
 				</Border>

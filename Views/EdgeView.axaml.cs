@@ -20,7 +20,7 @@ public partial class EdgeView : Canvas
         WeakReferenceMessenger.Default.Send(new SelectNodeEdgeMessage((EdgeViewModel)DataContext));
     }
 
-    protected void OnTextBoxFocused(object sender, GotFocusEventArgs e)
+    protected void OnTextFocused(object sender, GotFocusEventArgs e)
     {
         EdgeViewModel vm = (EdgeViewModel)DataContext;
         if (vm != null)

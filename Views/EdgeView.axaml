@@ -4,6 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:vm="clr-namespace:dboard.ViewModels"
+	xmlns:views="clr-namespace:dboard.Views"
 	xmlns:constants="clr-namespace:dboard.Constants"
 	x:Class="dboard.Views.EdgeView"
 	x:DataType="vm:EdgeViewModel"
@@ -85,7 +86,7 @@
 		</Line.EndPoint>
 	</Line>
 
-	<Button Command="{Binding AddDescCommand}" CornerRadius="1000">
+	<Button Command="{Binding AddDescCommand}" CornerRadius="1000" Name="AddDescriptionButton">
 		<Button.IsVisible>
 			<MultiBinding Converter="{StaticResource ShowEdgeAddDescConverter}">
 				<Binding Path="Edge.Description"/>
@@ -95,33 +96,40 @@
 
 		<PathIcon Data="{StaticResource add_regular}"/>
 		<Canvas.Left>
-			<MultiBinding Converter="{StaticResource MedianConverter}">
-				<Binding Path="Edge.FromNode.PositionX"/>
-				<Binding Path="Edge.ToNode.PositionX"/>
+			<MultiBinding Converter="{StaticResource EdgeDescPositionConverter}">
+				<Binding Path="#Edge.StartPoint.X"/>
+				<Binding Path="#Edge.EndPoint.X"/>
+				<Binding Path="#AddDescriptionButton.Bounds.Width"/>
 			</MultiBinding>
 		</Canvas.Left>
 		<Canvas.Top>
-			<MultiBinding Converter="{StaticResource MedianConverter}">
-				<Binding Path="Edge.FromNode.PositionY"/>
-				<Binding Path="Edge.ToNode.PositionY"/>
+			<MultiBinding Converter="{StaticResource EdgeDescPositionConverter}">
+				<Binding Path="#Edge.StartPoint.Y"/>
+				<Binding Path="#Edge.EndPoint.Y"/>
+				<Binding Path="#AddDescriptionButton.Bounds.Height"/>
 			</MultiBinding>
 		</Canvas.Top>
 	</Button>
 
-	<TextBox Text="{Binding Edge.Description}" 
-			 GotFocus="OnTextBoxFocused"
-			 IsVisible="{Binding Edge.Description, Converter={StaticResource IsNotNullConverter}}">
+	<views:TextEditView DataContext="{Binding Description}" Name="EdgeTextEdit"
+			 GotFocus="OnTextFocused"
+			 IsVisible="{Binding, Converter={StaticResource IsNotNullConverter}}"
+			 Margin="0,0,0,5" 
+			 Background="{StaticResource EdgeDescriptionColor}"
+			 MaxHeight="150">
 		<Canvas.Left>
-			<MultiBinding Converter="{StaticResource MedianConverter}">
-				<Binding Path="Edge.FromNode.PositionX"/>
-				<Binding Path="Edge.ToNode.PositionX"/>
+			<MultiBinding Converter="{StaticResource EdgeDescPositionConverter}">
+				<Binding Path="#Edge.StartPoint.X"/>
+				<Binding Path="#Edge.EndPoint.X"/>
+				<Binding Path="#EdgeTextEdit.Bounds.Width"/>
 			</MultiBinding>
 		</Canvas.Left>
 		<Canvas.Top>
-			<MultiBinding Converter="{StaticResource MedianConverter}">
-				<Binding Path="Edge.FromNode.PositionY"/>
-				<Binding Path="Edge.ToNode.PositionY"/>
+			<MultiBinding Converter="{StaticResource EdgeDescPositionConverter}">
+				<Binding Path="#Edge.StartPoint.Y"/>
+				<Binding Path="#Edge.EndPoint.Y"/>
+				<Binding Path="#EdgeTextEdit.Bounds.Height"/>
 			</MultiBinding>
 		</Canvas.Top>
-	</TextBox>
+	</views:TextEditView>
 </Canvas>

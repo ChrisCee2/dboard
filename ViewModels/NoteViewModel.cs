@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Controls.Primitives;
+using Avalonia.Logging;
+using CommunityToolkit.Mvvm.ComponentModel;
 using dboard.Models;
 
 namespace dboard.ViewModels;
@@ -33,8 +35,8 @@ public partial class NoteViewModel : ObservableObject
 
     public void Copy(NoteViewModel noteToCopy)
     {
-        Title = noteToCopy.Title;
-        Text = noteToCopy.Text;
+        Title = noteToCopy.Title.Clone();
+        Text = noteToCopy.Text.Clone();
     }
 
     // Jank way to handle updating note model, this is done when saving the notes
