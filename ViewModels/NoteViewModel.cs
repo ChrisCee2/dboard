@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Controls.Primitives;
+using Avalonia.Logging;
+using CommunityToolkit.Mvvm.ComponentModel;
 using dboard.Models;
 
 namespace dboard.ViewModels;

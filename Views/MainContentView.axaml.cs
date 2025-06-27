@@ -162,14 +162,15 @@ public partial class MainContentView : Grid
         await using var stream = await file.OpenWriteAsync();
 
         WorkspaceViewModel workspaceVM = ((MainContentViewModel)DataContext).Workspace;
-        List<NodeModelBase> nodes = workspaceVM.Nodes.Select(x => x.NodeBase).ToList();
-        List<EdgeModel> edges = workspaceVM.Edges.Select(x => x.Edge).ToList();
 
         List<NoteViewModel> noteViewModels = workspaceVM.Notes.Notes.ToList();
         List<NodeViewModelBase> nodeViewModels = workspaceVM.Nodes.ToList();
         List<EdgeViewModel> edgeViewModels = workspaceVM.Edges.ToList();
 
         List<NoteModel> notes = new List<NoteModel>();
+        List<NodeModelBase> nodes = new List<NodeModelBase>();
+        List<EdgeModel> edges = new List<EdgeModel>();
+
         foreach (NoteViewModel noteViewModel in noteViewModels)
         {
             noteViewModel.UpdateNoteModel();
@@ -178,6 +179,12 @@ public partial class MainContentView : Grid
         foreach (EdgeViewModel edgeViewModel in edgeViewModels)
         {
             edgeViewModel.UpdateEdgeModel();
+            edges.Add(edgeViewModel.Edge);
+        }
+        foreach (NodeViewModel nodeViewModel in nodeViewModels)
+        {
+            nodeViewModel.UpdateNodeModel();
+            nodes.Add(nodeViewModel.NodeBase);
         }
         WorkspaceModel workspace = new WorkspaceModel(
             nodes, 

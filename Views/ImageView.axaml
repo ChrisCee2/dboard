@@ -26,7 +26,7 @@
 
 	<Image asyncImageLoader:ImageLoader.Source="{Binding Node.ImagePath}" 
 		   IsVisible="{Binding Node.ImagePath, Converter={StaticResource IsNotNullConverter}}"/>
-	<PathIcon Data="{StaticResource person_question_mark_regular}" MinWidth="20" MinHeight="20" Foreground="{StaticResource NodeTextboxBorderColor}"
+	<PathIcon Data="{StaticResource person_question_mark_regular}" MinWidth="20" MinHeight="20" Foreground="{StaticResource ImageIconColor}"
 				IsVisible="{Binding Node.ImagePath, Converter={StaticResource IsNullConverter}}">
 		<PathIcon.Width>
 			<MultiBinding Converter="{StaticResource MultiplicationConverter}">
