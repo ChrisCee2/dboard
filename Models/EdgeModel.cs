@@ -25,7 +25,7 @@ public partial class EdgeModel : ObservableObject
     public EdgeModel(
         NodeModelBase fromNode, 
         NodeModelBase toNode, 
-        string description,
+        string? description,
         byte a, byte r, byte g, byte b,
         double thickness = EdgeConstants.DEFAULT_THICKNESS)
     {

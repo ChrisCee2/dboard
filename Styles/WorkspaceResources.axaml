@@ -29,6 +29,7 @@
 
 	<!-- Edge Constants -->
 	<sys:Double x:Key="EdgeClickAreaThickness"> 25 </sys:Double>
+	<SolidColorBrush x:Key="EdgeDescriptionColor" Color="#96969696" />
 
 	<!-- Settings Constants -->
 	<SolidColorBrush x:Key="SettingsBackgroundColor" Color="#69696969" />

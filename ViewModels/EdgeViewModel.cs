@@ -11,12 +11,21 @@ public partial class EdgeViewModel : ObservableObject
     public EdgeViewModel(EdgeModel edgeModel)
     {
         Edge = edgeModel;
+        if (Edge.Description != null)
+        {
+            Description = new TextEditViewModel(Edge.Description);
+        }
     }
 
     [ObservableProperty]
     private EdgeModel _edge;
     [ObservableProperty]
     private bool _isSelected;
+
+    // For text edit
+    [ObservableProperty]
+    private TextEditViewModel? _description;
+
     public bool DescIsNull() => Edge.Description is null;
     public bool DescIsNotNull() => Edge.Description is not null;
 
@@ -31,7 +40,8 @@ public partial class EdgeViewModel : ObservableObject
     {
         // TODO: Can optimize this by just storing the description and reference to this
         WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditEdgeActionModel(this)));
-        Edge.Description = "";
+        Description = new TextEditViewModel("");
+        UpdateEdgeModel();
     }
 
     [RelayCommand(CanExecute = nameof(DescIsNotNull))]
@@ -39,6 +49,7 @@ public partial class EdgeViewModel : ObservableObject
     {
         // TODO: Can optimize this by just storing the description and reference to this
         WeakReferenceMessenger.Default.Send(new LogActionMessage(new EditEdgeActionModel(this)));
+        Description = null;
         Edge.Description = null;
     }
 
@@ -47,7 +58,7 @@ public partial class EdgeViewModel : ObservableObject
         return new EdgeViewModel(new EdgeModel(
             Edge.FromNode,
             Edge.ToNode,
-            Edge.Description,
+            Description?.Text,
             Edge.A,
             Edge.R,
             Edge.G,
@@ -60,7 +71,7 @@ public partial class EdgeViewModel : ObservableObject
         return new EdgeViewModel(new EdgeModel(
             fromNode,
             toNode,
-            Edge.Description,
+            Description?.Text,
             Edge.A,
             Edge.R,
             Edge.G,
@@ -71,5 +82,10 @@ public partial class EdgeViewModel : ObservableObject
     public void Copy(EdgeViewModel edgeToCopy)
     {
         Edge.Copy(edgeToCopy.Edge);
+    }
+
+    public void UpdateEdgeModel()
+    {
+        Edge.Description = Description?.Text;
     }
 }

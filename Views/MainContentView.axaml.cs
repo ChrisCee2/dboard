@@ -164,12 +164,20 @@ public partial class MainContentView : Grid
         WorkspaceViewModel workspaceVM = ((MainContentViewModel)DataContext).Workspace;
         List<NodeModelBase> nodes = workspaceVM.Nodes.Select(x => x.NodeBase).ToList();
         List<EdgeModel> edges = workspaceVM.Edges.Select(x => x.Edge).ToList();
+
         List<NoteViewModel> noteViewModels = workspaceVM.Notes.Notes.ToList();
+        List<NodeViewModelBase> nodeViewModels = workspaceVM.Nodes.ToList();
+        List<EdgeViewModel> edgeViewModels = workspaceVM.Edges.ToList();
+
         List<NoteModel> notes = new List<NoteModel>();
         foreach (NoteViewModel noteViewModel in noteViewModels)
         {
             noteViewModel.UpdateNoteModel();
             notes.Add(noteViewModel.Note);
+        }
+        foreach (EdgeViewModel edgeViewModel in edgeViewModels)
+        {
+            edgeViewModel.UpdateEdgeModel();
         }
         WorkspaceModel workspace = new WorkspaceModel(
             nodes, 

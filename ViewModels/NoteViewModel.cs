@@ -33,8 +33,8 @@ public partial class NoteViewModel : ObservableObject
 
     public void Copy(NoteViewModel noteToCopy)
     {
-        Title = noteToCopy.Title;
-        Text = noteToCopy.Text;
+        Title = noteToCopy.Title.Clone();
+        Text = noteToCopy.Text.Clone();
     }
 
     // Jank way to handle updating note model, this is done when saving the notes
