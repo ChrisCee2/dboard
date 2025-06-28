@@ -42,6 +42,8 @@
 					<Binding Path="Edge.FromNode.PositionX"/>
 					<Binding Path="Edge.FromNode.PositionY"/>
 					<Binding Path="Edge.FromNode.Width"/>
+					<Binding Path="Edge.ToNode.PositionX"/>
+					<Binding Path="Edge.ToNode.PositionY"/>
 				</MultiBinding>
 			</Line.StartPoint>
 			<Line.EndPoint>
@@ -49,6 +51,8 @@
 					<Binding Path="Edge.ToNode.PositionX"/>
 					<Binding Path="Edge.ToNode.PositionY"/>
 					<Binding Path="Edge.ToNode.Width"/>
+					<Binding Path="Edge.FromNode.PositionX"/>
+					<Binding Path="Edge.FromNode.PositionY"/>
 				</MultiBinding>
 			</Line.EndPoint>
 			<Line.Stroke>
@@ -75,6 +79,8 @@
 				<Binding Path="Edge.FromNode.PositionX"/>
 				<Binding Path="Edge.FromNode.PositionY"/>
 				<Binding Path="Edge.FromNode.Width"/>
+				<Binding Path="Edge.ToNode.PositionX"/>
+				<Binding Path="Edge.ToNode.PositionY"/>
 			</MultiBinding>
 		</Line.StartPoint>
 		<Line.EndPoint>
@@ -82,6 +88,8 @@
 				<Binding Path="Edge.ToNode.PositionX"/>
 				<Binding Path="Edge.ToNode.PositionY"/>
 				<Binding Path="Edge.ToNode.Width"/>
+				<Binding Path="Edge.FromNode.PositionX"/>
+				<Binding Path="Edge.FromNode.PositionY"/>
 			</MultiBinding>
 		</Line.EndPoint>
 	</Line>

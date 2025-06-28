@@ -15,6 +15,11 @@ public class EdgePosConverter : IMultiValueConverter
         {
             return EdgeTools.EdgePosFromNode(x, y, width);
         }
+        else if (values.Count == 5 && values[0] is double X && values[1] is double Y && values[2] is double Width 
+            && values[3] is double endX && values[4] is double endY)
+        {
+            return EdgeTools.EdgePosFromNode(X, Y, Width, endX, endY);
+        }
         return null;
     }
 
