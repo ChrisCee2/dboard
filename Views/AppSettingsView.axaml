@@ -37,7 +37,7 @@
 				  ItemsSource="{Binding Source={x:Static constants:SettingsConstants.THEMES}}"
 				  SelectedItem="{Binding SharedSettings.Theme}">
 			<ComboBox.ItemTemplate>
-				<DataTemplate x:CompileBindings="False">
+				<DataTemplate x:CompileBindings="True">
 					<TextBlock Text="{Binding}"/>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>

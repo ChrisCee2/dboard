@@ -7,7 +7,7 @@
 	xmlns:constants="clr-namespace:dboard.Constants"
     x:Class="dboard.Views.SaveDialogWindowView"
 	x:DataType="vm:SaveDialogWindowViewModel"
-    Icon="/Assets/avalonia-logo.ico"
+    Icon="/Assets/dboard_icon.ico"
     Title="dboard"
 	ExtendClientAreaToDecorationsHint="True"
 	ExtendClientAreaChromeHints="NoChrome"

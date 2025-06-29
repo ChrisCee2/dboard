@@ -46,9 +46,17 @@ public partial class MainWindowViewModel : ObservableObject
 
     public SettingsModel LoadSettings()
     {
-        if (File.Exists("./Settings.json"))
+        string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/dboard";
+        if (!Directory.Exists(folderPath))
         {
-            using (FileStream stream = File.OpenRead("./Settings.json"))
+            Directory.CreateDirectory(folderPath);
+        }
+
+        string settingsPath = folderPath + "/Settings.json";
+
+        if (File.Exists(settingsPath))
+        {
+            using (FileStream stream = File.OpenRead(settingsPath))
             {
                 try
                 {
@@ -68,8 +76,15 @@ public partial class MainWindowViewModel : ObservableObject
 
     public async void SaveSettings()
     {
+        string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/dboard";
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+
+        string settingsPath = folderPath + "/Settings.json";
         string settings = JsonSerializer.Serialize(SharedSettings, options);
-        File.WriteAllText("./Settings.json", settings);
+        File.WriteAllText(settingsPath, settings);
     }
 
     [RelayCommand]
