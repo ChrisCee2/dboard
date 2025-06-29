@@ -9,6 +9,9 @@ using dboard.Models;
 using System;
 using CommunityToolkit.Mvvm.Input;
 using System.Text.Json.Serialization;
+using System.Globalization;
+using Avalonia.Controls.Primitives;
+using Avalonia.Logging;
 
 namespace dboard.ViewModels;
 
@@ -46,9 +49,19 @@ public partial class MainWindowViewModel : ObservableObject
 
     public SettingsModel LoadSettings()
     {
-        if (File.Exists("./Settings.json"))
+        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, "ASDF");
+        string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/dboard";
+        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, folderPath);
+        if (!Directory.Exists(folderPath))
         {
-            using (FileStream stream = File.OpenRead("./Settings.json"))
+            Directory.CreateDirectory(folderPath);
+        }
+
+        string settingsPath = folderPath + "/Settings.json";
+
+        if (File.Exists(settingsPath))
+        {
+            using (FileStream stream = File.OpenRead(settingsPath))
             {
                 try
                 {
@@ -68,8 +81,15 @@ public partial class MainWindowViewModel : ObservableObject
 
     public async void SaveSettings()
     {
+        string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/dboard";
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+
+        string settingsPath = folderPath + "/Settings.json";
         string settings = JsonSerializer.Serialize(SharedSettings, options);
-        File.WriteAllText("./Settings.json", settings);
+        File.WriteAllText(settingsPath, settings);
     }
 
     [RelayCommand]
