@@ -9,9 +9,6 @@ using dboard.Models;
 using System;
 using CommunityToolkit.Mvvm.Input;
 using System.Text.Json.Serialization;
-using System.Globalization;
-using Avalonia.Controls.Primitives;
-using Avalonia.Logging;
 
 namespace dboard.ViewModels;
 
