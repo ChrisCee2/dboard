@@ -105,6 +105,21 @@ public partial class MainContentView : Grid
         SaveAs();
     }
 
+    private void prepareDirectories()
+    {
+        string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + "/dboard";
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+
+        string workspacesPath = folderPath + "/Workspaces";
+        if (!Directory.Exists(workspacesPath))
+        {
+            Directory.CreateDirectory(workspacesPath);
+        }
+    }
+
     protected async void Save(Window? windowToCloseAfterSave = null)
     {
         if (((MainContentViewModel)DataContext).WorkspaceFileName == null)
@@ -113,11 +128,9 @@ public partial class MainContentView : Grid
         }
         else
         {
-            if (!Directory.Exists("./Workspaces"))
-            {
-                Directory.CreateDirectory("./Workspaces");
-            }
-            IStorageFolder directory = await TopLevel.GetTopLevel(this).StorageProvider.TryGetFolderFromPathAsync("./Workspaces");
+            prepareDirectories();
+            string workspacesPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + "/dboard/Workspaces";
+            IStorageFolder directory = await TopLevel.GetTopLevel(this).StorageProvider.TryGetFolderFromPathAsync(workspacesPath);
             string path = directory.TryGetLocalPath() + "/" + ((MainContentViewModel)DataContext).WorkspaceFileName;
             IStorageFile file = await TopLevel.GetTopLevel(this).StorageProvider.TryGetFileFromPathAsync(path);
             if (file is not null)
@@ -129,12 +142,10 @@ public partial class MainContentView : Grid
 
     protected async void SaveAs(Window? windowToCloseAfterSave = null)
     {
-        if (!Directory.Exists("./Workspaces"))
-        {
-            Directory.CreateDirectory("./Workspaces");
-        }
+        prepareDirectories();
+        string workspacesPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + "/dboard/Workspaces";
 
-        IStorageFolder directory = await TopLevel.GetTopLevel(this).StorageProvider.TryGetFolderFromPathAsync("./Workspaces");
+        IStorageFolder directory = await TopLevel.GetTopLevel(this).StorageProvider.TryGetFolderFromPathAsync(workspacesPath);
 
         IStorageFile file = await TopLevel.GetTopLevel(this).StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
@@ -216,12 +227,10 @@ public partial class MainContentView : Grid
 
     protected async void ChooseWorkspace(object sender, RoutedEventArgs e)
     {
-        if (!Directory.Exists("./Workspaces"))
-        {
-            Directory.CreateDirectory("./Workspaces");
-        }
+        prepareDirectories();
+        string workspacesPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + "/dboard/Workspaces";
 
-        IStorageFolder directory = await TopLevel.GetTopLevel(this).StorageProvider.TryGetFolderFromPathAsync("./Workspaces");
+        IStorageFolder directory = await TopLevel.GetTopLevel(this).StorageProvider.TryGetFolderFromPathAsync(workspacesPath);
 
         var files = await TopLevel.GetTopLevel(this).StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
