@@ -49,9 +49,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     public SettingsModel LoadSettings()
     {
-        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, "ASDF");
         string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/dboard";
-        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(this, folderPath);
         if (!Directory.Exists(folderPath))
         {
             Directory.CreateDirectory(folderPath);
